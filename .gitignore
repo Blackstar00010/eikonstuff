@@ -1,3 +1,6 @@
+/price_data_adj/
+/price_data_merged/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
