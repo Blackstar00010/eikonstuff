@@ -1,0 +1,994 @@
+C:\Users\djwja\GitHub\eikonproj\venv\Scripts\python.exe C:\Users\djwja\GitHub\eikonproj\price_scraper.py 
+WAGN.L^C09 is delisted in 2009..
+WAGN.L^C09 completed!
+WADE.L^C92 is delisted in 1992..
+WADE.L^C92: No data available for 1983-1992
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for WADE.L^C92!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2023-07-10 19:24:14,559 P[18140] [MainThread 10172] Error with WADE.L^C92: Invalid RIC
+2023-07-10 19:24:14,559 P[18140] [MainThread 10172] WADE.L^C92: Invalid RIC | 
+VYKE.L^D11 is delisted in 2011..
+VYKE.L^D11: No data available for 1983-1992
+2023-07-10 19:24:16,652 P[18140] [MainThread 10172] Error with VYKE.L^D11: No data available for the requested date range
+2023-07-10 19:24:16,652 P[18140] [MainThread 10172] VYKE.L^D11: No data available for the requested date range | 
+VYKE.L^D11: No data available for 1993-2002
+2023-07-10 19:24:17,661 P[18140] [MainThread 10172] Error with VYKE.L^D11: No data available for the requested date range
+2023-07-10 19:24:17,661 P[18140] [MainThread 10172] VYKE.L^D11: No data available for the requested date range | 
+VYKE.L^D11 completed!
+VYCO.L^C09 is delisted in 2009..
+2023-07-10 19:24:21,987 P[18140] [MainThread 10172] Error with VYCO.L^C09: No data available for the requested date range
+2023-07-10 19:24:21,987 P[18140] [MainThread 10172] VYCO.L^C09: No data available for the requested date range | 
+VYCO.L^C09: No data available for 1983-1992
+2023-07-10 19:24:22,966 P[18140] [MainThread 10172] Error with VYCO.L^C09: No data available for the requested date range
+2023-07-10 19:24:22,966 P[18140] [MainThread 10172] VYCO.L^C09: No data available for the requested date range | 
+VYCO.L^C09: No data available for 1993-2002
+VYCO.L^C09 completed!
+VVT.L^A95 is delisted in 1995..
+VVT.L^A95 completed!
+VV.L^A12 is delisted in 2012..
+2023-07-10 19:24:33,332 P[18140] [MainThread 10172] Error with VV.L^A12: No data available for the requested date range
+2023-07-10 19:24:33,332 P[18140] [MainThread 10172] VV.L^A12: No data available for the requested date range | 
+VV.L^A12: No data available for 1983-1992
+VV.L^A12: No data available for 1993-2002
+2023-07-10 19:24:34,253 P[18140] [MainThread 10172] Error with VV.L^A12: No data available for the requested date range
+2023-07-10 19:24:34,253 P[18140] [MainThread 10172] VV.L^A12: No data available for the requested date range | 
+VV.L^A12 completed!
+VTU.L^A98 is delisted in 1998..
+VTU.L^A98: No data available for 1983-1992
+2023-07-10 19:24:38,323 P[18140] [MainThread 10172] Error with VTU.L^A98: No data available for the requested date range
+2023-07-10 19:24:38,323 P[18140] [MainThread 10172] VTU.L^A98: No data available for the requested date range | 
+VTU.L^A98 completed!
+VTO.L^A10 is delisted in 2010..
+2023-07-10 19:24:44,534 P[18140] [MainThread 10172] Error with VTO.L^A10: No data available for the requested date range
+2023-07-10 19:24:44,535 P[18140] [MainThread 10172] VTO.L^A10: No data available for the requested date range | 
+VTO.L^A10: No data available for 1983-1992
+VTO.L^A10: No data available for 1993-2002
+2023-07-10 19:24:45,534 P[18140] [MainThread 10172] Error with VTO.L^A10: No data available for the requested date range
+2023-07-10 19:24:45,534 P[18140] [MainThread 10172] VTO.L^A10: No data available for the requested date range | 
+VTO.L^A10 completed!
+VST.L^D08 is delisted in 2008..
+VST.L^D08: No data available for 1983-1992
+2023-07-10 19:24:49,122 P[18140] [MainThread 10172] Error with VST.L^D08: No data available for the requested date range
+2023-07-10 19:24:49,123 P[18140] [MainThread 10172] VST.L^D08: No data available for the requested date range | 
+2023-07-10 19:24:50,025 P[18140] [MainThread 10172] Error with VST.L^D08: No data available for the requested date range
+2023-07-10 19:24:50,025 P[18140] [MainThread 10172] VST.L^D08: No data available for the requested date range | 
+VST.L^D08: No data available for 1993-2002
+VST.L^D08 completed!
+VSLC.L^C16 is delisted in 2016..
+VSLC.L^C16: No data available for 1983-1992
+2023-07-10 19:24:54,252 P[18140] [MainThread 10172] Error with VSLC.L^C16: No data available for the requested date range
+2023-07-10 19:24:54,252 P[18140] [MainThread 10172] VSLC.L^C16: No data available for the requested date range | 
+2023-07-10 19:24:55,273 P[18140] [MainThread 10172] Error with VSLC.L^C16: No data available for the requested date range
+2023-07-10 19:24:55,273 P[18140] [MainThread 10172] VSLC.L^C16: No data available for the requested date range | 
+VSLC.L^C16: No data available for 1993-2002
+2023-07-10 19:24:56,513 P[18140] [MainThread 10172] Error with VSLC.L^C16: No data available for the requested date range
+2023-07-10 19:24:56,513 P[18140] [MainThread 10172] VSLC.L^C16: No data available for the requested date range | 
+VSLC.L^C16: No data available for 2003-2012
+VSLC.L^C16 completed!
+VSG.L^D99 is delisted in 1999..
+2023-07-10 19:24:59,682 P[18140] [MainThread 10172] Error with VSG.L^D99: No data available for the requested date range
+2023-07-10 19:24:59,683 P[18140] [MainThread 10172] VSG.L^D99: No data available for the requested date range | 
+VSG.L^D99: No data available for 1983-1992
+VSG.L^D99 completed!
+VSC.L^C10 is delisted in 2010..
+2023-07-10 19:25:03,777 P[18140] [MainThread 10172] Error with VSC.L^C10: No data available for the requested date range
+2023-07-10 19:25:03,777 P[18140] [MainThread 10172] VSC.L^C10: No data available for the requested date range | 
+VSC.L^C10: No data available for 1983-1992
+VSC.L^C10: No data available for 1993-2002
+2023-07-10 19:25:04,531 P[18140] [MainThread 10172] Error with VSC.L^C10: No data available for the requested date range
+2023-07-10 19:25:04,531 P[18140] [MainThread 10172] VSC.L^C10: No data available for the requested date range | 
+VSC.L^C10 completed!
+VSA.L^D13 is delisted in 2013..
+VSA.L^D13: No data available for 1983-1992
+2023-07-10 19:25:08,839 P[18140] [MainThread 10172] Error with VSA.L^D13: No data available for the requested date range
+2023-07-10 19:25:08,839 P[18140] [MainThread 10172] VSA.L^D13: No data available for the requested date range | 
+VSA.L^D13: No data available for 1993-2002
+2023-07-10 19:25:09,581 P[18140] [MainThread 10172] Error with VSA.L^D13: No data available for the requested date range
+2023-07-10 19:25:09,581 P[18140] [MainThread 10172] VSA.L^D13: No data available for the requested date range | 
+VSA.L^D13 completed!
+VRYA.L^B07 is delisted in 2007..
+2023-07-10 19:25:18,476 P[18140] [MainThread 10172] Error with VRYA.L^B07: No data available for the requested date range
+2023-07-10 19:25:18,476 P[18140] [MainThread 10172] VRYA.L^B07: No data available for the requested date range | 
+VRYA.L^B07: No data available for 1983-1992
+VRYA.L^B07: No data available for 1993-2002
+2023-07-10 19:25:19,468 P[18140] [MainThread 10172] Error with VRYA.L^B07: No data available for the requested date range
+2023-07-10 19:25:19,468 P[18140] [MainThread 10172] VRYA.L^B07: No data available for the requested date range | 
+2023-07-10 19:25:20,518 P[18140] [MainThread 10172] Error with VRYA.L^B07: No data available for the requested date range
+2023-07-10 19:25:20,518 P[18140] [MainThread 10172] VRYA.L^B07: No data available for the requested date range | 
+VRYA.L^B07: No data available for 2003-2012
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for VRYA.L^B07!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+VRY.L^B07 is delisted in 2007..
+VRY.L^B07: No data available for 1983-1992
+2023-07-10 19:25:22,985 P[18140] [MainThread 10172] Error with VRY.L^B07: No data available for the requested date range
+2023-07-10 19:25:22,985 P[18140] [MainThread 10172] VRY.L^B07: No data available for the requested date range | 
+VRY.L^B07 completed!
+VRAA.L^B05 is delisted in 2005..
+2023-07-10 19:25:29,654 P[18140] [MainThread 10172] Error with VRAA.L^B05: No data available for the requested date range
+2023-07-10 19:25:29,654 P[18140] [MainThread 10172] VRAA.L^B05: No data available for the requested date range | 
+VRAA.L^B05: No data available for 1983-1992
+2023-07-10 19:25:30,732 P[18140] [MainThread 10172] Error with VRAA.L^B05: No data available for the requested date range
+2023-07-10 19:25:30,733 P[18140] [MainThread 10172] VRAA.L^B05: No data available for the requested date range | 
+VRAA.L^B05: No data available for 1993-2002
+VRAA.L^B05: No data available for 2003-2012
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for VRAA.L^B05!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2023-07-10 19:25:32,143 P[18140] [MainThread 10172] Error with VRAA.L^B05: No data available for the requested date range
+2023-07-10 19:25:32,143 P[18140] [MainThread 10172] VRAA.L^B05: No data available for the requested date range | 
+VPP.L^D13 is delisted in 2013..
+2023-07-10 19:25:34,147 P[18140] [MainThread 10172] Error with VPP.L^D13: No data available for the requested date range
+2023-07-10 19:25:34,148 P[18140] [MainThread 10172] VPP.L^D13: No data available for the requested date range | 
+VPP.L^D13: No data available for 1983-1992
+VPP.L^D13: No data available for 1993-2002
+2023-07-10 19:25:35,370 P[18140] [MainThread 10172] Error with VPP.L^D13: No data available for the requested date range
+2023-07-10 19:25:35,370 P[18140] [MainThread 10172] VPP.L^D13: No data available for the requested date range | 
+VPP.L^D13 completed!
+VPE.L^D97 is delisted in 1997..
+2023-07-10 19:25:39,393 P[18140] [MainThread 10172] Error with VPE.L^D97: Invalid RIC
+2023-07-10 19:25:39,393 P[18140] [MainThread 10172] VPE.L^D97: Invalid RIC | 
+VPE.L^D97: No data available for 1983-1992
+VPE.L^D97: No data available for 1993-2002
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for VPE.L^D97!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2023-07-10 19:25:40,243 P[18140] [MainThread 10172] Error with VPE.L^D97: Invalid RIC
+2023-07-10 19:25:40,243 P[18140] [MainThread 10172] VPE.L^D97: Invalid RIC | 
+VOR.L^D20 is delisted in 2020..
+2023-07-10 19:25:42,686 P[18140] [MainThread 10172] Error with VOR.L^D20: No data available for the requested date range
+2023-07-10 19:25:42,686 P[18140] [MainThread 10172] VOR.L^D20: No data available for the requested date range | 
+VOR.L^D20: No data available for 1983-1992
+2023-07-10 19:25:43,759 P[18140] [MainThread 10172] Error with VOR.L^D20: No data available for the requested date range
+2023-07-10 19:25:43,761 P[18140] [MainThread 10172] VOR.L^D20: No data available for the requested date range | 
+VOR.L^D20: No data available for 1993-2002
+VOR.L^D20 completed!
+VMG.L^A10 is delisted in 2010..
+VMG.L^A10: No data available for 1983-1992
+2023-07-10 19:25:49,408 P[18140] [MainThread 10172] Error with VMG.L^A10: No data available for the requested date range
+2023-07-10 19:25:49,408 P[18140] [MainThread 10172] VMG.L^A10: No data available for the requested date range | 
+VMG.L^A10: No data available for 1993-2002
+2023-07-10 19:25:50,138 P[18140] [MainThread 10172] Error with VMG.L^A10: No data available for the requested date range
+2023-07-10 19:25:50,138 P[18140] [MainThread 10172] VMG.L^A10: No data available for the requested date range | 
+VMG.L^A10 completed!
+VLL.L^C01 is delisted in 2001..
+VLL.L^C01: No data available for 1983-1992
+2023-07-10 19:25:54,588 P[18140] [MainThread 10172] Error with VLL.L^C01: No data available for the requested date range
+2023-07-10 19:25:54,588 P[18140] [MainThread 10172] VLL.L^C01: No data available for the requested date range | 
+VLL.L^C01 completed!
+VKT.L^A95 is delisted in 1995..
+VKT.L^A95: No data available for 1983-1992
+2023-07-10 19:25:58,913 P[18140] [MainThread 10172] Error with VKT.L^A95: Invalid RIC
+2023-07-10 19:25:58,913 P[18140] [MainThread 10172] VKT.L^A95: Invalid RIC | 
+2023-07-10 19:25:59,764 P[18140] [MainThread 10172] Error with VKT.L^A95: Invalid RIC
+2023-07-10 19:25:59,765 P[18140] [MainThread 10172] VKT.L^A95: Invalid RIC | 
+VKT.L^A95: No data available for 1993-2002
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for VKT.L^A95!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+VKPL.L^C90 is delisted in 1990..
+2023-07-10 19:26:01,633 P[18140] [MainThread 10172] Error with VKPL.L^C90: Invalid RIC
+2023-07-10 19:26:01,633 P[18140] [MainThread 10172] VKPL.L^C90: Invalid RIC | 
+VKPL.L^C90: No data available for 1983-1992
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for VKPL.L^C90!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+VJETq.L^A00 is delisted in 2000..
+VJETq.L^A00: No data available for 1983-1992
+2023-07-10 19:26:03,599 P[18140] [MainThread 10172] Error with VJETq.L^A00: No data available for the requested date range
+2023-07-10 19:26:03,599 P[18140] [MainThread 10172] VJETq.L^A00: No data available for the requested date range | 
+VJETq.L^A00 completed!
+VITFfq.L^A95 is delisted in 1995..
+VITFfq.L^A95 completed!
+VICP.L^D09 is delisted in 2009..
+VICP.L^D09: No data available for 1983-1992
+2023-07-10 19:26:11,249 P[18140] [MainThread 10172] Error with VICP.L^D09: No data available for the requested date range
+2023-07-10 19:26:11,250 P[18140] [MainThread 10172] VICP.L^D09: No data available for the requested date range | 
+VICP.L^D09: No data available for 1993-2002
+2023-07-10 19:26:12,394 P[18140] [MainThread 10172] Error with VICP.L^D09: No data available for the requested date range
+2023-07-10 19:26:12,394 P[18140] [MainThread 10172] VICP.L^D09: No data available for the requested date range | 
+VICP.L^D09 completed!
+VIAN.L^A09 is delisted in 2009..
+2023-07-10 19:26:31,892 P[18140] [MainThread 10172] Error with VIAN.L^A09: No data available for the requested date range
+2023-07-10 19:26:31,892 P[18140] [MainThread 10172] VIAN.L^A09: No data available for the requested date range | 
+VIAN.L^A09: No data available for 1983-1992
+VIAN.L^A09 completed!
+VIAGq.L^B98 is delisted in 1998..
+VIAGq.L^B98 completed!
+VGIL.L^C90 is delisted in 1990..
+VGIL.L^C90: No data available for 1983-1992
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for VGIL.L^C90!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2023-07-10 19:26:53,732 P[18140] [MainThread 10172] Error with VGIL.L^C90: Invalid RIC
+2023-07-10 19:26:53,732 P[18140] [MainThread 10172] VGIL.L^C90: Invalid RIC | 
+VGAS.L^D21 is delisted in 2021..
+2023-07-10 19:26:55,756 P[18140] [MainThread 10172] Error with VGAS.L^D21: No data available for the requested date range
+2023-07-10 19:26:55,756 P[18140] [MainThread 10172] VGAS.L^D21: No data available for the requested date range | 
+VGAS.L^D21: No data available for 1983-1992
+2023-07-10 19:26:58,734 P[18140] [MainThread 10172] Error with VGAS.L^D21: No data available for the requested date range
+2023-07-10 19:26:58,735 P[18140] [MainThread 10172] VGAS.L^D21: No data available for the requested date range | 
+VGAS.L^D21: No data available for 1993-2002
+VGAS.L^D21 completed!
+VGAAV.L^D21 is delisted in 2021..
+2023-07-10 19:27:05,902 P[18140] [MainThread 10172] Error with VGAAV.L^D21: No data available for the requested date range
+2023-07-10 19:27:05,902 P[18140] [MainThread 10172] VGAAV.L^D21: No data available for the requested date range | 
+VGAAV.L^D21: No data available for 1983-1992
+2023-07-10 19:27:06,908 P[18140] [MainThread 10172] Error with VGAAV.L^D21: No data available for the requested date range
+2023-07-10 19:27:06,908 P[18140] [MainThread 10172] VGAAV.L^D21: No data available for the requested date range | 
+VGAAV.L^D21: No data available for 1993-2002
+2023-07-10 19:27:07,988 P[18140] [MainThread 10172] Error with VGAAV.L^D21: No data available for the requested date range
+2023-07-10 19:27:07,989 P[18140] [MainThread 10172] VGAAV.L^D21: No data available for the requested date range | 
+VGAAV.L^D21: No data available for 2003-2012
+2023-07-10 19:27:09,057 P[18140] [MainThread 10172] Error with VGAAV.L^D21: No data available for the requested date range
+2023-07-10 19:27:09,057 P[18140] [MainThread 10172] VGAAV.L^D21: No data available for the requested date range | 
+VGAAV.L^D21: No data available for 2013-2022
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for VGAAV.L^D21!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+VFG.L^D02 is delisted in 2002..
+2023-07-10 19:27:11,058 P[18140] [MainThread 10172] Error with VFG.L^D02: No data available for the requested date range
+2023-07-10 19:27:11,058 P[18140] [MainThread 10172] VFG.L^D02: No data available for the requested date range | 
+VFG.L^D02: No data available for 1983-1992
+VFG.L^D02 completed!
+VFCq.L^A00 is delisted in 2000..
+VFCq.L^A00: No data available for 1983-1992
+2023-07-10 19:27:15,150 P[18140] [MainThread 10172] Error with VFCq.L^A00: No data available for the requested date range
+2023-07-10 19:27:15,151 P[18140] [MainThread 10172] VFCq.L^A00: No data available for the requested date range | 
+VFCq.L^A00 completed!
+VENd.L^B22 is delisted in 2022..
+VENd.L^B22: No data available for 1983-1992
+2023-07-10 19:27:19,569 P[18140] [MainThread 10172] Error with VENd.L^B22: No data available for the requested date range
+2023-07-10 19:27:19,569 P[18140] [MainThread 10172] VENd.L^B22: No data available for the requested date range | 
+VENd.L^B22: No data available for 1993-2002
+2023-07-10 19:27:20,837 P[18140] [MainThread 10172] Error with VENd.L^B22: No data available for the requested date range
+2023-07-10 19:27:20,837 P[18140] [MainThread 10172] VENd.L^B22: No data available for the requested date range | 
+VENd.L^B22: No data available for 2003-2012
+2023-07-10 19:27:22,004 P[18140] [MainThread 10172] Error with VENd.L^B22: No data available for the requested date range
+2023-07-10 19:27:22,004 P[18140] [MainThread 10172] VENd.L^B22: No data available for the requested date range | 
+VENd.L^B22 completed!
+VENc.L^B22 is delisted in 2022..
+VENc.L^B22: No data available for 1983-1992
+2023-07-10 19:27:26,562 P[18140] [MainThread 10172] Error with VENc.L^B22: No data available for the requested date range
+2023-07-10 19:27:26,563 P[18140] [MainThread 10172] VENc.L^B22: No data available for the requested date range | 
+VENc.L^B22: No data available for 1993-2002
+2023-07-10 19:27:27,635 P[18140] [MainThread 10172] Error with VENc.L^B22: No data available for the requested date range
+2023-07-10 19:27:27,636 P[18140] [MainThread 10172] VENc.L^B22: No data available for the requested date range | 
+VENc.L^B22 completed!
+VEN2d.L^B22 is delisted in 2022..
+VEN2d.L^B22: No data available for 1983-1992
+2023-07-10 19:27:35,277 P[18140] [MainThread 10172] Error with VEN2d.L^B22: No data available for the requested date range
+2023-07-10 19:27:35,277 P[18140] [MainThread 10172] VEN2d.L^B22: No data available for the requested date range | 
+VEN2d.L^B22: No data available for 1993-2002
+2023-07-10 19:27:36,382 P[18140] [MainThread 10172] Error with VEN2d.L^B22: No data available for the requested date range
+2023-07-10 19:27:36,382 P[18140] [MainThread 10172] VEN2d.L^B22: No data available for the requested date range | 
+2023-07-10 19:27:37,185 P[18140] [MainThread 10172] Error with VEN2d.L^B22: No data available for the requested date range
+2023-07-10 19:27:37,185 P[18140] [MainThread 10172] VEN2d.L^B22: No data available for the requested date range | 
+VEN2d.L^B22: No data available for 2003-2012
+VEN2d.L^B22 completed!
+VEN2c.L^B22 is delisted in 2022..
+2023-07-10 19:27:41,704 P[18140] [MainThread 10172] Error with VEN2c.L^B22: No data available for the requested date range
+2023-07-10 19:27:41,704 P[18140] [MainThread 10172] VEN2c.L^B22: No data available for the requested date range | 
+VEN2c.L^B22: No data available for 1983-1992
+VEN2c.L^B22: No data available for 1993-2002
+2023-07-10 19:27:42,840 P[18140] [MainThread 10172] Error with VEN2c.L^B22: No data available for the requested date range
+2023-07-10 19:27:42,841 P[18140] [MainThread 10172] VEN2c.L^B22: No data available for the requested date range | 
+VEN2c.L^B22 completed!
+VEN2.L^B22 is delisted in 2022..
+2023-07-10 19:27:49,708 P[18140] [MainThread 10172] Error with VEN2.L^B22: No data available for the requested date range
+2023-07-10 19:27:49,708 P[18140] [MainThread 10172] VEN2.L^B22: No data available for the requested date range | 
+VEN2.L^B22: No data available for 1983-1992
+VEN2.L^B22: No data available for 1993-2002
+2023-07-10 19:27:50,824 P[18140] [MainThread 10172] Error with VEN2.L^B22: No data available for the requested date range
+2023-07-10 19:27:50,825 P[18140] [MainThread 10172] VEN2.L^B22: No data available for the requested date range | 
+VEN2.L^B22 completed!
+VEN.L^B22 is delisted in 2022..
+VEN.L^B22: No data available for 1983-1992
+2023-07-10 19:27:59,506 P[18140] [MainThread 10172] Error with VEN.L^B22: No data available for the requested date range
+2023-07-10 19:27:59,506 P[18140] [MainThread 10172] VEN.L^B22: No data available for the requested date range | 
+VEN.L^B22: No data available for 1993-2002
+2023-07-10 19:28:00,598 P[18140] [MainThread 10172] Error with VEN.L^B22: No data available for the requested date range
+2023-07-10 19:28:00,598 P[18140] [MainThread 10172] VEN.L^B22: No data available for the requested date range | 
+VEN.L^B22 completed!
+VELO.L^B11 is delisted in 2011..
+VELO.L^B11: No data available for 1983-1992
+2023-07-10 19:28:09,308 P[18140] [MainThread 10172] Error with VELO.L^B11: No data available for the requested date range
+2023-07-10 19:28:09,308 P[18140] [MainThread 10172] VELO.L^B11: No data available for the requested date range | 
+VELO.L^B11: No data available for 1993-2002
+2023-07-10 19:28:10,499 P[18140] [MainThread 10172] Error with VELO.L^B11: No data available for the requested date range
+2023-07-10 19:28:10,500 P[18140] [MainThread 10172] VELO.L^B11: No data available for the requested date range | 
+VELO.L^B11 completed!
+VDTH.L^B08 is delisted in 2008..
+VDTH.L^B08: No data available for 1983-1992
+2023-07-10 19:28:14,289 P[18140] [MainThread 10172] Error with VDTH.L^B08: No data available for the requested date range
+2023-07-10 19:28:14,289 P[18140] [MainThread 10172] VDTH.L^B08: No data available for the requested date range | 
+VDTH.L^B08: No data available for 1993-2002
+2023-07-10 19:28:15,172 P[18140] [MainThread 10172] Error with VDTH.L^B08: No data available for the requested date range
+2023-07-10 19:28:15,172 P[18140] [MainThread 10172] VDTH.L^B08: No data available for the requested date range | 
+VDTH.L^B08 completed!
+VDI.L^B09 is delisted in 2009..
+VDI.L^B09: No data available for 1983-1992
+2023-07-10 19:28:18,383 P[18140] [MainThread 10172] Error with VDI.L^B09: No data available for the requested date range
+2023-07-10 19:28:18,383 P[18140] [MainThread 10172] VDI.L^B09: No data available for the requested date range | 
+2023-07-10 19:28:31,519 P[18140] [MainThread 10172] Error with VDI.L^B09: No data available for the requested date range
+2023-07-10 19:28:31,519 P[18140] [MainThread 10172] VDI.L^B09: No data available for the requested date range | 
+VDI.L^B09: No data available for 1993-2002
+VDI.L^B09 completed!
+VCTal.L^A96 is delisted in 1996..
+VCTal.L^A96: No data available for 1983-1992
+2023-07-10 19:28:35,436 P[18140] [MainThread 10172] Error with VCTal.L^A96: No data available for the requested date range
+2023-07-10 19:28:35,436 P[18140] [MainThread 10172] VCTal.L^A96: No data available for the requested date range | 
+VCTal.L^A96 completed!
+VCI.L^A99 is delisted in 1999..
+2023-07-10 19:28:38,558 P[18140] [MainThread 10172] Error with VCI.L^A99: No data available for the requested date range
+2023-07-10 19:28:38,558 P[18140] [MainThread 10172] VCI.L^A99: No data available for the requested date range | 
+VCI.L^A99: No data available for 1983-1992
+VCI.L^A99 completed!
+VBRO.L^D01 is delisted in 2001..
+VBRO.L^D01: No data available for 1983-1992
+2023-07-10 19:28:42,552 P[18140] [MainThread 10172] Error with VBRO.L^D01: Invalid RIC
+2023-07-10 19:28:42,552 P[18140] [MainThread 10172] VBRO.L^D01: Invalid RIC | 
+VBRO.L^D01: No data available for 1993-2002
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for VBRO.L^D01!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2023-07-10 19:28:43,506 P[18140] [MainThread 10172] Error with VBRO.L^D01: Invalid RIC
+2023-07-10 19:28:43,506 P[18140] [MainThread 10172] VBRO.L^D01: Invalid RIC | 
+VAH.L^A98 is delisted in 1998..
+VAH.L^A98: No data available for 1983-1992
+2023-07-10 19:28:45,535 P[18140] [MainThread 10172] Error with VAH.L^A98: No data available for the requested date range
+2023-07-10 19:28:45,536 P[18140] [MainThread 10172] VAH.L^A98: No data available for the requested date range | 
+VAH.L^A98 completed!
+VAEIq.L^A94 is delisted in 1994..
+2023-07-10 19:28:49,104 P[18140] [MainThread 10172] Error with VAEIq.L^A94: Invalid RIC
+2023-07-10 19:28:49,104 P[18140] [MainThread 10172] VAEIq.L^A94: Invalid RIC | 
+VAEIq.L^A94: No data available for 1983-1992
+2023-07-10 19:28:49,963 P[18140] [MainThread 10172] Error with VAEIq.L^A94: Invalid RIC
+2023-07-10 19:28:49,963 P[18140] [MainThread 10172] VAEIq.L^A94: Invalid RIC | 
+VAEIq.L^A94: No data available for 1993-2002
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for VAEIq.L^A94!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+UWRLr.L^D92 is delisted in 1992..
+2023-07-10 19:28:56,086 P[18140] [MainThread 10172] Error with UWRLr.L^D92: Invalid RIC
+2023-07-10 19:28:56,087 P[18140] [MainThread 10172] UWRLr.L^D92: Invalid RIC | 
+UWRLr.L^D92: No data available for 1983-1992
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for UWRLr.L^D92!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+UWRL.L^B93 is delisted in 1993..
+UWRL.L^B93 completed!
+UWq.L^A00 is delisted in 2000..
+2023-07-10 19:29:01,126 P[18140] [MainThread 10172] Error with UWq.L^A00: No data available for the requested date range
+2023-07-10 19:29:01,127 P[18140] [MainThread 10172] UWq.L^A00: No data available for the requested date range | 
+UWq.L^A00: No data available for 1983-1992
+UWq.L^A00 completed!
+UVT.L^C05 is delisted in 2005..
+UVT.L^C05: No data available for 1983-1992
+2023-07-10 19:29:04,972 P[18140] [MainThread 10172] Error with UVT.L^C05: No data available for the requested date range
+2023-07-10 19:29:04,972 P[18140] [MainThread 10172] UVT.L^C05: No data available for the requested date range | 
+UVT.L^C05 completed!
+UUU.L^D07 is delisted in 2007..
+2023-07-10 19:29:10,526 P[18140] [MainThread 10172] Error with UUU.L^D07: No data available for the requested date range
+2023-07-10 19:29:10,526 P[18140] [MainThread 10172] UUU.L^D07: No data available for the requested date range | 
+UUU.L^D07: No data available for 1983-1992
+2023-07-10 19:29:11,428 P[18140] [MainThread 10172] Error with UUU.L^D07: No data available for the requested date range
+2023-07-10 19:29:11,428 P[18140] [MainThread 10172] UUU.L^D07: No data available for the requested date range | 
+UUU.L^D07: No data available for 1993-2002
+UUU.L^D07 completed!
+UTW.L^C19 is delisted in 2019..
+2023-07-10 19:29:14,753 P[18140] [MainThread 10172] Error with UTW.L^C19: No data available for the requested date range
+2023-07-10 19:29:14,754 P[18140] [MainThread 10172] UTW.L^C19: No data available for the requested date range | 
+UTW.L^C19: No data available for 1983-1992
+2023-07-10 19:29:15,487 P[18140] [MainThread 10172] Error with UTW.L^C19: No data available for the requested date range
+2023-07-10 19:29:15,487 P[18140] [MainThread 10172] UTW.L^C19: No data available for the requested date range | 
+UTW.L^C19: No data available for 1993-2002
+UTW.L^C19 completed!
+UTKaq.L^D06 is delisted in 2006..
+UTKaq.L^D06: No data available for 1983-1992
+2023-07-10 19:29:20,631 P[18140] [MainThread 10172] Error with UTKaq.L^D06: No data available for the requested date range
+2023-07-10 19:29:20,631 P[18140] [MainThread 10172] UTKaq.L^D06: No data available for the requested date range | 
+2023-07-10 19:29:21,506 P[18140] [MainThread 10172] Error with UTKaq.L^D06: No data available for the requested date range
+2023-07-10 19:29:21,507 P[18140] [MainThread 10172] UTKaq.L^D06: No data available for the requested date range | 
+UTKaq.L^D06: No data available for 1993-2002
+UTKaq.L^D06 completed!
+UTIGq.L^A03 is delisted in 2003..
+UTIGq.L^A03: No data available for 1983-1992
+2023-07-10 19:29:24,576 P[18140] [MainThread 10172] Error with UTIGq.L^A03: No data available for the requested date range
+2023-07-10 19:29:24,577 P[18140] [MainThread 10172] UTIGq.L^A03: No data available for the requested date range | 
+UTIGq.L^A03 completed!
+USTq.L^A00 is delisted in 2000..
+2023-07-10 19:29:28,119 P[18140] [MainThread 10172] Error with USTq.L^A00: No data available for the requested date range
+2023-07-10 19:29:28,119 P[18140] [MainThread 10172] USTq.L^A00: No data available for the requested date range | 
+USTq.L^A00: No data available for 1983-1992
+USTq.L^A00 completed!
+USSCq.L^A00 is delisted in 2000..
+USSCq.L^A00: No data available for 1983-1992
+2023-07-10 19:29:31,803 P[18140] [MainThread 10172] Error with USSCq.L^A00: No data available for the requested date range
+2023-07-10 19:29:31,803 P[18140] [MainThread 10172] USSCq.L^A00: No data available for the requested date range | 
+USSCq.L^A00 completed!
+USINq.L^B98 is delisted in 1998..
+2023-07-10 19:29:35,652 P[18140] [MainThread 10172] Error with USINq.L^B98: No data available for the requested date range
+2023-07-10 19:29:35,652 P[18140] [MainThread 10172] USINq.L^B98: No data available for the requested date range | 
+USINq.L^B98: No data available for 1983-1992
+USINq.L^B98 completed!
+Uq.L^A00 is delisted in 2000..
+2023-07-10 19:29:40,877 P[18140] [MainThread 10172] Error with Uq.L^A00: No data available for the requested date range
+2023-07-10 19:29:40,877 P[18140] [MainThread 10172] Uq.L^A00: No data available for the requested date range | 
+Uq.L^A00: No data available for 1983-1992
+Uq.L^A00 completed!
+UPMq.L^A99 is delisted in 1999..
+UPMq.L^A99: No data available for 1983-1992
+2023-07-10 19:29:46,617 P[18140] [MainThread 10172] Error with UPMq.L^A99: No data available for the requested date range
+2023-07-10 19:29:46,617 P[18140] [MainThread 10172] UPMq.L^A99: No data available for the requested date range | 
+UPMq.L^A99 completed!
+UPJq.L^A00 is delisted in 2000..
+2023-07-10 19:29:50,263 P[18140] [MainThread 10172] Error with UPJq.L^A00: No data available for the requested date range
+2023-07-10 19:29:50,263 P[18140] [MainThread 10172] UPJq.L^A00: No data available for the requested date range | 
+UPJq.L^A00: No data available for 1983-1992
+2023-07-10 19:29:51,263 P[18140] [MainThread 10172] Error with UPJq.L^A00: No data available for the requested date range
+2023-07-10 19:29:51,264 P[18140] [MainThread 10172] UPJq.L^A00: No data available for the requested date range | 
+UPJq.L^A00: No data available for 1993-2002
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for UPJq.L^A00!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+UOT.L^C99 is delisted in 1999..
+2023-07-10 19:29:53,310 P[18140] [MainThread 10172] Error with UOT.L^C99: No data available for the requested date range
+2023-07-10 19:29:53,310 P[18140] [MainThread 10172] UOT.L^C99: No data available for the requested date range | 
+UOT.L^C99: No data available for 1983-1992
+UOT.L^C99 completed!
+UNWSe.L^C00 is delisted in 2000..
+UNWSe.L^C00: No data available for 1983-1992
+2023-07-10 19:29:56,871 P[18140] [MainThread 10172] Error with UNWSe.L^C00: No data available for the requested date range
+2023-07-10 19:29:56,871 P[18140] [MainThread 10172] UNWSe.L^C00: No data available for the requested date range | 
+UNWSe.L^C00: No data available for 1993-2002
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for UNWSe.L^C00!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2023-07-10 19:29:57,807 P[18140] [MainThread 10172] Error with UNWSe.L^C00: No data available for the requested date range
+2023-07-10 19:29:57,807 P[18140] [MainThread 10172] UNWSe.L^C00: No data available for the requested date range | 
+UNPCq.L^A00 is delisted in 2000..
+UNPCq.L^A00: No data available for 1983-1992
+2023-07-10 19:29:59,965 P[18140] [MainThread 10172] Error with UNPCq.L^A00: No data available for the requested date range
+2023-07-10 19:29:59,965 P[18140] [MainThread 10172] UNPCq.L^A00: No data available for the requested date range | 
+UNPCq.L^A00 completed!
+UNP.L^A96 is delisted in 1996..
+UNP.L^A96: No data available for 1983-1992
+2023-07-10 19:30:03,873 P[18140] [MainThread 10172] Error with UNP.L^A96: No data available for the requested date range
+2023-07-10 19:30:03,873 P[18140] [MainThread 10172] UNP.L^A96: No data available for the requested date range | 
+UNP.L^A96 completed!
+UNIOq.L^A99 is delisted in 1999..
+UNIOq.L^A99 completed!
+UNIDaq.L^D98 is delisted in 1998..
+2023-07-10 19:30:11,844 P[18140] [MainThread 10172] Error with UNIDaq.L^D98: No data available for the requested date range
+2023-07-10 19:30:11,844 P[18140] [MainThread 10172] UNIDaq.L^D98: No data available for the requested date range | 
+UNIDaq.L^D98: No data available for 1983-1992
+UNIDaq.L^D98 completed!
+UNHq.L^A00 is delisted in 2000..
+UNHq.L^A00: No data available for 1983-1992
+2023-07-10 19:30:15,553 P[18140] [MainThread 10172] Error with UNHq.L^A00: No data available for the requested date range
+2023-07-10 19:30:15,553 P[18140] [MainThread 10172] UNHq.L^A00: No data available for the requested date range | 
+UNHq.L^A00 completed!
+UMP.L^A10 is delisted in 2010..
+2023-07-10 19:30:20,806 P[18140] [MainThread 10172] Error with UMP.L^A10: No data available for the requested date range
+2023-07-10 19:30:20,806 P[18140] [MainThread 10172] UMP.L^A10: No data available for the requested date range | 
+UMP.L^A10: No data available for 1983-1992
+2023-07-10 19:30:21,897 P[18140] [MainThread 10172] Error with UMP.L^A10: No data available for the requested date range
+2023-07-10 19:30:21,897 P[18140] [MainThread 10172] UMP.L^A10: No data available for the requested date range | 
+UMP.L^A10: No data available for 1993-2002
+UMP.L^A10 completed!
+UML.L^C10 is delisted in 2010..
+UML.L^C10: No data available for 1983-1992
+2023-07-10 19:30:25,526 P[18140] [MainThread 10172] Error with UML.L^C10: No data available for the requested date range
+2023-07-10 19:30:25,526 P[18140] [MainThread 10172] UML.L^C10: No data available for the requested date range | 
+UML.L^C10: No data available for 1993-2002
+2023-07-10 19:30:26,271 P[18140] [MainThread 10172] Error with UML.L^C10: No data available for the requested date range
+2023-07-10 19:30:26,271 P[18140] [MainThread 10172] UML.L^C10: No data available for the requested date range | 
+UML.L^C10 completed!
+UMB.L^C08 is delisted in 2008..
+2023-07-10 19:30:30,152 P[18140] [MainThread 10172] Error with UMB.L^C08: No data available for the requested date range
+2023-07-10 19:30:30,152 P[18140] [MainThread 10172] UMB.L^C08: No data available for the requested date range | 
+UMB.L^C08: No data available for 1983-1992
+2023-07-10 19:30:31,275 P[18140] [MainThread 10172] Error with UMB.L^C08: No data available for the requested date range
+2023-07-10 19:30:31,275 P[18140] [MainThread 10172] UMB.L^C08: No data available for the requested date range | 
+UMB.L^C08: No data available for 1993-2002
+UMB.L^C08 completed!
+UMAR.L^C92 is delisted in 1992..
+2023-07-10 19:30:35,424 P[18140] [MainThread 10172] Error with UMAR.L^C92: Invalid RIC
+2023-07-10 19:30:35,424 P[18140] [MainThread 10172] UMAR.L^C92: Invalid RIC | 
+UMAR.L^C92: No data available for 1983-1992
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for UMAR.L^C92!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+UKPL.L^C90 is delisted in 1990..
+2023-07-10 19:30:37,384 P[18140] [MainThread 10172] Error with UKPL.L^C90: Invalid RIC
+2023-07-10 19:30:37,384 P[18140] [MainThread 10172] UKPL.L^C90: Invalid RIC | 
+UKPL.L^C90: No data available for 1983-1992
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for UKPL.L^C90!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+UKOZb.L^D14 is delisted in 2014..
+UKOZb.L^D14: No data available for 1983-1992
+2023-07-10 19:30:39,499 P[18140] [MainThread 10172] Error with UKOZb.L^D14: No data available for the requested date range
+2023-07-10 19:30:39,499 P[18140] [MainThread 10172] UKOZb.L^D14: No data available for the requested date range | 
+UKOZb.L^D14: No data available for 1993-2002
+2023-07-10 19:30:40,497 P[18140] [MainThread 10172] Error with UKOZb.L^D14: No data available for the requested date range
+2023-07-10 19:30:40,497 P[18140] [MainThread 10172] UKOZb.L^D14: No data available for the requested date range | 
+2023-07-10 19:30:41,579 P[18140] [MainThread 10172] Error with UKOZb.L^D14: No data available for the requested date range
+2023-07-10 19:30:41,579 P[18140] [MainThread 10172] UKOZb.L^D14: No data available for the requested date range | 
+UKOZb.L^D14: No data available for 2003-2012
+UKOZb.L^D14 completed!
+UKML.L^C22 is delisted in 2022..
+UKML.L^C22: No data available for 1983-1992
+2023-07-10 19:30:44,932 P[18140] [MainThread 10172] Error with UKML.L^C22: No data available for the requested date range
+2023-07-10 19:30:44,933 P[18140] [MainThread 10172] UKML.L^C22: No data available for the requested date range | 
+2023-07-10 19:30:46,029 P[18140] [MainThread 10172] Error with UKML.L^C22: No data available for the requested date range
+2023-07-10 19:30:46,029 P[18140] [MainThread 10172] UKML.L^C22: No data available for the requested date range | 
+UKML.L^C22: No data available for 1993-2002
+2023-07-10 19:30:46,764 P[18140] [MainThread 10172] Error with UKML.L^C22: No data available for the requested date range
+2023-07-10 19:30:46,764 P[18140] [MainThread 10172] UKML.L^C22: No data available for the requested date range | 
+UKML.L^C22: No data available for 2003-2012
+UKML.L^C22 completed!
+UILls.L^C11 is delisted in 2011..
+2023-07-10 19:30:50,801 P[18140] [MainThread 10172] Error with UILls.L^C11: No data available for the requested date range
+2023-07-10 19:30:50,801 P[18140] [MainThread 10172] UILls.L^C11: No data available for the requested date range | 
+UILls.L^C11: No data available for 1983-1992
+UILls.L^C11: No data available for 1993-2002
+2023-07-10 19:30:51,780 P[18140] [MainThread 10172] Error with UILls.L^C11: No data available for the requested date range
+2023-07-10 19:30:51,780 P[18140] [MainThread 10172] UILls.L^C11: No data available for the requested date range | 
+UILls.L^C11 completed!
+UFIB.L^A92 is delisted in 1992..
+UFIB.L^A92: No data available for 1983-1992
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for UFIB.L^A92!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2023-07-10 19:30:55,793 P[18140] [MainThread 10172] Error with UFIB.L^A92: Invalid RIC
+2023-07-10 19:30:55,793 P[18140] [MainThread 10172] UFIB.L^A92: Invalid RIC | 
+UEPq.L^A98 is delisted in 1998..
+2023-07-10 19:30:57,794 P[18140] [MainThread 10172] Error with UEPq.L^A98: No data available for the requested date range
+2023-07-10 19:30:57,794 P[18140] [MainThread 10172] UEPq.L^A98: No data available for the requested date range | 
+UEPq.L^A98: No data available for 1983-1992
+UEPq.L^A98 completed!
+UEP.L^D16 is delisted in 2016..
+2023-07-10 19:31:03,332 P[18140] [MainThread 10172] Error with UEP.L^D16: No data available for the requested date range
+2023-07-10 19:31:03,332 P[18140] [MainThread 10172] UEP.L^D16: No data available for the requested date range | 
+UEP.L^D16: No data available for 1983-1992
+UEP.L^D16: No data available for 1993-2002
+2023-07-10 19:31:04,480 P[18140] [MainThread 10172] Error with UEP.L^D16: No data available for the requested date range
+2023-07-10 19:31:04,481 P[18140] [MainThread 10172] UEP.L^D16: No data available for the requested date range | 
+UEP.L^D16 completed!
+UEN.L^C19 is delisted in 2019..
+2023-07-10 19:31:12,723 P[18140] [MainThread 10172] Error with UEN.L^C19: No data available for the requested date range
+2023-07-10 19:31:12,723 P[18140] [MainThread 10172] UEN.L^C19: No data available for the requested date range | 
+UEN.L^C19: No data available for 1983-1992
+2023-07-10 19:31:13,465 P[18140] [MainThread 10172] Error with UEN.L^C19: No data available for the requested date range
+2023-07-10 19:31:13,466 P[18140] [MainThread 10172] UEN.L^C19: No data available for the requested date range | 
+UEN.L^C19: No data available for 1993-2002
+UEN.L^C19 completed!
+UEMx.L^C08 is delisted in 2008..
+UEMx.L^C08: No data available for 1983-1992
+2023-07-10 19:31:20,038 P[18140] [MainThread 10172] Error with UEMx.L^C08: No data available for the requested date range
+2023-07-10 19:31:20,038 P[18140] [MainThread 10172] UEMx.L^C08: No data available for the requested date range | 
+UEMx.L^C08: No data available for 1993-2002
+2023-07-10 19:31:21,015 P[18140] [MainThread 10172] Error with UEMx.L^C08: No data available for the requested date range
+2023-07-10 19:31:21,016 P[18140] [MainThread 10172] UEMx.L^C08: No data available for the requested date range | 
+UEMx.L^C08 completed!
+UEMS.L^D18 is delisted in 2018..
+2023-07-10 19:31:25,372 P[18140] [MainThread 10172] Error with UEMS.L^D18: No data available for the requested date range
+2023-07-10 19:31:25,372 P[18140] [MainThread 10172] UEMS.L^D18: No data available for the requested date range | 
+UEMS.L^D18: No data available for 1983-1992
+2023-07-10 19:31:26,263 P[18140] [MainThread 10172] Error with UEMS.L^D18: No data available for the requested date range
+2023-07-10 19:31:26,263 P[18140] [MainThread 10172] UEMS.L^D18: No data available for the requested date range | 
+UEMS.L^D18: No data available for 1993-2002
+2023-07-10 19:31:27,184 P[18140] [MainThread 10172] Error with UEMS.L^D18: No data available for the requested date range
+2023-07-10 19:31:27,184 P[18140] [MainThread 10172] UEMS.L^D18: No data available for the requested date range | 
+UEMS.L^D18: No data available for 2003-2012
+UEMS.L^D18 completed!
+UEMc.L^C08 is delisted in 2008..
+UEMc.L^C08: No data available for 1983-1992
+2023-07-10 19:31:30,999 P[18140] [MainThread 10172] Error with UEMc.L^C08: No data available for the requested date range
+2023-07-10 19:31:30,999 P[18140] [MainThread 10172] UEMc.L^C08: No data available for the requested date range | 
+UEMc.L^C08: No data available for 1993-2002
+2023-07-10 19:31:31,826 P[18140] [MainThread 10172] Error with UEMc.L^C08: No data available for the requested date range
+2023-07-10 19:31:31,826 P[18140] [MainThread 10172] UEMc.L^C08: No data available for the requested date range | 
+UEMc.L^C08 completed!
+UEIL.L^C90 is delisted in 1990..
+2023-07-10 19:31:34,993 P[18140] [MainThread 10172] Error with UEIL.L^C90: Invalid RIC
+2023-07-10 19:31:34,993 P[18140] [MainThread 10172] UEIL.L^C90: Invalid RIC | 
+UEIL.L^C90: No data available for 1983-1992
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for UEIL.L^C90!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+UDIA.L^D05 is delisted in 2005..
+2023-07-10 19:31:37,037 P[18140] [MainThread 10172] Error with UDIA.L^D05: No data available for the requested date range
+2023-07-10 19:31:37,037 P[18140] [MainThread 10172] UDIA.L^D05: No data available for the requested date range | 
+UDIA.L^D05: No data available for 1983-1992
+2023-07-10 19:31:38,070 P[18140] [MainThread 10172] Error with UDIA.L^D05: No data available for the requested date range
+2023-07-10 19:31:38,070 P[18140] [MainThread 10172] UDIA.L^D05: No data available for the requested date range | 
+UDIA.L^D05: No data available for 1993-2002
+UDIA.L^D05: No data available for 2003-2012
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for UDIA.L^D05!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2023-07-10 19:31:39,052 P[18140] [MainThread 10172] Error with UDIA.L^D05: No data available for the requested date range
+2023-07-10 19:31:39,052 P[18140] [MainThread 10172] UDIA.L^D05: No data available for the requested date range | 
+UCMA.L^D07 is delisted in 2007..
+2023-07-10 19:31:41,137 P[18140] [MainThread 10172] Error with UCMA.L^D07: No data available for the requested date range
+2023-07-10 19:31:41,137 P[18140] [MainThread 10172] UCMA.L^D07: No data available for the requested date range | 
+UCMA.L^D07: No data available for 1983-1992
+2023-07-10 19:31:42,075 P[18140] [MainThread 10172] Error with UCMA.L^D07: No data available for the requested date range
+2023-07-10 19:31:42,076 P[18140] [MainThread 10172] UCMA.L^D07: No data available for the requested date range | 
+UCMA.L^D07: No data available for 1993-2002
+UCMA.L^D07: No data available for 2003-2012
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for UCMA.L^D07!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2023-07-10 19:31:43,177 P[18140] [MainThread 10172] Error with UCMA.L^D07: No data available for the requested date range
+2023-07-10 19:31:43,177 P[18140] [MainThread 10172] UCMA.L^D07: No data available for the requested date range | 
+UCM.L^D07 is delisted in 2007..
+2023-07-10 19:31:45,262 P[18140] [MainThread 10172] Error with UCM.L^D07: No data available for the requested date range
+2023-07-10 19:31:45,262 P[18140] [MainThread 10172] UCM.L^D07: No data available for the requested date range | 
+UCM.L^D07: No data available for 1983-1992
+UCM.L^D07 completed!
+UCLq.L^A09 is delisted in 2009..
+2023-07-10 19:31:53,243 P[18140] [MainThread 10172] Error with UCLq.L^A09: No data available for the requested date range
+2023-07-10 19:31:53,243 P[18140] [MainThread 10172] UCLq.L^A09: No data available for the requested date range | 
+UCLq.L^A09: No data available for 1983-1992
+2023-07-10 19:31:54,355 P[18140] [MainThread 10172] Error with UCLq.L^A09: No data available for the requested date range
+2023-07-10 19:31:54,356 P[18140] [MainThread 10172] UCLq.L^A09: No data available for the requested date range | 
+UCLq.L^A09: No data available for 1993-2002
+UCLq.L^A09 completed!
+UCLq.L^A00 is delisted in 2000..
+UCLq.L^A00: No data available for 1983-1992
+2023-07-10 19:31:57,921 P[18140] [MainThread 10172] Error with UCLq.L^A00: No data available for the requested date range
+2023-07-10 19:31:57,921 P[18140] [MainThread 10172] UCLq.L^A00: No data available for the requested date range | 
+UCLq.L^A00 completed!
+UCLL.L^C90 is delisted in 1990..
+2023-07-10 19:32:01,991 P[18140] [MainThread 10172] Error with UCLL.L^C90: Invalid RIC
+2023-07-10 19:32:01,992 P[18140] [MainThread 10172] UCLL.L^C90: Invalid RIC | 
+UCLL.L^C90: No data available for 1983-1992
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for UCLL.L^C90!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+UCG.L^A21 is delisted in 2021..
+UCG.L^A21: No data available for 1983-1992
+2023-07-10 19:32:06,601 P[18140] [MainThread 10172] Error with UCG.L^A21: No data available for the requested date range
+2023-07-10 19:32:06,601 P[18140] [MainThread 10172] UCG.L^A21: No data available for the requested date range | 
+UCG.L^A21: No data available for 1993-2002
+2023-07-10 19:32:07,455 P[18140] [MainThread 10172] Error with UCG.L^A21: No data available for the requested date range
+2023-07-10 19:32:07,455 P[18140] [MainThread 10172] UCG.L^A21: No data available for the requested date range | 
+UCG.L^A21 completed!
+UBRr.L^A05 is delisted in 2005..
+UBRr.L^A05: No data available for 1983-1992
+2023-07-10 19:32:15,362 P[18140] [MainThread 10172] Error with UBRr.L^A05: No data available for the requested date range
+2023-07-10 19:32:15,362 P[18140] [MainThread 10172] UBRr.L^A05: No data available for the requested date range | 
+UBRr.L^A05: No data available for 1993-2002
+2023-07-10 19:32:16,264 P[18140] [MainThread 10172] Error with UBRr.L^A05: No data available for the requested date range
+2023-07-10 19:32:16,264 P[18140] [MainThread 10172] UBRr.L^A05: No data available for the requested date range | 
+UBRr.L^A05: No data available for 2003-2012
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for UBRr.L^A05!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2023-07-10 19:32:17,696 P[18140] [MainThread 10172] Error with UBRr.L^A05: No data available for the requested date range
+2023-07-10 19:32:17,696 P[18140] [MainThread 10172] UBRr.L^A05: No data available for the requested date range | 
+UBQA.L^C07 is delisted in 2007..
+2023-07-10 19:32:19,744 P[18140] [MainThread 10172] Error with UBQA.L^C07: No data available for the requested date range
+2023-07-10 19:32:19,744 P[18140] [MainThread 10172] UBQA.L^C07: No data available for the requested date range | 
+UBQA.L^C07: No data available for 1983-1992
+2023-07-10 19:32:20,772 P[18140] [MainThread 10172] Error with UBQA.L^C07: No data available for the requested date range
+2023-07-10 19:32:20,773 P[18140] [MainThread 10172] UBQA.L^C07: No data available for the requested date range | 
+UBQA.L^C07: No data available for 1993-2002
+2023-07-10 19:32:23,380 P[18140] [MainThread 10172] Error with UBQA.L^C07: No data available for the requested date range
+2023-07-10 19:32:23,380 P[18140] [MainThread 10172] UBQA.L^C07: No data available for the requested date range | 
+UBQA.L^C07: No data available for 2003-2012
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for UBQA.L^C07!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+UBQ.L^C07 is delisted in 2007..
+UBQ.L^C07: No data available for 1983-1992
+2023-07-10 19:32:25,377 P[18140] [MainThread 10172] Error with UBQ.L^C07: No data available for the requested date range
+2023-07-10 19:32:25,377 P[18140] [MainThread 10172] UBQ.L^C07: No data available for the requested date range | 
+UBQ.L^C07: No data available for 1993-2002
+2023-07-10 19:32:26,382 P[18140] [MainThread 10172] Error with UBQ.L^C07: No data available for the requested date range
+2023-07-10 19:32:26,382 P[18140] [MainThread 10172] UBQ.L^C07: No data available for the requested date range | 
+UBQ.L^C07 completed!
+UBIS.L^D01 is delisted in 2001..
+2023-07-10 19:32:29,702 P[18140] [MainThread 10172] Error with UBIS.L^D01: No data available for the requested date range
+2023-07-10 19:32:29,702 P[18140] [MainThread 10172] UBIS.L^D01: No data available for the requested date range | 
+UBIS.L^D01: No data available for 1983-1992
+UBIS.L^D01: No data available for 1993-2002
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for UBIS.L^D01!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2023-07-10 19:32:30,712 P[18140] [MainThread 10172] Error with UBIS.L^D01: No data available for the requested date range
+2023-07-10 19:32:30,712 P[18140] [MainThread 10172] UBIS.L^D01: No data available for the requested date range | 
+UATr.L^D97 is delisted in 1997..
+2023-07-10 19:32:32,747 P[18140] [MainThread 10172] Error with UATr.L^D97: No data available for the requested date range
+2023-07-10 19:32:32,748 P[18140] [MainThread 10172] UATr.L^D97: No data available for the requested date range | 
+UATr.L^D97: No data available for 1983-1992
+UATr.L^D97 completed!
+UASA.L^B05 is delisted in 2005..
+UASA.L^B05: No data available for 1983-1992
+2023-07-10 19:32:36,845 P[18140] [MainThread 10172] Error with UASA.L^B05: No data available for the requested date range
+2023-07-10 19:32:36,845 P[18140] [MainThread 10172] UASA.L^B05: No data available for the requested date range | 
+2023-07-10 19:32:37,833 P[18140] [MainThread 10172] Error with UASA.L^B05: No data available for the requested date range
+2023-07-10 19:32:37,833 P[18140] [MainThread 10172] UASA.L^B05: No data available for the requested date range | 
+UASA.L^B05: No data available for 1993-2002
+2023-07-10 19:32:39,301 P[18140] [MainThread 10172] Error with UASA.L^B05: No data available for the requested date range
+2023-07-10 19:32:39,302 P[18140] [MainThread 10172] UASA.L^B05: No data available for the requested date range | 
+UASA.L^B05: No data available for 2003-2012
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for UASA.L^B05!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+UAS.L^B05 is delisted in 2005..
+2023-07-10 19:32:41,416 P[18140] [MainThread 10172] Error with UAS.L^B05: No data available for the requested date range
+2023-07-10 19:32:41,416 P[18140] [MainThread 10172] UAS.L^B05: No data available for the requested date range | 
+UAS.L^B05: No data available for 1983-1992
+UAS.L^B05 completed!
+UAPPq.L^A98 is delisted in 1998..
+UAPPq.L^A98 completed!
+TYA.L^D97 is delisted in 1997..
+TYA.L^D97 completed!
+TXUq.L^A00 is delisted in 2000..
+2023-07-10 19:32:55,480 P[18140] [MainThread 10172] Error with TXUq.L^A00: No data available for the requested date range
+2023-07-10 19:32:55,481 P[18140] [MainThread 10172] TXUq.L^A00: No data available for the requested date range | 
+TXUq.L^A00: No data available for 1983-1992
+TXUq.L^A00 completed!
+TXTq.L^A00 is delisted in 2000..
+2023-07-10 19:32:59,249 P[18140] [MainThread 10172] Error with TXTq.L^A00: No data available for the requested date range
+2023-07-10 19:32:59,249 P[18140] [MainThread 10172] TXTq.L^A00: No data available for the requested date range | 
+TXTq.L^A00: No data available for 1983-1992
+TXTq.L^A00 completed!
+TXO.L^C15 is delisted in 2015..
+2023-07-10 19:33:03,522 P[18140] [MainThread 10172] Error with TXO.L^C15: No data available for the requested date range
+2023-07-10 19:33:03,523 P[18140] [MainThread 10172] TXO.L^C15: No data available for the requested date range | 
+TXO.L^C15: No data available for 1983-1992
+TXO.L^C15 completed!
+TVZ.L^B14 is delisted in 2014..
+2023-07-10 19:33:11,544 P[18140] [MainThread 10172] Error with TVZ.L^B14: No data available for the requested date range
+2023-07-10 19:33:11,544 P[18140] [MainThread 10172] TVZ.L^B14: No data available for the requested date range | 
+TVZ.L^B14: No data available for 1983-1992
+2023-07-10 19:33:12,664 P[18140] [MainThread 10172] Error with TVZ.L^B14: No data available for the requested date range
+2023-07-10 19:33:12,664 P[18140] [MainThread 10172] TVZ.L^B14: No data available for the requested date range | 
+TVZ.L^B14: No data available for 1993-2002
+TVZ.L^B14 completed!
+TVSL.L^C93 is delisted in 1993..
+TVSL.L^C93 completed!
+TVPq.L^A00 is delisted in 2000..
+2023-07-10 19:33:21,081 P[18140] [MainThread 10172] Error with TVPq.L^A00: No data available for the requested date range
+2023-07-10 19:33:21,081 P[18140] [MainThread 10172] TVPq.L^A00: No data available for the requested date range | 
+TVPq.L^A00: No data available for 1983-1992
+TVPq.L^A00 completed!
+TVNR.L^D92 is delisted in 1992..
+TVNR.L^D92: No data available for 1983-1992
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for TVNR.L^D92!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2023-07-10 19:33:24,898 P[18140] [MainThread 10172] Error with TVNR.L^D92: Invalid RIC
+2023-07-10 19:33:24,898 P[18140] [MainThread 10172] TVNR.L^D92: Invalid RIC | 
+TUIJe.L^B15 is delisted in 2015..
+2023-07-10 19:33:27,010 P[18140] [MainThread 10172] Error with TUIJe.L^B15: No data available for the requested date range
+2023-07-10 19:33:27,010 P[18140] [MainThread 10172] TUIJe.L^B15: No data available for the requested date range | 
+TUIJe.L^B15: No data available for 1983-1992
+2023-07-10 19:33:28,147 P[18140] [MainThread 10172] Error with TUIJe.L^B15: No data available for the requested date range
+2023-07-10 19:33:28,147 P[18140] [MainThread 10172] TUIJe.L^B15: No data available for the requested date range | 
+TUIJe.L^B15: No data available for 1993-2002
+2023-07-10 19:33:28,987 P[18140] [MainThread 10172] Error with TUIJe.L^B15: No data available for the requested date range
+2023-07-10 19:33:28,987 P[18140] [MainThread 10172] TUIJe.L^B15: No data available for the requested date range | 
+TUIJe.L^B15: No data available for 2003-2012
+TUIJe.L^B15 completed!
+TTNM.L^A12 is delisted in 2012..
+TTNM.L^A12 completed!
+TTH.L^C92 is delisted in 1992..
+TTH.L^C92: No data available for 1983-1992
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for TTH.L^C92!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2023-07-10 19:33:40,402 P[18140] [MainThread 10172] Error with TTH.L^C92: Invalid RIC
+2023-07-10 19:33:40,403 P[18140] [MainThread 10172] TTH.L^C92: Invalid RIC | 
+TRW.L^A04 is delisted in 2004..
+TRW.L^A04: No data available for 1983-1992
+2023-07-10 19:33:42,574 P[18140] [MainThread 10172] Error with TRW.L^A04: No data available for the requested date range
+2023-07-10 19:33:42,574 P[18140] [MainThread 10172] TRW.L^A04: No data available for the requested date range | 
+TRW.L^A04 completed!
+TRNL.L^D92 is delisted in 1992..
+2023-07-10 19:33:49,139 P[18140] [MainThread 10172] Error with TRNL.L^D92: Invalid RIC
+2023-07-10 19:33:49,139 P[18140] [MainThread 10172] TRNL.L^D92: Invalid RIC | 
+TRNL.L^D92: No data available for 1983-1992
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for TRNL.L^D92!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+TRNA.L^D05 is delisted in 2005..
+TRNA.L^D05: No data available for 1983-1992
+2023-07-10 19:33:51,188 P[18140] [MainThread 10172] Error with TRNA.L^D05: No data available for the requested date range
+2023-07-10 19:33:51,188 P[18140] [MainThread 10172] TRNA.L^D05: No data available for the requested date range | 
+TRNA.L^D05: No data available for 1993-2002
+2023-07-10 19:33:52,212 P[18140] [MainThread 10172] Error with TRNA.L^D05: No data available for the requested date range
+2023-07-10 19:33:52,212 P[18140] [MainThread 10172] TRNA.L^D05: No data available for the requested date range | 
+TRNA.L^D05: No data available for 2003-2012
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for TRNA.L^D05!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2023-07-10 19:33:53,441 P[18140] [MainThread 10172] Error with TRNA.L^D05: No data available for the requested date range
+2023-07-10 19:33:53,441 P[18140] [MainThread 10172] TRNA.L^D05: No data available for the requested date range | 
+TRML.L^A93 is delisted in 1993..
+TRML.L^A93 completed!
+TRMcx.L^A08 is delisted in 2008..
+TRMcx.L^A08: No data available for 1983-1992
+2023-07-10 19:33:58,628 P[18140] [MainThread 10172] Error with TRMcx.L^A08: No data available for the requested date range
+2023-07-10 19:33:58,628 P[18140] [MainThread 10172] TRMcx.L^A08: No data available for the requested date range | 
+TRMcx.L^A08: No data available for 1993-2002
+2023-07-10 19:33:59,615 P[18140] [MainThread 10172] Error with TRMcx.L^A08: No data available for the requested date range
+2023-07-10 19:33:59,616 P[18140] [MainThread 10172] TRMcx.L^A08: No data available for the requested date range | 
+TRMcx.L^A08 completed!
+TRMcu.L^A08 is delisted in 2008..
+2023-07-10 19:34:02,711 P[18140] [MainThread 10172] Error with TRMcu.L^A08: No data available for the requested date range
+2023-07-10 19:34:02,712 P[18140] [MainThread 10172] TRMcu.L^A08: No data available for the requested date range | 
+TRMcu.L^A08: No data available for 1983-1992
+2023-07-10 19:34:03,456 P[18140] [MainThread 10172] Error with TRMcu.L^A08: No data available for the requested date range
+2023-07-10 19:34:03,456 P[18140] [MainThread 10172] TRMcu.L^A08: No data available for the requested date range | 
+TRMcu.L^A08: No data available for 1993-2002
+TRMcu.L^A08 completed!
+TRMc.L^A08 is delisted in 2008..
+TRMc.L^A08: No data available for 1983-1992
+2023-07-10 19:34:07,025 P[18140] [MainThread 10172] Error with TRMc.L^A08: No data available for the requested date range
+2023-07-10 19:34:07,026 P[18140] [MainThread 10172] TRMc.L^A08: No data available for the requested date range | 
+TRMc.L^A08: No data available for 1993-2002
+2023-07-10 19:34:07,880 P[18140] [MainThread 10172] Error with TRMc.L^A08: No data available for the requested date range
+2023-07-10 19:34:07,880 P[18140] [MainThread 10172] TRMc.L^A08: No data available for the requested date range | 
+TRMc.L^A08 completed!
+TRLI.L^C91 is delisted in 1991..
+2023-07-10 19:34:16,494 P[18140] [MainThread 10172] Error with TRLI.L^C91: Invalid RIC
+2023-07-10 19:34:16,494 P[18140] [MainThread 10172] TRLI.L^C91: Invalid RIC | 
+TRLI.L^C91: No data available for 1983-1992
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for TRLI.L^C91!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+TRK.L^C18 is delisted in 2018..
+2023-07-10 19:34:18,529 P[18140] [MainThread 10172] Error with TRK.L^C18: No data available for the requested date range
+2023-07-10 19:34:18,529 P[18140] [MainThread 10172] TRK.L^C18: No data available for the requested date range | 
+TRK.L^C18: No data available for 1983-1992
+TRK.L^C18 completed!
+TRH.L^C97 is delisted in 1997..
+2023-07-10 19:34:28,032 P[18140] [MainThread 10172] Error with TRH.L^C97: Invalid RIC
+2023-07-10 19:34:28,032 P[18140] [MainThread 10172] TRH.L^C97: Invalid RIC | 
+TRH.L^C97: No data available for 1983-1992
+TRH.L^C97: No data available for 1993-2002
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for TRH.L^C97!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2023-07-10 19:34:29,897 P[18140] [MainThread 10172] Error with TRH.L^C97: Invalid RIC
+2023-07-10 19:34:29,897 P[18140] [MainThread 10172] TRH.L^C97: Invalid RIC | 
+TRGc.L^B97 is delisted in 1997..
+TRGc.L^B97: No data available for 1983-1992
+2023-07-10 19:34:31,928 P[18140] [MainThread 10172] Error with TRGc.L^B97: No data available for the requested date range
+2023-07-10 19:34:31,928 P[18140] [MainThread 10172] TRGc.L^B97: No data available for the requested date range | 
+TRGc.L^B97 completed!
+TRF1.L^B03 is delisted in 2003..
+TRF1.L^B03: No data available for 1983-1992
+2023-07-10 19:34:35,630 P[18140] [MainThread 10172] Error with TRF1.L^B03: No data available for the requested date range
+2023-07-10 19:34:35,630 P[18140] [MainThread 10172] TRF1.L^B03: No data available for the requested date range | 
+TRF1.L^B03 completed!
+TREr.L^C98 is delisted in 1998..
+2023-07-10 19:34:39,748 P[18140] [MainThread 10172] Error with TREr.L^C98: No data available for the requested date range
+2023-07-10 19:34:39,749 P[18140] [MainThread 10172] TREr.L^C98: No data available for the requested date range | 
+TREr.L^C98: No data available for 1983-1992
+TREr.L^C98 completed!
+TREBq.L^B00 is delisted in 2000..
+TREBq.L^B00 completed!
+TRDS.L^C08 is delisted in 2008..
+2023-07-10 19:34:47,788 P[18140] [MainThread 10172] Error with TRDS.L^C08: No data available for the requested date range
+2023-07-10 19:34:47,788 P[18140] [MainThread 10172] TRDS.L^C08: No data available for the requested date range | 
+TRDS.L^C08: No data available for 1983-1992
+TRDS.L^C08 completed!
+TRC.L^C18 is delisted in 2018..
+2023-07-10 19:34:53,943 P[18140] [MainThread 10172] Error with TRC.L^C18: No data available for the requested date range
+2023-07-10 19:34:53,943 P[18140] [MainThread 10172] TRC.L^C18: No data available for the requested date range | 
+TRC.L^C18: No data available for 1983-1992
+2023-07-10 19:34:54,983 P[18140] [MainThread 10172] Error with TRC.L^C18: No data available for the requested date range
+2023-07-10 19:34:54,983 P[18140] [MainThread 10172] TRC.L^C18: No data available for the requested date range | 
+TRC.L^C18: No data available for 1993-2002
+TRC.L^C18 completed!
+TRBq.L^A00 is delisted in 2000..
+2023-07-10 19:35:01,008 P[18140] [MainThread 10172] Error with TRBq.L^A00: No data available for the requested date range
+2023-07-10 19:35:01,009 P[18140] [MainThread 10172] TRBq.L^A00: No data available for the requested date range | 
+TRBq.L^A00: No data available for 1983-1992
+TRBq.L^A00 completed!
+TRAq.L^A00 is delisted in 2000..
+TRAq.L^A00: No data available for 1983-1992
+2023-07-10 19:35:05,086 P[18140] [MainThread 10172] Error with TRAq.L^A00: No data available for the requested date range
+2023-07-10 19:35:05,087 P[18140] [MainThread 10172] TRAq.L^A00: No data available for the requested date range | 
+TRAq.L^A00 completed!
+TPZq.L^D07 is delisted in 2007..
+2023-07-10 19:35:09,014 P[18140] [MainThread 10172] Error with TPZq.L^D07: No data available for the requested date range
+2023-07-10 19:35:09,014 P[18140] [MainThread 10172] TPZq.L^D07: No data available for the requested date range | 
+TPZq.L^D07: No data available for 1983-1992
+TPZq.L^D07 completed!
+TPY.L^C06 is delisted in 2006..
+TPY.L^C06 completed!
+TPTe.L^B99 is delisted in 1999..
+TPTe.L^B99: No data available for 1983-1992
+2023-07-10 19:35:21,502 P[18140] [MainThread 10172] Error with TPTe.L^B99: No data available for the requested date range
+2023-07-10 19:35:21,503 P[18140] [MainThread 10172] TPTe.L^B99: No data available for the requested date range | 
+TPTe.L^B99 completed!
+TPOP.L^A19 is delisted in 2019..
+2023-07-10 19:35:29,186 P[18140] [MainThread 10172] Error with TPOP.L^A19: No data available for the requested date range
+2023-07-10 19:35:29,186 P[18140] [MainThread 10172] TPOP.L^A19: No data available for the requested date range | 
+TPOP.L^A19: No data available for 1983-1992
+2023-07-10 19:35:30,276 P[18140] [MainThread 10172] Error with TPOP.L^A19: No data available for the requested date range
+2023-07-10 19:35:30,277 P[18140] [MainThread 10172] TPOP.L^A19: No data available for the requested date range | 
+TPOP.L^A19: No data available for 1993-2002
+TPOP.L^A19: No data available for 2003-2012
+2023-07-10 19:35:31,174 P[18140] [MainThread 10172] Error with TPOP.L^A19: No data available for the requested date range
+2023-07-10 19:35:31,175 P[18140] [MainThread 10172] TPOP.L^A19: No data available for the requested date range | 
+TPOP.L^A19 completed!
+TPOB.L^D23 is delisted in 2023..
+TPOB.L^D23: No data available for 1983-1992
+2023-07-10 19:35:34,921 P[18140] [MainThread 10172] Error with TPOB.L^D23: No data available for the requested date range
+2023-07-10 19:35:34,921 P[18140] [MainThread 10172] TPOB.L^D23: No data available for the requested date range | 
+TPOB.L^D23: No data available for 1993-2002
+2023-07-10 19:35:36,047 P[18140] [MainThread 10172] Error with TPOB.L^D23: No data available for the requested date range
+2023-07-10 19:35:36,048 P[18140] [MainThread 10172] TPOB.L^D23: No data available for the requested date range | 
+2023-07-10 19:35:37,076 P[18140] [MainThread 10172] Error with TPOB.L^D23: No data available for the requested date range
+2023-07-10 19:35:37,076 P[18140] [MainThread 10172] TPOB.L^D23: No data available for the requested date range | 
+TPOB.L^D23: No data available for 2003-2012
+TPOB.L^D23 completed!
+TPOA.L^D23 is delisted in 2023..
+TPOA.L^D23: No data available for 1983-1992
+2023-07-10 19:35:42,805 P[18140] [MainThread 10172] Error with TPOA.L^D23: No data available for the requested date range
+2023-07-10 19:35:42,805 P[18140] [MainThread 10172] TPOA.L^D23: No data available for the requested date range | 
+2023-07-10 19:35:43,640 P[18140] [MainThread 10172] Error with TPOA.L^D23: No data available for the requested date range
+2023-07-10 19:35:43,640 P[18140] [MainThread 10172] TPOA.L^D23: No data available for the requested date range | 
+TPOA.L^D23: No data available for 1993-2002
+2023-07-10 19:35:44,749 P[18140] [MainThread 10172] Error with TPOA.L^D23: No data available for the requested date range
+2023-07-10 19:35:44,750 P[18140] [MainThread 10172] TPOA.L^D23: No data available for the requested date range | 
+TPOA.L^D23: No data available for 2003-2012
+TPOA.L^D23 completed!
+TPM.L^A09 is delisted in 2009..
+TPM.L^A09: No data available for 1983-1992
+2023-07-10 19:35:48,947 P[18140] [MainThread 10172] Error with TPM.L^A09: No data available for the requested date range
+2023-07-10 19:35:48,948 P[18140] [MainThread 10172] TPM.L^A09: No data available for the requested date range | 
+TPM.L^A09: No data available for 1993-2002
+2023-07-10 19:35:49,767 P[18140] [MainThread 10172] Error with TPM.L^A09: No data available for the requested date range
+2023-07-10 19:35:49,767 P[18140] [MainThread 10172] TPM.L^A09: No data available for the requested date range | 
+TPM.L^A09 completed!
+TPG.L^A23 is delisted in 2023..
+TPG.L^A23: No data available for 1983-1992
+2023-07-10 19:35:53,277 P[18140] [MainThread 10172] Error with TPG.L^A23: No data available for the requested date range
+2023-07-10 19:35:53,277 P[18140] [MainThread 10172] TPG.L^A23: No data available for the requested date range | 
+TPG.L^A23 completed!
+TPF.L^B18 is delisted in 2018..
+2023-07-10 19:36:04,274 P[18140] [MainThread 10172] Error with TPF.L^B18: No data available for the requested date range
+2023-07-10 19:36:04,274 P[18140] [MainThread 10172] TPF.L^B18: No data available for the requested date range | 
+TPF.L^B18: No data available for 1983-1992
+2023-07-10 19:36:05,290 P[18140] [MainThread 10172] Error with TPF.L^B18: No data available for the requested date range
+2023-07-10 19:36:05,290 P[18140] [MainThread 10172] TPF.L^B18: No data available for the requested date range | 
+TPF.L^B18: No data available for 1993-2002
+TPF.L^B18 completed!
+TP10.L^A16 is delisted in 2016..
+TP10.L^A16: No data available for 1983-1992
+2023-07-10 19:36:11,484 P[18140] [MainThread 10172] Error with TP10.L^A16: No data available for the requested date range
+2023-07-10 19:36:11,484 P[18140] [MainThread 10172] TP10.L^A16: No data available for the requested date range | 
+TP10.L^A16: No data available for 1993-2002
+2023-07-10 19:36:12,399 P[18140] [MainThread 10172] Error with TP10.L^A16: No data available for the requested date range
+2023-07-10 19:36:12,399 P[18140] [MainThread 10172] TP10.L^A16: No data available for the requested date range | 
+TP10.L^A16: No data available for 2003-2012
+2023-07-10 19:36:13,422 P[18140] [MainThread 10172] Error with TP10.L^A16: No data available for the requested date range
+2023-07-10 19:36:13,422 P[18140] [MainThread 10172] TP10.L^A16: No data available for the requested date range | 
+TP10.L^A16: No data available for 2013-2022
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for TP10.L^A16!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2023-07-10 19:36:14,786 P[18140] [MainThread 10172] Error with TP10.L^A16: No data available for the requested date range
+2023-07-10 19:36:14,786 P[18140] [MainThread 10172] TP10.L^A16: No data available for the requested date range | 
+TOYq.L^A00 is delisted in 2000..
+2023-07-10 19:36:16,803 P[18140] [MainThread 10172] Error with TOYq.L^A00: No data available for the requested date range
+2023-07-10 19:36:16,803 P[18140] [MainThread 10172] TOYq.L^A00: No data available for the requested date range | 
+TOYq.L^A00: No data available for 1983-1992
+TOYq.L^A00 completed!
+TOXA.L^A04 is delisted in 2004..
+2023-07-10 19:36:20,669 P[18140] [MainThread 10172] Error with TOXA.L^A04: No data available for the requested date range
+2023-07-10 19:36:20,669 P[18140] [MainThread 10172] TOXA.L^A04: No data available for the requested date range | 
+TOXA.L^A04: No data available for 1983-1992
+TOXA.L^A04: No data available for 1993-2002
+2023-07-10 19:36:21,740 P[18140] [MainThread 10172] Error with TOXA.L^A04: No data available for the requested date range
+2023-07-10 19:36:21,740 P[18140] [MainThread 10172] TOXA.L^A04: No data available for the requested date range | 
+TOXA.L^A04: No data available for 2003-2012
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for TOXA.L^A04!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2023-07-10 19:36:22,734 P[18140] [MainThread 10172] Error with TOXA.L^A04: No data available for the requested date range
+2023-07-10 19:36:22,734 P[18140] [MainThread 10172] TOXA.L^A04: No data available for the requested date range | 
+TOSq.L^A00 is delisted in 2000..
+TOSq.L^A00: No data available for 1983-1992
+2023-07-10 19:36:24,738 P[18140] [MainThread 10172] Error with TOSq.L^A00: No data available for the requested date range
+2023-07-10 19:36:24,739 P[18140] [MainThread 10172] TOSq.L^A00: No data available for the requested date range | 
+TOSq.L^A00 completed!
+TOPPq.L^A00 is delisted in 2000..
+TOPPq.L^A00: No data available for 1983-1992
+2023-07-10 19:36:28,668 P[18140] [MainThread 10172] Error with TOPPq.L^A00: No data available for the requested date range
+2023-07-10 19:36:28,668 P[18140] [MainThread 10172] TOPPq.L^A00: No data available for the requested date range | 
+TOPPq.L^A00 completed!
+TOPC.L^C97 is delisted in 1997..
+Traceback (most recent call last):
+  File "C:\Users\djwja\GitHub\eikonproj\price_scraper.py", line 27, in <module>
+    price_data = comp.fetch_price(delisted=endyear)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\db_builder.py", line 73, in fetch_price
+    df = self.fetch_decade(startyear)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\db_builder.py", line 58, in fetch_decade
+    return ek.get_timeseries(self.ric_codes, start_date=str(dec) + "-01-01", end_date=str(dec + 9) + "-12-31")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\venv\Lib\site-packages\eikon\time_series.py", line 213, in get_timeseries
+    data_frame = NiceDataFrame_Formatter(ts_result).get_data_frame()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\venv\Lib\site-packages\eikon\time_series.py", line 273, in get_data_frame
+    data_frames, rics, fields = self._get_frame_list()
+                                ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\venv\Lib\site-packages\eikon\time_series.py", line 298, in _get_frame_list
+    timestamp_index = fields.index('TIMESTAMP')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: 'TIMESTAMP' is not in list
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\djwja\GitHub\eikonproj\price_scraper.py", line 37, in <module>
+    price_data = comp.fetch_price()
+                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\db_builder.py", line 73, in fetch_price
+    df = self.fetch_decade(startyear)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\db_builder.py", line 58, in fetch_decade
+    return ek.get_timeseries(self.ric_codes, start_date=str(dec) + "-01-01", end_date=str(dec + 9) + "-12-31")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\venv\Lib\site-packages\eikon\time_series.py", line 213, in get_timeseries
+    data_frame = NiceDataFrame_Formatter(ts_result).get_data_frame()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\venv\Lib\site-packages\eikon\time_series.py", line 273, in get_data_frame
+    data_frames, rics, fields = self._get_frame_list()
+                                ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\venv\Lib\site-packages\eikon\time_series.py", line 298, in _get_frame_list
+    timestamp_index = fields.index('TIMESTAMP')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: 'TIMESTAMP' is not in list
+
+Process finished with exit code -1073741819 (0xC0000005)

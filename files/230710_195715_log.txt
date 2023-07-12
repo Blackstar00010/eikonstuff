@@ -1,0 +1,228 @@
+C:\Users\djwja\GitHub\eikonproj\venv\Scripts\python.exe C:\Users\djwja\GitHub\eikonproj\price_scraper.py 
+TOPC.L^A15 is delisted in 2015..
+2023-07-10 19:57:15,516 P[23240] [MainThread 23496] Error with TOPC.L^A15: No data available for the requested date range
+2023-07-10 19:57:15,516 P[23240] [MainThread 23496] TOPC.L^A15: No data available for the requested date range | 
+TOPC.L^A15: No data available for 1983-1992
+TOPC.L^A15: No data available for 1993-2002
+2023-07-10 19:57:16,439 P[23240] [MainThread 23496] Error with TOPC.L^A15: No data available for the requested date range
+2023-07-10 19:57:16,440 P[23240] [MainThread 23496] TOPC.L^A15: No data available for the requested date range | 
+TOPC.L^A15 completed!
+TOOL.L^C91 is delisted in 1991..
+TOOL.L^C91: No data available for 1983-1992
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for TOOL.L^C91!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2023-07-10 19:57:21,885 P[23240] [MainThread 23496] Error with TOOL.L^C91: Invalid RIC
+2023-07-10 19:57:21,887 P[23240] [MainThread 23496] TOOL.L^C91: Invalid RIC | 
+TOLU.L^D11 is delisted in 2011..
+TOLU.L^D11: No data available for 1983-1992
+2023-07-10 19:57:24,015 P[23240] [MainThread 23496] Error with TOLU.L^D11: No data available for the requested date range
+2023-07-10 19:57:24,015 P[23240] [MainThread 23496] TOLU.L^D11: No data available for the requested date range | 
+TOLU.L^D11: No data available for 1993-2002
+2023-07-10 19:57:24,937 P[23240] [MainThread 23496] Error with TOLU.L^D11: No data available for the requested date range
+2023-07-10 19:57:24,937 P[23240] [MainThread 23496] TOLU.L^D11: No data available for the requested date range | 
+TOLU.L^D11 completed!
+TOIGnq.L^C03 is delisted in 2003..
+2023-07-10 19:57:29,749 P[23240] [MainThread 23496] Error with TOIGnq.L^C03: No data available for the requested date range
+2023-07-10 19:57:29,749 P[23240] [MainThread 23496] TOIGnq.L^C03: No data available for the requested date range | 
+TOIGnq.L^C03: No data available for 1983-1992
+TOIGnq.L^C03 completed!
+TNGB.L^C16 is delisted in 2016..
+2023-07-10 19:57:33,437 P[23240] [MainThread 23496] Error with TNGB.L^C16: No data available for the requested date range
+2023-07-10 19:57:33,437 P[23240] [MainThread 23496] TNGB.L^C16: No data available for the requested date range | 
+TNGB.L^C16: No data available for 1983-1992
+TNGB.L^C16: No data available for 1993-2002
+2023-07-10 19:57:34,277 P[23240] [MainThread 23496] Error with TNGB.L^C16: No data available for the requested date range
+2023-07-10 19:57:34,277 P[23240] [MainThread 23496] TNGB.L^C16: No data available for the requested date range | 
+TNGB.L^C16: No data available for 2003-2012
+2023-07-10 19:57:35,208 P[23240] [MainThread 23496] Error with TNGB.L^C16: No data available for the requested date range
+2023-07-10 19:57:35,208 P[23240] [MainThread 23496] TNGB.L^C16: No data available for the requested date range | 
+TNGB.L^C16: No data available for 2013-2022
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for TNGB.L^C16!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2023-07-10 19:57:36,707 P[23240] [MainThread 23496] Error with TNGB.L^C16: No data available for the requested date range
+2023-07-10 19:57:36,707 P[23240] [MainThread 23496] TNGB.L^C16: No data available for the requested date range | 
+TNCIx.L^A15 is delisted in 2015..
+2023-07-10 19:57:39,014 P[23240] [MainThread 23496] Error with TNCIx.L^A15: No data available for the requested date range
+2023-07-10 19:57:39,014 P[23240] [MainThread 23496] TNCIx.L^A15: No data available for the requested date range | 
+TNCIx.L^A15: No data available for 1983-1992
+2023-07-10 19:57:40,095 P[23240] [MainThread 23496] Error with TNCIx.L^A15: No data available for the requested date range
+2023-07-10 19:57:40,095 P[23240] [MainThread 23496] TNCIx.L^A15: No data available for the requested date range | 
+TNCIx.L^A15: No data available for 1993-2002
+2023-07-10 19:57:43,018 P[23240] [MainThread 23496] Error with TNCIx.L^A15: No data available for the requested date range
+2023-07-10 19:57:43,018 P[23240] [MainThread 23496] TNCIx.L^A15: No data available for the requested date range | 
+TNCIx.L^A15: No data available for 2013-2022
+TNCIx.L^A15 completed!
+TNCI.L^A15 is delisted in 2015..
+2023-07-10 19:57:45,120 P[23240] [MainThread 23496] Error with TNCI.L^A15: No data available for the requested date range
+2023-07-10 19:57:45,120 P[23240] [MainThread 23496] TNCI.L^A15: No data available for the requested date range | 
+TNCI.L^A15: No data available for 1983-1992
+TNCI.L^A15: No data available for 1993-2002
+2023-07-10 19:57:46,236 P[23240] [MainThread 23496] Error with TNCI.L^A15: No data available for the requested date range
+2023-07-10 19:57:46,236 P[23240] [MainThread 23496] TNCI.L^A15: No data available for the requested date range | 
+TNCI.L^A15 completed!
+TMOq.L^A00 is delisted in 2000..
+TMOq.L^A00: No data available for 1983-1992
+2023-07-10 19:57:56,617 P[23240] [MainThread 23496] Error with TMOq.L^A00: No data available for the requested date range
+2023-07-10 19:57:56,618 P[23240] [MainThread 23496] TMOq.L^A00: No data available for the requested date range | 
+TMOq.L^A00: No data available for 1993-2002
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for TMOq.L^A00!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2023-07-10 19:57:57,908 P[23240] [MainThread 23496] Error with TMOq.L^A00: No data available for the requested date range
+2023-07-10 19:57:57,908 P[23240] [MainThread 23496] TMOq.L^A00: No data available for the requested date range | 
+TMCq.L^A00 is delisted in 2000..
+TMCq.L^A00: No data available for 1983-1992
+2023-07-10 19:57:59,957 P[23240] [MainThread 23496] Error with TMCq.L^A00: No data available for the requested date range
+2023-07-10 19:57:59,957 P[23240] [MainThread 23496] TMCq.L^A00: No data available for the requested date range | 
+2023-07-10 19:58:00,983 P[23240] [MainThread 23496] Error with TMCq.L^A00: No data available for the requested date range
+2023-07-10 19:58:00,983 P[23240] [MainThread 23496] TMCq.L^A00: No data available for the requested date range | 
+TMCq.L^A00: No data available for 1993-2002
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for TMCq.L^A00!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+TLUq.L^C09 is delisted in 2009..
+2023-07-10 19:58:03,066 P[23240] [MainThread 23496] Error with TLUq.L^C09: No data available for the requested date range
+2023-07-10 19:58:03,066 P[23240] [MainThread 23496] TLUq.L^C09: No data available for the requested date range | 
+TLUq.L^C09: No data available for 1983-1992
+2023-07-10 19:58:03,997 P[23240] [MainThread 23496] Error with TLUq.L^C09: No data available for the requested date range
+2023-07-10 19:58:03,997 P[23240] [MainThread 23496] TLUq.L^C09: No data available for the requested date range | 
+TLUq.L^C09: No data available for 1993-2002
+TLUq.L^C09 completed!
+TLT.L^B10 is delisted in 2010..
+TLT.L^B10: No data available for 1983-1992
+2023-07-10 19:58:09,325 P[23240] [MainThread 23496] Error with TLT.L^B10: No data available for the requested date range
+2023-07-10 19:58:09,325 P[23240] [MainThread 23496] TLT.L^B10: No data available for the requested date range | 
+TLT.L^B10 completed!
+TLS.L^B07 is delisted in 2007..
+TLS.L^B07: No data available for 1983-1992
+2023-07-10 19:58:16,535 P[23240] [MainThread 23496] Error with TLS.L^B07: No data available for the requested date range
+2023-07-10 19:58:16,536 P[23240] [MainThread 23496] TLS.L^B07: No data available for the requested date range | 
+2023-07-10 19:58:17,467 P[23240] [MainThread 23496] Error with TLS.L^B07: No data available for the requested date range
+2023-07-10 19:58:17,468 P[23240] [MainThread 23496] TLS.L^B07: No data available for the requested date range | 
+TLS.L^B07: No data available for 1993-2002
+TLS.L^B07 completed!
+TLNT.L^A08 is delisted in 2008..
+TLNT.L^A08: No data available for 1983-1992
+2023-07-10 19:58:20,961 P[23240] [MainThread 23496] Error with TLNT.L^A08: No data available for the requested date range
+2023-07-10 19:58:20,961 P[23240] [MainThread 23496] TLNT.L^A08: No data available for the requested date range | 
+2023-07-10 19:58:22,180 P[23240] [MainThread 23496] Error with TLNT.L^A08: No data available for the requested date range
+2023-07-10 19:58:22,180 P[23240] [MainThread 23496] TLNT.L^A08: No data available for the requested date range | 
+TLNT.L^A08: No data available for 1993-2002
+TLNT.L^A08 completed!
+TLEL.L^C90 is delisted in 1990..
+2023-07-10 19:58:26,881 P[23240] [MainThread 23496] Error with TLEL.L^C90: Invalid RIC
+2023-07-10 19:58:26,881 P[23240] [MainThread 23496] TLEL.L^C90: Invalid RIC | 
+TLEL.L^C90: No data available for 1983-1992
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for TLEL.L^C90!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+TLD.L^A08 is delisted in 2008..
+2023-07-10 19:58:28,814 P[23240] [MainThread 23496] Error with TLD.L^A08: No data available for the requested date range
+2023-07-10 19:58:28,814 P[23240] [MainThread 23496] TLD.L^A08: No data available for the requested date range | 
+TLD.L^A08: No data available for 1983-1992
+TLD.L^A08 completed!
+TKRq.L^A00 is delisted in 2000..
+TKRq.L^A00: No data available for 1983-1992
+2023-07-10 19:58:34,602 P[23240] [MainThread 23496] Error with TKRq.L^A00: No data available for the requested date range
+2023-07-10 19:58:34,602 P[23240] [MainThread 23496] TKRq.L^A00: No data available for the requested date range | 
+TKRq.L^A00 completed!
+TJXq.L^A00 is delisted in 2000..
+TJXq.L^A00: No data available for 1983-1992
+2023-07-10 19:58:38,387 P[23240] [MainThread 23496] Error with TJXq.L^A00: No data available for the requested date range
+2023-07-10 19:58:38,387 P[23240] [MainThread 23496] TJXq.L^A00: No data available for the requested date range | 
+TJXq.L^A00 completed!
+TIK.L^A13 is delisted in 2013..
+TIK.L^A13: No data available for 1983-1992
+2023-07-10 19:58:42,556 P[23240] [MainThread 23496] Error with TIK.L^A13: No data available for the requested date range
+2023-07-10 19:58:42,557 P[23240] [MainThread 23496] TIK.L^A13: No data available for the requested date range | 
+TIK.L^A13 completed!
+TIGq.L^A00 is delisted in 2000..
+2023-07-10 19:58:49,827 P[23240] [MainThread 23496] Error with TIGq.L^A00: No data available for the requested date range
+2023-07-10 19:58:49,827 P[23240] [MainThread 23496] TIGq.L^A00: No data available for the requested date range | 
+TIGq.L^A00: No data available for 1983-1992
+TIGq.L^A00 completed!
+TI1.L^D23 is delisted in 2023..
+2023-07-10 19:58:54,126 P[23240] [MainThread 23496] Error with TI1.L^D23: No data available for the requested date range
+2023-07-10 19:58:54,127 P[23240] [MainThread 23496] TI1.L^D23: No data available for the requested date range | 
+TI1.L^D23: No data available for 1983-1992
+2023-07-10 19:58:55,238 P[23240] [MainThread 23496] Error with TI1.L^D23: No data available for the requested date range
+2023-07-10 19:58:55,239 P[23240] [MainThread 23496] TI1.L^D23: No data available for the requested date range | 
+TI1.L^D23: No data available for 1993-2002
+TI1.L^D23: No data available for 2003-2012
+2023-07-10 19:58:56,278 P[23240] [MainThread 23496] Error with TI1.L^D23: No data available for the requested date range
+2023-07-10 19:58:56,278 P[23240] [MainThread 23496] TI1.L^D23: No data available for the requested date range | 
+TI1.L^D23 completed!
+THTq.L^C08 is delisted in 2008..
+THTq.L^C08: No data available for 1983-1992
+2023-07-10 19:59:01,055 P[23240] [MainThread 23496] Error with THTq.L^C08: No data available for the requested date range
+2023-07-10 19:59:01,055 P[23240] [MainThread 23496] THTq.L^C08: No data available for the requested date range | 
+THTq.L^C08 completed!
+THP.L^D03 is delisted in 2003..
+2023-07-10 19:59:06,289 P[23240] [MainThread 23496] Error with THP.L^D03: No data available for the requested date range
+2023-07-10 19:59:06,290 P[23240] [MainThread 23496] THP.L^D03: No data available for the requested date range | 
+THP.L^D03: No data available for 1983-1992
+THP.L^D03 completed!
+THOL.L^D92 is delisted in 1992..
+THOL.L^D92: No data available for 1983-1992
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for THOL.L^D92!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2023-07-10 19:59:10,572 P[23240] [MainThread 23496] Error with THOL.L^D92: Invalid RIC
+2023-07-10 19:59:10,572 P[23240] [MainThread 23496] THOL.L^D92: Invalid RIC | 
+THNb.L^C98 is delisted in 1998..
+2023-07-10 19:59:12,585 P[23240] [MainThread 23496] Error with THNb.L^C98: No data available for the requested date range
+2023-07-10 19:59:12,585 P[23240] [MainThread 23496] THNb.L^C98: No data available for the requested date range | 
+THNb.L^C98: No data available for 1983-1992
+THNb.L^C98 completed!
+THIq.L^A06 is delisted in 2006..
+2023-07-10 19:59:20,478 P[23240] [MainThread 23496] Error with THIq.L^A06: No data available for the requested date range
+2023-07-10 19:59:20,479 P[23240] [MainThread 23496] THIq.L^A06: No data available for the requested date range | 
+THIq.L^A06: No data available for 1983-1992
+2023-07-10 19:59:21,981 P[23240] [MainThread 23496] Error with THIq.L^A06: No data available for the requested date range
+2023-07-10 19:59:21,981 P[23240] [MainThread 23496] THIq.L^A06: No data available for the requested date range | 
+THIq.L^A06: No data available for 1993-2002
+2023-07-10 19:59:23,107 P[23240] [MainThread 23496] Error with THIq.L^A06: No data available for the requested date range
+2023-07-10 19:59:23,107 P[23240] [MainThread 23496] THIq.L^A06: No data available for the requested date range | 
+THIq.L^A06: No data available for 2003-2012
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for THIq.L^A06!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+THB.L^A12 is delisted in 2012..
+THB.L^A12: No data available for 1983-1992
+2023-07-10 19:59:25,256 P[23240] [MainThread 23496] Error with THB.L^A12: No data available for the requested date range
+2023-07-10 19:59:25,256 P[23240] [MainThread 23496] THB.L^A12: No data available for the requested date range | 
+THB.L^A12 completed!
+TGO.L^C97 is delisted in 1997..
+Traceback (most recent call last):
+  File "C:\Users\djwja\GitHub\eikonproj\price_scraper.py", line 27, in <module>
+    price_data = comp.fetch_price(delisted=endyear)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\db_builder.py", line 73, in fetch_price
+    df = self.fetch_decade(startyear)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\db_builder.py", line 58, in fetch_decade
+    return ek.get_timeseries(self.ric_codes, start_date=str(dec) + "-01-01", end_date=str(dec + 9) + "-12-31")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\venv\Lib\site-packages\eikon\time_series.py", line 213, in get_timeseries
+    data_frame = NiceDataFrame_Formatter(ts_result).get_data_frame()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\venv\Lib\site-packages\eikon\time_series.py", line 273, in get_data_frame
+    data_frames, rics, fields = self._get_frame_list()
+                                ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\venv\Lib\site-packages\eikon\time_series.py", line 298, in _get_frame_list
+    timestamp_index = fields.index('TIMESTAMP')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: 'TIMESTAMP' is not in list
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\djwja\GitHub\eikonproj\price_scraper.py", line 37, in <module>
+    price_data = comp.fetch_price()
+                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\db_builder.py", line 73, in fetch_price
+    df = self.fetch_decade(startyear)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\db_builder.py", line 58, in fetch_decade
+    return ek.get_timeseries(self.ric_codes, start_date=str(dec) + "-01-01", end_date=str(dec + 9) + "-12-31")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\venv\Lib\site-packages\eikon\time_series.py", line 213, in get_timeseries
+    data_frame = NiceDataFrame_Formatter(ts_result).get_data_frame()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\venv\Lib\site-packages\eikon\time_series.py", line 273, in get_data_frame
+    data_frames, rics, fields = self._get_frame_list()
+                                ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\venv\Lib\site-packages\eikon\time_series.py", line 298, in _get_frame_list
+    timestamp_index = fields.index('TIMESTAMP')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: 'TIMESTAMP' is not in list
+
+Process finished with exit code -1073741819 (0xC0000005)

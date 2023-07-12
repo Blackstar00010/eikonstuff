@@ -48,33 +48,36 @@ class Companies:
 
         self.price_data = pd.DataFrame()
 
-    def fetch_decade(self, dec):
+    def fetch_decade(self, dec, adj=False):
         """
         fetches price/volume data of a decade and returns as a dataframe.
+        :param adj: adjusted price data if True, unadjusted price if False.
         :param dec: start year an integer. (e.g. 2020)
         :return: dataframe of columns HIGH, LOW, CLOSE, OPEN, COUNT, VOLUME, SharesOutstanding.
         """
+        corax = 'adjusted' if adj else 'unadjusted'
         try:
-            return ek.get_timeseries(self.ric_codes, start_date=str(dec) + "-01-01", end_date=str(dec + 9) + "-12-31")
+            return ek.get_timeseries(self.ric_codes, start_date=str(dec) + "-01-01", end_date=str(dec + 9) + "-12-31",
+                                     corax=corax)
         except eke.EikonError:
-            print(f"{self.ric_codes}: No data available for {dec}-{dec+9}")
+            print(f"{self.ric_codes}: No data available for {dec}-{dec + 9}")
             return pd.DataFrame()
 
-    def fetch_price(self, overwrite=False, delisted=2024):
+    def fetch_price(self, overwrite=False, delisted=2024, adj=False):
         """
         fetches price/volume data and returns as a dataframe.
+        :param adj: adjusted price data if True, unadjusted price if False.
         :param delisted: the year the firm got delisted
         :param overwrite: overwrites price data dataframe if it is not empty
         :return: dataframe of columns HIGH, LOW, CLOSE, OPEN, COUNT, VOLUME.
         """
-        endyear = pd.read_csv('./files/comp_list.csv')
 
         if overwrite or self.price_data.empty:
             startyear = 1983
-            df = self.fetch_decade(startyear)
+            df = self.fetch_decade(startyear, adj=adj)
             startyear += 10
             while startyear < delisted:
-                new_df = self.fetch_decade(startyear)
+                new_df = self.fetch_decade(startyear, adj=adj)
                 df = pd.concat([df, new_df], axis=0)
                 startyear += 10
             self.price_data = df
