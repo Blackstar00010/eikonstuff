@@ -1,11 +1,8 @@
 import pandas as pd
 import math
 import time
-import db_builder as dbb
+import myEikon as dbb
 import eikon as ek
-import ssl
-
-ssl._create_default_https_context = ssl._create_unverified_context
 
 """
 print(ek.get_data("AZN.L", [{"TR.SharesOutstanding": {"SDate": "2010-01-01", "EDate": "2020-12-31", "Currency": "USD"}},
@@ -44,25 +41,10 @@ for txtfile in txtlist:
     [shits.append(item) for item in loglines]
 print(shits)
 
-with open('./files/empty_list.txt', 'w') as f:
+with open('./files/no_data.txt', 'w') as f:
     for line in shits:
         f.write(f"{line}\n")
 '''
 
-rics = ["AZN.L", "HSBA.L"]
-datedict = {"SDate": "2010-01-01", "EDate": "2020-12-31"}
-fields = [ek.TR_Field('TR.Revenue', datedict),
-          ek.TR_Field('TR.BankTotalRevenue', datedict),
-          ek.TR_Field('TR.SgaExpenseTotal', datedict),
-          ek.TR_Field('TR.DepreDepletionAndAmort'),
-          ek.TR_Field(),
-          ek.TR_Field(),
-          ek.TR_Field(),
-          ek.TR_Field(),
-          ek.TR_Field(),
-          ek.TR_Field(),
-          ek.TR_Field('TR.SharesOutstanding', datedict),
-          ek.TR_Field('TR.COGSActValue', datedict),
-          ek.TR_Field('Currency')]
-df, err = ek.get_data(rics, fields)
-print(df)
+hsba = pd.read_csv('./files/fund_data/HSBA.L.csv')
+print(hsba[hsba['Instrument'] == 'HSBA.L'])

@@ -1,4 +1,4 @@
-import db_builder as dbb
+import myEikon as dbb
 import pandas as pd
 import numpy as np
 from eikon import eikonError
@@ -12,20 +12,25 @@ merge_dir = './files/price_data_merged/'
 # fetching data using eikon data api
 fetchQ = True
 if fetchQ:
-    comp_list = pd.read_csv('./files/comp_list.csv')
+    comp_list = pd.read_csv('files/comp_list/comp_list.csv')
     rics = comp_list["RIC"].to_list()
 
     already_done = [i.split('.')[0] for i in os.listdir(price_dir)]
     ogrics = rics
-    with open('./files/empty_list.txt', 'r') as f:
+    with open('files/comp_list/no_data.txt', 'r') as f:
         emptylist = [line.rstrip() for line in f]
-    mask = [(ric.split('.')[0] not in already_done and ric not in emptylist) for ric in rics]
+    with open('files/comp_list/no_timestamp.txt', 'r') as f:
+        notimestamplist = [line.rstrip() for line in f]
+    mask = [(ric.split('.')[0] not in already_done and
+             ric not in emptylist and
+             ric not in notimestamplist)
+            for ric in rics]
     rics = np.array(rics)[mask]
 
     for ric in rics:
         endyear = comp_list['delisted YY'].tolist()[ogrics.index(ric)]
         try:
-            comp = dbb.Companies(ric, fetch_isin=False)
+            comp = dbb.Company(ric)
             if endyear == 0:
                 price_data = comp.fetch_price()
             else:
@@ -37,19 +42,22 @@ if fetchQ:
             else:
                 print(f"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for {ric}!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                 emptylist.append(ric)
-                with open('./files/empty_list.txt', 'w') as f:
+                with open('files/comp_list/no_data.txt', 'w') as f:
                     for line in emptylist:
                         f.write(f"{line}\n")
             time.sleep(1)
         except ValueError:
             print(f'ValueError: \'TIMESTAMP\' is not in list for {ric}')
+            notimestamplist.append(ric)
+            with open('files/comp_list/no_timestamp.txt', 'w') as f:
+                for line in notimestamplist:
+                    f.write(f"{line}\n")
 
-    with open('./files/empty_list.txt', 'w') as f:
+    with open('files/comp_list/no_data.txt', 'w') as f:
         for line in emptylist:
             f.write(f"{line}\n")
 
 # arranging data
-
 fixQ = False
 retryQ = False
 if fixQ:
@@ -121,7 +129,6 @@ if fixQ:
         print(f'{afile} done!')
 
 # merging data
-
 mergeQ = False
 if mergeQ:
     files = os.listdir(fixed_price_dir)
