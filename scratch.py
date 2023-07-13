@@ -1,7 +1,7 @@
 import pandas as pd
 import math
 import time
-import myEikon as dbb
+# import myEikon as dbb
 import eikon as ek
 
 """
@@ -46,5 +46,11 @@ with open('./files/no_data.txt', 'w') as f:
         f.write(f"{line}\n")
 '''
 
-hsba = pd.read_csv('./files/fund_data/HSBA.L.csv')
-print(hsba[hsba['Instrument'] == 'HSBA.L'])
+import os
+
+shits = os.listdir('./files/price_stuff/price_data_fixed/')
+shits = [i[:-4] for i in shits]
+df = pd.read_csv('./files/comp_list/comp_list.csv')
+df = df[df['RIC1(ticker)'].isin(shits)]
+df.to_csv('./files/comp_list/done.csv', index=False)
+print(df['ISIN'].isna().sum(), '/', len(df), ',', len(shits))
