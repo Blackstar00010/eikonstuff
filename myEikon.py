@@ -1,5 +1,5 @@
 import pandas as pd
-import numpy as np
+# import numpy as np
 import eikon as ek
 
 apikey = "7fb0e788b2ff42c2823e80933fde4d28158c74f4"
@@ -48,13 +48,6 @@ class Company:
                 startyear += 10
             self.price_data = df
         return self.price_data
-
-    def save_price(self):
-        """
-        saves the firm's price/volume data as a csv file under ./files/history/ folder
-        :return: None
-        """
-        self.price_data.to_csv(f"./files/history/{self.ric_code[:-2]}.csv")
 
 
 class Companies:

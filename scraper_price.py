@@ -5,9 +5,9 @@ from eikon import eikonError
 import time
 import os
 
-price_dir = './files/price_data/'
-fixed_price_dir = 'files/price_data_fixed/'
-merge_dir = './files/price_data_merged/'
+price_dir = 'files/price_stuff/price_data/'
+fixed_price_dir = 'files/price_stuff/price_data_fixed/'
+merge_dir = 'files/price_stuff/price_data_merged/'
 
 # fetching data using eikon data api
 fetchQ = True
@@ -52,10 +52,6 @@ if fetchQ:
             with open('files/comp_list/no_timestamp.txt', 'w') as f:
                 for line in notimestamplist:
                     f.write(f"{line}\n")
-
-    with open('files/comp_list/no_data.txt', 'w') as f:
-        for line in emptylist:
-            f.write(f"{line}\n")
 
 # arranging data
 fixQ = False

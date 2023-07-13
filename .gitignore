@@ -1,7 +1,5 @@
 .DS_Store
-/files/price_data/
-/files/price_data_fixed/
-/files/price_data_merged/
+/files/price_stuff/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
