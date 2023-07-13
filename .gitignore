@@ -1,5 +1,6 @@
 .DS_Store
 /files/price_stuff/
+/files/wrds/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
