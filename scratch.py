@@ -3,6 +3,8 @@ import math
 import time
 # import myEikon as dbb
 import eikon as ek
+import os
+import numpy as np
 
 """
 print(ek.get_data("AZN.L", [{"TR.SharesOutstanding": {"SDate": "2010-01-01", "EDate": "2020-12-31", "Currency": "USD"}},
@@ -46,7 +48,7 @@ with open('./files/no_data.txt', 'w') as f:
         f.write(f"{line}\n")
 '''
 
-import os
+'''
 
 shits = os.listdir('./files/price_stuff/price_data_fixed/')
 shits = [i[:-4] for i in shits]
@@ -54,3 +56,15 @@ df = pd.read_csv('./files/comp_list/comp_list.csv')
 df = df[df['RIC1(ticker)'].isin(shits)]
 df.to_csv('./files/comp_list/done.csv', index=False)
 print(df['ISIN'].isna().sum(), '/', len(df), ',', len(shits))
+'''
+
+close_df = pd.read_csv('./files/price_stuff/price_data_merged/close.csv')
+close_df = close_df.set_index('Date')
+notna_df = close_df.notna()
+df_rand = pd.DataFrame(np.random.randn(*close_df.shape), columns=close_df.columns)
+df_rand = df_rand.set_index(close_df.index)
+df_rand = df_rand.abs()*100
+shrout_df = np.round(df_rand, 2) * notna_df
+shrout_df.to_csv('./files/by_data/shrout.csv')
+mve_df = shrout_df * close_df
+mve_df.to_csv('./files/by_data/mve.csv')
