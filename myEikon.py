@@ -7,11 +7,11 @@ ek.set_app_key(apikey)
 
 
 class Company:
-    def __init__(self, comp_codes):
+    def __init__(self, comp_code):
         """
-        :param comp_codes: an RIC code as a str
+        :param comp_code: an RIC code as a str
         """
-        self.ric_code = comp_codes
+        self.ric_code = comp_code
         self.price_data = pd.DataFrame()
 
     def fetch_decade(self, dec, adj=False):
@@ -68,6 +68,7 @@ class Companies:
         """
         self.isins = ek.get_symbology(self.ric_codes, from_symbol_type="RIC", to_symbol_type="ISIN")[
             "ISIN"].to_list()
+        return self.isins
 
     def fetch_cusip(self):
         """
@@ -76,6 +77,7 @@ class Companies:
         """
         self.cusips = ek.get_symbology(self.ric_codes, from_symbol_type="RIC", to_symbol_type="CUSIP")[
             "CUSIP"].to_list()
+        return self.cusips
 
     def fetch_sedol(self):
         """
@@ -84,6 +86,7 @@ class Companies:
         """
         self.sedols = ek.get_symbology(self.ric_codes, from_symbol_type="RIC", to_symbol_type="SEDOL")[
             "SEDOL"].to_list()
+        return self.sedols
 
     def fetch_data(self, tr_list, start='1983-01-01', end='2020-12-31'):
         """

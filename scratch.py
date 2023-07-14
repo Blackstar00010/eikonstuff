@@ -49,7 +49,6 @@ with open('./files/no_data.txt', 'w') as f:
 '''
 
 '''
-
 shits = os.listdir('./files/price_stuff/price_data_fixed/')
 shits = [i[:-4] for i in shits]
 df = pd.read_csv('./files/comp_list/comp_list.csv')
@@ -58,6 +57,7 @@ df.to_csv('./files/comp_list/done.csv', index=False)
 print(df['ISIN'].isna().sum(), '/', len(df), ',', len(shits))
 '''
 
+'''
 close_df = pd.read_csv('./files/price_stuff/price_data_merged/close.csv')
 close_df = close_df.set_index('Date')
 notna_df = close_df.notna()
@@ -68,3 +68,6 @@ shrout_df = np.round(df_rand, 2) * notna_df
 shrout_df.to_csv('./files/by_data/shrout.csv')
 mve_df = shrout_df * close_df
 mve_df.to_csv('./files/by_data/mve.csv')
+'''
+
+

@@ -5,18 +5,23 @@ from eikon import eikonError
 import time
 import os
 
+'''
+1. fetch ohlcv data from eikon and save as {ric1(ticker)}.csv at /price_data/
+2. merge to {one_of_ohlcv}.csv at /price_data_merged/
+3. convert back to {ric1(ticker)}.csv at /price_data_fixed/
+'''
+
 price_dir = 'files/price_stuff/price_data/'
 fixed_price_dir = 'files/price_stuff/price_data_fixed/'
 merge_dir = 'files/price_stuff/price_data_merged/'
 
-# fetching data using eikon data api
+# fetching data using eikon data api and save as {ric1(ticker)}.csv at /price_data/
 fetchQ = True
 if fetchQ:
     comp_list = pd.read_csv('files/comp_list/comp_list.csv')
     rics = comp_list["RIC"].to_list()
 
     already_done = [i.split('.')[0] for i in os.listdir(price_dir)]
-    ogrics = rics
     with open('files/comp_list/no_data.txt', 'r') as f:
         emptylist = [line.rstrip() for line in f]
     with open('files/comp_list/no_timestamp.txt', 'r') as f:
@@ -25,6 +30,7 @@ if fetchQ:
              ric not in emptylist and
              ric not in notimestamplist)
             for ric in rics]
+    ogrics = rics
     rics = np.array(rics)[mask]
 
     for ric in rics:
@@ -37,7 +43,7 @@ if fetchQ:
                 print(f'{ric} is delisted in {endyear}..')
                 price_data = comp.fetch_price(delisted=endyear, adj=False)
             if len(price_data) > 0:
-                price_data.to_csv(price_dir + ric.split(".")[0] + '.csv')
+                price_data.to_csv(price_dir + ric.replace('.', '-') + '.csv')
                 print(f"{ric} completed!")
             else:
                 print(f"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for {ric}!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
@@ -53,7 +59,7 @@ if fetchQ:
                 for line in notimestamplist:
                     f.write(f"{line}\n")
 
-# arranging data
+# wisely fill NaNs and save at /price_data/
 fixQ = False
 retryQ = False
 if fixQ:
@@ -124,7 +130,7 @@ if fixQ:
             df.to_csv(fixed_price_dir + afile, index=False)
         print(f'{afile} done!')
 
-# merging data
+# merging data to make {one_of_ohlcv}.csv at /price_data_merged/
 mergeQ = False
 if mergeQ:
     files = os.listdir(fixed_price_dir)
@@ -160,7 +166,7 @@ if mergeQ:
     popen.to_csv(merge_dir + 'open.csv', index=True)
     pclose.to_csv(merge_dir + 'close.csv', index=True)
 
-# fill in the blanks of the merged data with prev values
+# fill in the blanks of the merged data with prev values and save at /price_data_merged/
 fillQ = False
 if fillQ:
     merged_files = os.listdir(merge_dir)
@@ -176,7 +182,7 @@ if fillQ:
                 prev_price = df.at[i, acol]
         df.to_csv(merge_dir + afile, index=False)
 
-# convert fixed date vs comp matrix into date vs ohlc matrix
+# convert fixed date vs comp matrix into date vs ohlc matrix and save as {ric1(ticker)}.csv at /price_data_fixed/
 convertQ = False
 if convertQ:
     df_c = pd.read_csv(merge_dir + 'close.csv')
