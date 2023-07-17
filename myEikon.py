@@ -1,5 +1,5 @@
 import pandas as pd
-# import numpy as np
+import numpy as np
 import eikon as ek
 
 apikey = "7fb0e788b2ff42c2823e80933fde4d28158c74f4"
@@ -88,26 +88,68 @@ class Companies:
             "SEDOL"].to_list()
         return self.sedols
 
-    def fetch_data(self, tr_list, start='1983-01-01', end='2020-12-31'):
+    def fetch_data(self, tr_list, start='1983-01-01', end='2023-06-30', period='FY'):
         """
-        Fetches and returns data in pandas DataFrame without error. This DataFrame is stored in this instance, so to
-        view previous fetches, use show_history() function.
+        Fetches and returns data in pandas DataFrame without error.
+        This DataFrame is stored in this instance, so to view previous fetches, use show_history() function.
         :param tr_list: list of TR fields (e.g. ['TR.SharesOutstanding', 'TR.Revenue']
         :param start: the first date to fetch data, in the format 'YYYY-MM-DD' (e.g. '1983-01-01')
         :param end: the last date to fetch data, in the format 'YYYY-MM-DD' (e.g. '2020-12-31')
-        :return: DataFrame that contains RIC codes in 'Instrument' column and other data in columns named after
-        TR field names
+        :param period: period of which the data is fetched. 'FY' by default (e.g. 'FY', 'FS', 'FQ')
+        :return: DataFrame that contains RIC codes in 'Instrument' column and other data in columns named after TR field names
         """
+        if len(start.split('-')) != 3 or len(end.split('-')) != 3:
+            raise ValueError('start and end values should be given in the format of "YYYY-MM-DD". ')
+        if period not in ['FY', 'FS', 'FQ']:
+            raise ValueError('period value should be given as either "FY", "FS", or "FQ". ')
+
+        tr_and_date_list = tr_list + [item + '.CALCDATE' for item in tr_list]
+        tr_and_date_list.sort()
         fields = []
-        [fields.append(ek.TR_Field(tr_item)) for tr_item in tr_list]
+        [fields.append(ek.TR_Field(tr_item)) for tr_item in tr_and_date_list]
 
-        datedict = {"SDate": start, "EDate": end}
+        datedict = {"SDate": start, "EDate": end, 'Curn': 'GBP', 'Frq': period}
 
-        df = ek.get_data(self.ric_codes, fields, parameters=datedict, field_name=True)
+        df, err = ek.get_data(self.ric_codes, fields, parameters=datedict, field_name=True)
+        for col in df.columns:
+            if col[-9:] != '.CALCDATE':
+                continue
+            df[col] = df[col].astype(str)
+            df.loc[:, col] = df.loc[:, col].str[:10]
+            df[col].replace("<NA>", np.NaN, inplace=True)
         self._data_list.append(df)
         return df
 
-    def show_history(self, index=None):
+    def fetch_price_data(self, start='2010-01-01', end='2023-06-30'):
+        """
+        Fetches and returns ohlc+v data in pandas DataFrame without error.
+        This DataFrame is stored in this instance, so to view previous fetches, use show_history() function.
+        :param start: the first date to fetch data, in the format 'YYYY-MM-DD' (e.g. '1983-01-01')
+        :param end: the last date to fetch data, in the format 'YYYY-MM-DD' (e.g. '2020-12-31')
+        :return: DataFrame that contains RIC codes in 'Instrument' column and other data in columns named after TR field names
+        """
+        if len(start.split('-')) != 3 or len(end.split('-')) != 3:
+            raise ValueError('start and end values should be given in the format of "YYYY-MM-DD". ')
+
+        tr_list = ['TR.OPENPRICE', 'TR.HIGHPRICE', 'TR.LOWPRICE', 'TR.CLOSEPRICE', 'TR.Volume']
+        tr_and_date_list = tr_list + [item + '.CALCDATE' for item in tr_list]
+        tr_and_date_list.sort()
+        fields = []
+        [fields.append(ek.TR_Field(tr_item)) for tr_item in tr_and_date_list]
+
+        datedict = {"SDate": start, "EDate": end, 'Curn': 'GBP'}
+
+        df, err = ek.get_data(self.ric_codes, fields, parameters=datedict, field_name=True)
+        for col in df.columns:
+            if col[-9:] != '.CALCDATE':
+                continue
+            df[col] = df[col].astype(str)
+            df.loc[:, col] = df.loc[:, col].str[:10]
+            df[col].replace("<NA>", np.NaN, inplace=True)
+        self._data_list.append(df)
+        return df
+
+    def get_history(self, index=None):
         """
         Returns previous fetch(es) of data.
         :param index: The index of history
@@ -116,7 +158,10 @@ class Companies:
         """
         if index is None:
             return self._data_list
-        return [self._data_list[i] for i in index]
+        elif type(index) is list:
+            return [self._data_list[i] for i in index]
+        elif type(index) is int:
+            return [self._data_list[index]]
 
     def comp_specific_data(self, ric_code):
         """
@@ -124,7 +169,27 @@ class Companies:
         :param ric_code: the code of the firm to get
         :return: DataFrame whose Instrument column is ric_code from the last fetch
         """
-        if len(self.show_history()) < 1:
-            raise IndexError('No data fetched yet.')
-        last_df = self.show_history(-1)[0]
+        if len(self.get_history()) < 1:
+            raise IndexError('No data has been fetched yet.')
+        last_df = self.get_history(-1)[0]
         return last_df[last_df['Instrument'] == ric_code]
+
+    def set_history(self, dataframes):
+        """
+        Sets the list of fetch history to the given dataframes.
+        :param dataframes: the list to set history as.
+        :return: None
+        """
+        if type(dataframes) is list:
+            self._data_list = dataframes
+        elif type(dataframes) is pd.DataFrame:
+            self._data_list = [dataframes]
+        else:
+            raise TypeError("The parameter given to set_history() should be a list or a pd.DataFrame.")
+
+    def clear_history(self):
+        """
+        Clears all data history
+        :return: None
+        """
+        self.set_history([])

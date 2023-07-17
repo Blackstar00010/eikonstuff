@@ -1,0 +1,15 @@
+shitty_name,TR_name
+prccd,TR.
+xad,TR.AdvertisingExpense
+ni,TR.NetIncome
+ob,TR.BacklogValueActual
+dm,TR.CapitalLeaseObligations
+dcvt,TR.WarrantsConverted
+drc,TR.DeferredRevenueCurrent
+drlt,TR.DeferredRevenueLT
+scstkc,TR.IssuanceRetirementOfStockNet
+pstk,TR.TtlPreferredSharesOut
+pstkq,TR.RedeemablePreferredTtl
+txfed,TR.TaxCurDom
+txt,TR.TaxOthIncTot
+gdwlia,TR.GoodwillNet

@@ -4,13 +4,11 @@ ni,TR.NetIncome
 ob,TR.BacklogValueActual
 dm,TR.CapitalLeaseObligations
 dcvt,TR.WarrantsConverted
-dcpstk1,TR.TtlPreferredSharesOut
-dcpstk2,TR.WarrantsConverted
 drc,TR.DeferredRevenueCurrent
 drlt,TR.DeferredRevenueLT
 scstkc,TR.IssuanceRetirementOfStockNet
-pstkq,TR.TtlPreferredSharesOut
-pstkrq,TR.RedeemablePreferredTtl
+pstk,TR.TtlPreferredSharesOut
+pstkq,TR.RedeemablePreferredTtl
 txfed,TR.TaxCurDom
 txt,TR.TaxOthIncTot
 gdwlia,TR.GoodwillNet
