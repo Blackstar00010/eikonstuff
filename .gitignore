@@ -1,7 +1,8 @@
 .DS_Store
 /files/price_stuff/
 /files/wrds/
-/files/by_data/
+/files/by_data/secd/mve.csv
+/files/by_data/from_ref/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
