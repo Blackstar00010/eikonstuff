@@ -78,8 +78,6 @@ if fetchQ:
             comp_df_new.loc[:, 'lt'] = comp_df_new.loc[:, 'lt'] - comp_df_new.loc[:, 'lt1']
             comp_df_new = comp_df_new.drop('lt1', axis=1)
 
-
-
             if data_type == 'FQ':
                 comp_df_new = comp_df_new.rename(columns={col: col + 'q' for col in comp_df_new.columns
                                                           if col not in ['datadate', 'Instrument']})
