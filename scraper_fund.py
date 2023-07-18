@@ -56,10 +56,30 @@ if fetchQ:
             # manage duplicate 'datadate'
             comp_df_new = comp_df_new.groupby('datadate').sum().reset_index()
 
-            # rename columns & add dcpstk column
+            # rename columns & adding columns
             comp_df_new = comp_df_new.rename(columns=tl_dict)
             comp_df_new.loc[:, 'dcpstk'] = comp_df_new.loc[:, 'pstk'] + comp_df_new.loc[:, 'dcvt']
             comp_df_new.loc[:, 'txfo'] = comp_df_new.loc[:, 'txt'] - comp_df_new.loc[:, 'txfed']
+            comp_df_new.loc[:, 'nopi'] = comp_df_new.loc[:, 'nopi'] + comp_df_new.loc[:, 'nopi1']
+            comp_df_new = comp_df_new.drop('nopi1', axis=1)
+            comp_df_new.loc[:, 'xint'] = - comp_df_new.loc[:, 'xint']
+            comp_df_new.loc[:, 'capx'] = - comp_df_new.loc[:, 'capx']
+            comp_df_new.loc[:, 'rect'] = comp_df_new.loc[:, 'rect'] + comp_df_new.loc[:, 'rect1']
+            comp_df_new = comp_df_new.drop('rect1', axis=1)
+            comp_df_new.loc[:, 'invt'] = comp_df_new.loc[:, 'invt'].fillna(comp_df_new.loc[:, 'invt2'])
+            comp_df_new = comp_df_new.drop('invt2', axis=1)
+            comp_df_new.loc[:, 'intan'] = comp_df_new.loc[:, 'intan'] + comp_df_new.loc[:, 'gdwlia']
+            comp_df_new.loc[:, 'ao'] = comp_df_new.loc[:, 'ao'] + comp_df_new.loc[:, 'aco']
+            comp_df_new.loc[:, 'fatl'] = comp_df_new.loc[:, 'fatl'] + comp_df_new.loc[:, 'fatl1']
+            comp_df_new = comp_df_new.drop('fatl1', axis=1)
+            comp_df_new.loc[:, 'dltt'] = comp_df_new.loc[:, 'dlc1'] + comp_df_new.loc[:, 'dlc11']
+            comp_df_new.loc[:, 'dlc'] = comp_df_new.loc[:, 'dlc'] + comp_df_new.loc[:, 'dltt']
+            comp_df_new = comp_df_new.drop(['dlc1', 'dlc11'], axis=1)
+            comp_df_new.loc[:, 'lt'] = comp_df_new.loc[:, 'lt'] - comp_df_new.loc[:, 'lt1']
+            comp_df_new = comp_df_new.drop('lt1', axis=1)
+
+
+
             if data_type == 'FQ':
                 comp_df_new = comp_df_new.rename(columns={col: col + 'q' for col in comp_df_new.columns
                                                           if col not in ['datadate', 'Instrument']})
