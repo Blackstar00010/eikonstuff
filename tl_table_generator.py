@@ -1,7 +1,7 @@
 import pandas as pd
 
 '''
-files/comp_list/comp_list.csv (from Refinitiv) + ~/comp_names_all.csv (from Compustat) -> files/tl_table/ref-comp.csv
+files/comp_list/comp_list.csv (from Refinitiv) + ~/comp_names_all.csv (from Compustat) -> files/metadata/ref-comp.csv
 '''
 
 dt_wrds_dir = '/Users/jamesd/Desktop/data/all/'
@@ -33,5 +33,5 @@ for isin in dup_isins:
 merged_df = merged_df[~merged_df['isin'].duplicated()]
 
 # columns: ['company name', 'ric', 'ric1(ticker)', 'isin', 'cusip', 'gvkey']
-merged_df.to_csv('files/tl_table/ref-comp.csv', index=False)
+merged_df.to_csv('files/metadata/ref-comp.csv', index=False)
 print('# of unique translatable companies:', len(merged_df))
