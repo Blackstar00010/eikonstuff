@@ -17,7 +17,7 @@ date_col = pd.read_csv('files/metadata/business_days.csv').rename(columns={'YYYY
 slice_by = 100
 start_firm = 0
 # split into smaller list just in case it might give some blank rows
-fetchQ = True
+fetchQ = False
 if fetchQ:
     for i in range(start_firm, len(all_rics), slice_by):
         rics = all_rics[i:i + slice_by]
@@ -84,6 +84,10 @@ if fetchQ:
             comp_df_new.loc[:, 'lt'] = comp_df_new.loc[:, 'lt'] - comp_df_new.loc[:, 'lt1']
             comp_df_new = comp_df_new.drop('lt1', axis=1)
 
+            # lines 86-92
+            comp_df_new.loc[:, 'dr'] = comp_df_new.loc[:, 'drlt'] + comp_df_new.loc[:, 'drc']
+            comp_df_new.loc[:, 'dc'] = comp_df_new.loc[:, 'dcvt']
+
             if data_type == 'FQ':
                 comp_df_new = comp_df_new.rename(columns={col: col + 'q' for col in comp_df_new.columns
                                                           if col not in ['datadate', 'Instrument']})
@@ -104,7 +108,7 @@ if fetchQ:
         break
 
 # organise & move to /by_data/from_ref
-organize_FY = False
+organize_FY = True
 if organize_FY:
     fy_dir = 'files/fund_data/FY/'
     files = os.listdir(fy_dir)

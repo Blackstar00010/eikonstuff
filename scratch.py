@@ -70,7 +70,7 @@ mve_df = shrout_df * close_df
 mve_df.to_csv('./files/by_data/mve.csv')
 '''
 
-# ''' calculating business_days.csv
+''' calculating business_days.csv
 close_df = pd.read_csv('files/by_data/secd/close.csv')[
     ['datadate', 'AZN.L']]  # AZN is just a placeholder to keep df not series
 close_df['YYYY'] = close_df['datadate'].apply(lambda x: str(x)[:4])
@@ -81,3 +81,10 @@ close_df['YYYY-MM-DD'] = close_df['YYYY'] + '-' + close_df['MM'] + '-' + close_d
 close_df = close_df.drop(['AZN.L', 'datadate'], axis=1)
 close_df.to_csv('files/metadata/business_days.csv', index=False)
 # '''
+
+files = os.listdir('files/fund_data/FY/')
+for afile in files:
+    thedf = pd.read_csv('files/fund_data/FY/'+afile)
+    thedf = thedf.fillna(0)
+    thedf.to_csv('files/fund_data/FY/'+afile, index=False)
+    print(f'{afile} done!')

@@ -81,12 +81,13 @@ if __name__ == "__main__":
     gvkey_ric_dict = {}
     for i in range(len(ref_comp_table)):
         gvkey_ric_dict[ref_comp_table.loc[i, 'gvkey']] = ref_comp_table.loc[i, 'ric']  # TODO: check if it is int->str
+    date_col = pd.read_csv('files/metadata/business_days.csv').rename(columns={'YYYY-MM-DD': 'datadate'}).loc[:, 'datadate']
 
     # GBPXXX
     exch_rates = pd.read_csv(all_dir + 'comp_exrt_all.csv', low_memory=False).loc[:, ['tocurd', 'exratd', 'datadate']]
     exch_rates = exch_rates.rename(columns={'tocurd': 'curr', 'exratd': 'GBPXXX'})
 
-    organize_secd = False
+    organize_secd = True
     if organize_secd:
         # gvkey,datadate,conm,isin,exchg,monthend,curcdd,ajexdi,cshoc,cshtrd,prccd,prchd,prcld,prcod,curcddv,divd,paydate,split
         comp_secd = pd.read_csv(useful_dir + 'comp_secd.csv', low_memory=False)
@@ -112,6 +113,21 @@ if __name__ == "__main__":
             ohlc.append(comp_secd.loc[:, ['ric', 'datadate', f'{p_type}(GBP)']])
             comp_secd = comp_secd.drop(p_type, axis=1)
 
+        # ohlc saving
+        for i, p_type in enumerate(['open', 'high', 'low', 'close']):
+            p_df = ohlc[i]
+            p_df = pivot(p_df)
+            p_df = p_df.fillna(method='ffill')
+            p_df.to_csv(by_data_dir + f'secd/{p_type}.csv')
+            print(f'{p_type} saved!')
+
+        # shrout
+        shrout_df = comp_secd.loc[:, ['ric', 'datadate', 'shrout']]
+        shrout_df = pivot(shrout_df)
+        shrout_df = shrout_df.fillna(method='ffill')
+        shrout_df.to_csv(by_data_dir + 'secd/shrout.csv')
+        print('shrout saved!')
+
         # market value = market cap
         mve_df = ohlc[-1]  # columns: ric, datadate, close(GBP)
         mve_df = mve_df.merge(comp_secd.loc[:, ['ric', 'datadate', 'shrout']], left_on=['ric', 'datadate'],
@@ -119,15 +135,9 @@ if __name__ == "__main__":
         mve_df.loc[:, 'mve'] = mve_df.loc[:, 'close(GBP)'] * mve_df.loc[:, 'shrout']
         mve_df = mve_df.drop(['close(GBP)', 'shrout'], axis=1)
         mve_df = pivot(mve_df)
+        mve_df = mve_df.fillna(method='ffill')
         mve_df.to_csv(by_data_dir + 'secd/mve.csv')
         print('mve saved!')
-
-        # ohlc saving
-        for i, p_type in enumerate(['open', 'high', 'low', 'close']):
-            p_df = ohlc[i]
-            p_df = pivot(p_df)
-            p_df.to_csv(by_data_dir + f'secd/{p_type}.csv')
-            print(f'{p_type} saved!')
 
         # dividend saving
         comp_secd = comp_secd.drop('GBPXXX', axis=1)
@@ -148,7 +158,7 @@ if __name__ == "__main__":
     else:
         rics = pd.read_csv(by_data_dir + 'secd/close.csv').columns[1:]
 
-    organize_funda = True
+    organize_funda = False
     if organize_funda:
         # gvkey,conm,datadate,fyear,curcd,
         # sale,revt,cogs,xsga,dp,xrd,ib,ebitda,ebit,nopi,spi,pi,txp,txt,xint,
@@ -168,14 +178,15 @@ if __name__ == "__main__":
         comp_funda = comp_funda[comp_funda['ric'].isin(rics)]
         comp_funda = comp_funda.rename(columns={'curcd': 'curr'})
         comp_funda = comp_funda.merge(exch_rates, left_on=['datadate', 'curr'], right_on=['datadate', 'curr']).drop(
-            'curr',
-            axis=1)
+            'curr', axis=1)
         comp_funda['count'] = comp_funda.groupby('ric').cumcount() + 1  # line 76
 
-        comp_funda['dr'] = np.NAN  # TODO: line 86-92
+        # comp_funda['dr'] = np.NAN  # TODO: line 86-92
         comp_funda[:, 'xint0'] = comp_funda[:, 'xint'].fillna(0)  # line 94
         comp_funda = comp_funda.drop('xint', axis=1)
         comp_funda[:, 'xsga0'] = comp_funda[:, 'xsga'].fillna(0)  # line 96
+
+        comp_funda = comp_funda.merge(date_col, on='datadate', how='outer').sort_values('datadate')
 
         # not ric, datadate; not GBPXXX
         to_export = comp_funda.columns[2:-2]
@@ -193,7 +204,7 @@ if __name__ == "__main__":
         comp_funda.to_csv(raw_output_dir + 'comp_funda.csv', index=False)
         print('comp_funda saved!')
 
-    organize_fundq = True
+    organize_fundq = False
     if organize_fundq:
         # gvkey,fyearq,fqtr,datadate,curcdq,
         # ibq,saleq,txtq,revtq,cogsq,xsgaq,atq,actq,cheq,lctq,dlcq,ppentq,ceqq,seqq,ltq
@@ -209,8 +220,9 @@ if __name__ == "__main__":
         comp_fundq = comp_fundq[comp_fundq['ric'].isin(rics)]
         comp_fundq = comp_fundq.rename(columns={'curcdq': 'curr'})
         comp_fundq = comp_fundq.merge(exch_rates, left_on=['datadate', 'curr'], right_on=['datadate', 'curr']).drop(
-            'curr',
-            axis=1)
+            'curr', axis=1)
+
+        comp_fundq = comp_fundq.merge(date_col, on='datadate', how='outer').sort_values('datadate')
 
         # not gvkey, datadate; not GBPXXX
         to_export = comp_fundq.columns[2:-2]
