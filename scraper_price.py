@@ -26,7 +26,8 @@ if fetchQ:
         emptylist = [line.rstrip() for line in f]
     with open('files/comp_list/no_timestamp.txt', 'r') as f:
         notimestamplist = [line.rstrip() for line in f]
-    mask = [(ric.split('.')[0] not in already_done and
+    mask = [(ric.replace('.', '-') not in already_done and
+             ric.split('.')[0] not in already_done and  # TODO
              ric not in emptylist and
              ric not in notimestamplist)
             for ric in rics]
