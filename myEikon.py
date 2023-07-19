@@ -104,7 +104,7 @@ class Companies:
         if period not in ['FY', 'FS', 'FQ']:
             raise ValueError('period value should be given as either "FY", "FS", or "FQ". ')
 
-        tr_and_date_list = tr_list + [item + '.CALCDATE' for item in tr_list] + [item + '.FPERIOD' for item in tr_list]
+        tr_and_date_list = tr_list + [item + '.CALCDATE' for item in tr_list]
         tr_and_date_list.sort()
         fields = []
         [fields.append(ek.TR_Field(tr_item)) for tr_item in tr_and_date_list]
@@ -114,11 +114,12 @@ class Companies:
         df, err = ek.get_data(self.ric_codes, fields, parameters=datedict, field_name=True)
         self._raw_data_list.append(df)
         for col in df.columns:
-            if col.count('.') < 2:  # if not calcdate nor fperiod
+            if col.count('.') < 2:  # if not calcdate
                 continue
             df[col] = df[col].astype(str)
             df.loc[:, col] = df.loc[:, col].str[:10]
-            df[col].replace("<NA>", np.NaN, inplace=True)
+            df[col].replace("<NA>", float('NaN'), inplace=True)
+            df[col].replace("", float('NaN'), inplace=True)
         self._data_list.append(df)
         return df
 
@@ -148,7 +149,8 @@ class Companies:
                 continue
             df[col] = df[col].astype(str)
             df.loc[:, col] = df.loc[:, col].str[:10]
-            df[col].replace("<NA>", np.NaN, inplace=True)
+            df[col].replace("<NA>", float('NaN'), inplace=True)
+            df[col].replace("", float('NaN'), inplace=True)
         self._data_list.append(df)
         return df
 
@@ -187,11 +189,11 @@ class Companies:
         :return: None
         """
         if type(dataframes) is list:
-            self._data_list = dataframes if raw else self._data_list
-            self._raw_data_list = dataframes if not raw else self._raw_data_list
+            self._data_list = dataframes if not raw else self._data_list
+            self._raw_data_list = dataframes if raw else self._raw_data_list
         elif type(dataframes) is pd.DataFrame:
-            self._data_list = [dataframes] if raw else self._data_list
-            self._raw_data_list = [dataframes] if not raw else self._raw_data_list
+            self._data_list = [dataframes] if not raw else self._data_list
+            self._raw_data_list = [dataframes] if raw else self._raw_data_list
         else:
             raise TypeError("The parameter given to set_history() should be a list or a pd.DataFrame.")
 

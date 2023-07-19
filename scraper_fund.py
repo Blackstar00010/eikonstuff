@@ -56,9 +56,11 @@ if fetchQ:
                     to_concat = comp_df.loc[:, [acol + ".CALCDATE", acol]]
                     to_concat = to_concat.rename(columns={acol + ".CALCDATE": 'datadate'})
                     comp_df_new = pd.concat([comp_df_new, to_concat])
+
             # manage duplicate 'datadate'
+            comp_df_new = comp_df_new.dropna(how='all')
             comp_df_new = comp_df_new.groupby('datadate').sum().reset_index()
-            comp_df_new = comp_df_new.sort_values(by='datadate', axis=1)
+            comp_df_new = comp_df_new.sort_values(by=['datadate'])
 
             # rename columns & adding columns
             comp_df_new = comp_df_new.rename(columns=tl_dict)
@@ -99,6 +101,7 @@ if fetchQ:
                 comp_df_new.to_csv(f'./files/fund_data/{data_type}/{ric.replace(".", "-")}.csv', index=False)
 
             print(ric, 'done!')
+        break
 
 # organise & move to /by_data/from_ref
 organize_FY = False
