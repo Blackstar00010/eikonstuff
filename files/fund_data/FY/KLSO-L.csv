@@ -1,4 +1,4 @@
-datadate,xad,ob,dm,drc,drlt,gdwlia,scstkc,ni,pstkq,txfed,txt,pstk,dcvt,dcpstk
-2020-12-31,,,,,,,,,,,,,,
-2022-04-28,,,,,,,780500.0,-131680.0,,,,,,
-2023-04-27,,,,,,,780500.0,-289320.0,,,,,,
+datadate,ap,rect,xad,ob,capx,dm,che,oancf,cogs,drc,drlt,dp,ebit,ebitda,emp,gdwlia,dvt,txp,xint,intan,nopi,scstkc,ni,ib,pi,aco,lco,ao,lo,ppegt,ppent,pstkq,xrd,revt,fatl,xsga,spi,txfed,txdi,txt,at,lct,act,dlc,ceq,invt,lt,pstk,dcvt,dcpstk,txfo,dltt
+2020-12-31,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+2022-04-28,,47590.0,,,,,576020.0,-144460.0,,,,,,,,,,,,,,780500.0,-131680.0,-131680.0,-131680.0,,,,,,,,,,,131680.0,,,,,623610.0,36510.0,623610.0,,587100.0,,36510.0,,,,,
+2023-04-27,,9010.0,,,,,332970.0,-241580.0,,,,,,,,,,,,,,780500.0,-289320.0,-289320.0,-289320.0,,,,,,,,,,,287860.0,,,,,341980.0,44200.0,341980.0,,297780.0,,44200.0,,,,,

@@ -60,6 +60,7 @@ class Companies:
         self.cusips = []
         self.sedols = []
         self._data_list = []
+        self._raw_data_list = []
 
     def fetch_isin(self):
         """
@@ -111,6 +112,7 @@ class Companies:
         datedict = {"SDate": start, "EDate": end, 'Curn': 'GBP', 'Frq': period}
 
         df, err = ek.get_data(self.ric_codes, fields, parameters=datedict, field_name=True)
+        self._raw_data_list.append(df)
         for col in df.columns:
             if col[-9:] != '.CALCDATE':
                 continue
@@ -140,6 +142,7 @@ class Companies:
         datedict = {"SDate": start, "EDate": end, 'Curn': 'GBP'}
 
         df, err = ek.get_data(self.ric_codes, fields, parameters=datedict, field_name=True)
+        self._raw_data_list.append(df)
         for col in df.columns:
             if col[-9:] != '.CALCDATE':
                 continue
@@ -149,47 +152,53 @@ class Companies:
         self._data_list.append(df)
         return df
 
-    def get_history(self, index=None):
+    def get_history(self, index=None, raw=False):
         """
         Returns previous fetch(es) of data.
-        :param index: The index of history
-        (e.g. -1 -> last fetch, 0 -> first fetch, [0, -1] -> first and last fetch, None -> all)
+        :param index: The index of history (e.g. -1 -> last fetch, 0 -> first fetch, [0, -1] -> first and last fetch, None -> all)
+        :param raw: True if you want to fetch the history of raw data
         :return: list of dataframe(s)
         """
+        ret_list = self._raw_data_list if raw else self._data_list
         if index is None:
-            return self._data_list
+            return ret_list
         elif type(index) is list:
-            return [self._data_list[i] for i in index]
+            return [ret_list[i] for i in index]
         elif type(index) is int:
-            return [self._data_list[index]]
+            return [ret_list[index]]
 
-    def comp_specific_data(self, ric_code):
+    def comp_specific_data(self, ric_code, raw=False):
         """
         Returns a DataFrame whose Instrument column is ric_code from the last fetch
         :param ric_code: the code of the firm to get
+        :param raw: True if you want to fetch from the last raw data
         :return: DataFrame whose Instrument column is ric_code from the last fetch
         """
-        if len(self.get_history()) < 1:
+        if len(self.get_history(raw=raw)) < 1:
             raise IndexError('No data has been fetched yet.')
-        last_df = self.get_history(-1)[0]
+        last_df = self.get_history(-1, raw=raw)[0]
         return last_df[last_df['Instrument'] == ric_code]
 
-    def set_history(self, dataframes):
+    def set_history(self, dataframes, raw=False):
         """
         Sets the list of fetch history to the given dataframes.
         :param dataframes: the list to set history as.
+        :param raw: True if you want to set the history of raw data
         :return: None
         """
         if type(dataframes) is list:
-            self._data_list = dataframes
+            self._data_list = dataframes if raw else self._data_list
+            self._raw_data_list = dataframes if not raw else self._raw_data_list
         elif type(dataframes) is pd.DataFrame:
-            self._data_list = [dataframes]
+            self._data_list = [dataframes] if raw else self._data_list
+            self._raw_data_list = [dataframes] if not raw else self._raw_data_list
         else:
             raise TypeError("The parameter given to set_history() should be a list or a pd.DataFrame.")
 
-    def clear_history(self):
+    def clear_history(self, raw=False):
         """
         Clears all data history
+        :param raw: True if you want to clear the history of raw data
         :return: None
         """
-        self.set_history([])
+        self.set_history([], raw=raw)
