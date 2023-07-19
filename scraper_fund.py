@@ -12,8 +12,7 @@ fields = shits['TR_name'].to_list()
 for i in range(len(shits)):
     tl_dict[shits['TR_name'][i].upper()] = shits['shitty_name'][i]
 data_type = 'FY'
-date_col = pd.read_csv('files/by_data/secd/close.csv').loc[:, 'datadate']
-date_col = pd.to_datetime(date_col, format='%Y%m%d').dt.strftime('%Y-%m-%d')
+date_col = pd.read_csv('files/metadata/business_days.csv').rename(columns={'YYYY-MM-DD': 'datadate'}).loc[:, 'datadate']
 
 slice_by = 100
 start_firm = 0
@@ -41,7 +40,8 @@ if fetchQ:
                 df_20c = comps.get_history(-1)[0]
                 df_20c_raw = comps.get_history(-1, raw=True)[0]
                 comps.set_history(pd.concat([df_21c, df_20c], axis=0))
-                pd.concat([df_20c_raw, df_21c_raw], axis=0).to_csv(f'files/fund_data/_raw/{data_type}/raw_data_{i}.csv')
+                pd.concat([df_20c_raw, df_21c_raw], axis=0).to_csv(f'files/fund_data/_raw/{data_type}/raw_data_{i}.csv',
+                                                                   index=False)
 
         # separate, arrange, and save
         for ric in rics:
@@ -53,16 +53,12 @@ if fetchQ:
             comp_df_new = comp_df_new.rename(columns={comp_df_new.columns[-1]: 'datadate'})
             for acol in comp_df.columns[3:]:
                 if acol.count('.') == 1:
-                    to_concat = comp_df.loc[:, [acol + ".CALCDATE", acol + '.FPERIOD', acol]]
-                    to_concat = to_concat.rename(columns={acol + ".CALCDATE": 'datadate', acol + '.FPERIOD': 'fperiod'})
+                    to_concat = comp_df.loc[:, [acol + ".CALCDATE", acol]]
+                    to_concat = to_concat.rename(columns={acol + ".CALCDATE": 'datadate'})
                     comp_df_new = pd.concat([comp_df_new, to_concat])
-            # manage duplicate 'datadate' and 'fperiod's
-            index_df: pd.DataFrame = comp_df_new[['fperiod', 'datadate']]
-            index_df = index_df.drop_duplicates(subset=['fperiod'], keep='last')
-            comp_df_new = comp_df_new.drop('datadate', axis=1)
-            comp_df_new = comp_df_new.groupby('fperiod').sum().reset_index()
-            comp_df_new = index_df.merge(comp_df_new, how='outer', on='fperiod')
-            comp_df_new = comp_df_new.sort_values(by='fperiod', axis=1)
+            # manage duplicate 'datadate'
+            comp_df_new = comp_df_new.groupby('datadate').sum().reset_index()
+            comp_df_new = comp_df_new.sort_values(by='datadate', axis=1)
 
             # rename columns & adding columns
             comp_df_new = comp_df_new.rename(columns=tl_dict)
@@ -88,6 +84,9 @@ if fetchQ:
 
             if data_type == 'FQ':
                 comp_df_new = comp_df_new.rename(columns={col: col + 'q' for col in comp_df_new.columns
+                                                          if col not in ['datadate', 'Instrument']})
+            if data_type == 'FS':
+                comp_df_new = comp_df_new.rename(columns={col: col + 's' for col in comp_df_new.columns
                                                           if col not in ['datadate', 'Instrument']})
 
             # final cleanup
