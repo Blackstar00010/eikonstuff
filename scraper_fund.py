@@ -11,7 +11,7 @@ tl_dict = {}
 fields = shits['TR_name'].to_list()
 for i in range(len(shits)):
     tl_dict[shits['TR_name'][i].upper()] = shits['shitty_name'][i]
-data_type = 'FS'
+data_type = 'FY'
 date_col = pd.read_csv('files/by_data/secd/close.csv').loc[:, 'datadate']
 date_col = pd.to_datetime(date_col, format='%Y%m%d').dt.strftime('%Y-%m-%d')
 
@@ -53,11 +53,11 @@ if fetchQ:
             comp_df_new = comp_df_new.rename(columns={comp_df_new.columns[-1]: 'datadate'})
             for acol in comp_df.columns[3:]:
                 if acol.count('.') == 1:
-                    to_concat = comp_df.loc[:, [acol + ".CALCDATE", acol+'.FPERIOD', acol]]
-                    to_concat = to_concat.rename(columns={acol + ".CALCDATE": 'datadate', acol+'.FPERIOD': 'fperiod'})
+                    to_concat = comp_df.loc[:, [acol + ".CALCDATE", acol + '.FPERIOD', acol]]
+                    to_concat = to_concat.rename(columns={acol + ".CALCDATE": 'datadate', acol + '.FPERIOD': 'fperiod'})
                     comp_df_new = pd.concat([comp_df_new, to_concat])
             # manage duplicate 'datadate' and 'fperiod's
-            index_df:pd.DataFrame = comp_df_new[['fperiod', 'datadate']]
+            index_df: pd.DataFrame = comp_df_new[['fperiod', 'datadate']]
             index_df = index_df.drop_duplicates(subset=['fperiod'], keep='last')
             comp_df_new = comp_df_new.drop('datadate', axis=1)
             comp_df_new = comp_df_new.groupby('fperiod').sum().reset_index()
