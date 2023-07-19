@@ -74,6 +74,7 @@ def pivot(some_df: pd.DataFrame):
     ret.columns = ret.columns.droplevel(level=0)  # b/c of two-level column names
     return ret
 
+
 if __name__ == "__main__":
     # gvkeys -> RIC dictionary
     ref_comp_table = pd.read_csv('files/metadata/ref-comp.csv')[['ric', 'gvkey']]
@@ -100,8 +101,9 @@ if __name__ == "__main__":
         comp_secd = comp_secd.rename(columns={'curcdd': 'curr', 'curcddv': 'curr_div',
                                               'ajexdi': 'adj', 'cshoc': 'shrout', 'cshtrd': 'vol',
                                               'prccd': 'close', 'prchd': 'high', 'prcld': 'low', 'prcod': 'open'})
-        comp_secd = comp_secd.merge(exch_rates, left_on=['datadate', 'curr'], right_on=['datadate', 'curr']).drop('curr',
-                                                                                                                  axis=1)
+        comp_secd = comp_secd.merge(exch_rates, left_on=['datadate', 'curr'], right_on=['datadate', 'curr']).drop(
+            'curr',
+            axis=1)
 
         ohlc = []
         for p_type in ['open', 'high', 'low', 'close']:
@@ -165,9 +167,10 @@ if __name__ == "__main__":
 
         comp_funda = comp_funda[comp_funda['ric'].isin(rics)]
         comp_funda = comp_funda.rename(columns={'curcd': 'curr'})
-        comp_funda = comp_funda.merge(exch_rates, left_on=['datadate', 'curr'], right_on=['datadate', 'curr']).drop('curr',
-                                                                                                                    axis=1)
-        comp_funda['count'] = comp_funda.groupby('ric').cumcount() + 1    # line 76
+        comp_funda = comp_funda.merge(exch_rates, left_on=['datadate', 'curr'], right_on=['datadate', 'curr']).drop(
+            'curr',
+            axis=1)
+        comp_funda['count'] = comp_funda.groupby('ric').cumcount() + 1  # line 76
 
         comp_funda['dr'] = np.NAN  # TODO: line 86-92
         comp_funda[:, 'xint0'] = comp_funda[:, 'xint'].fillna(0)  # line 94
@@ -185,7 +188,7 @@ if __name__ == "__main__":
             new_df = comp_funda.loc[:, ['ric', 'datadate', new_acol]]
             new_df = pivot(new_df)
             new_df.to_csv(by_data_dir + 'funda/' + acol + '.csv')
-            print(acol+' saved!')
+            print(acol + ' saved!')
 
         comp_funda.to_csv(raw_output_dir + 'comp_funda.csv', index=False)
         print('comp_funda saved!')
@@ -205,8 +208,9 @@ if __name__ == "__main__":
 
         comp_fundq = comp_fundq[comp_fundq['ric'].isin(rics)]
         comp_fundq = comp_fundq.rename(columns={'curcdq': 'curr'})
-        comp_fundq = comp_fundq.merge(exch_rates, left_on=['datadate', 'curr'], right_on=['datadate', 'curr']).drop('curr',
-                                                                                                                    axis=1)
+        comp_fundq = comp_fundq.merge(exch_rates, left_on=['datadate', 'curr'], right_on=['datadate', 'curr']).drop(
+            'curr',
+            axis=1)
 
         # not gvkey, datadate; not GBPXXX
         to_export = comp_fundq.columns[2:-2]
@@ -219,7 +223,7 @@ if __name__ == "__main__":
             new_df = comp_fundq.loc[:, ['ric', 'datadate', new_acol]]
             new_df = pivot(new_df)
             new_df.to_csv(by_data_dir + 'fundq/' + acol + '.csv')
-            print(acol+' saved!')
+            print(acol + ' saved!')
 
         comp_fundq.to_csv(raw_output_dir + 'comp_fundq.csv', index=False)
         print('comp_fundq saved!')

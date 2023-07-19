@@ -52,12 +52,17 @@ if fetchQ:
             comp_df_new = comp_df.loc[:, comp_df.columns[0:3]]  # first data
             comp_df_new = comp_df_new.rename(columns={comp_df_new.columns[-1]: 'datadate'})
             for acol in comp_df.columns[3:]:
-                if acol[-9:] != '.CALCDATE':
-                    to_concat = comp_df.loc[:, [acol + ".CALCDATE", acol]]
-                    to_concat = to_concat.rename(columns={acol + ".CALCDATE": 'datadate'})
+                if acol.count('.') == 1:
+                    to_concat = comp_df.loc[:, [acol + ".CALCDATE", acol+'.FPERIOD', acol]]
+                    to_concat = to_concat.rename(columns={acol + ".CALCDATE": 'datadate', acol+'.FPERIOD': 'fperiod'})
                     comp_df_new = pd.concat([comp_df_new, to_concat])
-            # manage duplicate 'datadate'
-            comp_df_new = comp_df_new.groupby('datadate').sum().reset_index()
+            # manage duplicate 'datadate' and 'fperiod's
+            index_df:pd.DataFrame = comp_df_new[['fperiod', 'datadate']]
+            index_df = index_df.drop_duplicates(subset=['fperiod'], keep='last')
+            comp_df_new = comp_df_new.drop('datadate', axis=1)
+            comp_df_new = comp_df_new.groupby('fperiod').sum().reset_index()
+            comp_df_new = index_df.merge(comp_df_new, how='outer', on='fperiod')
+            comp_df_new = comp_df_new.sort_values(by='fperiod', axis=1)
 
             # rename columns & adding columns
             comp_df_new = comp_df_new.rename(columns=tl_dict)

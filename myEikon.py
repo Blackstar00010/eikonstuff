@@ -104,7 +104,7 @@ class Companies:
         if period not in ['FY', 'FS', 'FQ']:
             raise ValueError('period value should be given as either "FY", "FS", or "FQ". ')
 
-        tr_and_date_list = tr_list + [item + '.CALCDATE' for item in tr_list]
+        tr_and_date_list = tr_list + [item + '.CALCDATE' for item in tr_list] + [item + '.FPERIOD' for item in tr_list]
         tr_and_date_list.sort()
         fields = []
         [fields.append(ek.TR_Field(tr_item)) for tr_item in tr_and_date_list]
@@ -114,7 +114,7 @@ class Companies:
         df, err = ek.get_data(self.ric_codes, fields, parameters=datedict, field_name=True)
         self._raw_data_list.append(df)
         for col in df.columns:
-            if col[-9:] != '.CALCDATE':
+            if col.count('.') < 2:  # if not calcdate nor fperiod
                 continue
             df[col] = df[col].astype(str)
             df.loc[:, col] = df.loc[:, col].str[:10]
