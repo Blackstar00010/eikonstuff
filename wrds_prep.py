@@ -101,9 +101,9 @@ if __name__ == "__main__":
         comp_secd = comp_secd.rename(columns={'curcdd': 'curr', 'curcddv': 'curr_div',
                                               'ajexdi': 'adj', 'cshoc': 'shrout', 'cshtrd': 'vol',
                                               'prccd': 'close', 'prchd': 'high', 'prcld': 'low', 'prcod': 'open'})
-        comp_secd = comp_secd.merge(exch_rates, left_on=['datadate', 'curr'], right_on=['datadate', 'curr']).drop(
-            'curr',
-            axis=1)
+        comp_secd = comp_secd.merge(exch_rates,
+                                    left_on=['datadate', 'curr'],
+                                    right_on=['datadate', 'curr']).drop('curr', axis=1)
 
         ohlc = []
         for p_type in ['open', 'high', 'low', 'close']:
