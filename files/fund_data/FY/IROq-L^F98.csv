@@ -1,6 +1,6 @@
-datadate,ap,rect,xad,ob,capx,dm,che,oancf,cogs,drc,drlt,dp,ebit,ebitda,emp,gdwlia,dvt,txp,xint,intan,nopi,scstkc,ni,ib,pi,aco,lco,ao,lo,ppegt,ppent,pstkq,xrd,revt,fatl,xsga,spi,txfed,txdi,txt,at,lct,act,dlc,ceq,invt,lt,pstk,dcvt,dcpstk,txfo,dltt,dr,dc
-1995-08-22,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-1996-02-27,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-1997-02-24,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-1998-03-16,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-1999-02-25,,,,,,,,,,,,,9271418.70654348,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+datadate,ap,rect,xad,ob,capx,dm,che,oancf,cogs,drc,drlt,dp,ebit,ebitda,emp,gdwlia,dvt,txp,xint,intan,nopi,scstkc,ni,ib,pi,aco,lco,ao,lo,ppegt,ppent,pstkq,xrd,revt,fatl,xsga,spi,txfed,txdi,txt,at,lct,act,dlc,ceq,invt,lt,pstk,dcvt,dcpstk,txfo,dltt,dr,dc,count
+1995-08-22,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1
+1996-02-27,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1
+1997-02-24,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,2
+1998-03-16,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,3
+1999-02-25,,,,,,,,,,,,,9271418.70654348,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,4

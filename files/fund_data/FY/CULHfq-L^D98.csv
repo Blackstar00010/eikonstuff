@@ -1,5 +1,5 @@
-datadate,ap,rect,xad,ob,capx,dm,che,oancf,cogs,drc,drlt,dp,ebit,ebitda,emp,gdwlia,dvt,txp,xint,intan,nopi,scstkc,ni,ib,pi,aco,lco,ao,lo,ppegt,ppent,pstkq,xrd,revt,fatl,xsga,spi,txfed,txdi,txt,at,lct,act,dlc,ceq,invt,lt,pstk,dcvt,dcpstk,txfo,dltt,dr,dc
-1997-03-20,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-1998-03-06,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-1999-02-22,,,,,,,,,,,,,26981782.1611611,87690792.0237736,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-1999-12-31,,,,,,,,,,,,,26981782.1611611,87690792.0237736,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+datadate,ap,rect,xad,ob,capx,dm,che,oancf,cogs,drc,drlt,dp,ebit,ebitda,emp,gdwlia,dvt,txp,xint,intan,nopi,scstkc,ni,ib,pi,aco,lco,ao,lo,ppegt,ppent,pstkq,xrd,revt,fatl,xsga,spi,txfed,txdi,txt,at,lct,act,dlc,ceq,invt,lt,pstk,dcvt,dcpstk,txfo,dltt,dr,dc,count
+1997-03-20,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1
+1998-03-06,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1
+1999-02-22,,,,,,,,,,,,,26981782.1611611,87690792.0237736,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,2
+1999-12-31,,,,,,,,,,,,,26981782.1611611,87690792.0237736,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,3

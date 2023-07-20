@@ -103,21 +103,7 @@ for file_name in os.listdir(ref_dir):
     data_df = pd.concat([data_df, to_concat], axis=0)
 data_df = data_df.set_index('datadate')
 
-dcpstk = data_df[data_df['data_name'] == 'dcpstk'].drop('data_name', axis=1)
-dcvt = data_df[data_df['data_name'] == 'dcvt'].drop('data_name', axis=1)
 if True:
-    dm = data_df[data_df['data_name'] == 'dm'].drop('data_name', axis=1)
-    drc = data_df[data_df['data_name'] == 'drc'].drop('data_name', axis=1)
-    drlt = data_df[data_df['data_name'] == 'drlt'].drop('data_name', axis=1)
-    gdwlia = data_df[data_df['data_name'] == 'gdwlia'].drop('data_name', axis=1)
-    ni = data_df[data_df['data_name'] == 'ni'].drop('data_name', axis=1)
-    ob = data_df[data_df['data_name'] == 'ob'].drop('data_name', axis=1)
-    pstk = data_df[data_df['data_name'] == 'pstk'].drop('data_name', axis=1)
-    pstkq = data_df[data_df['data_name'] == 'pstkq'].drop('data_name', axis=1)
-    scstkc = data_df[data_df['data_name'] == 'scstkc'].drop('data_name', axis=1)
-    txfed = data_df[data_df['data_name'] == 'txfed'].drop('data_name', axis=1)
-    txt = data_df[data_df['data_name'] == 'txt'].drop('data_name', axis=1)
-    xad = data_df[data_df['data_name'] == 'xad'].drop('data_name', axis=1)
     aco = data_df[data_df['data_name'] == 'aco'].drop('data_name', axis=1)
     act = data_df[data_df['data_name'] == 'act'].drop('data_name', axis=1)
     ao = data_df[data_df['data_name'] == 'ao'].drop('data_name', axis=1)
@@ -127,15 +113,23 @@ if True:
     ceq = data_df[data_df['data_name'] == 'ceq'].drop('data_name', axis=1)
     che = data_df[data_df['data_name'] == 'che'].drop('data_name', axis=1)
     cogs = data_df[data_df['data_name'] == 'cogs'].drop('data_name', axis=1)
+    count = data_df[data_df['data_name'] == 'count'].drop('data_name', axis=1)
+    dc = data_df[data_df['data_name'] == 'dc'].drop('data_name', axis=1)
+    dcpstk = data_df[data_df['data_name'] == 'dcpstk'].drop('data_name', axis=1)
+    dcvt = data_df[data_df['data_name'] == 'dcvt'].drop('data_name', axis=1)
     dlc = data_df[data_df['data_name'] == 'dlc'].drop('data_name', axis=1)
     dltt = data_df[data_df['data_name'] == 'dltt'].drop('data_name', axis=1)
+    dm = data_df[data_df['data_name'] == 'dm'].drop('data_name', axis=1)
     dp = data_df[data_df['data_name'] == 'dp'].drop('data_name', axis=1)
+    dr = data_df[data_df['data_name'] == 'dr'].drop('data_name', axis=1)
+    drc = data_df[data_df['data_name'] == 'drc'].drop('data_name', axis=1)
+    drlt = data_df[data_df['data_name'] == 'drlt'].drop('data_name', axis=1)
     dvt = data_df[data_df['data_name'] == 'dvt'].drop('data_name', axis=1)
     ebit = data_df[data_df['data_name'] == 'ebit'].drop('data_name', axis=1)
     ebitda = data_df[data_df['data_name'] == 'ebitda'].drop('data_name', axis=1)
-    fatb = data_df[data_df['data_name'] == 'fatb'].drop('data_name', axis=1)
+    emp = data_df[data_df['data_name'] == 'emp'].drop('data_name', axis=1)
     fatl = data_df[data_df['data_name'] == 'fatl'].drop('data_name', axis=1)
-    gdwl = data_df[data_df['data_name'] == 'gdwl'].drop('data_name', axis=1)
+    gdwlia = data_df[data_df['data_name'] == 'gdwlia'].drop('data_name', axis=1)
     ib = data_df[data_df['data_name'] == 'ib'].drop('data_name', axis=1)
     intan = data_df[data_df['data_name'] == 'intan'].drop('data_name', axis=1)
     invt = data_df[data_df['data_name'] == 'invt'].drop('data_name', axis=1)
@@ -143,37 +137,42 @@ if True:
     lct = data_df[data_df['data_name'] == 'lct'].drop('data_name', axis=1)
     lo = data_df[data_df['data_name'] == 'lo'].drop('data_name', axis=1)
     lt = data_df[data_df['data_name'] == 'lt'].drop('data_name', axis=1)
+    ni = data_df[data_df['data_name'] == 'ni'].drop('data_name', axis=1)
     nopi = data_df[data_df['data_name'] == 'nopi'].drop('data_name', axis=1)
     oancf = data_df[data_df['data_name'] == 'oancf'].drop('data_name', axis=1)
+    ob = data_df[data_df['data_name'] == 'ob'].drop('data_name', axis=1)
     pi = data_df[data_df['data_name'] == 'pi'].drop('data_name', axis=1)
     ppegt = data_df[data_df['data_name'] == 'ppegt'].drop('data_name', axis=1)
     ppent = data_df[data_df['data_name'] == 'ppent'].drop('data_name', axis=1)
+    pstk = data_df[data_df['data_name'] == 'pstk'].drop('data_name', axis=1)
+    pstkq = data_df[data_df['data_name'] == 'pstkq'].drop('data_name', axis=1)
     rect = data_df[data_df['data_name'] == 'rect'].drop('data_name', axis=1)
     revt = data_df[data_df['data_name'] == 'revt'].drop('data_name', axis=1)
-    sale = data_df[data_df['data_name'] == 'sale'].drop('data_name', axis=1)
+    scstkc = data_df[data_df['data_name'] == 'scstkc'].drop('data_name', axis=1)
     spi = data_df[data_df['data_name'] == 'spi'].drop('data_name', axis=1)
     txdi = data_df[data_df['data_name'] == 'txdi'].drop('data_name', axis=1)
+    txfed = data_df[data_df['data_name'] == 'txfed'].drop('data_name', axis=1)
+    txfo = data_df[data_df['data_name'] == 'txfo'].drop('data_name', axis=1)
     txp = data_df[data_df['data_name'] == 'txp'].drop('data_name', axis=1)
+    txt = data_df[data_df['data_name'] == 'txt'].drop('data_name', axis=1)
+    xad = data_df[data_df['data_name'] == 'xad'].drop('data_name', axis=1)
     xint = data_df[data_df['data_name'] == 'xint'].drop('data_name', axis=1)
     xrd = data_df[data_df['data_name'] == 'xrd'].drop('data_name', axis=1)
     xsga = data_df[data_df['data_name'] == 'xsga'].drop('data_name', axis=1)
-
     mve = pd.read_csv(secd_dir + 'mve.csv')
     close = pd.read_csv(secd_dir + 'close.csv')
     csho = pd.read_csv(secd_dir + 'shrout.csv')
 
 print('all data loaded.')
 
-# TODO: notna, isna, fillna
-
 bm = ceq / mve
 ep = ib / mve
 cashpr = ((mve + dltt - at) / che)
 dy = dvt / mve
 lev = lt / mve
-sp = sale / mve
+sp = revt / mve
 roic = (ebit - nopi) / (ceq + lt - che)
-rd_sale = xrd / sale
+rd_sale = xrd / revt
 rd_mve = xrd / mve
 agr = rate_of_change(at)
 gma = (revt - cogs) / lag(at)
@@ -192,15 +191,15 @@ pctacc = (oancfnotna * (ib - oancf) / (abs(ib) * (ib != 0) + 0.1 * (ib == 0)) +
           oancfisna * oancf_alt / (abs(ib) * (ib != 0) + 0.1 * (ib == 0)))
 cfp = oancfisna * (ib - oancf_alt) / mve + oancfnotna * oancf / mve
 absacc = abs(acc)
-# age = count  # TODO
+age = count
 chinv = atlagat * delta(invt)
-spii = (spi != 0) * spi.notna()
+spii = (spi != 0)
 spi = atlagat * spi
 cf = atlagat * (
         oancfnotna * oancf +
         oancfisna * (ib - oancf_alt))
-# hire = rate_of_change(emp) * emp.notna() * lag(emp).notna()  # TODO
-# if missing(emp) or missing(lag(emp)) then hire=0
+hire = rate_of_change(emp) * (emp!=0) * (lag(emp)!=0)
+hire = hire.fillna(0)  # it is a valid flllna
 sgr = rate_of_change(revt)  # sale == revt
 chpm = (ib / revt) - (lag(ib) / lag(revt))
 chato = 2 * (revt / (at + lag(at))) - (lag(revt) / (lag(at) + lag(at, by=2)))
@@ -216,11 +215,9 @@ egr = rate_of_change(ceq)
 capx = capx.replace(0, float('NaN')).fillna(delta(ppent))
 pchcapx = rate_of_change(capx)
 grcapx = (capx - lag(capx, by=2)) / lag(capx, by=2)
-grGW = rate_of_change(gdwl)
-grGW = grGW.fillna((gdwl != 0) * (grGW.isna() + (grGW == 0)) * 1).astype(float)  # TODO: fillna & isna
-# woGW = (gdwlia.notna()*(gdwlia!=0)) + # TODO
-# if (not missing(gdwlia) and gdwlia ne 0) or (not missing(gdwlip) and gdwlip ne 0) or (not missing(gwo) and gwo ne 0) then woGW=1
-#     else woGW=0
+grGW = rate_of_change(gdwlia)
+grGW = (gdwlia==0)*0 + ((gdwlia!=0)*(grGW.isna()))*1 + (grGW.notna())*grGW  # legit isna/notna
+woGW = (gdwlia!=0)
 tang = (che + rect * 0.715 + invt * 0.547 + ppent * 0.535) / at
 # if (2100<=sic<=2199) or (2080<=sic<=2085) or (naics in ('7132','71312','713210','71329','713290','72112','721120'))
 #     then sin=1 else sin=0  # TODO
@@ -230,26 +227,36 @@ currat = act / lct
 pchcurrat = rate_of_change(act / lct)
 quick = (act - invt) / lct
 pchquick = rate_of_change((act - invt) / lct)
-salecash = sale / che
-salerec = sale / rect
-saleinv = sale / invt
+salecash = revt / che
+salerec = revt / rect
+saleinv = revt / invt
 pchsaleinv = rate_of_change(revt / invt)
 cashdebt = 2 * (ib + dp) / (lt + lag(lt))
 realestate = (fatb + fatl) / (ppegt.replace(0, float('NaN')).fillna(ppent))
-divi = ((dvt > 0) * ((lag(dvt) == 0) + lag(dvt).isna())).astype(int)  # starts paying dividends
-divo = (((dvt == 0) + dvt.isna()) * (lag(dvt) > 0)).astype(int)  # stops paying dividends
+divi = ((dvt > 0) * ((lag(dvt) == 0) + lag(dvt).isna())).astype(int)  # starts paying dividends, legit isna
+divo = (((dvt == 0) + dvt.isna()) * (lag(dvt) > 0)).astype(int)  # stops paying dividends, legit isna
 obklg = 2 * ob / (at + lag(at))
 chobklg = delta(ob) / (at + lag(at)) * 2
-securedind = ((dm != 0) * dm.notna()).astype(int)
+securedind = (dm != 0).astype(int)
 secured = dm / dltt
-convind = (((dc != 0) * dc.notna()) + (cshrc > 0)).astype(int)
+convind = ((dc != 0) + (csho > 0)).astype(int)
 conv = dc / dltt
 grltnoa = (delta(+ppent + intan + ao - lo) - dp) / (at + lag(at)) * 2
 chdrc = delta(dr) / (at + lag(at)) * 2
 rd = (rate_of_change(xrd / at) > .05).astype(int)
 roe = ib / lag(ceq)
 rdbias = rate_of_change(xrd) - roe
-operprof = (revt - cogs - xsga0 - xint0) / lag(ceq)
+operprof = (revt - cogs - xsga - xint) / lag(ceq)
+ps=(ni>0).astype(int) +(oancf>0).astype(int) + (ni/at>lag(ni/at)).astype(int) + (oancf>ni).astype(int) + (dltt/at<lag(dltt/at)).astype(int) + (act/lct>lag(act/lct)).astype(int) + ((revt-cogs)/revt>(lag((revt-cogs)/revt)).astype(int)) + (revt/at>lag(revt/at)).astype(int) + (scstkc=0).astype(int)
+
+# TODO: Lev and Nissim (2004) https://www.jstor.org/stable/4093085
+
+roa = atlagat * ni
+cfroa = atlagat * (oancf + (oancf==0)*(ib+dp))
+xrdint = atlagat * xrd
+capxint = atlagat * capx
+xadint = atlagat * xad
+
 
 bm.to_csv('./files/by_data/seventyeight/bm.csv')
 ep.to_csv('./files/by_data/seventyeight/ep.csv')
