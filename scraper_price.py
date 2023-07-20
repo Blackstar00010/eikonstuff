@@ -18,24 +18,27 @@ merge_dir = 'files/price_stuff/price_data_merged/'
 # fetching data using eikon data api and save as {ric1(ticker)}.csv at /price_data/
 fetchQ = True
 if fetchQ:
-    comp_list = pd.read_csv('files/comp_list/comp_list.csv')
-    rics = comp_list["RIC"].to_list()
+    comp_list = pd.read_pickle('files/comp_list/comp_list.pickle')
+    rics = comp_list["RIC"]
+
+    dup_ric_list = comp_list[comp_list.duplicated(subset='RIC1(ticker)', keep=False)][['Company Name', 'RIC',
+                                                                                       'RIC1(ticker)', 'ISIN']]
+    dup_ric_list = dup_ric_list.sort_values(by='RIC1(ticker)')
+    dup_ric_list.to_csv('files/comp_list/comp_list_dup_ric1.csv')
 
     already_done = [i.split('.')[0] for i in os.listdir(price_dir)]
     with open('files/comp_list/no_data.txt', 'r') as f:
         emptylist = [line.rstrip() for line in f]
     with open('files/comp_list/no_timestamp.txt', 'r') as f:
         notimestamplist = [line.rstrip() for line in f]
-    mask = [(ric.replace('.', '-') not in already_done and
-             ric.split('.')[0] not in already_done and  # TODO
-             ric not in emptylist and
-             ric not in notimestamplist)
-            for ric in rics]
-    ogrics = rics
-    rics = np.array(rics)[mask]
+    # mask = [(ric.replace('.', '-') not in already_done and
+    #          ric not in emptylist and
+    #          ric not in notimestamplist)
+    #         for ric in rics]
+    rics = rics[rics.isin(dup_ric_list['RIC']) * ~rics.isin(emptylist) * ~rics.isin(notimestamplist)]
 
     for ric in rics:
-        endyear = comp_list['delisted YY'].tolist()[ogrics.index(ric)]
+        endyear = comp_list[comp_list['RIC'] == ric]['delisted YY'].sum()
         try:
             comp = dbb.Company(ric)
             if endyear == 0:

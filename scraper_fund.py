@@ -3,6 +3,7 @@ import pandas as pd
 import eikon as ek
 import myEikon as mek
 from wrds_prep import pivot
+from time import sleep
 
 ref_comp_df = pd.read_csv('files/metadata/ref-comp.csv')
 all_rics = ref_comp_df['ric'].to_list()
@@ -11,13 +12,13 @@ tl_dict = {}
 fields = shits['TR_name'].to_list()
 for i in range(len(shits)):
     tl_dict[shits['TR_name'][i].upper()] = shits['shitty_name'][i]
-data_type = 'FY'
+data_type = 'FS'
 date_col = pd.read_csv('files/metadata/business_days.csv').rename(columns={'YYYY-MM-DD': 'datadate'}).loc[:, 'datadate']
 
-slice_by = 100
-start_firm = 0
+slice_by = 50
+start_firm = 1350
 # split into smaller list just in case it might give some blank rows
-fetchQ = False
+fetchQ = True
 if fetchQ:
     for i in range(start_firm, len(all_rics), slice_by):
         rics = all_rics[i:i + slice_by]
@@ -26,22 +27,30 @@ if fetchQ:
         # try until we can fetch some data
         goodenough = False
         while not goodenough:
-            comps.fetch_data(fields, start='2000-01-01', period=data_type)
-            if len(comps.get_history(-1)) > 0:
-                goodenough = True
-                df_21c = comps.get_history(-1)[0]
-                df_21c_raw = comps.get_history(-1, raw=True)[0]
-                comps.clear_history()
+            try:
+                sleep(10)
+                comps.fetch_data(fields, start='2000-01-01', period=data_type)
+                if len(comps.get_history(-1)) > 0:
+                    goodenough = True
+                    df_21c = comps.get_history(-1)[0]
+                    df_21c_raw = comps.get_history(-1, raw=True)[0]
+                    comps.clear_history()
+            except ek.EikonError:
+                goodenough = False
         goodenough = False
         while not goodenough:
-            comps.fetch_data(fields, start='1980-01-01', end='1999-12-31', period=data_type)
-            if len(comps.get_history(-1)) > 0:
-                goodenough = True
-                df_20c = comps.get_history(-1)[0]
-                df_20c_raw = comps.get_history(-1, raw=True)[0]
-                comps.set_history(pd.concat([df_21c, df_20c], axis=0))
-                pd.concat([df_20c_raw, df_21c_raw], axis=0).to_csv(f'files/fund_data/_raw/{data_type}/raw_data_{i}.csv',
-                                                                   index=False)
+            try:
+                sleep(10)
+                comps.fetch_data(fields, start='1980-01-01', end='1999-12-31', period=data_type)
+                if len(comps.get_history(-1)) > 0:
+                    goodenough = True
+                    df_20c = comps.get_history(-1)[0]
+                    df_20c_raw = comps.get_history(-1, raw=True)[0]
+                    comps.set_history(pd.concat([df_21c, df_20c], axis=0))
+                    pd.concat([df_20c_raw, df_21c_raw], axis=0).to_csv(f'files/fund_data/_raw/{data_type}/raw_data_{i}.csv',
+                                                                       index=False)
+            except ek.EikonError:
+                goodenough = False
 
         # separate, arrange, and save
         for ric in rics:
@@ -105,10 +114,9 @@ if fetchQ:
                 comp_df_new.to_csv(f'./files/fund_data/{data_type}/{ric.replace(".", "-")}.csv', index=False)
 
             print(ric, 'done!')
-        break
 
 # organise & move to /by_data/from_ref
-organize_FY = True
+organize_FY = False
 if organize_FY:
     fy_dir = 'files/fund_data/FY/'
     files = os.listdir(fy_dir)

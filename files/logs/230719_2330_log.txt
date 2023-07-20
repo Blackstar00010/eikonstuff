@@ -1,0 +1,1243 @@
+C:\Users\djwja\GitHub\eikonproj\venv\Scripts\python.exe C:\Users\djwja\GitHub\eikonproj\scraper_price.py 
+2023-07-19 23:30:49,566 P[10100] [MainThread 3708] Error with CAML.L: No data available for the requested date range
+2023-07-19 23:30:49,566 P[10100] [MainThread 3708] CAML.L: No data available for the requested date range | 
+CAML.L: No data available for 1983-1992
+2023-07-19 23:30:50,480 P[10100] [MainThread 3708] Error with CAML.L: No data available for the requested date range
+2023-07-19 23:30:50,480 P[10100] [MainThread 3708] CAML.L: No data available for the requested date range | 
+CAML.L: No data available for 1993-2002
+2023-07-19 23:30:51,398 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:30:51,398 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+CAML.L: No data available for 2003-2012
+CAML.L completed!
+2023-07-19 23:30:59,385 P[10100] [MainThread 3708] Error with INS.L: No data available for the requested date range
+2023-07-19 23:30:59,385 P[10100] [MainThread 3708] INS.L: No data available for the requested date range | 
+INS.L: No data available for 1983-1992
+2023-07-19 23:31:00,225 P[10100] [MainThread 3708] Error with INS.L: No data available for the requested date range
+2023-07-19 23:31:00,225 P[10100] [MainThread 3708] INS.L: No data available for the requested date range | 
+INS.L: No data available for 1993-2002
+INS.L completed!
+JOG.L: No data available for 1983-1992
+2023-07-19 23:31:22,400 P[10100] [MainThread 3708] Error with JOG.L: No data available for the requested date range
+2023-07-19 23:31:22,400 P[10100] [MainThread 3708] JOG.L: No data available for the requested date range | 
+JOG.L: No data available for 1993-2002
+2023-07-19 23:31:23,146 P[10100] [MainThread 3708] Error with JOG.L: No data available for the requested date range
+2023-07-19 23:31:23,146 P[10100] [MainThread 3708] JOG.L: No data available for the requested date range | 
+JOG.L completed!
+2023-07-19 23:31:31,087 P[10100] [MainThread 3708] Error with LTGL.L: No data available for the requested date range
+2023-07-19 23:31:31,087 P[10100] [MainThread 3708] LTGL.L: No data available for the requested date range | 
+LTGL.L: No data available for 1983-1992
+2023-07-19 23:31:31,918 P[10100] [MainThread 3708] Error with LTGL.L: No data available for the requested date range
+2023-07-19 23:31:31,918 P[10100] [MainThread 3708] LTGL.L: No data available for the requested date range | 
+LTGL.L: No data available for 1993-2002
+LTGL.L completed!
+KRS.L: No data available for 1983-1992
+2023-07-19 23:31:53,182 P[10100] [MainThread 3708] Error with KRS.L: No data available for the requested date range
+2023-07-19 23:31:53,182 P[10100] [MainThread 3708] KRS.L: No data available for the requested date range | 
+2023-07-19 23:31:54,145 P[10100] [MainThread 3708] Error with KRS.L: No data available for the requested date range
+2023-07-19 23:31:54,145 P[10100] [MainThread 3708] KRS.L: No data available for the requested date range | 
+KRS.L: No data available for 1993-2002
+KRS.L completed!
+GLR.L: No data available for 1983-1992
+2023-07-19 23:32:10,800 P[10100] [MainThread 3708] Error with GLR.L: No data available for the requested date range
+2023-07-19 23:32:10,801 P[10100] [MainThread 3708] GLR.L: No data available for the requested date range | 
+GLR.L: No data available for 1993-2002
+2023-07-19 23:32:11,695 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:32:11,695 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+GLR.L completed!
+2023-07-19 23:32:21,357 P[10100] [MainThread 3708] Error with WGP.L: No data available for the requested date range
+2023-07-19 23:32:21,357 P[10100] [MainThread 3708] WGP.L: No data available for the requested date range | 
+WGP.L: No data available for 1983-1992
+2023-07-19 23:32:22,314 P[10100] [MainThread 3708] Error with WGP.L: No data available for the requested date range
+2023-07-19 23:32:22,314 P[10100] [MainThread 3708] WGP.L: No data available for the requested date range | 
+WGP.L: No data available for 1993-2002
+2023-07-19 23:32:43,418 P[10100] [MainThread 3708] UDF Core request failed. Gateway Time-out
+2023-07-19 23:32:43,419 P[10100] [MainThread 3708] HTTP request failed: EikonError-UDF Core request failed. Gateway Time-out
+WGP.L: No data available for 2013-2022
+2023-07-19 23:32:44,396 P[10100] [MainThread 3708] Error with WGP.L: No data available for the requested date range
+2023-07-19 23:32:44,397 P[10100] [MainThread 3708] WGP.L: No data available for the requested date range | 
+WGP.L: No data available for 2023-2032
+WGP.L completed!
+2023-07-19 23:32:46,526 P[10100] [MainThread 3708] Error with HVO.L: No data available for the requested date range
+2023-07-19 23:32:46,526 P[10100] [MainThread 3708] HVO.L: No data available for the requested date range | 
+HVO.L: No data available for 1983-1992
+2023-07-19 23:32:47,460 P[10100] [MainThread 3708] Error with HVO.L: No data available for the requested date range
+2023-07-19 23:32:47,460 P[10100] [MainThread 3708] HVO.L: No data available for the requested date range | 
+HVO.L: No data available for 1993-2002
+HVO.L completed!
+2023-07-19 23:32:54,932 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:32:54,932 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+SYS.L: No data available for 1983-1992
+2023-07-19 23:32:55,772 P[10100] [MainThread 3708] Error with SYS.L: No data available for the requested date range
+2023-07-19 23:32:55,772 P[10100] [MainThread 3708] SYS.L: No data available for the requested date range | 
+SYS.L: No data available for 1993-2002
+SYS.L: No data available for 2003-2012
+2023-07-19 23:32:56,739 P[10100] [MainThread 3708] Error with SYS.L: No data available for the requested date range
+2023-07-19 23:32:56,739 P[10100] [MainThread 3708] SYS.L: No data available for the requested date range | 
+SYS.L completed!
+2023-07-19 23:33:02,017 P[10100] [MainThread 3708] Error with VRS.L: No data available for the requested date range
+2023-07-19 23:33:02,017 P[10100] [MainThread 3708] VRS.L: No data available for the requested date range | 
+VRS.L: No data available for 1983-1992
+2023-07-19 23:33:02,951 P[10100] [MainThread 3708] Error with VRS.L: No data available for the requested date range
+2023-07-19 23:33:02,951 P[10100] [MainThread 3708] VRS.L: No data available for the requested date range | 
+VRS.L: No data available for 1993-2002
+VRS.L: No data available for 2003-2012
+2023-07-19 23:33:07,960 P[10100] [MainThread 3708] Error with VRS.L: No data available for the requested date range
+2023-07-19 23:33:07,961 P[10100] [MainThread 3708] VRS.L: No data available for the requested date range | 
+VRS.L completed!
+2023-07-19 23:33:14,248 P[10100] [MainThread 3708] Error with CCH.L: No data available for the requested date range
+2023-07-19 23:33:14,248 P[10100] [MainThread 3708] CCH.L: No data available for the requested date range | 
+CCH.L: No data available for 1983-1992
+CCH.L: No data available for 1993-2002
+2023-07-19 23:33:15,115 P[10100] [MainThread 3708] Error with CCH.L: No data available for the requested date range
+2023-07-19 23:33:15,115 P[10100] [MainThread 3708] CCH.L: No data available for the requested date range | 
+2023-07-19 23:33:15,954 P[10100] [MainThread 3708] Error with CCH.L: No data available for the requested date range
+2023-07-19 23:33:15,955 P[10100] [MainThread 3708] CCH.L: No data available for the requested date range | 
+CCH.L: No data available for 2003-2012
+CCH.L completed!
+GWI.L: No data available for 1983-1992
+2023-07-19 23:33:33,912 P[10100] [MainThread 3708] Error with GWI.L: No data available for the requested date range
+2023-07-19 23:33:33,912 P[10100] [MainThread 3708] GWI.L: No data available for the requested date range | 
+2023-07-19 23:33:34,827 P[10100] [MainThread 3708] Error with GWI.L: No data available for the requested date range
+2023-07-19 23:33:34,828 P[10100] [MainThread 3708] GWI.L: No data available for the requested date range | 
+GWI.L: No data available for 1993-2002
+2023-07-19 23:33:36,098 P[10100] [MainThread 3708] Error with GWI.L: No data available for the requested date range
+2023-07-19 23:33:36,098 P[10100] [MainThread 3708] GWI.L: No data available for the requested date range | 
+GWI.L: No data available for 2003-2012
+GWI.L completed!
+IOG.L: No data available for 1983-1992
+2023-07-19 23:33:42,079 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:33:42,080 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+2023-07-19 23:33:43,041 P[10100] [MainThread 3708] Error with IOG.L: No data available for the requested date range
+2023-07-19 23:33:43,041 P[10100] [MainThread 3708] IOG.L: No data available for the requested date range | 
+IOG.L: No data available for 1993-2002
+2023-07-19 23:33:43,893 P[10100] [MainThread 3708] Error with IOG.L: No data available for the requested date range
+2023-07-19 23:33:43,893 P[10100] [MainThread 3708] IOG.L: No data available for the requested date range | 
+IOG.L: No data available for 2003-2012
+IOG.L completed!
+2023-07-19 23:34:06,096 P[10100] [MainThread 3708] Error with GENG.L: No data available for the requested date range
+2023-07-19 23:34:06,096 P[10100] [MainThread 3708] GENG.L: No data available for the requested date range | 
+GENG.L: No data available for 1983-1992
+GENG.L: No data available for 1993-2002
+2023-07-19 23:34:06,965 P[10100] [MainThread 3708] Error with GENG.L: No data available for the requested date range
+2023-07-19 23:34:06,965 P[10100] [MainThread 3708] GENG.L: No data available for the requested date range | 
+2023-07-19 23:34:07,812 P[10100] [MainThread 3708] Error with GENG.L: No data available for the requested date range
+2023-07-19 23:34:07,813 P[10100] [MainThread 3708] GENG.L: No data available for the requested date range | 
+GENG.L: No data available for 2003-2012
+GENG.L completed!
+ESP.L: No data available for 1983-1992
+2023-07-19 23:34:14,505 P[10100] [MainThread 3708] Error with ESP.L: No data available for the requested date range
+2023-07-19 23:34:14,505 P[10100] [MainThread 3708] ESP.L: No data available for the requested date range | 
+2023-07-19 23:34:15,254 P[10100] [MainThread 3708] Error with ESP.L: No data available for the requested date range
+2023-07-19 23:34:15,255 P[10100] [MainThread 3708] ESP.L: No data available for the requested date range | 
+ESP.L: No data available for 1993-2002
+2023-07-19 23:34:16,305 P[10100] [MainThread 3708] Error with ESP.L: No data available for the requested date range
+2023-07-19 23:34:16,305 P[10100] [MainThread 3708] ESP.L: No data available for the requested date range | 
+ESP.L: No data available for 2003-2012
+ESP.L completed!
+SPI.L: No data available for 1983-1992
+2023-07-19 23:34:22,527 P[10100] [MainThread 3708] Error with SPI.L: No data available for the requested date range
+2023-07-19 23:34:22,527 P[10100] [MainThread 3708] SPI.L: No data available for the requested date range | 
+SPI.L: No data available for 1993-2002
+2023-07-19 23:34:23,278 P[10100] [MainThread 3708] Error with SPI.L: No data available for the requested date range
+2023-07-19 23:34:23,278 P[10100] [MainThread 3708] SPI.L: No data available for the requested date range | 
+2023-07-19 23:34:24,128 P[10100] [MainThread 3708] Error with SPI.L: No data available for the requested date range
+2023-07-19 23:34:24,128 P[10100] [MainThread 3708] SPI.L: No data available for the requested date range | 
+SPI.L: No data available for 2003-2012
+SPI.L completed!
+EVG.L: No data available for 1983-1992
+2023-07-19 23:34:30,336 P[10100] [MainThread 3708] Error with EVG.L: No data available for the requested date range
+2023-07-19 23:34:30,336 P[10100] [MainThread 3708] EVG.L: No data available for the requested date range | 
+2023-07-19 23:34:31,260 P[10100] [MainThread 3708] Error with EVG.L: No data available for the requested date range
+2023-07-19 23:34:31,260 P[10100] [MainThread 3708] EVG.L: No data available for the requested date range | 
+EVG.L: No data available for 1993-2002
+EVG.L: No data available for 2003-2012
+2023-07-19 23:34:32,174 P[10100] [MainThread 3708] Error with EVG.L: No data available for the requested date range
+2023-07-19 23:34:32,175 P[10100] [MainThread 3708] EVG.L: No data available for the requested date range | 
+EVG.L completed!
+INOV.L: No data available for 1983-1992
+2023-07-19 23:34:37,705 P[10100] [MainThread 3708] Error with INOV.L: No data available for the requested date range
+2023-07-19 23:34:37,705 P[10100] [MainThread 3708] INOV.L: No data available for the requested date range | 
+2023-07-19 23:34:39,447 P[10100] [MainThread 3708] Error with INOV.L: No data available for the requested date range
+2023-07-19 23:34:39,447 P[10100] [MainThread 3708] INOV.L: No data available for the requested date range | 
+INOV.L: No data available for 1993-2002
+INOV.L: No data available for 2003-2012
+2023-07-19 23:34:40,264 P[10100] [MainThread 3708] Error with INOV.L: No data available for the requested date range
+2023-07-19 23:34:40,264 P[10100] [MainThread 3708] INOV.L: No data available for the requested date range | 
+INOV.L completed!
+RBG.L: No data available for 1983-1992
+2023-07-19 23:34:46,406 P[10100] [MainThread 3708] Error with RBG.L: No data available for the requested date range
+2023-07-19 23:34:46,406 P[10100] [MainThread 3708] RBG.L: No data available for the requested date range | 
+RBG.L: No data available for 1993-2002
+2023-07-19 23:34:47,175 P[10100] [MainThread 3708] Error with RBG.L: No data available for the requested date range
+2023-07-19 23:34:47,175 P[10100] [MainThread 3708] RBG.L: No data available for the requested date range | 
+2023-07-19 23:34:48,047 P[10100] [MainThread 3708] Error with RBG.L: No data available for the requested date range
+2023-07-19 23:34:48,047 P[10100] [MainThread 3708] RBG.L: No data available for the requested date range | 
+RBG.L: No data available for 2003-2012
+RBG.L completed!
+CHLL.L: No data available for 1983-1992
+2023-07-19 23:35:01,238 P[10100] [MainThread 3708] Error with CHLL.L: No data available for the requested date range
+2023-07-19 23:35:01,238 P[10100] [MainThread 3708] CHLL.L: No data available for the requested date range | 
+2023-07-19 23:35:02,071 P[10100] [MainThread 3708] Error with CHLL.L: No data available for the requested date range
+2023-07-19 23:35:02,071 P[10100] [MainThread 3708] CHLL.L: No data available for the requested date range | 
+CHLL.L: No data available for 1993-2002
+CHLL.L: No data available for 2003-2012
+2023-07-19 23:35:03,295 P[10100] [MainThread 3708] Error with CHLL.L: No data available for the requested date range
+2023-07-19 23:35:03,295 P[10100] [MainThread 3708] CHLL.L: No data available for the requested date range | 
+CHLL.L completed!
+2023-07-19 23:35:08,466 P[10100] [MainThread 3708] Error with CBP.L: No data available for the requested date range
+2023-07-19 23:35:08,466 P[10100] [MainThread 3708] CBP.L: No data available for the requested date range | 
+CBP.L: No data available for 1983-1992
+CBP.L: No data available for 1993-2002
+2023-07-19 23:35:10,101 P[10100] [MainThread 3708] Error with CBP.L: No data available for the requested date range
+2023-07-19 23:35:10,101 P[10100] [MainThread 3708] CBP.L: No data available for the requested date range | 
+CBP.L: No data available for 2003-2012
+2023-07-19 23:35:10,940 P[10100] [MainThread 3708] Error with CBP.L: No data available for the requested date range
+2023-07-19 23:35:10,940 P[10100] [MainThread 3708] CBP.L: No data available for the requested date range | 
+CBP.L completed!
+2023-07-19 23:35:15,546 P[10100] [MainThread 3708] Error with BBB.L: No data available for the requested date range
+2023-07-19 23:35:15,546 P[10100] [MainThread 3708] BBB.L: No data available for the requested date range | 
+BBB.L: No data available for 1983-1992
+2023-07-19 23:35:16,290 P[10100] [MainThread 3708] Error with BBB.L: No data available for the requested date range
+2023-07-19 23:35:16,290 P[10100] [MainThread 3708] BBB.L: No data available for the requested date range | 
+BBB.L: No data available for 1993-2002
+BBB.L: No data available for 2003-2012
+2023-07-19 23:35:17,228 P[10100] [MainThread 3708] Error with BBB.L: No data available for the requested date range
+2023-07-19 23:35:17,228 P[10100] [MainThread 3708] BBB.L: No data available for the requested date range | 
+BBB.L completed!
+2023-07-19 23:35:21,852 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:35:21,852 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+AGRP.L: No data available for 1983-1992
+2023-07-19 23:35:22,694 P[10100] [MainThread 3708] Error with AGRP.L: No data available for the requested date range
+2023-07-19 23:35:22,694 P[10100] [MainThread 3708] AGRP.L: No data available for the requested date range | 
+AGRP.L: No data available for 1993-2002
+2023-07-19 23:35:24,328 P[10100] [MainThread 3708] Error with AGRP.L: No data available for the requested date range
+2023-07-19 23:35:24,328 P[10100] [MainThread 3708] AGRP.L: No data available for the requested date range | 
+AGRP.L: No data available for 2003-2012
+AGRP.L: No data available for 2013-2022
+2023-07-19 23:35:25,117 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:35:25,117 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+AGRP.L completed!
+2023-07-19 23:35:28,292 P[10100] [MainThread 3708] Error with IBST.L: No data available for the requested date range
+2023-07-19 23:35:28,292 P[10100] [MainThread 3708] IBST.L: No data available for the requested date range | 
+IBST.L: No data available for 1983-1992
+IBST.L: No data available for 1993-2002
+2023-07-19 23:35:29,213 P[10100] [MainThread 3708] Error with IBST.L: No data available for the requested date range
+2023-07-19 23:35:29,213 P[10100] [MainThread 3708] IBST.L: No data available for the requested date range | 
+IBST.L: No data available for 2003-2012
+2023-07-19 23:35:30,735 P[10100] [MainThread 3708] Error with IBST.L: No data available for the requested date range
+2023-07-19 23:35:30,735 P[10100] [MainThread 3708] IBST.L: No data available for the requested date range | 
+IBST.L completed!
+2023-07-19 23:35:35,765 P[10100] [MainThread 3708] Error with MRON.L: No data available for the requested date range
+2023-07-19 23:35:35,766 P[10100] [MainThread 3708] MRON.L: No data available for the requested date range | 
+MRON.L: No data available for 1983-1992
+MRON.L: No data available for 1993-2002
+2023-07-19 23:35:36,615 P[10100] [MainThread 3708] Error with MRON.L: No data available for the requested date range
+2023-07-19 23:35:36,615 P[10100] [MainThread 3708] MRON.L: No data available for the requested date range | 
+2023-07-19 23:36:00,649 P[10100] [MainThread 3708] UDF Core request failed. Gateway Time-out
+2023-07-19 23:36:00,649 P[10100] [MainThread 3708] HTTP request failed: EikonError-UDF Core request failed. Gateway Time-out
+MRON.L: No data available for 2023-2032
+MRON.L completed!
+2023-07-19 23:36:02,932 P[10100] [MainThread 3708] Error with CER.L: No data available for the requested date range
+2023-07-19 23:36:02,933 P[10100] [MainThread 3708] CER.L: No data available for the requested date range | 
+CER.L: No data available for 1983-1992
+2023-07-19 23:36:04,948 P[10100] [MainThread 3708] Error with CER.L: No data available for the requested date range
+2023-07-19 23:36:04,948 P[10100] [MainThread 3708] CER.L: No data available for the requested date range | 
+CER.L: No data available for 1993-2002
+2023-07-19 23:36:05,758 P[10100] [MainThread 3708] Error with CER.L: No data available for the requested date range
+2023-07-19 23:36:05,758 P[10100] [MainThread 3708] CER.L: No data available for the requested date range | 
+CER.L: No data available for 2003-2012
+CER.L completed!
+2023-07-19 23:36:29,883 P[10100] [MainThread 3708] Error with MRLM.L: No data available for the requested date range
+2023-07-19 23:36:29,883 P[10100] [MainThread 3708] MRLM.L: No data available for the requested date range | 
+MRLM.L: No data available for 1983-1992
+MRLM.L: No data available for 1993-2002
+2023-07-19 23:36:30,856 P[10100] [MainThread 3708] Error with MRLM.L: No data available for the requested date range
+2023-07-19 23:36:30,856 P[10100] [MainThread 3708] MRLM.L: No data available for the requested date range | 
+MRLM.L completed!
+2023-07-19 23:36:58,013 P[10100] [MainThread 3708] Error with SDX.L: No data available for the requested date range
+2023-07-19 23:36:58,014 P[10100] [MainThread 3708] SDX.L: No data available for the requested date range | 
+SDX.L: No data available for 1983-1992
+2023-07-19 23:36:58,767 P[10100] [MainThread 3708] Error with SDX.L: No data available for the requested date range
+2023-07-19 23:36:58,767 P[10100] [MainThread 3708] SDX.L: No data available for the requested date range | 
+SDX.L: No data available for 1993-2002
+2023-07-19 23:36:59,598 P[10100] [MainThread 3708] Error with SDX.L: No data available for the requested date range
+2023-07-19 23:36:59,598 P[10100] [MainThread 3708] SDX.L: No data available for the requested date range | 
+SDX.L: No data available for 2003-2012
+SDX.L completed!
+2023-07-19 23:37:04,620 P[10100] [MainThread 3708] Error with BOWL.L: No data available for the requested date range
+2023-07-19 23:37:04,620 P[10100] [MainThread 3708] BOWL.L: No data available for the requested date range | 
+BOWL.L: No data available for 1983-1992
+BOWL.L: No data available for 1993-2002
+2023-07-19 23:37:06,319 P[10100] [MainThread 3708] Error with BOWL.L: No data available for the requested date range
+2023-07-19 23:37:06,319 P[10100] [MainThread 3708] BOWL.L: No data available for the requested date range | 
+BOWL.L: No data available for 2003-2012
+2023-07-19 23:37:07,278 P[10100] [MainThread 3708] Error with BOWL.L: No data available for the requested date range
+2023-07-19 23:37:07,278 P[10100] [MainThread 3708] BOWL.L: No data available for the requested date range | 
+BOWL.L completed!
+FPP.L: No data available for 1983-1992
+2023-07-19 23:37:17,791 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:37:17,791 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+2023-07-19 23:37:18,636 P[10100] [MainThread 3708] Error with FPP.L: No data available for the requested date range
+2023-07-19 23:37:18,636 P[10100] [MainThread 3708] FPP.L: No data available for the requested date range | 
+FPP.L: No data available for 1993-2002
+FPP.L: No data available for 2003-2012
+2023-07-19 23:37:19,400 P[10100] [MainThread 3708] Error with FPP.L: No data available for the requested date range
+2023-07-19 23:37:19,401 P[10100] [MainThread 3708] FPP.L: No data available for the requested date range | 
+FPP.L completed!
+EGL.L: No data available for 1983-1992
+2023-07-19 23:37:40,240 P[10100] [MainThread 3708] Error with EGL.L: No data available for the requested date range
+2023-07-19 23:37:40,240 P[10100] [MainThread 3708] EGL.L: No data available for the requested date range | 
+2023-07-19 23:37:40,985 P[10100] [MainThread 3708] Error with EGL.L: No data available for the requested date range
+2023-07-19 23:37:40,985 P[10100] [MainThread 3708] EGL.L: No data available for the requested date range | 
+EGL.L: No data available for 1993-2002
+EGL.L: No data available for 2003-2012
+2023-07-19 23:37:42,235 P[10100] [MainThread 3708] Error with EGL.L: No data available for the requested date range
+2023-07-19 23:37:42,235 P[10100] [MainThread 3708] EGL.L: No data available for the requested date range | 
+EGL.L completed!
+CREO.L: No data available for 1983-1992
+2023-07-19 23:37:47,870 P[10100] [MainThread 3708] Error with CREO.L: No data available for the requested date range
+2023-07-19 23:37:47,870 P[10100] [MainThread 3708] CREO.L: No data available for the requested date range | 
+CREO.L: No data available for 1993-2002
+2023-07-19 23:37:48,707 P[10100] [MainThread 3708] Error with CREO.L: No data available for the requested date range
+2023-07-19 23:37:48,708 P[10100] [MainThread 3708] CREO.L: No data available for the requested date range | 
+CREO.L: No data available for 2003-2012
+2023-07-19 23:37:49,551 P[10100] [MainThread 3708] Error with CREO.L: No data available for the requested date range
+2023-07-19 23:37:49,551 P[10100] [MainThread 3708] CREO.L: No data available for the requested date range | 
+CREO.L completed!
+XPS.L: No data available for 1983-1992
+2023-07-19 23:38:03,078 P[10100] [MainThread 3708] Error with XPS.L: No data available for the requested date range
+2023-07-19 23:38:03,078 P[10100] [MainThread 3708] XPS.L: No data available for the requested date range | 
+XPS.L: No data available for 1993-2002
+2023-07-19 23:38:04,042 P[10100] [MainThread 3708] Error with XPS.L: No data available for the requested date range
+2023-07-19 23:38:04,042 P[10100] [MainThread 3708] XPS.L: No data available for the requested date range | 
+XPS.L: No data available for 2003-2012
+2023-07-19 23:38:05,518 P[10100] [MainThread 3708] Error with XPS.L: No data available for the requested date range
+2023-07-19 23:38:05,518 P[10100] [MainThread 3708] XPS.L: No data available for the requested date range | 
+2023-07-19 23:38:08,087 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:38:08,087 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+XPS.L: No data available for 2023-2032
+XPS.L completed!
+LDG.L: No data available for 1983-1992
+2023-07-19 23:38:11,068 P[10100] [MainThread 3708] Error with LDG.L: No data available for the requested date range
+2023-07-19 23:38:11,068 P[10100] [MainThread 3708] LDG.L: No data available for the requested date range | 
+LDG.L: No data available for 1993-2002
+2023-07-19 23:38:11,816 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:38:11,816 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+LDG.L: No data available for 2003-2012
+2023-07-19 23:38:12,572 P[10100] [MainThread 3708] Error with LDG.L: No data available for the requested date range
+2023-07-19 23:38:12,572 P[10100] [MainThread 3708] LDG.L: No data available for the requested date range | 
+LDG.L: No data available for 2023-2032
+LDG.L completed!
+2023-07-19 23:38:15,406 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:38:15,406 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+2023-07-19 23:38:17,280 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:38:17,280 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+TEG.L: No data available for 1983-1992
+2023-07-19 23:38:18,277 P[10100] [MainThread 3708] Error with TEG.L: No data available for the requested date range
+2023-07-19 23:38:18,278 P[10100] [MainThread 3708] TEG.L: No data available for the requested date range | 
+TEG.L: No data available for 1993-2002
+2023-07-19 23:38:19,197 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:38:19,197 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+TEG.L: No data available for 2003-2012
+TEG.L: No data available for 2023-2032
+2023-07-19 23:38:22,114 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:38:22,114 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+TEG.L completed!
+ROC.L: No data available for 1983-1992
+2023-07-19 23:38:23,995 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:38:23,995 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+ROC.L: No data available for 1993-2002
+2023-07-19 23:38:26,073 P[10100] [MainThread 3708] Error with ROC.L: No data available for the requested date range
+2023-07-19 23:38:26,073 P[10100] [MainThread 3708] ROC.L: No data available for the requested date range | 
+2023-07-19 23:38:27,509 P[10100] [MainThread 3708] Error with ROC.L: No data available for the requested date range
+2023-07-19 23:38:27,509 P[10100] [MainThread 3708] ROC.L: No data available for the requested date range | 
+ROC.L: No data available for 2003-2012
+ROC.L: No data available for 2023-2032
+ROC.L completed!
+2023-07-19 23:38:29,888 P[10100] [MainThread 3708] Error with ROC.L: No data available for the requested date range
+2023-07-19 23:38:29,888 P[10100] [MainThread 3708] ROC.L: No data available for the requested date range | 
+KETL.L: No data available for 1983-1992
+2023-07-19 23:38:31,754 P[10100] [MainThread 3708] Error with KETL.L: No data available for the requested date range
+2023-07-19 23:38:31,755 P[10100] [MainThread 3708] KETL.L: No data available for the requested date range | 
+2023-07-19 23:38:32,500 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:38:32,501 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+KETL.L: No data available for 1993-2002
+2023-07-19 23:38:33,488 P[10100] [MainThread 3708] Error with KETL.L: No data available for the requested date range
+2023-07-19 23:38:33,488 P[10100] [MainThread 3708] KETL.L: No data available for the requested date range | 
+KETL.L: No data available for 2003-2012
+KETL.L completed!
+ATM.L: No data available for 1983-1992
+2023-07-19 23:38:43,794 P[10100] [MainThread 3708] Error with ATM.L: No data available for the requested date range
+2023-07-19 23:38:43,795 P[10100] [MainThread 3708] ATM.L: No data available for the requested date range | 
+ATM.L: No data available for 1993-2002
+2023-07-19 23:38:45,277 P[10100] [MainThread 3708] Error with ATM.L: No data available for the requested date range
+2023-07-19 23:38:45,277 P[10100] [MainThread 3708] ATM.L: No data available for the requested date range | 
+ATM.L: No data available for 2003-2012
+2023-07-19 23:38:46,120 P[10100] [MainThread 3708] Error with ATM.L: No data available for the requested date range
+2023-07-19 23:38:46,121 P[10100] [MainThread 3708] ATM.L: No data available for the requested date range | 
+ATM.L completed!
+2023-07-19 23:38:52,066 P[10100] [MainThread 3708] Error with CGO.L: No data available for the requested date range
+2023-07-19 23:38:52,067 P[10100] [MainThread 3708] CGO.L: No data available for the requested date range | 
+CGO.L: No data available for 1983-1992
+2023-07-19 23:38:52,812 P[10100] [MainThread 3708] Error with CGO.L: No data available for the requested date range
+2023-07-19 23:38:52,813 P[10100] [MainThread 3708] CGO.L: No data available for the requested date range | 
+CGO.L: No data available for 1993-2002
+CGO.L: No data available for 2003-2012
+2023-07-19 23:38:53,563 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:38:53,563 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+2023-07-19 23:38:55,571 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:38:55,572 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+CGO.L: No data available for 2023-2032
+CGO.L completed!
+CPC.L: No data available for 1983-1992
+2023-07-19 23:38:57,436 P[10100] [MainThread 3708] Error with CPC.L: No data available for the requested date range
+2023-07-19 23:38:57,436 P[10100] [MainThread 3708] CPC.L: No data available for the requested date range | 
+2023-07-19 23:39:06,496 P[10100] [MainThread 3708] Error with CPC.L: No data available for the requested date range
+2023-07-19 23:39:06,496 P[10100] [MainThread 3708] CPC.L: No data available for the requested date range | 
+CPC.L: No data available for 1993-2002
+CPC.L: No data available for 2003-2012
+2023-07-19 23:39:07,245 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:39:07,245 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+CPC.L completed!
+FAB.L: No data available for 1983-1992
+2023-07-19 23:39:12,901 P[10100] [MainThread 3708] Error with FAB.L: No data available for the requested date range
+2023-07-19 23:39:12,902 P[10100] [MainThread 3708] FAB.L: No data available for the requested date range | 
+FAB.L: No data available for 1993-2002
+2023-07-19 23:39:13,856 P[10100] [MainThread 3708] Error with FAB.L: No data available for the requested date range
+2023-07-19 23:39:13,857 P[10100] [MainThread 3708] FAB.L: No data available for the requested date range | 
+2023-07-19 23:39:14,610 P[10100] [MainThread 3708] Error with FAB.L: No data available for the requested date range
+2023-07-19 23:39:14,611 P[10100] [MainThread 3708] FAB.L: No data available for the requested date range | 
+FAB.L: No data available for 2003-2012
+FAB.L completed!
+TRU.L: No data available for 1983-1992
+2023-07-19 23:39:33,972 P[10100] [MainThread 3708] Error with TRU.L: No data available for the requested date range
+2023-07-19 23:39:33,972 P[10100] [MainThread 3708] TRU.L: No data available for the requested date range | 
+TRU.L: No data available for 1993-2002
+2023-07-19 23:39:34,827 P[10100] [MainThread 3708] Error with TRU.L: No data available for the requested date range
+2023-07-19 23:39:34,827 P[10100] [MainThread 3708] TRU.L: No data available for the requested date range | 
+2023-07-19 23:39:35,571 P[10100] [MainThread 3708] Error with TRU.L: No data available for the requested date range
+2023-07-19 23:39:35,571 P[10100] [MainThread 3708] TRU.L: No data available for the requested date range | 
+TRU.L: No data available for 2003-2012
+TRU.L completed!
+JTC.L: No data available for 1983-1992
+2023-07-19 23:39:39,807 P[10100] [MainThread 3708] Error with JTC.L: No data available for the requested date range
+2023-07-19 23:39:39,808 P[10100] [MainThread 3708] JTC.L: No data available for the requested date range | 
+2023-07-19 23:39:40,655 P[10100] [MainThread 3708] Error with JTC.L: No data available for the requested date range
+2023-07-19 23:39:40,655 P[10100] [MainThread 3708] JTC.L: No data available for the requested date range | 
+JTC.L: No data available for 1993-2002
+JTC.L: No data available for 2003-2012
+2023-07-19 23:39:41,403 P[10100] [MainThread 3708] Error with JTC.L: No data available for the requested date range
+2023-07-19 23:39:41,403 P[10100] [MainThread 3708] JTC.L: No data available for the requested date range | 
+JTC.L completed!
+2023-07-19 23:39:45,820 P[10100] [MainThread 3708] Error with GSF.L: No data available for the requested date range
+2023-07-19 23:39:45,820 P[10100] [MainThread 3708] GSF.L: No data available for the requested date range | 
+GSF.L: No data available for 1983-1992
+GSF.L: No data available for 1993-2002
+2023-07-19 23:39:46,575 P[10100] [MainThread 3708] Error with GSF.L: No data available for the requested date range
+2023-07-19 23:39:46,575 P[10100] [MainThread 3708] GSF.L: No data available for the requested date range | 
+GSF.L: No data available for 2003-2012
+2023-07-19 23:39:47,424 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:39:47,424 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+GSF.L completed!
+2023-07-19 23:39:52,311 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:39:52,312 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+SUP.L: No data available for 1983-1992
+SUP.L: No data available for 1993-2002
+2023-07-19 23:39:53,849 P[10100] [MainThread 3708] Error with SUP.L: No data available for the requested date range
+2023-07-19 23:39:53,849 P[10100] [MainThread 3708] SUP.L: No data available for the requested date range | 
+2023-07-19 23:39:54,688 P[10100] [MainThread 3708] Error with SUP.L: No data available for the requested date range
+2023-07-19 23:39:54,688 P[10100] [MainThread 3708] SUP.L: No data available for the requested date range | 
+SUP.L: No data available for 2003-2012
+SUP.L completed!
+2023-07-19 23:40:10,478 P[10100] [MainThread 3708] Error with AIE.L: No data available for the requested date range
+2023-07-19 23:40:10,478 P[10100] [MainThread 3708] AIE.L: No data available for the requested date range | 
+AIE.L: No data available for 1983-1992
+AIE.L: No data available for 1993-2002
+2023-07-19 23:40:11,386 P[10100] [MainThread 3708] Error with AIE.L: No data available for the requested date range
+2023-07-19 23:40:11,386 P[10100] [MainThread 3708] AIE.L: No data available for the requested date range | 
+AIE.L: No data available for 2003-2012
+2023-07-19 23:40:12,232 P[10100] [MainThread 3708] Error with AIE.L: No data available for the requested date range
+2023-07-19 23:40:12,233 P[10100] [MainThread 3708] AIE.L: No data available for the requested date range | 
+AIE.L completed!
+2023-07-19 23:40:17,037 P[10100] [MainThread 3708] Error with CBOX.L: No data available for the requested date range
+2023-07-19 23:40:17,037 P[10100] [MainThread 3708] CBOX.L: No data available for the requested date range | 
+CBOX.L: No data available for 1983-1992
+2023-07-19 23:40:18,045 P[10100] [MainThread 3708] Error with CBOX.L: No data available for the requested date range
+2023-07-19 23:40:18,045 P[10100] [MainThread 3708] CBOX.L: No data available for the requested date range | 
+CBOX.L: No data available for 1993-2002
+2023-07-19 23:40:18,823 P[10100] [MainThread 3708] Error with CBOX.L: No data available for the requested date range
+2023-07-19 23:40:18,823 P[10100] [MainThread 3708] CBOX.L: No data available for the requested date range | 
+CBOX.L: No data available for 2003-2012
+CBOX.L completed!
+2023-07-19 23:40:24,003 P[10100] [MainThread 3708] Error with AAF.L: No data available for the requested date range
+2023-07-19 23:40:24,004 P[10100] [MainThread 3708] AAF.L: No data available for the requested date range | 
+AAF.L: No data available for 1983-1992
+AAF.L: No data available for 1993-2002
+2023-07-19 23:40:24,744 P[10100] [MainThread 3708] Error with AAF.L: No data available for the requested date range
+2023-07-19 23:40:24,744 P[10100] [MainThread 3708] AAF.L: No data available for the requested date range | 
+AAF.L: No data available for 2003-2012
+2023-07-19 23:40:25,639 P[10100] [MainThread 3708] Error with AAF.L: No data available for the requested date range
+2023-07-19 23:40:25,639 P[10100] [MainThread 3708] AAF.L: No data available for the requested date range | 
+AAF.L completed!
+GST.L: No data available for 1983-1992
+2023-07-19 23:40:32,114 P[10100] [MainThread 3708] Error with GST.L: No data available for the requested date range
+2023-07-19 23:40:32,114 P[10100] [MainThread 3708] GST.L: No data available for the requested date range | 
+2023-07-19 23:40:34,544 P[10100] [MainThread 3708] Error with GST.L: No data available for the requested date range
+2023-07-19 23:40:34,545 P[10100] [MainThread 3708] GST.L: No data available for the requested date range | 
+GST.L: No data available for 1993-2002
+2023-07-19 23:40:35,445 P[10100] [MainThread 3708] Error with GST.L: No data available for the requested date range
+2023-07-19 23:40:35,445 P[10100] [MainThread 3708] GST.L: No data available for the requested date range | 
+GST.L: No data available for 2003-2012
+GST.L completed!
+SEIT.L: No data available for 1983-1992
+2023-07-19 23:40:41,022 P[10100] [MainThread 3708] Error with SEIT.L: No data available for the requested date range
+2023-07-19 23:40:41,022 P[10100] [MainThread 3708] SEIT.L: No data available for the requested date range | 
+2023-07-19 23:40:41,772 P[10100] [MainThread 3708] Error with SEIT.L: No data available for the requested date range
+2023-07-19 23:40:41,773 P[10100] [MainThread 3708] SEIT.L: No data available for the requested date range | 
+SEIT.L: No data available for 1993-2002
+2023-07-19 23:40:43,795 P[10100] [MainThread 3708] Error with SEIT.L: No data available for the requested date range
+2023-07-19 23:40:43,795 P[10100] [MainThread 3708] SEIT.L: No data available for the requested date range | 
+SEIT.L: No data available for 2003-2012
+SEIT.L completed!
+LITL.L: No data available for 1983-1992
+2023-07-19 23:40:48,378 P[10100] [MainThread 3708] Error with LITL.L: No data available for the requested date range
+2023-07-19 23:40:48,378 P[10100] [MainThread 3708] LITL.L: No data available for the requested date range | 
+2023-07-19 23:40:49,248 P[10100] [MainThread 3708] Error with LITL.L: No data available for the requested date range
+2023-07-19 23:40:49,248 P[10100] [MainThread 3708] LITL.L: No data available for the requested date range | 
+LITL.L: No data available for 1993-2002
+LITL.L: No data available for 2003-2012
+2023-07-19 23:40:50,136 P[10100] [MainThread 3708] Error with LITL.L: No data available for the requested date range
+2023-07-19 23:40:50,136 P[10100] [MainThread 3708] LITL.L: No data available for the requested date range | 
+LITL.L completed!
+2023-07-19 23:40:55,895 P[10100] [MainThread 3708] Error with FRP.L: No data available for the requested date range
+2023-07-19 23:40:55,895 P[10100] [MainThread 3708] FRP.L: No data available for the requested date range | 
+FRP.L: No data available for 1983-1992
+FRP.L: No data available for 1993-2002
+2023-07-19 23:40:56,652 P[10100] [MainThread 3708] Error with FRP.L: No data available for the requested date range
+2023-07-19 23:40:56,652 P[10100] [MainThread 3708] FRP.L: No data available for the requested date range | 
+2023-07-19 23:40:57,394 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:40:57,395 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+FRP.L: No data available for 2003-2012
+FRP.L: No data available for 2023-2032
+2023-07-19 23:40:59,711 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:40:59,711 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+FRP.L completed!
+2023-07-19 23:41:02,143 P[10100] [MainThread 3708] Error with RHM.L: No data available for the requested date range
+2023-07-19 23:41:02,143 P[10100] [MainThread 3708] RHM.L: No data available for the requested date range | 
+RHM.L: No data available for 1983-1992
+RHM.L: No data available for 1993-2002
+2023-07-19 23:41:03,826 P[10100] [MainThread 3708] Error with RHM.L: No data available for the requested date range
+2023-07-19 23:41:03,826 P[10100] [MainThread 3708] RHM.L: No data available for the requested date range | 
+2023-07-19 23:41:04,667 P[10100] [MainThread 3708] Error with RHM.L: No data available for the requested date range
+2023-07-19 23:41:04,667 P[10100] [MainThread 3708] RHM.L: No data available for the requested date range | 
+RHM.L: No data available for 2003-2012
+RHM.L completed!
+IIG.L: No data available for 1983-1992
+2023-07-19 23:41:16,809 P[10100] [MainThread 3708] Error with IIG.L: No data available for the requested date range
+2023-07-19 23:41:16,809 P[10100] [MainThread 3708] IIG.L: No data available for the requested date range | 
+2023-07-19 23:41:17,557 P[10100] [MainThread 3708] Error with IIG.L: No data available for the requested date range
+2023-07-19 23:41:17,557 P[10100] [MainThread 3708] IIG.L: No data available for the requested date range | 
+IIG.L: No data available for 1993-2002
+2023-07-19 23:41:18,398 P[10100] [MainThread 3708] Error with IIG.L: No data available for the requested date range
+2023-07-19 23:41:18,398 P[10100] [MainThread 3708] IIG.L: No data available for the requested date range | 
+IIG.L: No data available for 2003-2012
+IIG.L completed!
+2023-07-19 23:41:22,431 P[10100] [MainThread 3708] Error with PNPL.L: No data available for the requested date range
+2023-07-19 23:41:22,431 P[10100] [MainThread 3708] PNPL.L: No data available for the requested date range | 
+PNPL.L: No data available for 1983-1992
+2023-07-19 23:41:23,174 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:41:23,174 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+PNPL.L: No data available for 1993-2002
+PNPL.L: No data available for 2003-2012
+2023-07-19 23:41:23,924 P[10100] [MainThread 3708] Error with PNPL.L: No data available for the requested date range
+2023-07-19 23:41:23,924 P[10100] [MainThread 3708] PNPL.L: No data available for the requested date range | 
+PNPL.L completed!
+2023-07-19 23:41:36,194 P[10100] [MainThread 3708] Error with CBX.L: No data available for the requested date range
+2023-07-19 23:41:36,195 P[10100] [MainThread 3708] CBX.L: No data available for the requested date range | 
+CBX.L: No data available for 1983-1992
+CBX.L: No data available for 1993-2002
+2023-07-19 23:41:37,108 P[10100] [MainThread 3708] Error with CBX.L: No data available for the requested date range
+2023-07-19 23:41:37,108 P[10100] [MainThread 3708] CBX.L: No data available for the requested date range | 
+CBX.L: No data available for 2003-2012
+2023-07-19 23:41:37,963 P[10100] [MainThread 3708] Error with CBX.L: No data available for the requested date range
+2023-07-19 23:41:37,963 P[10100] [MainThread 3708] CBX.L: No data available for the requested date range | 
+CBX.L completed!
+ATG.L: No data available for 1983-1992
+2023-07-19 23:41:41,930 P[10100] [MainThread 3708] Error with ATG.L: No data available for the requested date range
+2023-07-19 23:41:41,930 P[10100] [MainThread 3708] ATG.L: No data available for the requested date range | 
+2023-07-19 23:41:42,682 P[10100] [MainThread 3708] Error with ATG.L: No data available for the requested date range
+2023-07-19 23:41:42,683 P[10100] [MainThread 3708] ATG.L: No data available for the requested date range | 
+ATG.L: No data available for 1993-2002
+ATG.L: No data available for 2003-2012
+2023-07-19 23:41:43,427 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:41:43,427 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+ATG.L completed!
+2023-07-19 23:41:47,889 P[10100] [MainThread 3708] Error with ITS.L: No data available for the requested date range
+2023-07-19 23:41:47,889 P[10100] [MainThread 3708] ITS.L: No data available for the requested date range | 
+ITS.L: No data available for 1983-1992
+2023-07-19 23:41:48,639 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:41:48,639 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+ITS.L: No data available for 1993-2002
+2023-07-19 23:41:49,552 P[10100] [MainThread 3708] Error with ITS.L: No data available for the requested date range
+2023-07-19 23:41:49,552 P[10100] [MainThread 3708] ITS.L: No data available for the requested date range | 
+ITS.L: No data available for 2003-2012
+ITS.L: No data available for 2023-2032
+2023-07-19 23:41:51,742 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:41:51,742 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+ITS.L completed!
+2023-07-19 23:41:53,717 P[10100] [MainThread 3708] Error with AOM.L: No data available for the requested date range
+2023-07-19 23:41:53,717 P[10100] [MainThread 3708] AOM.L: No data available for the requested date range | 
+AOM.L: No data available for 1983-1992
+AOM.L: No data available for 1993-2002
+2023-07-19 23:41:55,856 P[10100] [MainThread 3708] Error with AOM.L: No data available for the requested date range
+2023-07-19 23:41:55,856 P[10100] [MainThread 3708] AOM.L: No data available for the requested date range | 
+AOM.L: No data available for 2003-2012
+2023-07-19 23:41:56,609 P[10100] [MainThread 3708] Error with AOM.L: No data available for the requested date range
+2023-07-19 23:41:56,609 P[10100] [MainThread 3708] AOM.L: No data available for the requested date range | 
+AOM.L completed!
+OCTP.L: No data available for 1983-1992
+2023-07-19 23:42:01,137 P[10100] [MainThread 3708] Error with OCTP.L: No data available for the requested date range
+2023-07-19 23:42:01,138 P[10100] [MainThread 3708] OCTP.L: No data available for the requested date range | 
+2023-07-19 23:42:02,071 P[10100] [MainThread 3708] Error with OCTP.L: No data available for the requested date range
+2023-07-19 23:42:02,071 P[10100] [MainThread 3708] OCTP.L: No data available for the requested date range | 
+OCTP.L: No data available for 1993-2002
+2023-07-19 23:42:03,568 P[10100] [MainThread 3708] Error with OCTP.L: No data available for the requested date range
+2023-07-19 23:42:03,568 P[10100] [MainThread 3708] OCTP.L: No data available for the requested date range | 
+OCTP.L: No data available for 2003-2012
+OCTP.L: No data available for 2023-2032
+OCTP.L completed!
+2023-07-19 23:42:38,784 P[10100] [MainThread 3708] UDF Core request failed. Gateway Time-out
+2023-07-19 23:42:38,784 P[10100] [MainThread 3708] HTTP request failed: EikonError-UDF Core request failed. Gateway Time-out
+2023-07-19 23:42:40,730 P[10100] [MainThread 3708] Error with DNM.L: No data available for the requested date range
+2023-07-19 23:42:40,730 P[10100] [MainThread 3708] DNM.L: No data available for the requested date range | 
+DNM.L: No data available for 1983-1992
+2023-07-19 23:42:41,704 P[10100] [MainThread 3708] Error with DNM.L: No data available for the requested date range
+2023-07-19 23:42:41,705 P[10100] [MainThread 3708] DNM.L: No data available for the requested date range | 
+DNM.L: No data available for 1993-2002
+2023-07-19 23:42:42,575 P[10100] [MainThread 3708] Error with DNM.L: No data available for the requested date range
+2023-07-19 23:42:42,575 P[10100] [MainThread 3708] DNM.L: No data available for the requested date range | 
+DNM.L: No data available for 2003-2012
+2023-07-19 23:42:44,631 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:42:44,631 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+DNM.L: No data available for 2023-2032
+DNM.L completed!
+2023-07-19 23:42:46,885 P[10100] [MainThread 3708] Error with AFPA.L: No data available for the requested date range
+2023-07-19 23:42:46,885 P[10100] [MainThread 3708] AFPA.L: No data available for the requested date range | 
+AFPA.L: No data available for 1983-1992
+AFPA.L: No data available for 1993-2002
+2023-07-19 23:42:47,795 P[10100] [MainThread 3708] Error with AFPA.L: No data available for the requested date range
+2023-07-19 23:42:47,795 P[10100] [MainThread 3708] AFPA.L: No data available for the requested date range | 
+AFPA.L: No data available for 2003-2012
+2023-07-19 23:42:48,538 P[10100] [MainThread 3708] Error with AFPA.L: No data available for the requested date range
+2023-07-19 23:42:48,538 P[10100] [MainThread 3708] AFPA.L: No data available for the requested date range | 
+AFPA.L: No data available for 2023-2032
+2023-07-19 23:42:50,618 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:42:50,618 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+AFPA.L completed!
+2023-07-19 23:42:52,495 P[10100] [MainThread 3708] Error with ART.L: No data available for the requested date range
+2023-07-19 23:42:52,495 P[10100] [MainThread 3708] ART.L: No data available for the requested date range | 
+ART.L: No data available for 1983-1992
+ART.L: No data available for 1993-2002
+2023-07-19 23:42:53,428 P[10100] [MainThread 3708] Error with ART.L: No data available for the requested date range
+2023-07-19 23:42:53,428 P[10100] [MainThread 3708] ART.L: No data available for the requested date range | 
+2023-07-19 23:42:57,830 P[10100] [MainThread 3708] Error with ART.L: No data available for the requested date range
+2023-07-19 23:42:57,830 P[10100] [MainThread 3708] ART.L: No data available for the requested date range | 
+ART.L: No data available for 2003-2012
+2023-07-19 23:42:58,582 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:42:58,582 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+ART.L: No data available for 2013-2022
+ART.L completed!
+FWD.L: No data available for 1983-1992
+2023-07-19 23:43:01,363 P[10100] [MainThread 3708] Error with FWD.L: No data available for the requested date range
+2023-07-19 23:43:01,363 P[10100] [MainThread 3708] FWD.L: No data available for the requested date range | 
+2023-07-19 23:43:02,256 P[10100] [MainThread 3708] Error with FWD.L: No data available for the requested date range
+2023-07-19 23:43:02,256 P[10100] [MainThread 3708] FWD.L: No data available for the requested date range | 
+FWD.L: No data available for 1993-2002
+FWD.L: No data available for 2003-2012
+2023-07-19 23:43:03,003 P[10100] [MainThread 3708] Error with FWD.L: No data available for the requested date range
+2023-07-19 23:43:03,003 P[10100] [MainThread 3708] FWD.L: No data available for the requested date range | 
+FWD.L completed!
+2023-07-19 23:43:19,415 P[10100] [MainThread 3708] Error with BHL.L: No data available for the requested date range
+2023-07-19 23:43:19,416 P[10100] [MainThread 3708] BHL.L: No data available for the requested date range | 
+BHL.L: No data available for 1983-1992
+2023-07-19 23:43:20,262 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:43:20,262 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+BHL.L: No data available for 1993-2002
+BHL.L: No data available for 2003-2012
+2023-07-19 23:43:21,140 P[10100] [MainThread 3708] Error with BHL.L: No data available for the requested date range
+2023-07-19 23:43:21,140 P[10100] [MainThread 3708] BHL.L: No data available for the requested date range | 
+BHL.L completed!
+2023-07-19 23:43:25,318 P[10100] [MainThread 3708] Error with ONT.L: No data available for the requested date range
+2023-07-19 23:43:25,318 P[10100] [MainThread 3708] ONT.L: No data available for the requested date range | 
+ONT.L: No data available for 1983-1992
+ONT.L: No data available for 1993-2002
+2023-07-19 23:43:26,063 P[10100] [MainThread 3708] Error with ONT.L: No data available for the requested date range
+2023-07-19 23:43:26,063 P[10100] [MainThread 3708] ONT.L: No data available for the requested date range | 
+2023-07-19 23:43:26,822 P[10100] [MainThread 3708] Error with ONT.L: No data available for the requested date range
+2023-07-19 23:43:26,822 P[10100] [MainThread 3708] ONT.L: No data available for the requested date range | 
+ONT.L: No data available for 2003-2012
+2023-07-19 23:43:28,621 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:43:28,622 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+ONT.L: No data available for 2023-2032
+ONT.L completed!
+FSF.L: No data available for 1983-1992
+2023-07-19 23:43:30,598 P[10100] [MainThread 3708] Error with FSF.L: No data available for the requested date range
+2023-07-19 23:43:30,599 P[10100] [MainThread 3708] FSF.L: No data available for the requested date range | 
+2023-07-19 23:43:31,421 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:43:31,421 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+FSF.L: No data available for 1993-2002
+FSF.L: No data available for 2003-2012
+2023-07-19 23:43:38,278 P[10100] [MainThread 3708] Error with FSF.L: No data available for the requested date range
+2023-07-19 23:43:38,278 P[10100] [MainThread 3708] FSF.L: No data available for the requested date range | 
+2023-07-19 23:43:40,188 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:43:40,189 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+FSF.L: No data available for 2023-2032
+FSF.L completed!
+PEEL.L: No data available for 1983-1992
+2023-07-19 23:43:46,648 P[10100] [MainThread 3708] Error with PEEL.L: No data available for the requested date range
+2023-07-19 23:43:46,648 P[10100] [MainThread 3708] PEEL.L: No data available for the requested date range | 
+PEEL.L: No data available for 1993-2002
+2023-07-19 23:43:47,510 P[10100] [MainThread 3708] Error with PEEL.L: No data available for the requested date range
+2023-07-19 23:43:47,510 P[10100] [MainThread 3708] PEEL.L: No data available for the requested date range | 
+PEEL.L: No data available for 2003-2012
+2023-07-19 23:43:48,515 P[10100] [MainThread 3708] Error with PEEL.L: No data available for the requested date range
+2023-07-19 23:43:48,515 P[10100] [MainThread 3708] PEEL.L: No data available for the requested date range | 
+PEEL.L completed!
+2023-07-19 23:43:52,387 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:43:52,388 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+CGL.L: No data available for 1983-1992
+CGL.L: No data available for 1993-2002
+2023-07-19 23:43:53,252 P[10100] [MainThread 3708] Error with CGL.L: No data available for the requested date range
+2023-07-19 23:43:53,252 P[10100] [MainThread 3708] CGL.L: No data available for the requested date range | 
+CGL.L: No data available for 2003-2012
+2023-07-19 23:43:54,147 P[10100] [MainThread 3708] Error with CGL.L: No data available for the requested date range
+2023-07-19 23:43:54,148 P[10100] [MainThread 3708] CGL.L: No data available for the requested date range | 
+CGL.L completed!
+FRG.L: No data available for 1983-1992
+2023-07-19 23:44:11,643 P[10100] [MainThread 3708] Error with FRG.L: No data available for the requested date range
+2023-07-19 23:44:11,643 P[10100] [MainThread 3708] FRG.L: No data available for the requested date range | 
+FRG.L: No data available for 1993-2002
+2023-07-19 23:44:12,485 P[10100] [MainThread 3708] Error with FRG.L: No data available for the requested date range
+2023-07-19 23:44:12,486 P[10100] [MainThread 3708] FRG.L: No data available for the requested date range | 
+2023-07-19 23:44:13,380 P[10100] [MainThread 3708] Error with FRG.L: No data available for the requested date range
+2023-07-19 23:44:13,380 P[10100] [MainThread 3708] FRG.L: No data available for the requested date range | 
+FRG.L: No data available for 2003-2012
+FRG.L completed!
+CTA.L: No data available for 1983-1992
+2023-07-19 23:44:17,345 P[10100] [MainThread 3708] Error with CTA.L: No data available for the requested date range
+2023-07-19 23:44:17,346 P[10100] [MainThread 3708] CTA.L: No data available for the requested date range | 
+2023-07-19 23:44:18,169 P[10100] [MainThread 3708] Error with CTA.L: No data available for the requested date range
+2023-07-19 23:44:18,169 P[10100] [MainThread 3708] CTA.L: No data available for the requested date range | 
+CTA.L: No data available for 1993-2002
+CTA.L: No data available for 2003-2012
+2023-07-19 23:44:24,976 P[10100] [MainThread 3708] Error with CTA.L: No data available for the requested date range
+2023-07-19 23:44:24,977 P[10100] [MainThread 3708] CTA.L: No data available for the requested date range | 
+CTA.L completed!
+LIBL.L: No data available for 1983-1992
+2023-07-19 23:44:29,474 P[10100] [MainThread 3708] Error with LIBL.L: No data available for the requested date range
+2023-07-19 23:44:29,474 P[10100] [MainThread 3708] LIBL.L: No data available for the requested date range | 
+2023-07-19 23:44:30,394 P[10100] [MainThread 3708] Error with LIBL.L: No data available for the requested date range
+2023-07-19 23:44:30,395 P[10100] [MainThread 3708] LIBL.L: No data available for the requested date range | 
+LIBL.L: No data available for 1993-2002
+LIBL.L: No data available for 2003-2012
+2023-07-19 23:44:31,139 P[10100] [MainThread 3708] Error with LIBL.L: No data available for the requested date range
+2023-07-19 23:44:31,139 P[10100] [MainThread 3708] LIBL.L: No data available for the requested date range | 
+LIBL.L: No data available for 2023-2032
+LIBL.L completed!
+2023-07-19 23:44:32,962 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:44:32,963 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+CTL.L: No data available for 1983-1992
+2023-07-19 23:44:35,022 P[10100] [MainThread 3708] Error with CTL.L: No data available for the requested date range
+2023-07-19 23:44:35,022 P[10100] [MainThread 3708] CTL.L: No data available for the requested date range | 
+2023-07-19 23:44:37,701 P[10100] [MainThread 3708] Error with CTL.L: No data available for the requested date range
+2023-07-19 23:44:37,701 P[10100] [MainThread 3708] CTL.L: No data available for the requested date range | 
+CTL.L: No data available for 1993-2002
+2023-07-19 23:44:38,586 P[10100] [MainThread 3708] Error with CTL.L: No data available for the requested date range
+2023-07-19 23:44:38,586 P[10100] [MainThread 3708] CTL.L: No data available for the requested date range | 
+CTL.L: No data available for 2003-2012
+CTL.L completed!
+2023-07-19 23:44:55,023 P[10100] [MainThread 3708] Error with ARA.L: No data available for the requested date range
+2023-07-19 23:44:55,024 P[10100] [MainThread 3708] ARA.L: No data available for the requested date range | 
+ARA.L: No data available for 1983-1992
+2023-07-19 23:44:55,797 P[10100] [MainThread 3708] Error with ARA.L: No data available for the requested date range
+2023-07-19 23:44:55,797 P[10100] [MainThread 3708] ARA.L: No data available for the requested date range | 
+ARA.L: No data available for 1993-2002
+ARA.L: No data available for 2003-2012
+2023-07-19 23:44:56,558 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:44:56,559 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+ARA.L completed!
+2023-07-19 23:45:06,847 P[10100] [MainThread 3708] Error with KEN.L: No data available for the requested date range
+2023-07-19 23:45:06,847 P[10100] [MainThread 3708] KEN.L: No data available for the requested date range | 
+KEN.L: No data available for 1983-1992
+KEN.L: No data available for 1993-2002
+2023-07-19 23:45:07,879 P[10100] [MainThread 3708] Error with KEN.L: No data available for the requested date range
+2023-07-19 23:45:07,879 P[10100] [MainThread 3708] KEN.L: No data available for the requested date range | 
+KEN.L: No data available for 2003-2012
+2023-07-19 23:45:08,870 P[10100] [MainThread 3708] Error with KEN.L: No data available for the requested date range
+2023-07-19 23:45:08,870 P[10100] [MainThread 3708] KEN.L: No data available for the requested date range | 
+KEN.L: No data available for 2013-2022
+2023-07-19 23:45:09,660 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:45:09,661 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+KEN.L completed!
+2023-07-19 23:45:12,786 P[10100] [MainThread 3708] Error with GSC.L: No data available for the requested date range
+2023-07-19 23:45:12,787 P[10100] [MainThread 3708] GSC.L: No data available for the requested date range | 
+GSC.L: No data available for 1983-1992
+2023-07-19 23:45:13,588 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:45:13,588 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+GSC.L: No data available for 1993-2002
+2023-07-19 23:45:14,624 P[10100] [MainThread 3708] Error with GSC.L: No data available for the requested date range
+2023-07-19 23:45:14,624 P[10100] [MainThread 3708] GSC.L: No data available for the requested date range | 
+GSC.L: No data available for 2003-2012
+GSC.L completed!
+2023-07-19 23:45:18,552 P[10100] [MainThread 3708] Error with TRA.L: No data available for the requested date range
+2023-07-19 23:45:18,552 P[10100] [MainThread 3708] TRA.L: No data available for the requested date range | 
+TRA.L: No data available for 1983-1992
+TRA.L: No data available for 1993-2002
+2023-07-19 23:45:20,430 P[10100] [MainThread 3708] Error with TRA.L: No data available for the requested date range
+2023-07-19 23:45:20,431 P[10100] [MainThread 3708] TRA.L: No data available for the requested date range | 
+TRA.L: No data available for 2003-2012
+2023-07-19 23:45:21,271 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:45:21,271 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+TRA.L completed!
+2023-07-19 23:45:36,211 P[10100] [MainThread 3708] Error with AURR.L: No data available for the requested date range
+2023-07-19 23:45:36,211 P[10100] [MainThread 3708] AURR.L: No data available for the requested date range | 
+AURR.L: No data available for 1983-1992
+2023-07-19 23:45:37,198 P[10100] [MainThread 3708] Error with AURR.L: No data available for the requested date range
+2023-07-19 23:45:37,198 P[10100] [MainThread 3708] AURR.L: No data available for the requested date range | 
+AURR.L: No data available for 1993-2002
+AURR.L: No data available for 2003-2012
+2023-07-19 23:45:38,047 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:45:38,047 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+AURR.L completed!
+2023-07-19 23:45:42,051 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:45:42,051 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+ATN.L: No data available for 1983-1992
+ATN.L: No data available for 1993-2002
+2023-07-19 23:45:42,927 P[10100] [MainThread 3708] Error with ATN.L: No data available for the requested date range
+2023-07-19 23:45:42,928 P[10100] [MainThread 3708] ATN.L: No data available for the requested date range | 
+ATN.L: No data available for 2003-2012
+2023-07-19 23:45:43,876 P[10100] [MainThread 3708] Error with ATN.L: No data available for the requested date range
+2023-07-19 23:45:43,876 P[10100] [MainThread 3708] ATN.L: No data available for the requested date range | 
+ATN.L completed!
+2023-07-19 23:45:49,550 P[10100] [MainThread 3708] Error with KIST.L: No data available for the requested date range
+2023-07-19 23:45:49,550 P[10100] [MainThread 3708] KIST.L: No data available for the requested date range | 
+KIST.L: No data available for 1983-1992
+2023-07-19 23:45:50,548 P[10100] [MainThread 3708] Error with KIST.L: No data available for the requested date range
+2023-07-19 23:45:50,549 P[10100] [MainThread 3708] KIST.L: No data available for the requested date range | 
+KIST.L: No data available for 1993-2002
+2023-07-19 23:45:51,405 P[10100] [MainThread 3708] Error with KIST.L: No data available for the requested date range
+2023-07-19 23:45:51,405 P[10100] [MainThread 3708] KIST.L: No data available for the requested date range | 
+KIST.L: No data available for 2003-2012
+KIST.L completed!
+CCL.L: No data available for 1983-1992
+2023-07-19 23:45:56,730 P[10100] [MainThread 3708] Error with CCL.L: No data available for the requested date range
+2023-07-19 23:45:56,730 P[10100] [MainThread 3708] CCL.L: No data available for the requested date range | 
+2023-07-19 23:45:58,728 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:45:58,728 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+CCL.L: No data available for 2003-2012
+CCL.L completed!
+BATS.L: No data available for 1993-2002
+2023-07-19 23:46:06,878 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:46:06,878 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+BATS.L completed!
+HDD.L: No data available for 1983-1992
+2023-07-19 23:46:31,131 P[10100] [MainThread 3708] Error with HDD.L: No data available for the requested date range
+2023-07-19 23:46:31,131 P[10100] [MainThread 3708] HDD.L: No data available for the requested date range | 
+2023-07-19 23:46:32,894 P[10100] [MainThread 3708] Error with HDD.L: No data available for the requested date range
+2023-07-19 23:46:32,894 P[10100] [MainThread 3708] HDD.L: No data available for the requested date range | 
+HDD.L: No data available for 1993-2002
+2023-07-19 23:46:35,813 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:46:35,813 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+HDD.L: No data available for 2013-2022
+HDD.L completed!
+HAN.L: No data available for 1983-1992
+2023-07-19 23:46:38,796 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:46:38,797 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+HAN.L completed!
+IHC.L: No data available for 1983-1992
+2023-07-19 23:46:57,506 P[10100] [MainThread 3708] Error with IHC.L: No data available for the requested date range
+2023-07-19 23:46:57,506 P[10100] [MainThread 3708] IHC.L: No data available for the requested date range | 
+IHC.L completed!
+2023-07-19 23:47:12,641 P[10100] [MainThread 3708] Error with CCP.L: No data available for the requested date range
+2023-07-19 23:47:12,641 P[10100] [MainThread 3708] CCP.L: No data available for the requested date range | 
+CCP.L: No data available for 1983-1992
+CCP.L: No data available for 2003-2012
+2023-07-19 23:47:17,535 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:47:17,535 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+CCP.L completed!
+HYG.L: No data available for 1983-1992
+2023-07-19 23:47:22,864 P[10100] [MainThread 3708] Error with HYG.L: No data available for the requested date range
+2023-07-19 23:47:22,865 P[10100] [MainThread 3708] HYG.L: No data available for the requested date range | 
+2023-07-19 23:47:37,310 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:47:37,311 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+HYG.L: No data available for 2003-2012
+HYG.L: No data available for 2013-2022
+2023-07-19 23:47:38,067 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:47:38,067 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+HYG.L completed!
+2023-07-19 23:47:56,605 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:47:56,605 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+REDD.L: No data available for 1993-2002
+REDD.L completed!
+HAYS.L completed!
+AEI.L: No data available for 1993-2002
+2023-07-19 23:48:46,796 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:48:46,798 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+AEI.L completed!
+BRK.L: No data available for 1983-1992
+2023-07-19 23:48:56,045 P[10100] [MainThread 3708] Error with BRK.L: No data available for the requested date range
+2023-07-19 23:48:56,045 P[10100] [MainThread 3708] BRK.L: No data available for the requested date range | 
+2023-07-19 23:48:56,975 P[10100] [MainThread 3708] Error with BRK.L: No data available for the requested date range
+2023-07-19 23:48:56,975 P[10100] [MainThread 3708] BRK.L: No data available for the requested date range | 
+BRK.L: No data available for 1993-2002
+2023-07-19 23:48:57,827 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:48:57,827 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+BRK.L: No data available for 2003-2012
+BRK.L: No data available for 2023-2032
+2023-07-19 23:49:00,977 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:49:00,977 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+BRK.L completed!
+2023-07-19 23:49:03,016 P[10100] [MainThread 3708] Error with HWC.L: No data available for the requested date range
+2023-07-19 23:49:03,016 P[10100] [MainThread 3708] HWC.L: No data available for the requested date range | 
+HWC.L: No data available for 1983-1992
+HWC.L: No data available for 2023-2032
+2023-07-19 23:49:11,392 P[10100] [MainThread 3708] Error with HWC.L: No data available for the requested date range
+2023-07-19 23:49:11,392 P[10100] [MainThread 3708] HWC.L: No data available for the requested date range | 
+HWC.L completed!
+2023-07-19 23:49:13,275 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:49:13,275 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+SVE.L: No data available for 1983-1992
+SVE.L: No data available for 2013-2022
+2023-07-19 23:49:19,486 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:49:19,486 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+SVE.L completed!
+NWG.L completed!
+2023-07-19 23:49:45,713 P[10100] [MainThread 3708] Error with CCC.L: No data available for the requested date range
+2023-07-19 23:49:45,713 P[10100] [MainThread 3708] CCC.L: No data available for the requested date range | 
+CCC.L: No data available for 1983-1992
+2023-07-19 23:49:54,498 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:49:54,499 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+CCC.L: No data available for 2023-2032
+CCC.L completed!
+CTY.L: No data available for 2013-2022
+2023-07-19 23:50:25,531 P[10100] [MainThread 3708] UDF Core request failed. Gateway Time-out
+2023-07-19 23:50:25,532 P[10100] [MainThread 3708] HTTP request failed: EikonError-UDF Core request failed. Gateway Time-out
+CTY.L completed!
+2023-07-19 23:50:33,935 P[10100] [MainThread 3708] Error with INSP.L: No data available for the requested date range
+2023-07-19 23:50:33,935 P[10100] [MainThread 3708] INSP.L: No data available for the requested date range | 
+INSP.L: No data available for 1983-1992
+2023-07-19 23:50:34,917 P[10100] [MainThread 3708] Error with INSP.L: No data available for the requested date range
+2023-07-19 23:50:34,917 P[10100] [MainThread 3708] INSP.L: No data available for the requested date range | 
+INSP.L: No data available for 1993-2002
+INSP.L completed!
+LLOY.L completed!
+2023-07-19 23:51:08,648 P[10100] [MainThread 3708] Error with FTF.L: No data available for the requested date range
+2023-07-19 23:51:08,648 P[10100] [MainThread 3708] FTF.L: No data available for the requested date range | 
+FTF.L: No data available for 1983-1992
+2023-07-19 23:51:09,411 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:51:09,411 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+FTF.L: No data available for 1993-2002
+FTF.L completed!
+TIME.L: No data available for 1983-1992
+2023-07-19 23:51:29,257 P[10100] [MainThread 3708] Error with TIME.L: No data available for the requested date range
+2023-07-19 23:51:29,257 P[10100] [MainThread 3708] TIME.L: No data available for the requested date range | 
+TIME.L: No data available for 1993-2002
+2023-07-19 23:51:30,102 P[10100] [MainThread 3708] Error with TIME.L: No data available for the requested date range
+2023-07-19 23:51:30,102 P[10100] [MainThread 3708] TIME.L: No data available for the requested date range | 
+TIME.L completed!
+2023-07-19 23:51:37,074 P[10100] [MainThread 3708] Error with PCT.L: No data available for the requested date range
+2023-07-19 23:51:37,074 P[10100] [MainThread 3708] PCT.L: No data available for the requested date range | 
+PCT.L: No data available for 1983-1992
+PCT.L completed!
+RTN.L completed!
+MIG.L: No data available for 1983-1992
+2023-07-19 23:52:30,897 P[10100] [MainThread 3708] Error with MIG.L: No data available for the requested date range
+2023-07-19 23:52:30,897 P[10100] [MainThread 3708] MIG.L: No data available for the requested date range | 
+MIG.L: No data available for 1993-2002
+2023-07-19 23:52:31,647 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:52:31,647 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+MIG.L completed!
+2023-07-19 23:52:38,955 P[10100] [MainThread 3708] Error with IGG.L: No data available for the requested date range
+2023-07-19 23:52:38,955 P[10100] [MainThread 3708] IGG.L: No data available for the requested date range | 
+IGG.L: No data available for 1983-1992
+IGG.L: No data available for 1993-2002
+2023-07-19 23:52:40,461 P[10100] [MainThread 3708] Error with IGG.L: No data available for the requested date range
+2023-07-19 23:52:40,461 P[10100] [MainThread 3708] IGG.L: No data available for the requested date range | 
+2023-07-19 23:52:43,175 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:52:43,175 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+IGG.L: No data available for 2013-2022
+IGG.L completed!
+2023-07-19 23:52:46,019 P[10100] [MainThread 3708] Error with GCC.L: No data available for the requested date range
+2023-07-19 23:52:46,020 P[10100] [MainThread 3708] GCC.L: No data available for the requested date range | 
+GCC.L: No data available for 1983-1992
+2023-07-19 23:52:46,768 P[10100] [MainThread 3708] Error with GCC.L: No data available for the requested date range
+2023-07-19 23:52:46,768 P[10100] [MainThread 3708] GCC.L: No data available for the requested date range | 
+GCC.L: No data available for 1993-2002
+GCC.L completed!
+2023-07-19 23:53:06,398 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:53:06,399 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+CHCH.L: No data available for 1983-1992
+CHCH.L completed!
+PHSC.L: No data available for 1983-1992
+2023-07-19 23:53:20,330 P[10100] [MainThread 3708] Error with PHSC.L: No data available for the requested date range
+2023-07-19 23:53:20,330 P[10100] [MainThread 3708] PHSC.L: No data available for the requested date range | 
+2023-07-19 23:53:21,206 P[10100] [MainThread 3708] Error with PHSC.L: No data available for the requested date range
+2023-07-19 23:53:21,206 P[10100] [MainThread 3708] PHSC.L: No data available for the requested date range | 
+PHSC.L: No data available for 1993-2002
+2023-07-19 23:53:22,065 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:53:22,066 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+PHSC.L: No data available for 2003-2012
+PHSC.L completed!
+QED.L: No data available for 1983-1992
+2023-07-19 23:53:41,629 P[10100] [MainThread 3708] Error with QED.L: No data available for the requested date range
+2023-07-19 23:53:41,630 P[10100] [MainThread 3708] QED.L: No data available for the requested date range | 
+QED.L: No data available for 1993-2002
+2023-07-19 23:53:43,427 P[10100] [MainThread 3708] Error with QED.L: No data available for the requested date range
+2023-07-19 23:53:43,427 P[10100] [MainThread 3708] QED.L: No data available for the requested date range | 
+QED.L completed!
+2023-07-19 23:54:08,148 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:54:08,149 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+SPT.L: No data available for 2023-2032
+SPT.L completed!
+MNP.L: No data available for 1983-1992
+2023-07-19 23:54:09,992 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:54:09,992 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+MNP.L completed!
+PDL.L: No data available for 1983-1992
+2023-07-19 23:54:18,797 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:54:18,798 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+2023-07-19 23:54:19,660 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:54:19,660 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+PDL.L: No data available for 1993-2002
+2023-07-19 23:54:22,382 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:54:22,382 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+PDL.L: No data available for 2013-2022
+PDL.L completed!
+SEC.L: No data available for 1983-1992
+2023-07-19 23:54:25,192 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:54:25,192 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+2023-07-19 23:54:26,121 P[10100] [MainThread 3708] Error with SEC.L: No data available for the requested date range
+2023-07-19 23:54:26,121 P[10100] [MainThread 3708] SEC.L: No data available for the requested date range | 
+SEC.L: No data available for 1993-2002
+SEC.L completed!
+BGO.L: No data available for 1983-1992
+2023-07-19 23:54:47,579 P[10100] [MainThread 3708] Error with BGO.L: No data available for the requested date range
+2023-07-19 23:54:47,579 P[10100] [MainThread 3708] BGO.L: No data available for the requested date range | 
+BGO.L: No data available for 1993-2002
+2023-07-19 23:54:48,548 P[10100] [MainThread 3708] Error with BGO.L: No data available for the requested date range
+2023-07-19 23:54:48,549 P[10100] [MainThread 3708] BGO.L: No data available for the requested date range | 
+BGO.L completed!
+2023-07-19 23:54:58,451 P[10100] [MainThread 3708] Error with SRB.L: No data available for the requested date range
+2023-07-19 23:54:58,451 P[10100] [MainThread 3708] SRB.L: No data available for the requested date range | 
+SRB.L: No data available for 1983-1992
+2023-07-19 23:54:59,449 P[10100] [MainThread 3708] Error with SRB.L: No data available for the requested date range
+2023-07-19 23:54:59,449 P[10100] [MainThread 3708] SRB.L: No data available for the requested date range | 
+SRB.L: No data available for 1993-2002
+SRB.L completed!
+ITV.L: No data available for 2013-2022
+2023-07-19 23:55:29,043 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:55:29,043 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+ITV.L completed!
+2023-07-19 23:55:32,714 P[10100] [MainThread 3708] Error with MEN.L: No data available for the requested date range
+2023-07-19 23:55:32,714 P[10100] [MainThread 3708] MEN.L: No data available for the requested date range | 
+MEN.L: No data available for 1983-1992
+MEN.L: No data available for 1993-2002
+2023-07-19 23:55:33,579 P[10100] [MainThread 3708] Error with MEN.L: No data available for the requested date range
+2023-07-19 23:55:33,579 P[10100] [MainThread 3708] MEN.L: No data available for the requested date range | 
+MEN.L completed!
+LEX.L: No data available for 1983-1992
+2023-07-19 23:55:41,129 P[10100] [MainThread 3708] Error with LEX.L: No data available for the requested date range
+2023-07-19 23:55:41,130 P[10100] [MainThread 3708] LEX.L: No data available for the requested date range | 
+2023-07-19 23:55:42,150 P[10100] [MainThread 3708] Error with LEX.L: No data available for the requested date range
+2023-07-19 23:55:42,150 P[10100] [MainThread 3708] LEX.L: No data available for the requested date range | 
+LEX.L: No data available for 1993-2002
+LEX.L completed!
+2023-07-19 23:55:52,189 P[10100] [MainThread 3708] Error with HWG.L: No data available for the requested date range
+2023-07-19 23:55:52,189 P[10100] [MainThread 3708] HWG.L: No data available for the requested date range | 
+HWG.L: No data available for 1983-1992
+HWG.L completed!
+AET.L: No data available for 1983-1992
+2023-07-19 23:56:01,550 P[10100] [MainThread 3708] Error with AET.L: No data available for the requested date range
+2023-07-19 23:56:01,551 P[10100] [MainThread 3708] AET.L: No data available for the requested date range | 
+AET.L completed!
+2023-07-19 23:56:14,422 P[10100] [MainThread 3708] Error with WSG.L: No data available for the requested date range
+2023-07-19 23:56:14,423 P[10100] [MainThread 3708] WSG.L: No data available for the requested date range | 
+WSG.L: No data available for 1983-1992
+2023-07-19 23:56:15,406 P[10100] [MainThread 3708] Error with WSG.L: No data available for the requested date range
+2023-07-19 23:56:15,406 P[10100] [MainThread 3708] WSG.L: No data available for the requested date range | 
+WSG.L: No data available for 1993-2002
+WSG.L: No data available for 2023-2032
+2023-07-19 23:56:20,245 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:56:20,245 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+WSG.L completed!
+2023-07-19 23:56:22,844 P[10100] [MainThread 3708] Error with CEG.L: No data available for the requested date range
+2023-07-19 23:56:22,844 P[10100] [MainThread 3708] CEG.L: No data available for the requested date range | 
+CEG.L: No data available for 1983-1992
+CEG.L: No data available for 1993-2002
+2023-07-19 23:56:23,871 P[10100] [MainThread 3708] Error with CEG.L: No data available for the requested date range
+2023-07-19 23:56:23,871 P[10100] [MainThread 3708] CEG.L: No data available for the requested date range | 
+2023-07-19 23:56:26,636 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:56:26,636 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+CEG.L: No data available for 2013-2022
+CEG.L completed!
+2023-07-19 23:56:29,664 P[10100] [MainThread 3708] Error with TRX.L: No data available for the requested date range
+2023-07-19 23:56:29,664 P[10100] [MainThread 3708] TRX.L: No data available for the requested date range | 
+TRX.L: No data available for 1983-1992
+TRX.L: No data available for 1993-2002
+2023-07-19 23:56:30,431 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:56:30,431 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+TRX.L: No data available for 2023-2032
+2023-07-19 23:56:37,856 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:56:37,856 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+TRX.L completed!
+2023-07-19 23:56:42,847 P[10100] [MainThread 3708] Error with HARL.L: No data available for the requested date range
+2023-07-19 23:56:42,847 P[10100] [MainThread 3708] HARL.L: No data available for the requested date range | 
+HARL.L: No data available for 1983-1992
+2023-07-19 23:56:44,511 P[10100] [MainThread 3708] Error with HARL.L: No data available for the requested date range
+2023-07-19 23:56:44,512 P[10100] [MainThread 3708] HARL.L: No data available for the requested date range | 
+HARL.L: No data available for 1993-2002
+HARL.L completed!
+PRM.L: No data available for 1983-1992
+2023-07-19 23:56:55,794 P[10100] [MainThread 3708] Error with PRM.L: No data available for the requested date range
+2023-07-19 23:56:55,794 P[10100] [MainThread 3708] PRM.L: No data available for the requested date range | 
+PRM.L: No data available for 1993-2002
+2023-07-19 23:56:56,534 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:56:56,534 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+PRM.L completed!
+2023-07-19 23:57:05,299 P[10100] [MainThread 3708] Error with IWG.L: No data available for the requested date range
+2023-07-19 23:57:05,299 P[10100] [MainThread 3708] IWG.L: No data available for the requested date range | 
+IWG.L: No data available for 1983-1992
+2023-07-19 23:57:07,588 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:57:07,588 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+IWG.L: No data available for 2003-2012
+IWG.L completed!
+2023-07-19 23:57:13,286 P[10100] [MainThread 3708] Error with GOT.L: No data available for the requested date range
+2023-07-19 23:57:13,287 P[10100] [MainThread 3708] GOT.L: No data available for the requested date range | 
+GOT.L: No data available for 1983-1992
+2023-07-19 23:57:15,129 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:57:15,130 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+GOT.L: No data available for 2003-2012
+GOT.L completed!
+2023-07-19 23:57:21,035 P[10100] [MainThread 3708] Error with FIH.L: No data available for the requested date range
+2023-07-19 23:57:21,035 P[10100] [MainThread 3708] FIH.L: No data available for the requested date range | 
+FIH.L: No data available for 1983-1992
+2023-07-19 23:57:21,777 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:57:21,777 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+FIH.L: No data available for 1993-2002
+FIH.L: No data available for 2003-2012
+2023-07-19 23:57:41,548 P[10100] [MainThread 3708] UDF Core request failed. Gateway Time-out
+2023-07-19 23:57:41,548 P[10100] [MainThread 3708] HTTP request failed: EikonError-UDF Core request failed. Gateway Time-out
+FIH.L completed!
+SAL.L: No data available for 1983-1992
+2023-07-19 23:58:00,556 P[10100] [MainThread 3708] Error with SAL.L: No data available for the requested date range
+2023-07-19 23:58:00,557 P[10100] [MainThread 3708] SAL.L: No data available for the requested date range | 
+2023-07-19 23:58:01,397 P[10100] [MainThread 3708] Error with SAL.L: No data available for the requested date range
+2023-07-19 23:58:01,397 P[10100] [MainThread 3708] SAL.L: No data available for the requested date range | 
+SAL.L: No data available for 1993-2002
+SAL.L completed!
+2023-07-19 23:58:10,326 P[10100] [MainThread 3708] Error with SAR.L: No data available for the requested date range
+2023-07-19 23:58:10,326 P[10100] [MainThread 3708] SAR.L: No data available for the requested date range | 
+SAR.L: No data available for 1983-1992
+SAR.L: No data available for 1993-2002
+2023-07-19 23:58:11,135 P[10100] [MainThread 3708] Error with SAR.L: No data available for the requested date range
+2023-07-19 23:58:11,135 P[10100] [MainThread 3708] SAR.L: No data available for the requested date range | 
+SAR.L completed!
+STAR.L: No data available for 1983-1992
+2023-07-19 23:58:29,269 P[10100] [MainThread 3708] Error with STAR.L: No data available for the requested date range
+2023-07-19 23:58:29,270 P[10100] [MainThread 3708] STAR.L: No data available for the requested date range | 
+STAR.L: No data available for 1993-2002
+2023-07-19 23:58:30,125 P[10100] [MainThread 3708] Error with STAR.L: No data available for the requested date range
+2023-07-19 23:58:30,125 P[10100] [MainThread 3708] STAR.L: No data available for the requested date range | 
+STAR.L completed!
+2023-07-19 23:58:37,461 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:58:37,461 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+CHI.L: No data available for 1983-1992
+CHI.L completed!
+2023-07-19 23:58:47,599 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:58:47,599 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+BP.L: No data available for 1993-2002
+BP.L completed!
+ROD.L: No data available for 1983-1992
+2023-07-19 23:58:58,261 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:58:58,262 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+ROD.L completed!
+CPG.L: No data available for 1983-1992
+2023-07-19 23:59:07,333 P[10100] [MainThread 3708] Error with CPG.L: No data available for the requested date range
+2023-07-19 23:59:07,333 P[10100] [MainThread 3708] CPG.L: No data available for the requested date range | 
+2023-07-19 23:59:09,410 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:59:09,410 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+CPG.L: No data available for 2003-2012
+2023-07-19 23:59:29,141 P[10100] [MainThread 3708] UDF Core request failed. Gateway Time-out
+2023-07-19 23:59:29,141 P[10100] [MainThread 3708] HTTP request failed: EikonError-UDF Core request failed. Gateway Time-out
+CPG.L: No data available for 2013-2022
+CPG.L completed!
+2023-07-19 23:59:36,523 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-19 23:59:36,524 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+TTG.L: No data available for 2003-2012
+2023-07-19 23:59:56,288 P[10100] [MainThread 3708] UDF Core request failed. Gateway Time-out
+2023-07-19 23:59:56,288 P[10100] [MainThread 3708] HTTP request failed: EikonError-UDF Core request failed. Gateway Time-out
+TTG.L: No data available for 2013-2022
+TTG.L completed!
+APIA.L: No data available for 1983-1992
+2023-07-20 00:00:00,044 P[10100] [MainThread 3708] Error with APIA.L: No data available for the requested date range
+2023-07-20 00:00:00,044 P[10100] [MainThread 3708] APIA.L: No data available for the requested date range | 
+APIA.L: No data available for 1993-2002
+2023-07-20 00:00:05,534 P[10100] [MainThread 3708] Error with APIA.L: No data available for the requested date range
+2023-07-20 00:00:05,534 P[10100] [MainThread 3708] APIA.L: No data available for the requested date range | 
+2023-07-20 00:00:06,401 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-20 00:00:06,402 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+APIA.L: No data available for 2003-2012
+APIA.L completed!
+RGO.L completed!
+2023-07-20 00:01:05,834 P[10100] [MainThread 3708] Backend error. 500 Internal Server Error
+2023-07-20 00:01:05,834 P[10100] [MainThread 3708] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+SJP.L: No data available for 2013-2022
+SJP.L completed!
+2023-07-20 00:01:09,321 P[10100] [MainThread 3708] Error with SOU.L: No data available for the requested date range
+2023-07-20 00:01:09,321 P[10100] [MainThread 3708] SOU.L: No data available for the requested date range | 
+SOU.L: No data available for 1983-1992
+SOU.L: No data available for 1993-2002
+2023-07-20 00:01:10,317 P[10100] [MainThread 3708] Error with SOU.L: No data available for the requested date range
+2023-07-20 00:01:10,317 P[10100] [MainThread 3708] SOU.L: No data available for the requested date range | 
+SOU.L completed!
+2023-07-20 00:01:19,766 P[10100] [MainThread 3708] Error with ORR.L: No data available for the requested date range
+2023-07-20 00:01:19,766 P[10100] [MainThread 3708] ORR.L: No data available for the requested date range | 
+ORR.L: No data available for 1983-1992
+2023-07-20 00:06:53,445 P[10100] [MainThread 3708] Eikon Proxy not running or cannot be reached. Please read the documentation on troubleshooting
+ORR.L: No data available for 1993-2002
+ORR.L completed!
+Traceback (most recent call last):
+  File "C:\Users\djwja\GitHub\eikonproj\scraper_price.py", line 45, in <module>
+    price_data = comp.fetch_price()
+                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\myEikon.py", line 46, in fetch_price
+    new_df = self.fetch_decade(startyear, adj=adj)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\myEikon.py", line 26, in fetch_decade
+    return ek.get_timeseries(self.ric_code, start_date=str(dec) + "-01-01", end_date=str(dec + 9) + "-12-31",
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\venv\Lib\site-packages\eikon\time_series.py", line 182, in get_timeseries
+    ts_result = eikon.json_requests.send_json_request(TimeSeries_UDF_endpoint, payload, debug=debug)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\venv\Lib\site-packages\eikon\json_requests.py", line 89, in send_json_request
+    response = profile.send_request(json=udf_request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\venv\Lib\site-packages\eikon\Profile.py", line 348, in send_request
+    response = self._desktop_session.http_request(url=self.get_url(),
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\venv\Lib\site-packages\eikon\streaming_session\session.py", line 670, in http_request
+    response = loop.run_until_complete(self.http_request_async(url, method, headers, data,
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\GitHub\eikonproj\venv\Lib\site-packages\nest_asyncio.py", line 84, in run_until_complete
+    self._run_once()
+  File "C:\Users\djwja\GitHub\eikonproj\venv\Lib\site-packages\nest_asyncio.py", line 107, in _run_once
+    event_list = self._selector.select(timeout)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djwja\AppData\Local\Programs\Python\Python311\Lib\asyncio\windows_events.py", line 444, in select
+    self._poll(timeout)
+  File "C:\Users\djwja\AppData\Local\Programs\Python\Python311\Lib\asyncio\windows_events.py", line 817, in _poll
+    status = _overlapped.GetQueuedCompletionStatus(self._iocp, ms)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+
+Process finished with exit code -1073741819 (0xC0000005)

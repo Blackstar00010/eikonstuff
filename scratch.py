@@ -82,9 +82,23 @@ close_df = close_df.drop(['AZN.L', 'datadate'], axis=1)
 close_df.to_csv('files/metadata/business_days.csv', index=False)
 # '''
 
+'''
 files = os.listdir('files/fund_data/FY/')
 for afile in files:
     thedf = pd.read_csv('files/fund_data/FY/'+afile)
     thedf = thedf.fillna(0)
     thedf.to_csv('files/fund_data/FY/'+afile, index=False)
     print(f'{afile} done!')
+# '''
+
+asdf = pd.read_csv('files/comp_list/comp_list.csv')
+asdf['RIC1(ticker)'] = asdf['RIC'].apply(lambda x: x.split('.L')[0])
+asdf['Company Name'] = asdf['Company Name'].astype(str)
+asdf['RIC'] = asdf['RIC'].astype(str)
+asdf['RIC1(ticker)'] = asdf['RIC1(ticker)'].astype(str)
+asdf['delisted MM'] = asdf['delisted MM'].astype('int8')
+asdf['delisted YY'] = asdf['delisted YY'].astype('int16')
+asdf['ISIN'] = asdf['ISIN'].astype(str)
+asdf['CUSIP'] = asdf['CUSIP'].astype(str)
+asdf['SEDOL'] = asdf['SEDOL'].astype(str)
+asdf.to_pickle('files/comp_list/comp_list.pickle')
