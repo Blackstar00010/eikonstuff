@@ -17,11 +17,11 @@ tl_dict = {}
 fields = shits['TR_name'].to_list()
 for i in range(len(shits)):
     tl_dict[shits['TR_name'][i].upper()] = shits['shitty_name'][i]
-data_type = 'FS'
+data_type = 'FQ'
 date_col = pd.read_csv('files/metadata/business_days.csv').rename(columns={'YYYY-MM-DD': 'datadate'}).loc[:, 'datadate']
 
 slice_by = 50
-start_firm = 1350
+start_firm = 3550
 # split into smaller list just in case it might give some blank rows
 fetchQ = True
 if fetchQ:
@@ -40,8 +40,10 @@ if fetchQ:
                     df_21c = comps.get_history(-1)[0]
                     df_21c_raw = comps.get_history(-1, raw=True)[0]
                     comps.clear_history()
-            except ek.EikonError:
+            except ek.EikonError as eke:
                 goodenough = False
+                print(eke.code, eke.message)
+                sleep(3)
         goodenough = False
         while not goodenough:
             try:
@@ -51,8 +53,10 @@ if fetchQ:
                     goodenough = True
                     df_20c = comps.get_history(-1)[0]
                     df_20c_raw = comps.get_history(-1, raw=True)[0]
-            except ek.EikonError:
+            except ek.EikonError as eke:
                 goodenough = False
+                print(eke.code, eke.message)
+                sleep(3)
 
         comps.set_history(pd.concat([df_21c, df_20c], axis=0))
         pd.concat([df_20c_raw, df_21c_raw], axis=0).to_csv(f'files/fund_data/_raw/{data_type}/raw_data_{i}.csv',
