@@ -102,3 +102,4 @@ asdf['ISIN'] = asdf['ISIN'].astype(str)
 asdf['CUSIP'] = asdf['CUSIP'].astype(str)
 asdf['SEDOL'] = asdf['SEDOL'].astype(str)
 asdf.to_pickle('files/comp_list/comp_list.pickle')
+'''
