@@ -1,4 +1,4 @@
-datadate,xad,ob,dm,drc,drlt,gdwlia,scstkc,ni,pstkq,txfed,txt,pstk,dcvt,dcpstk
-2022-02-18,,,,,,,715000.0,-266040.0,,,,,,
-2022-10-28,,,,,,,715000.0,-266040.0,,,,,,
-2023-03-06,,,,,,,715000.0,-266040.0,,,,,,
+datadate,aps,rects,xads,obs,capxs,dms,ches,oancfs,cogss,drcs,drlts,dps,ebits,ebitdas,emps,gdwlias,dvts,txps,xints,intans,nopis,scstkcs,nis,ibs,pis,acos,lcos,aos,los,ppegts,ppents,pstkqs,xrds,revts,fatls,xsgas,spis,txfeds,txdis,txts,ats,lcts,acts,dlcs,ceqs,invts,lts,pstks,dcvts,dcpstks,txfos,dltts,drs,dcs
+2022-02-18,,9600.0,,,,,282240.0,-156760.0,,,,,,,,,,,,,,715000.0,-266040.0,-266040.0,-266040.0,,,,,,,,,,,266040.0,,,,,291850.0,66370.0,291850.0,,225470.0,,66370.0,,,,,,,
+2022-10-28,,9600.0,,,,,282240.0,-156760.0,,,,,,,,,,,,,,715000.0,-266040.0,-266040.0,-266040.0,,,,,,,,,,,266040.0,,,,,291850.0,66370.0,291850.0,,225470.0,,66370.0,,,,,,,
+2023-03-06,,9600.0,,,,,282240.0,-156760.0,,,,,,,,,,,,,,715000.0,-266040.0,-266040.0,-266040.0,,,,,,,,,,,266040.0,,,,,291850.0,66370.0,291850.0,,225470.0,,66370.0,,,,,,,

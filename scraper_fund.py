@@ -28,7 +28,7 @@ if fetchQ:
         goodenough = False
         while not goodenough:
             try:
-                sleep(10)
+                sleep(1)
                 comps.fetch_data(fields, start='2000-01-01', period=data_type)
                 if len(comps.get_history(-1)) > 0:
                     goodenough = True
@@ -40,7 +40,7 @@ if fetchQ:
         goodenough = False
         while not goodenough:
             try:
-                sleep(10)
+                sleep(1)
                 comps.fetch_data(fields, start='1980-01-01', end='1999-12-31', period=data_type)
                 if len(comps.get_history(-1)) > 0:
                     goodenough = True
