@@ -41,7 +41,7 @@ aco,TR.OtherCurrentAssets
 intan,TR.IntangiblesNet
 ao,TR.OtherLTAssetsTotal
 ppent,TR.PropertyPlantEquipmentTotalNet
-fatb,TR.BuildingGross
+fatb,TR.BuildingsGross
 fatl,TR.RightOfUseAssetsOperLeaseGrossSupp
 fatl1,TR.RightOfUseAssetsCapLeaseGrossSupp
 lct,TR.TotalCurrLiabilities
