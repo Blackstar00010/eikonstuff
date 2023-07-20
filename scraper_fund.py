@@ -5,6 +5,11 @@ import myEikon as mek
 from wrds_prep import pivot
 from time import sleep
 
+'''
+1. Fetch FY/FS/FQ data using eikon
+2. Organise those data and move to /by_data/from_ref with each file of certain data containing date in rows companies in columns 
+'''
+
 ref_comp_df = pd.read_csv('files/metadata/ref-comp.csv')
 all_rics = ref_comp_df['ric'].to_list()
 shits = pd.read_csv('files/metadata/supp_data.csv')
@@ -46,12 +51,12 @@ if fetchQ:
                     goodenough = True
                     df_20c = comps.get_history(-1)[0]
                     df_20c_raw = comps.get_history(-1, raw=True)[0]
-                    comps.set_history(pd.concat([df_21c, df_20c], axis=0))
-                    pd.concat([df_20c_raw, df_21c_raw], axis=0).to_csv(f'files/fund_data/_raw/{data_type}/raw_data_{i}.csv',
-                                                                       index=False)
             except ek.EikonError:
                 goodenough = False
 
+        comps.set_history(pd.concat([df_21c, df_20c], axis=0))
+        pd.concat([df_20c_raw, df_21c_raw], axis=0).to_csv(f'files/fund_data/_raw/{data_type}/raw_data_{i}.csv',
+                                                           index=False)
         # separate, arrange, and save
         for ric in rics:
             # N=len(tr_dict) number of value columns, N number of date columns
@@ -106,10 +111,13 @@ if fetchQ:
 
             # final cleanup
             comp_df_new = comp_df_new.drop(['Instrument'], axis=1)
-            comp_df_new = comp_df_new.replace(0, float('NaN'))  # fill empty columns
+            comp_df_new = comp_df_new.replace(0, float('NaN'))   # fill empty columns
             comp_df_new = comp_df_new.replace('', float('NaN'))  # fill empty columns
-            comp_df_new = comp_df_new.fillna(method='ffill')  # fill empty columns
+            comp_df_new = comp_df_new.fillna(method='ffill')     # fill empty columns
             comp_df_new = comp_df_new.dropna(how='all')
+            comp_df_new['count'] = (pd.to_datetime(comp_df_new['datadate']) - pd.to_datetime(
+                comp_df_new['datadate']).min()).dt.days // 365 + 1
+
             if len(comp_df_new) > 0:
                 comp_df_new.to_csv(f'./files/fund_data/{data_type}/{ric.replace(".", "-")}.csv', index=False)
 

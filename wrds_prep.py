@@ -81,7 +81,8 @@ if __name__ == "__main__":
     gvkey_ric_dict = {}
     for i in range(len(ref_comp_table)):
         gvkey_ric_dict[ref_comp_table.loc[i, 'gvkey']] = ref_comp_table.loc[i, 'ric']  # TODO: check if it is int->str
-    date_col = pd.read_csv('files/metadata/business_days.csv').rename(columns={'YYYY-MM-DD': 'datadate'}).loc[:, 'datadate']
+    date_col = pd.read_csv('files/metadata/business_days.csv'
+                           ).rename(columns={'YYYY-MM-DD': 'datadate'}).loc[:, 'datadate']
 
     # GBPXXX
     exch_rates = pd.read_csv(all_dir + 'comp_exrt_all.csv', low_memory=False).loc[:, ['tocurd', 'exratd', 'datadate']]

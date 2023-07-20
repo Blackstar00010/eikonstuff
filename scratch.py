@@ -91,6 +91,7 @@ for afile in files:
     print(f'{afile} done!')
 # '''
 
+''' pickle test
 asdf = pd.read_csv('files/comp_list/comp_list.csv')
 asdf['RIC1(ticker)'] = asdf['RIC'].apply(lambda x: x.split('.L')[0])
 asdf['Company Name'] = asdf['Company Name'].astype(str)
@@ -102,4 +103,9 @@ asdf['ISIN'] = asdf['ISIN'].astype(str)
 asdf['CUSIP'] = asdf['CUSIP'].astype(str)
 asdf['SEDOL'] = asdf['SEDOL'].astype(str)
 asdf.to_pickle('files/comp_list/comp_list.pickle')
-'''
+# '''
+
+asdf = pd.read_csv('files/fund_data/FY/AZN-L.csv')
+asdf['count'] = (pd.to_datetime(asdf['datadate']) - pd.to_datetime(asdf['datadate']).min()).dt.days // 365 + 1
+print(asdf)
+
