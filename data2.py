@@ -5,16 +5,6 @@ from numpy import log
 date_col = pd.read_csv('files/metadata/business_days.csv')[['YYYY-MM-DD', 'YYYYMMDD']]
 
 
-def date_fixer(target: pd.DataFrame, update=True):
-    """
-
-    :param target:
-    :param update:
-    :return:
-    """
-    target = target.merge(date_col)
-
-
 def date_column_finder(dataframe: pd.DataFrame):
     """
     Finds the name of the column that contains date values.
@@ -37,58 +27,44 @@ def date_column_finder(dataframe: pd.DataFrame):
     return date_col_name
 
 
-def lag(dataframe: pd.DataFrame, date_col_name='datadate', by=1):
+def lag(dataframe: pd.DataFrame, by=1):
     """
 
     :param dataframe:
-    :param date_col_name: the name of the column to use as date
     :return: a dataframe of calculated delta with the original date column
     """
-    if date_col_name is None or date_col_name not in dataframe.columns:
-        date_col_name = date_column_finder(dataframe)
-
-    ret = dataframe.shift(periods=1)
-    # TODO: annual
-    # TODO: amount
-
-    ret[date_col_name] = dataframe[date_col_name]
-    return 0
-
-
-def delta(dataframe: pd.DataFrame, date_col_name='datadate'):
-    """
-    Calculate absolute changes from the last different values vertically.
-    :param dataframe: the dataframe to calculate delta. Must contain a column of dates.
-    :param date_col_name: the name of the column to use as date
-    :return: a dataframe of calculated delta with the original date column
-    """
-    if date_col_name is None or date_col_name not in dataframe.columns:
-        date_col_name = date_column_finder(dataframe)
-
-    ret = dataframe - dataframe.shift(periods=1)
-    ret = ret.replace({0: float('NaN')})
+    ischanged = (dataframe == dataframe.shift(periods=1))
+    ret = dataframe.shift(periods=1) * ischanged
     ret = ret.fillna(method='ffill')
-    ret[date_col_name] = dataframe[date_col_name]
+    if by > 1:
+        ret = lag(ret)
     return ret
 
 
-def rate_of_change(dataframe: pd.DataFrame, date_col_name='datadate', minusone=True):
+def delta(dataframe: pd.DataFrame):
+    """
+    Calculate absolute changes from the last different values vertically.
+    :param dataframe: the dataframe to calculate delta. The column of dates must be the index column.
+    :return: a dataframe of calculated delta with the original date column
+    """
+    ret = dataframe - dataframe.shift(periods=1)
+    ret = ret.replace({0: float('NaN')})
+    ret = ret.fillna(method='ffill')
+    return ret
+
+
+def rate_of_change(dataframe: pd.DataFrame, minusone=True):
     """
     Calculate absolute changes from the last different values vertically. The value in the returned dataframe is 0.1 if
     the input dataframe's value changed from 10 to 11.
     :param dataframe: the dataframe to calculate delta. Must contain a column of dates.
-    :param date_col_name: the name of the column to use as date.
     :param minusone: For a value changing from 10 to 11, the returned value is 0.1 if minusone=True and 1.1 if minusone=False. True by default.
     :return: a dataframe of calculated rate of change with the original date column
     """
-    if date_col_name is None or date_col_name not in dataframe.columns:
-        date_col_name = date_column_finder(dataframe)
-
-    ret = delta(dataframe, date_col_name)
+    ret = delta(dataframe)
     ret = ret / (dataframe - ret)
     if not minusone:
         ret += 1
-    ret[date_col_name] = dataframe[date_col_name]
     return ret
 
 
@@ -175,6 +151,7 @@ roic = (ebit - nopi) / (ceq + lt - che)
 rd_sale = xrd / revt
 rd_mve = xrd / mve
 agr = rate_of_change(at)
+print('ten done')
 gma = (revt - cogs) / lag(at)
 chcsho = rate_of_change(csho)
 lgr = rate_of_change(lt)
@@ -190,6 +167,7 @@ acc = atlagat * (
 pctacc = (oancfnotna * (ib - oancf) / (abs(ib) * (ib != 0) + 0.1 * (ib == 0)) +
           oancfisna * oancf_alt / (abs(ib) * (ib != 0) + 0.1 * (ib == 0)))
 cfp = oancfisna * (ib - oancf_alt) / mve + oancfnotna * oancf / mve
+print('ten done')
 absacc = abs(acc)
 age = count
 chinv = atlagat * delta(invt)
@@ -198,10 +176,11 @@ spi = atlagat * spi
 cf = atlagat * (
         oancfnotna * oancf +
         oancfisna * (ib - oancf_alt))
-hire = rate_of_change(emp) * (emp!=0) * (lag(emp)!=0)
+hire = rate_of_change(emp) * (emp != 0) * (lag(emp) != 0)
 hire = hire.fillna(0)  # it is a valid flllna
 sgr = rate_of_change(revt)  # sale == revt
 chpm = (ib / revt) - (lag(ib) / lag(revt))
+print('ten done')
 chato = 2 * (revt / (at + lag(at))) - (lag(revt) / (lag(at) + lag(at, by=2)))
 pchsale_pchinvt = rate_of_change(revt) - rate_of_change(invt)
 pchsale_pchrect = rate_of_change(revt) - rate_of_change(rect)
@@ -212,18 +191,20 @@ pchdepr = rate_of_change(depr)
 chadv = log(1 + xad) - log(1 + lag(xad))
 invest = (delta(ppegt.replace(0, float('NaN')).fillna(ppent)) + delta(invt)) / lag(at)
 egr = rate_of_change(ceq)
+print('ten done')
 capx = capx.replace(0, float('NaN')).fillna(delta(ppent))
 pchcapx = rate_of_change(capx)
 grcapx = (capx - lag(capx, by=2)) / lag(capx, by=2)
 grGW = rate_of_change(gdwlia)
-grGW = (gdwlia==0)*0 + ((gdwlia!=0)*(grGW.isna()))*1 + (grGW.notna())*grGW  # legit isna/notna
-woGW = (gdwlia!=0)
+grGW = (gdwlia == 0) * 0 + ((gdwlia != 0) * (grGW.isna())) * 1 + (grGW.notna()) * grGW  # legit isna/notna
+woGW = (gdwlia != 0)
 tang = (che + rect * 0.715 + invt * 0.547 + ppent * 0.535) / at
 # if (2100<=sic<=2199) or (2080<=sic<=2085) or (naics in ('7132','71312','713210','71329','713290','72112','721120'))
 #     then sin=1 else sin=0  # TODO
 act = act.replace(0, float('NaN')).fillna(che + rect + invt)
 lct = lct.replace(0, float('NaN')).fillna(ap)
 currat = act / lct
+print('ten done')
 pchcurrat = rate_of_change(act / lct)
 quick = (act - invt) / lct
 pchquick = rate_of_change((act - invt) / lct)
@@ -232,7 +213,9 @@ salerec = revt / rect
 saleinv = revt / invt
 pchsaleinv = rate_of_change(revt / invt)
 cashdebt = 2 * (ib + dp) / (lt + lag(lt))
+fatb = pd.DataFrame(0, columns=fatl.columns, index=fatl.index)  # TODO
 realestate = (fatb + fatl) / (ppegt.replace(0, float('NaN')).fillna(ppent))
+print('ten done')
 divi = ((dvt > 0) * ((lag(dvt) == 0) + lag(dvt).isna())).astype(int)  # starts paying dividends, legit isna
 divo = (((dvt == 0) + dvt.isna()) * (lag(dvt) > 0)).astype(int)  # stops paying dividends, legit isna
 obklg = 2 * ob / (at + lag(at))
@@ -243,57 +226,61 @@ convind = ((dc != 0) + (csho > 0)).astype(int)
 conv = dc / dltt
 grltnoa = (delta(+ppent + intan + ao - lo) - dp) / (at + lag(at)) * 2
 chdrc = delta(dr) / (at + lag(at)) * 2
+print('ten done')
 rd = (rate_of_change(xrd / at) > .05).astype(int)
 roe = ib / lag(ceq)
 rdbias = rate_of_change(xrd) - roe
 operprof = (revt - cogs - xsga - xint) / lag(ceq)
-ps=(ni>0).astype(int) +(oancf>0).astype(int) + (ni/at>lag(ni/at)).astype(int) + (oancf>ni).astype(int) + (dltt/at<lag(dltt/at)).astype(int) + (act/lct>lag(act/lct)).astype(int) + ((revt-cogs)/revt>(lag((revt-cogs)/revt)).astype(int)) + (revt/at>lag(revt/at)).astype(int) + (scstkc=0).astype(int)
+ps = (ni > 0).astype(int) + (oancf > 0).astype(int) + (ni / at > lag(ni / at)).astype(int) + (oancf > ni).astype(
+    int) + (dltt / at < lag(dltt / at)).astype(int) + (act / lct > lag(act / lct)).astype(int) + (
+                 (revt - cogs) / revt > (lag((revt - cogs) / revt)).astype(int)) + (revt / at > lag(revt / at)).astype(
+    int) + (scstkc == 0).astype(int)
 
 # TODO: Lev and Nissim (2004) https://www.jstor.org/stable/4093085
 
 roa = atlagat * ni
-cfroa = atlagat * (oancf + (oancf==0)*(ib+dp))
+cfroa = atlagat * (oancf + (oancf == 0) * (ib + dp))
 xrdint = atlagat * xrd
 capxint = atlagat * capx
 xadint = atlagat * xad
-
+print('ten done')
 
 bm.to_csv('./files/by_data/seventyeight/bm.csv')
 ep.to_csv('./files/by_data/seventyeight/ep.csv')
 cashpr.to_csv('./files/by_data/seventyeight/cashpr.csv')
 dy.to_csv('./files/by_data/seventyeight/dy.csv')
 lev.to_csv('./files/by_data/seventyeight/lev.csv')
-sp.to_csv('./files/by_data/seventyeight/bm.csv')
-roic.to_csv('./files/by_data/seventyeight/bm.csv')
-agr.to_csv('./files/by_data/seventyeight/bm.csv')
-gma.to_csv('./files/by_data/seventyeight/bm.csv')
-chcsho.to_csv('./files/by_data/seventyeight/bm.csv')
-lgr.to_csv('./files/by_data/seventyeight/bm.csv')
-acc.to_csv('./files/by_data/seventyeight/bm.csv')
-pctacc.to_csv('./files/by_data/seventyeight/bm.csv')
-cfp.to_csv('./files/by_data/seventyeight/bm.csv')
-absacc.to_csv('./files/by_data/seventyeight/bm.csv')
-age.to_csv('./files/by_data/seventyeight/bm.csv')
-chinv.to_csv('./files/by_data/seventyeight/bm.csv')
-hire.to_csv('./files/by_data/seventyeight/bm.csv')
-sgr.to_csv('./files/by_data/seventyeight/bm.csv')
-pchsale_pchrect.to_csv('./files/by_data/seventyeight/bm.csv')
-pchgm_pchsale.to_csv('./files/by_data/seventyeight/bm.csv')
-depr.to_csv('./files/by_data/seventyeight/bm.csv')
-pchdepr.to_csv('./files/by_data/seventyeight/bm.csv')
-invest.to_csv('./files/by_data/seventyeight/bm.csv')
-egr.to_csv('./files/by_data/seventyeight/bm.csv')
-tang.to_csv('./files/by_data/seventyeight/bm.csv')
-sin.to_csv('./files/by_data/seventyeight/bm.csv')
-currat.to_csv('./files/by_data/seventyeight/bm.csv')
-pchcurrat.to_csv('./files/by_data/seventyeight/bm.csv')
-salecash.to_csv('./files/by_data/seventyeight/bm.csv')
-salerec.to_csv('./files/by_data/seventyeight/bm.csv')
-cashdebt.to_csv('./files/by_data/seventyeight/bm.csv')
-divi.to_csv('./files/by_data/seventyeight/bm.csv')
-divo.to_csv('./files/by_data/seventyeight/bm.csv')
-securedind.to_csv('./files/by_data/seventyeight/bm.csv')
-conv.to_csv('./files/by_data/seventyeight/bm.csv')
-rd.to_csv('./files/by_data/seventyeight/bm.csv')
-operprof.to_csv('./files/by_data/seventyeight/bm.csv')
-ps.to_csv('./files/by_data/seventyeight/bm.csv')
+sp.to_csv('./files/by_data/seventyeight/sp.csv')
+roic.to_csv('./files/by_data/seventyeight/roic.csv')
+agr.to_csv('./files/by_data/seventyeight/agr.csv')
+gma.to_csv('./files/by_data/seventyeight/gma.csv')
+chcsho.to_csv('./files/by_data/seventyeight/chcsho.csv')
+lgr.to_csv('./files/by_data/seventyeight/lgr.csv')
+acc.to_csv('./files/by_data/seventyeight/acc.csv')
+pctacc.to_csv('./files/by_data/seventyeight/pctacc.csv')
+cfp.to_csv('./files/by_data/seventyeight/cfp.csv')
+absacc.to_csv('./files/by_data/seventyeight/absacc.csv')
+age.to_csv('./files/by_data/seventyeight/age.csv')
+chinv.to_csv('./files/by_data/seventyeight/chinv.csv')
+hire.to_csv('./files/by_data/seventyeight/hire.csv')
+sgr.to_csv('./files/by_data/seventyeight/sgr.csv')
+pchsale_pchrect.to_csv('./files/by_data/seventyeight/pchsale_pchrect.csv')
+pchgm_pchsale.to_csv('./files/by_data/seventyeight/pchgm_pchsale.csv')
+depr.to_csv('./files/by_data/seventyeight/depr.csv')
+pchdepr.to_csv('./files/by_data/seventyeight/pchdepr.csv')
+invest.to_csv('./files/by_data/seventyeight/invest.csv')
+egr.to_csv('./files/by_data/seventyeight/egr.csv')
+tang.to_csv('./files/by_data/seventyeight/tang.csv')
+# sin.to_csv('./files/by_data/seventyeight/sin.csv')
+currat.to_csv('./files/by_data/seventyeight/currat.csv')
+pchcurrat.to_csv('./files/by_data/seventyeight/pchcurrat.csv')
+salecash.to_csv('./files/by_data/seventyeight/salecash.csv')
+salerec.to_csv('./files/by_data/seventyeight/salerec.csv')
+cashdebt.to_csv('./files/by_data/seventyeight/cashdebt.csv')
+divi.to_csv('./files/by_data/seventyeight/divi.csv')
+divo.to_csv('./files/by_data/seventyeight/divo.csv')
+securedind.to_csv('./files/by_data/seventyeight/securedind.csv')
+conv.to_csv('./files/by_data/seventyeight/conv.csv')
+rd.to_csv('./files/by_data/seventyeight/rd.csv')
+operprof.to_csv('./files/by_data/seventyeight/operprof.csv')
+ps.to_csv('./files/by_data/seventyeight/ps.csv')

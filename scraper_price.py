@@ -16,7 +16,7 @@ fixed_price_dir = 'files/price_stuff/price_data_fixed/'
 merge_dir = 'files/price_stuff/price_data_merged/'
 
 # fetching data using eikon data api and save as {ric1(ticker)}.csv at /price_data/
-fetchQ = True
+fetchQ = False
 if fetchQ:
     comp_list = pd.read_pickle('files/comp_list/comp_list.pickle')
     rics = comp_list["RIC"]
@@ -64,11 +64,12 @@ if fetchQ:
                     f.write(f"{line}\n")
 
 # wisely fill NaNs and save at /price_data/
-fixQ = False
-retryQ = False
+fixQ = True
+retryQ = True
 if fixQ:
     files = os.listdir(price_dir)
     finished_ones = os.listdir(fixed_price_dir)
+    finished_count = 0
     for afile in files:
         if retryQ or afile not in finished_ones:
             df = pd.read_csv(price_dir + afile)
@@ -132,10 +133,11 @@ if fixQ:
                 if i > 0 and df.at[i, 'VOLUME'] == 0 and df.at[i - 1, "CLOSE"] != df.at[i, "CLOSE"]:
                     df.at[i, 'VOLUME'] = 1
             df.to_csv(fixed_price_dir + afile, index=False)
-        print(f'{afile} done!')
+        finished_count += 1
+        print(f'{finished_count}/{len(files)} | {afile} done!')
 
 # merging data to make {one_of_ohlcv}.csv at /price_data_merged/
-mergeQ = False
+mergeQ = True
 if mergeQ:
     files = os.listdir(fixed_price_dir)
     df = pd.read_csv(fixed_price_dir + files[0])
@@ -169,11 +171,13 @@ if mergeQ:
     plow.to_csv(merge_dir + 'low.csv', index=True)
     popen.to_csv(merge_dir + 'open.csv', index=True)
     pclose.to_csv(merge_dir + 'close.csv', index=True)
+    print('Finished merging price data!')
 
 # fill in the blanks of the merged data with prev values and save at /price_data_merged/
-fillQ = False
+fillQ = True
 if fillQ:
     merged_files = os.listdir(merge_dir)
+    print('Refilling empty price values...')
     for afile in merged_files:
         df = pd.read_csv(merge_dir + afile)
         first_i = df.apply(lambda col: col.first_valid_index())
@@ -185,9 +189,10 @@ if fillQ:
                     df.at[i, acol] = prev_price
                 prev_price = df.at[i, acol]
         df.to_csv(merge_dir + afile, index=False)
+        print(f'{afile} finished!')
 
 # convert fixed date vs comp matrix into date vs ohlc matrix and save as {ric1(ticker)}.csv at /price_data_fixed/
-convertQ = False
+convertQ = True
 if convertQ:
     df_c = pd.read_csv(merge_dir + 'close.csv')
     df_h = pd.read_csv(merge_dir + 'high.csv')
