@@ -105,7 +105,9 @@ asdf['SEDOL'] = asdf['SEDOL'].astype(str)
 asdf.to_pickle('files/comp_list/comp_list.pickle')
 # '''
 
-asdf = pd.read_csv('files/fund_data/FY/AZN-L.csv')
-asdf['count'] = (pd.to_datetime(asdf['datadate']) - pd.to_datetime(asdf['datadate']).min()).dt.days // 365 + 1
-print(asdf)
+file_names = os.listdir('files/fund_data/FY/')
+for afile in file_names:
+    asdf = pd.read_csv('files/fund_data/FY/'+afile)
+    asdf['count'] = (pd.to_datetime(asdf['datadate']) - pd.to_datetime(asdf['datadate']).min()).dt.days // 365 + 1
+    asdf.to_csv('files/fund_data/FY/'+afile, index=False)
 
