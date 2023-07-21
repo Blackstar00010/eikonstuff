@@ -20,8 +20,8 @@ for i in range(len(shits)):
 data_type = 'FQ'
 date_col = pd.read_csv('files/metadata/business_days.csv').rename(columns={'YYYY-MM-DD': 'datadate'}).loc[:, 'datadate']
 
-slice_by = 50
-start_firm = 3550
+slice_by = 25
+start_firm = 3500
 # split into smaller list just in case it might give some blank rows
 fetchQ = True
 if fetchQ:

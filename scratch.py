@@ -53,7 +53,7 @@ shits = os.listdir('./files/price_stuff/price_data_fixed/')
 shits = [i[:-4] for i in shits]
 df = pd.read_csv('./files/comp_list/comp_list.csv')
 df = df[df['RIC1(ticker)'].isin(shits)]
-df.to_csv('./files/comp_list/done.csv', index=False)
+df.to_csv('./files/comp_list/done.csv', indices=False)
 print(df['ISIN'].isna().sum(), '/', len(df), ',', len(shits))
 '''
 
@@ -62,7 +62,7 @@ close_df = pd.read_csv('./files/price_stuff/price_data_merged/close.csv')
 close_df = close_df.set_index('Date')
 notna_df = close_df.notna()
 df_rand = pd.DataFrame(np.random.randn(*close_df.shape), columns=close_df.columns)
-df_rand = df_rand.set_index(close_df.index)
+df_rand = df_rand.set_index(close_df.indices)
 df_rand = df_rand.abs()*100
 shrout_df = np.round(df_rand, 2) * notna_df
 shrout_df.to_csv('./files/by_data/shrout.csv')
@@ -79,7 +79,7 @@ close_df['DD'] = close_df['datadate'].apply(lambda x: str(x)[-2:])
 close_df['YYYYMMDD'] = close_df['datadate']
 close_df['YYYY-MM-DD'] = close_df['YYYY'] + '-' + close_df['MM'] + '-' + close_df['DD']
 close_df = close_df.drop(['AZN.L', 'datadate'], axis=1)
-close_df.to_csv('files/metadata/business_days.csv', index=False)
+close_df.to_csv('files/metadata/business_days.csv', indices=False)
 # '''
 
 '''
@@ -87,7 +87,7 @@ files = os.listdir('files/fund_data/FY/')
 for afile in files:
     thedf = pd.read_csv('files/fund_data/FY/'+afile)
     thedf = thedf.fillna(0)
-    thedf.to_csv('files/fund_data/FY/'+afile, index=False)
+    thedf.to_csv('files/fund_data/FY/'+afile, indices=False)
     print(f'{afile} done!')
 # '''
 

@@ -24,17 +24,17 @@ df1 = pd.read_csv(dt_wrds_dir+'comp_names1_all.csv')
 df2 = pd.read_csv(dt_wrds_dir+'comp_names2_all.csv')
 df = pd.concat([df1, df2], ignore_index=True)
 df = df.sort_values('gvkey').reset_index()
-df = df.drop('index', axis=1)
+df = df.drop('indices', axis=1)
 dup = df[['gvkey', 'isin']].duplicated()
 df = df[~dup]
-df.to_csv(dt_wrds_dir+'comp_names_all.csv', index=False)
+df.to_csv(dt_wrds_dir+'comp_names_all.csv', indices=False)
 
 if input("DID YOU RUN tl_table_generator.py?[y/n]") != 'y':
     import sys
     sys.exit()
 
 files = os.listdir('files/wrds/')
-files.pop(files.index('0_comp_ref_tl_table.csv'))
+files.pop(files.indices('0_comp_ref_tl_table.csv'))
 for file in files:
     metadata = pd.read_csv('files/wrds/0_comp_ref_tl_table.csv')[['gvkey', 'ric', 'isin']]
     funda = pd.read_csv('files/wrds/'+file)
