@@ -27,15 +27,6 @@ print(asdf)
 '''
 
 '''
-shits = os.listdir('./files/price_stuff/price_data_fixed/')
-shits = [i[:-4] for i in shits]
-df = pd.read_csv('./files/comp_list/comp_list.csv')
-df = df[df['RIC1(ticker)'].isin(shits)]
-df.to_csv('./files/comp_list/done.csv', indices=False)
-print(df['ISIN'].isna().sum(), '/', len(df), ',', len(shits))
-'''
-
-'''
 close_df = pd.read_csv('./files/price_stuff/price_data_merged/close.csv')
 close_df = close_df.set_index('Date')
 notna_df = close_df.notna()
@@ -118,13 +109,13 @@ for afile in file_names:
 # ''' Removing dupliacted lines from no_data.txt and no_timestamp.txt
 with open('files/comp_list/no_data.txt', 'r') as f:
     to_edit = [line.rstrip() for line in f]
-to_edit = set(to_edit)
+to_edit = sorted(set(to_edit))
 with open('files/comp_list/no_data.txt', 'w') as f:
     for line in to_edit:
         f.write(f"{line}\n")
 with open('files/comp_list/no_timestamp.txt', 'r') as f:
     to_edit = [line.rstrip() for line in f]
-to_edit = set(to_edit)
+to_edit = sorted(set(to_edit))
 with open('files/comp_list/no_timestamp.txt', 'w') as f:
     for line in to_edit:
         f.write(f"{line}\n")

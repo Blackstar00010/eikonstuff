@@ -51,9 +51,9 @@ class Company:
 
 
 class Companies:
-    def __init__(self, code_list):
+    def __init__(self, code_list: list):
         """
-        :param code_list: list (or ndarray) of RIC codes
+        :param code_list: list of RIC codes
         """
         self.ric_codes = code_list
         self.isins = []
@@ -62,31 +62,44 @@ class Companies:
         self._data_list = []
         self._raw_data_list = []
 
+    def fetch_symb(self, symb_type: str):
+        """
+        Returns translation dataframe of ISIN/CUSIP/SEDOL.
+        :param symb_type: 'ISIN', 'CUSIP' or 'SEDOL'
+        :return: pd.DataFrame of columns 'RIC' and 'ISIN'/'CUSIP'/'SEDOL'
+        """
+        result = ek.get_symbology(self.ric_codes, from_symbol_type='RIC', to_symbol_type=symb_type)
+        result = result.reset_index()
+        result = result.rename(columns={'index': 'RIC'})
+        try:
+            symb = result[['RIC', symb_type]]
+        except KeyError:
+            result[symb_type] = ''
+            symb = result[['RIC', symb_type]]
+        return symb
+
     def fetch_isin(self):
         """
-        Returns list of ISIN Codes
-        :return: list of ISIN codes
+        Returns translation dataframe of ISIN Codes. Recommend using `fetch_symb('ISIN')` instead.
+        :return: pd.DataFrame of columns `RIC` and `ISIN`
         """
-        self.isins = ek.get_symbology(self.ric_codes, from_symbol_type="RIC", to_symbol_type="ISIN")[
-            "ISIN"].to_list()
+        self.isins = self.fetch_symb('ISIN')
         return self.isins
 
     def fetch_cusip(self):
         """
-        Returns list of CUSIP Codes
-        :return: list of CUSIP codes
+        Returns translation dataframe of CUSIP Codes. Recommend using `fetch_symb('CUSIP')` instead.
+        :return: pd.DataFrame of columns `RIC` and `CUSIP`
         """
-        self.cusips = ek.get_symbology(self.ric_codes, from_symbol_type="RIC", to_symbol_type="CUSIP")[
-            "CUSIP"].to_list()
+        self.cusips = self.fetch_symb('CUSIP')
         return self.cusips
 
     def fetch_sedol(self):
         """
-        Returns list of SEDOL Codes
-        :return: list of SEDOL Codes
+        Returns translation dataframe of SEDOL Codes. Recommend using `fetch_symb('SEDOL')` instead.
+        :return: pd.DataFrame of columns `RIC` and `SEDOL`
         """
-        self.sedols = ek.get_symbology(self.ric_codes, from_symbol_type="RIC", to_symbol_type="SEDOL")[
-            "SEDOL"].to_list()
+        self.sedols = self.fetch_symb('SEDOL')
         return self.sedols
 
     def fetch_data(self, tr_list, start='1983-01-01', end='2023-06-30', period='FY'):

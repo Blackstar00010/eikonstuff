@@ -11,10 +11,6 @@ import os
 3. convert back to {ric1(ticker)}.csv at /price_data_fixed/
 '''
 
-price_dir = 'files/price_stuff/price_data/'
-fixed_price_dir = 'files/price_stuff/price_data_fixed/'
-merge_dir = 'files/price_stuff/price_data_merged/'
-
 
 def fix_ohlccv(ohlccv_df: pd.DataFrame):
     """
@@ -105,39 +101,48 @@ def fix_ohlccv_file(input_file, output_file):
     return ohlccv_df
 
 
+adj = True
+price_dir = 'files/price_stuff/adj_price_data/' if adj else 'files/price_stuff/price_data/'
+fixed_price_dir = 'files/price_stuff/adj_price_data_fixed/' if adj else 'files/price_stuff/price_data_fixed/'
+merge_dir = 'files/price_stuff/adj_price_data_merged/' if adj else 'files/price_stuff/price_data_merged/'
+
 if __name__ == '__main__':
     # fetching data using eikon data api and save as {ric1(ticker)}.csv at /price_data/
     fetchQ = True
     if fetchQ:
-        comp_list = pd.read_pickle('files/comp_list/comp_list.pickle')
-        rics = comp_list["RIC"]
+        use_available = True
+        if use_available:
+            comp_list_df = pd.read_pickle('files/comp_list/available.pickle')
+            rics = comp_list_df['RIC']
+        else:
+            comp_list_df = pd.read_pickle('files/comp_list/comp_list.pickle')
+            rics = comp_list_df["RIC"]
 
-        dup_ric_list = comp_list[comp_list.duplicated(subset='RIC1(ticker)', keep=False)][['Company Name', 'RIC',
-                                                                                           'RIC1(ticker)', 'ISIN']]
-        dup_ric_list = dup_ric_list.sort_values(by='RIC1(ticker)')
-        dup_ric_list.to_csv('files/comp_list/comp_list_dup_ric1.csv', index=False)
+            # TODO: move to prep.py
+            dup_ric_list = comp_list_df[comp_list_df.duplicated(subset='RIC1(ticker)', keep=False)]
+            dup_ric_list = dup_ric_list.sort_values(by='RIC1(ticker)')
+            dup_ric_list.to_csv('files/comp_list/comp_list_dup_ric1.csv', index=False)
+
+            with open('files/comp_list/no_data.txt', 'r') as f:
+                emptylist = [line.rstrip() for line in f]
+            with open('files/comp_list/no_timestamp.txt', 'r') as f:
+                notimestamplist = [line.rstrip() for line in f]
+            rics = rics[~rics.isin(emptylist) * ~rics.isin(notimestamplist)]
 
         already_done = [file_name.split('.')[0].replace('-', '.') for file_name in os.listdir(price_dir)]
-        with open('files/comp_list/no_data.txt', 'r') as f:
-            emptylist = [line.rstrip() for line in f]
-        with open('files/comp_list/no_timestamp.txt', 'r') as f:
-            notimestamplist = [line.rstrip() for line in f]
-        # mask = [(ric.replace('.', '-') not in already_done and
-        #          ric not in emptylist and
-        #          ric not in notimestamplist)
-        #         for ric in rics]
-        rics = rics[~rics.isin(already_done) * ~rics.isin(emptylist) * ~rics.isin(notimestamplist)]
+        rics = rics[~rics.isin(already_done)]
 
         for ric in rics:
-            delistedYY = comp_list[comp_list['RIC'] == ric]['delisted YY'].sum()
+            delistedYY = comp_list_df[comp_list_df['RIC'] == ric]['delisted YY'].sum()
+            delistedYY = int(delistedYY)
             is_listed = delistedYY == 0
             try:
                 comp = dbb.Company(ric)
                 if is_listed:
-                    price_data = comp.fetch_price()
+                    price_data = comp.fetch_price(adj=adj)
                 else:
                     print(f'{ric} is delisted in {delistedYY}..')
-                    price_data = comp.fetch_price(delisted=delistedYY, adj=False)
+                    price_data = comp.fetch_price(delisted=delistedYY, adj=adj)
                 if len(price_data) > 0:
                     price_data.to_csv(price_dir + ric.replace('.', '-') + '.csv')
                     print(f"{ric} completed!")
@@ -154,6 +159,13 @@ if __name__ == '__main__':
                 with open('files/comp_list/no_timestamp.txt', 'w') as f:
                     for line in notimestamplist:
                         f.write(f"{line}\n")
+
+        # updating /files/comp_list/available.csv
+        if not use_available:
+            avail_list = [file_name[:-4].replace('-', '.') for file_name in os.listdir(price_dir)]
+            avail_df = comp_list_df[comp_list_df['RIC'].isin(avail_list)]
+            avail_df.to_csv('files/comp_list/available.csv', index=False)
+            avail_df.to_pickle('files/comp_list/available.pickle')
 
     # wisely fill NaNs and save at /price_data/
     fixQ = False
