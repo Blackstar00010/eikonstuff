@@ -1,0 +1,67 @@
+C:\Users\djwja\GitHub\eikonproj\venv\Scripts\python.exe C:\Users\djwja\GitHub\eikonproj\scraper_price.py 
+C4XD.L: No data available for 1983-1992
+2023-07-24 02:16:50,936 P[17100] [MainThread 20776] Error with C4XD.L: No data available for the requested date range
+2023-07-24 02:16:50,936 P[17100] [MainThread 20776] C4XD.L: No data available for the requested date range | 
+2023-07-24 02:16:51,806 P[17100] [MainThread 20776] Backend error. 500 Internal Server Error
+2023-07-24 02:16:51,806 P[17100] [MainThread 20776] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+C4XD.L: No data available for 1993-2002
+2023-07-24 02:16:52,794 P[17100] [MainThread 20776] Error with C4XD.L: No data available for the requested date range
+2023-07-24 02:16:52,794 P[17100] [MainThread 20776] C4XD.L: No data available for the requested date range | 
+C4XD.L: No data available for 2003-2012
+C4XD.L completed!
+EPICE.L: No data available for 1983-1992
+2023-07-24 02:16:58,854 P[17100] [MainThread 20776] Error with EPICE.L: No data available for the requested date range
+2023-07-24 02:16:58,854 P[17100] [MainThread 20776] EPICE.L: No data available for the requested date range | 
+2023-07-24 02:16:59,828 P[17100] [MainThread 20776] Error with EPICE.L: No data available for the requested date range
+2023-07-24 02:16:59,828 P[17100] [MainThread 20776] EPICE.L: No data available for the requested date range | 
+EPICE.L: No data available for 1993-2002
+EPICE.L: No data available for 2003-2012
+2023-07-24 02:17:00,657 P[17100] [MainThread 20776] Error with EPICE.L: No data available for the requested date range
+2023-07-24 02:17:00,657 P[17100] [MainThread 20776] EPICE.L: No data available for the requested date range | 
+EPICE.L completed!
+2023-07-24 02:17:06,255 P[17100] [MainThread 20776] Error with NNNN.L: No data available for the requested date range
+2023-07-24 02:17:06,255 P[17100] [MainThread 20776] NNNN.L: No data available for the requested date range | 
+NNNN.L: No data available for 1983-1992
+NNNN.L: No data available for 1993-2002
+2023-07-24 02:17:07,071 P[17100] [MainThread 20776] Error with NNNN.L: No data available for the requested date range
+2023-07-24 02:17:07,071 P[17100] [MainThread 20776] NNNN.L: No data available for the requested date range | 
+NNNN.L: No data available for 2003-2012
+2023-07-24 02:17:07,991 P[17100] [MainThread 20776] Error with NNNN.L: No data available for the requested date range
+2023-07-24 02:17:07,991 P[17100] [MainThread 20776] NNNN.L: No data available for the requested date range | 
+2023-07-24 02:17:08,723 P[17100] [MainThread 20776] Backend error. 500 Internal Server Error
+2023-07-24 02:17:08,723 P[17100] [MainThread 20776] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+NNNN.L: No data available for 2013-2022
+NNNN.L completed!
+MAB1.L: No data available for 1983-1992
+2023-07-24 02:17:11,501 P[17100] [MainThread 20776] Error with MAB1.L: No data available for the requested date range
+2023-07-24 02:17:11,501 P[17100] [MainThread 20776] MAB1.L: No data available for the requested date range | 
+MAB1.L: No data available for 1993-2002
+2023-07-24 02:17:12,236 P[17100] [MainThread 20776] Backend error. 500 Internal Server Error
+2023-07-24 02:17:12,236 P[17100] [MainThread 20776] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+MAB1.L: No data available for 2003-2012
+2023-07-24 02:17:13,080 P[17100] [MainThread 20776] Error with MAB1.L: No data available for the requested date range
+2023-07-24 02:17:13,080 P[17100] [MainThread 20776] MAB1.L: No data available for the requested date range | 
+MAB1.L completed!
+QTX.L: No data available for 1983-1992
+2023-07-24 02:17:18,474 P[17100] [MainThread 20776] Error with QTX.L: No data available for the requested date range
+2023-07-24 02:17:18,474 P[17100] [MainThread 20776] QTX.L: No data available for the requested date range | 
+2023-07-24 02:17:19,365 P[17100] [MainThread 20776] Error with QTX.L: No data available for the requested date range
+2023-07-24 02:17:19,365 P[17100] [MainThread 20776] QTX.L: No data available for the requested date range | 
+QTX.L: No data available for 1993-2002
+2023-07-24 02:17:20,109 P[17100] [MainThread 20776] Error with QTX.L: No data available for the requested date range
+2023-07-24 02:17:20,109 P[17100] [MainThread 20776] QTX.L: No data available for the requested date range | 
+QTX.L: No data available for 2003-2012
+QTX.L: No data available for 2013-2022
+2023-07-24 02:17:20,943 P[17100] [MainThread 20776] Backend error. 500 Internal Server Error
+2023-07-24 02:17:20,944 P[17100] [MainThread 20776] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+QTX.L: No data available for 2023-2032
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for QTX.L!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2023-07-24 02:17:21,781 P[17100] [MainThread 20776] Backend error. 500 Internal Server Error
+2023-07-24 02:17:21,781 P[17100] [MainThread 20776] HTTP request failed: EikonError-Backend error. 500 Internal Server Error
+Traceback (most recent call last):
+  File "C:\Users\djwja\GitHub\eikonproj\scraper_price.py", line 146, in <module>
+    emptylist.append(ric)
+    ^^^^^^^^^
+NameError: name 'emptylist' is not defined
+
+Process finished with exit code -1073741819 (0xC0000005)

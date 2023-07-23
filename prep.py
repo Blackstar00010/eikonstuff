@@ -6,7 +6,7 @@ import myEikon as mek
 at files/comp_list/,
 1. screen_230706.xlsx -> screen_230706.csv
 2. screen_230706.csv + delisted.csv + isin, cusip, sedol -> comp_list_all.csv
-3. comp_list_all.csv 's duplicates -> comp_list_dups.csv
+3. comp_list_all.csv 's duplicates -> comp_list_dup_cname.csv, comp_list_dup_ric1.csv
 4. comp_list_all.csv 's non-dups -> comp_list.csv
 '''
 
@@ -22,7 +22,10 @@ screen = screen.drop("Unnamed: 6", axis=1)  # same as ISIN
 screen = screen.drop("Identifier", axis=1)  # same as RIC
 screen = screen.drop('Price Close\n(2023-06-20, GBP)', axis=1)  # useless
 screen = screen.drop('Exchange Name', axis=1)  # always LONDON STOCK EXCHANGE
-screen = screen[~screen['RIC'].isin(['MGPL.L', 'FTSV.L'])]  # freshly deleted in July 2023
+
+g23_list = ['MGPM.L', 'FTSV.L', 'FULH.L']  # freshly deleted in July 2023
+g23_df = screen[screen['RIC'].isin(g23_list)][['Company Name', 'RIC']]
+screen = screen[~screen['RIC'].isin(g23_list)]
 screen.to_csv("./files/comp_list/screen_230706.csv", index=False)
 # columns: Company Name,ISIN,CUSIP (extended),SEDOL Code,RIC
 
@@ -32,10 +35,13 @@ delisted = pd.read_csv("./files/comp_list/delisted.csv")[[
     'Name (or Code)', 'RIC', 'RIC1(ticker)', 'RIC2(exchange)', 'delisted mm', 'delisted yy']]
 delisted = delisted[delisted['RIC2(exchange)'] == 'L']  # Strictly LSE. Not 'Lp' (probably preferred, and 'TRE' (idk)
 delisted = delisted.drop('RIC2(exchange)', axis=1)  # Now that all are 'L' type, not needed
-mgpm = ['Medica Group PLC', 'MGPM.L^G23', 'MGPM', '7', '2023']  # freshly delisted in July 2023
-ftsv = ['Foresight Solar & Technology VCT PLC', 'FTSV.L^G23', 'FTSV', '7', '2023']  # freshly delisted in July 2023
-delisted.loc[delisted.shape[0]] = mgpm
-delisted.loc[delisted.shape[0]] = ftsv
+
+g23_df['RIC1(ticker)'] = g23_df['RIC'].str.replace('.L', '')
+g23_df['delisted mm'] = 7
+g23_df['delisted yy'] = 2023
+g23_df['RIC1'] = g23_df['RIC'].apply(lambda x: x+'^G23')
+g23_df = g23_df.rename(columns={'Company Name': 'Name (or Code)'})
+delisted = pd.concat([delisted, g23_df], axis=0)
 
 listed['RIC1(ticker)'] = listed['RIC'].str.replace('.L', '')
 listed['delisted MM'] = 0  # not delisted
@@ -48,7 +54,7 @@ delisted = delisted.rename(
 all_firms = pd.concat([listed, delisted], axis=0)
 all_firms = all_firms.reset_index(drop=True)
 
-already_have_until = len(all_firms)-1  # already have isin, cusip, sedol until this row
+already_have_until = len(all_firms)-100  # already have isin, cusip, sedol until this row
 if already_have_until > 0:
     df_already_have = pd.read_pickle('./files/comp_list/comp_list_all.pickle')[['ISIN', 'CUSIP', 'SEDOL']]
     all_firms.loc[0:already_have_until, 'ISIN'] = df_already_have.loc[0:already_have_until, "ISIN"]
@@ -76,7 +82,11 @@ for i in range(already_have_until, len(all_firms), divide_by):
 # delete duplicates in Company Name
 duplicates = all_firms[all_firms.duplicated(subset=["Company Name"], keep=False)]
 duplicates = duplicates.sort_values(by="RIC1(ticker)")
-duplicates.to_csv('./files/comp_list/comp_list_dups.csv', index=False)
+duplicates.to_csv('./files/comp_list/comp_list_dup_cname.csv', index=False)
+
+dup_ric_list = all_firms[all_firms.duplicated(subset='RIC1(ticker)', keep=False)]
+dup_ric_list = dup_ric_list.sort_values(by='RIC1(ticker)')
+dup_ric_list.to_csv('files/comp_list/comp_list_dup_ric1.csv', index=False)
 
 # without those duplicates
 no_duplicates = all_firms.drop_duplicates(subset=["Company Name"], keep="last")
