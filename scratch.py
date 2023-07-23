@@ -6,13 +6,13 @@ import eikon as ek
 import os
 import numpy as np
 
-"""
+""" Testing TR Fields
 print(ek.get_data("AZN.L", [{"TR.SharesOutstanding": {"SDate": "2010-01-01", "EDate": "2020-12-31", "Currency": "USD"}},
                             {"TR.NormIncomeBeforeTaxes": {"SDate": "2010-01-01", "EDate": "2020-12-31", "Currency": "USD"}},
                             {"TR.NormIncomeBeforeTaxes": {"SDate": "2010-01-01", "EDate": "2020-12-31"}},
                             "Currency"])[0].transpose())
 """
-"""
+""" Testing how to fetch SharesOutstanding
 shrout = ek.get_data(["AZN.L", "AAPL.O"], 'TR.SharesOutstanding', {"SDate": "2010-01-01", "EDate": "2020-12-31"})[0]
 aznshrout = shrout[shrout["Instrument"] == "AZN.L"]
 print(aznshrout)
@@ -21,31 +21,9 @@ aznprice = prices["AZN.L"]
 print(aznprice)
 """
 
-"""
-print(ek.get_data(["AZN.L", "AAPL.O", "HSBA.L"], "Currency")[0])
-"""
-
 '''
 asdf = pd.read_csv('https://www.jamesd002.com/file/close.csv')
 print(asdf)
-'''
-
-'''
-txtlist = ['230710_161343_log.txt', '230710_192414_log.txt', '230710_195715_log.txt', '230710_200219_log.txt']
-shits = []
-for txtfile in txtlist:
-    with open('./files/' + txtfile, 'r') as f:
-        loglines = [line.rstrip() for line in f]
-
-    loglines = [i for i in loglines if len(i) > 0 and i[0] == "!"]
-    loglines = [i.replace('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for ', '').replace(
-        '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', '') for i in loglines]
-    [shits.append(item) for item in loglines]
-print(shits)
-
-with open('./files/no_data.txt', 'w') as f:
-    for line in shits:
-        f.write(f"{line}\n")
 '''
 
 '''
@@ -105,9 +83,49 @@ asdf['SEDOL'] = asdf['SEDOL'].astype(str)
 asdf.to_pickle('files/comp_list/comp_list.pickle')
 # '''
 
+'''
 file_names = os.listdir('files/fund_data/FY/')
 for afile in file_names:
     asdf = pd.read_csv('files/fund_data/FY/'+afile)
     asdf['count'] = (pd.to_datetime(asdf['datadate']) - pd.to_datetime(asdf['datadate']).min()).dt.days // 365 + 1
     asdf.to_csv('files/fund_data/FY/'+afile, index=False)
-
+'''
+''' Fixing  ticker1.csv files that had no -L^MYY in their names
+price_data_dir = 'files/price_stuff/price_data/'
+comp_list = pd.read_pickle('files/comp_list/comp_list.pickle')[['RIC', 'RIC1(ticker)']]
+dups = pd.read_csv('files/comp_list/comp_list_dup_ric1.csv')[['RIC', 'RIC1(ticker)']]
+dupduplist = []
+file_names = os.listdir(price_data_dir)
+for afile in file_names:
+    if '-L' not in afile:
+        # ric1 = afile[:-4]
+        # ric = comp_list[comp_list['RIC1(ticker)'] == ric1]['RIC']
+        # if len(ric) > 1:
+        #     print(ric1 + ' ' + str([aric for aric in ric]))
+        #     [dupduplist.append(aric) for aric in ric if aric.replace('.', '-') + '.csv' not in price_data_dir]
+        # elif len(ric) == 1:
+        #     ric = ric.values[0]
+        #     ric = ric.replace('.', '-')
+        #     if ric+'.csv' in file_names:
+        #         os.remove(price_data_dir + afile)
+        #     else:
+        #         os.rename(price_data_dir + afile, price_data_dir + ric + '.csv')
+        # else:
+        #     os.remove(price_data_dir + afile)
+        os.remove(price_data_dir + afile)
+# dupduplist = pd.DataFrame(dupduplist).to_csv('files/comp_list/unfetched_0723.csv')
+'''
+# ''' Removing dupliacted lines from no_data.txt and no_timestamp.txt
+with open('files/comp_list/no_data.txt', 'r') as f:
+    to_edit = [line.rstrip() for line in f]
+to_edit = set(to_edit)
+with open('files/comp_list/no_data.txt', 'w') as f:
+    for line in to_edit:
+        f.write(f"{line}\n")
+with open('files/comp_list/no_timestamp.txt', 'r') as f:
+    to_edit = [line.rstrip() for line in f]
+to_edit = set(to_edit)
+with open('files/comp_list/no_timestamp.txt', 'w') as f:
+    for line in to_edit:
+        f.write(f"{line}\n")
+# '''
