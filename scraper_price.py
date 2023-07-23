@@ -118,11 +118,6 @@ if __name__ == '__main__':
             comp_list_df = pd.read_pickle('files/comp_list/comp_list.pickle')
             rics = comp_list_df["RIC"]
 
-            # TODO: move to prep.py
-            dup_ric_list = comp_list_df[comp_list_df.duplicated(subset='RIC1(ticker)', keep=False)]
-            dup_ric_list = dup_ric_list.sort_values(by='RIC1(ticker)')
-            dup_ric_list.to_csv('files/comp_list/comp_list_dup_ric1.csv', index=False)
-
             with open('files/comp_list/no_data.txt', 'r') as f:
                 emptylist = [line.rstrip() for line in f]
             with open('files/comp_list/no_timestamp.txt', 'r') as f:
