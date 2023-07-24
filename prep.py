@@ -23,7 +23,7 @@ screen = screen.drop("Identifier", axis=1)  # same as RIC
 screen = screen.drop('Price Close\n(2023-06-20, GBP)', axis=1)  # useless
 screen = screen.drop('Exchange Name', axis=1)  # always LONDON STOCK EXCHANGE
 
-g23_list = ['MGPM.L', 'FTSV.L', 'FULH.L', 'SURS.L']  # freshly deleted in July 2023
+g23_list = ['MGPM.L', 'FTSV.L', 'FULH.L', 'SURS.L', 'XPD.L', 'STAST.L']  # freshly deleted in July 2023
 g23_df = screen[screen['RIC'].isin(g23_list)][['Company Name', 'RIC']]
 screen = screen[~screen['RIC'].isin(g23_list)]
 screen.to_csv("./files/comp_list/screen_230706.csv", index=False)

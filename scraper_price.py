@@ -150,7 +150,7 @@ if __name__ == '__main__':
                     with open('files/comp_list/no_data.txt', 'w') as f:
                         for line in emptylist:
                             f.write(f"{line}\n")
-                time.sleep(1)
+                # time.sleep(1)
             except ValueError:
                 print(f'ValueError: \'TIMESTAMP\' is not in list for {ric}\n')
                 notimestamplist.append(ric)

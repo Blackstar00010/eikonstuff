@@ -27,9 +27,12 @@ class Company:
                                      corax=corax)
         except ek.EikonError as eke:
             print('Error code: ', eke.code)
-            if eke.code == 500:
+            if eke.code in [401, 500]:
+                # 401: Eikon Proxy not running, 500: Backend error
                 sleep(1)
                 return self.fetch_decade(dec, adj=adj)
+            elif eke.code == 429:
+                raise RuntimeError('Code 429: reached API calls limit')
             else:
                 print(f"{self.ric_code}: No data available for {dec}-{dec + 9}")
             return pd.DataFrame()
@@ -107,20 +110,20 @@ class Companies:
         self.sedols = self.fetch_symb('SEDOL')
         return self.sedols
 
-    def fetch_data(self, tr_list, start='1983-01-01', end='2023-06-30', period='FY'):
+    def fetch_data(self, tr_list: list, start='1983-01-01', end='2023-06-30', period='FY'):
         """
         Fetches and returns data in pandas DataFrame without error.
         This DataFrame is stored in this instance, so to view previous fetches, use show_history() function.
         :param tr_list: list of TR fields (e.g. ['TR.SharesOutstanding', 'TR.Revenue']
         :param start: the first date to fetch data, in the format 'YYYY-MM-DD' (e.g. '1983-01-01')
         :param end: the last date to fetch data, in the format 'YYYY-MM-DD' (e.g. '2020-12-31')
-        :param period: period of which the data is fetched. 'FY' by default (e.g. 'FY', 'FS', 'FQ')
+        :param period: period of which the data is fetched. 'FY' by default (e.g. 'FY', 'FS', 'FQ', 'daily')
         :return: DataFrame that contains RIC codes in 'Instrument' column and other data in columns named after TR field names
         """
         if len(start.split('-')) != 3 or len(end.split('-')) != 3:
             raise ValueError('start and end values should be given in the format of "YYYY-MM-DD". ')
-        if period not in ['FY', 'FS', 'FQ']:
-            raise ValueError('period value should be given as either "FY", "FS", or "FQ". ')
+        if period not in ['FY', 'FS', 'FQ', 'daily']:
+            raise ValueError('period value should be given as either "FY", "FS", "FQ", or "daily". ')
 
         tr_and_date_list = tr_list + [item + '.CALCDATE' for item in tr_list]
         tr_and_date_list.sort()
@@ -222,3 +225,7 @@ class Companies:
         :return: None
         """
         self.set_history([], raw=raw)
+
+
+if __name__ == '__main__':
+    print('You are running myEikon.py')

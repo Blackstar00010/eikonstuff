@@ -4,7 +4,7 @@ import myEikon as mek
 from scraper_price import fix_ohlccv
 import pandas as pd
 
-# FTSE100, FTSE250, FTSE350, FTSE All-Share
+# FTSE100, FTSE250, FTSE350, FTSE All-Share, SP500, NDX, EuroStoxx50, ES All
 indices = ['FTSE', 'FTMC', 'FTLC', 'FTAS', 'SP500', 'NDX', 'STOXX50E', 'STOXXE']
 output_dir = 'files/price_stuff/indices/'
 merge_dir = 'files/price_stuff/indices_merged/'
