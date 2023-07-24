@@ -106,7 +106,7 @@ for afile in file_names:
         os.remove(price_data_dir + afile)
 # dupduplist = pd.DataFrame(dupduplist).to_csv('files/comp_list/unfetched_0723.csv')
 '''
-# ''' Removing dupliacted lines from no_data.txt and no_timestamp.txt
+''' Removing dupliacted lines from no_data.txt and no_timestamp.txt
 with open('files/comp_list/no_data.txt', 'r') as f:
     to_edit = [line.rstrip() for line in f]
 to_edit = sorted(set(to_edit))

@@ -56,3 +56,4 @@ lo,TR.OtherLiabilitiesTotal
 txdi,TR.TaxDefTot
 ceq,TR.TotalEquity
 emp,TR.Employees
+credrat,TR.IssuerRating

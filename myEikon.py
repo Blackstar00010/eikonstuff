@@ -27,12 +27,12 @@ class Company:
                                       {'SDate': start, 'EDate': end}, field_name=True)
         except ek.EikonError as eke:
             print('Error code: ', eke.code)
-            if eke.code in [401, 500]:
-                # 401: Eikon Proxy not running, 500: Backend error
-                sleep(1)
+            if eke.code in [401, 500, 2504]:
+                # 401: Eikon Proxy not running, 500: Backend error, 2504: Gateway Time-out
+                # sleep(1)
                 shrout = self.fetch_shrout(start=start, end=end)
             elif eke.code == 429:
-                raise RuntimeError('Code 429: reached API calls limit')
+                raise RuntimeError('Reached API calls limit')
             else:
                 print(f"{self.ric_code}: No data available for {start} - {end}")
                 return pd.DataFrame()
@@ -62,9 +62,9 @@ class Company:
             return ohlccv
         except ek.EikonError as eke:
             print('Error code: ', eke.code)
-            if eke.code in [401, 500]:
-                # 401: Eikon Proxy not running, 500: Backend error
-                sleep(1)
+            if eke.code in [401, 500, 2504]:
+                # 401: Eikon Proxy not running, 500: Backend error, 2504: Gateway Time-out
+                # sleep(1)
                 return self.fetch_price_decade(dec, adj=adj)
             elif eke.code == 429:
                 raise RuntimeError('Code 429: reached API calls limit')
@@ -265,3 +265,6 @@ class Companies:
 
 if __name__ == '__main__':
     print('You are running myEikon.py')
+    test = ek.get_data(['AZN.L', 'HSBA.L'], ['TR.IssuerRating', 'TR.IssuerRating.calcdate'],
+                       {'SDate': '2020-01-01', 'EDate': '2023-06-30'}, field_name=True)
+    print(test)
