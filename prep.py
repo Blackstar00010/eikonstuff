@@ -23,7 +23,7 @@ screen = screen.drop("Identifier", axis=1)  # same as RIC
 screen = screen.drop('Price Close\n(2023-06-20, GBP)', axis=1)  # useless
 screen = screen.drop('Exchange Name', axis=1)  # always LONDON STOCK EXCHANGE
 
-g23_list = ['MGPM.L', 'FTSV.L', 'FULH.L']  # freshly deleted in July 2023
+g23_list = ['MGPM.L', 'FTSV.L', 'FULH.L', 'SURS.L']  # freshly deleted in July 2023
 g23_df = screen[screen['RIC'].isin(g23_list)][['Company Name', 'RIC']]
 screen = screen[~screen['RIC'].isin(g23_list)]
 screen.to_csv("./files/comp_list/screen_230706.csv", index=False)
@@ -39,7 +39,7 @@ delisted = delisted.drop('RIC2(exchange)', axis=1)  # Now that all are 'L' type,
 g23_df['RIC1(ticker)'] = g23_df['RIC'].str.replace('.L', '')
 g23_df['delisted mm'] = 7
 g23_df['delisted yy'] = 2023
-g23_df['RIC1'] = g23_df['RIC'].apply(lambda x: x+'^G23')
+g23_df['RIC'] = g23_df['RIC'].apply(lambda x: x+'^G23')
 g23_df = g23_df.rename(columns={'Company Name': 'Name (or Code)'})
 delisted = pd.concat([delisted, g23_df], axis=0)
 

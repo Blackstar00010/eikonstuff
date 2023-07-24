@@ -135,21 +135,24 @@ if __name__ == '__main__':
                 comp = dbb.Company(ric)
                 if is_listed:
                     price_data = comp.fetch_price(adj=adj)
+                    time.sleep(1)
                 else:
                     print(f'{ric} is delisted in {delistedYY}..')
                     price_data = comp.fetch_price(delisted=delistedYY, adj=adj)
+                    time.sleep(1)
                 if len(price_data) > 0:
                     price_data.to_csv(price_dir + ric.replace('.', '-') + '.csv')
-                    print(f"{ric} completed!")
+                    print(f"{ric} completed!\n")
                 else:
-                    print(f"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for {ric}!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                    print(f"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Empty Dataset for {ric}"
+                          f"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n")
                     emptylist.append(ric)
                     with open('files/comp_list/no_data.txt', 'w') as f:
                         for line in emptylist:
                             f.write(f"{line}\n")
                 time.sleep(1)
             except ValueError:
-                print(f'ValueError: \'TIMESTAMP\' is not in list for {ric}')
+                print(f'ValueError: \'TIMESTAMP\' is not in list for {ric}\n')
                 notimestamplist.append(ric)
                 with open('files/comp_list/no_timestamp.txt', 'w') as f:
                     for line in notimestamplist:

@@ -1,5 +1,5 @@
 import pandas as pd
-import numpy as np
+from time import sleep
 import eikon as ek
 
 apikey = "7fb0e788b2ff42c2823e80933fde4d28158c74f4"
@@ -25,8 +25,13 @@ class Company:
         try:
             return ek.get_timeseries(self.ric_code, start_date=str(dec) + "-01-01", end_date=str(dec + 9) + "-12-31",
                                      corax=corax)
-        except ek.EikonError:
-            print(f"{self.ric_code}: No data available for {dec}-{dec + 9}")
+        except ek.EikonError as eke:
+            print('Error code: ', eke.code)
+            if eke.code == 500:
+                sleep(1)
+                return self.fetch_decade(dec, adj=adj)
+            else:
+                print(f"{self.ric_code}: No data available for {dec}-{dec + 9}")
             return pd.DataFrame()
 
     def fetch_price(self, overwrite=False, delisted=2024, adj=False):
@@ -122,7 +127,7 @@ class Companies:
         fields = []
         [fields.append(ek.TR_Field(tr_item)) for tr_item in tr_and_date_list]
 
-        datedict = {"SDate": start, "EDate": end, 'Curn': 'GBP', 'Frq': period}
+        datedict = {"SDate": start, "EDate": end, 'Curn': 'GBP', 'Period': 'period'+'0', 'Frq': period}
 
         df, err = ek.get_data(self.ric_codes, fields, parameters=datedict, field_name=True)
         self._raw_data_list.append(df)
