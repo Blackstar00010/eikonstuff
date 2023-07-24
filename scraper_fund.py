@@ -17,7 +17,6 @@ tl_dict = {}
 fields = shits['TR_name'].to_list()
 for i in range(len(shits)):
     tl_dict[shits['TR_name'][i].upper()] = shits['shitty_name'][i]
-data_type = 'FQ'
 date_col = pd.read_csv('files/metadata/business_days.csv').rename(columns={'YYYY-MM-DD': 'datadate'}).loc[:, 'datadate']
 
 slice_by = 25
@@ -25,6 +24,7 @@ start_firm = 3500
 # split into smaller list just in case it might give some blank rows
 fetchQ = True
 if fetchQ:
+    data_type = 'FQ'
     for i in range(start_firm, len(all_rics), slice_by):
         rics = all_rics[i:i + slice_by]
         comps = mek.Companies(rics)
@@ -80,7 +80,7 @@ if fetchQ:
             comp_df_new = comp_df_new.groupby('datadate').sum().reset_index()
             comp_df_new = comp_df_new.sort_values(by=['datadate'])
 
-            # rename columns & adding columns
+            # rename & compute new columns
             comp_df_new = comp_df_new.rename(columns=tl_dict)
             comp_df_new.loc[:, 'dcpstk'] = comp_df_new.loc[:, 'pstk'] + comp_df_new.loc[:, 'dcvt']
             comp_df_new.loc[:, 'txfo'] = comp_df_new.loc[:, 'txt'] - comp_df_new.loc[:, 'txfed']
@@ -128,15 +128,15 @@ if fetchQ:
             print(ric, 'done!')
 
 # organise & move to /by_data/from_ref
-organize_FY = False
-if organize_FY:
-    fy_dir = 'files/fund_data/FY/'
-    files = os.listdir(fy_dir)
+to_organize = ['FY']
+for Fsth in to_organize:
+    fsth_dir = f'files/fund_data/{Fsth}/'
+    files = os.listdir(fsth_dir)
     firms = [file_name[:-4].replace('-', '.') for file_name in files]
 
     total_df = pd.DataFrame()
     for i, file_name in enumerate(files):
-        to_concat = pd.read_csv(fy_dir + file_name)
+        to_concat = pd.read_csv(fsth_dir + file_name)
         to_concat['ric'] = firms[i]
         total_df = pd.concat([total_df, to_concat], axis=0)
     print('Finished loading data!')

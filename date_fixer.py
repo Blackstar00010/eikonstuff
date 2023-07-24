@@ -1,27 +1,36 @@
 import pandas as pd
 import os
 
-to_fix_dirs = ['files/by_data/from_ref', '']
 
-date_col = pd.read_csv('files/metadata/business_days.csv')[['YYYY-MM-DD', 'YYYYMMDD']]
-
-
-close_df = pd.read_csv('files/by_data/secd/close.csv')[
-    ['datadate', 'AZN.L']]  # AZN is just a placeholder to keep df not series
-close_df['YYYY'] = close_df['datadate'].apply(lambda x: str(x)[:4])
-close_df['MM'] = close_df['datadate'].apply(lambda x: str(x)[4:6])
-close_df['DD'] = close_df['datadate'].apply(lambda x: str(x)[-2:])
-close_df['YYYYMMDD'] = close_df['datadate']
-close_df['YYYY-MM-DD'] = close_df['YYYY'] + '-' + close_df['MM'] + '-' + close_df['DD']
-close_df = close_df.drop(['AZN.L', 'datadate'], axis=1)
-close_df.to_csv('files/metadata/business_days.csv', index=False)
-
-for adir in to_fix_dirs:
-    file_names = os.listdir(adir)
-    for file_name in file_names:
-        the_df = pd.read_csv(adir+file_name)
-        is_dashed = the_df.loc[0, 'datadate'].count('-') == 2
-        to_compare = 'YYYY-MM-DD' if is_dashed else 'YYYYMMDD'
-        # TODO
+def fix_dates_df(from_df: pd.DataFrame, to_df: pd.DataFrame, from_col='datadate', to_col='datadate', fill='ffill'):
+    """
+    Reads date column from `from_df` and apply to `to_df`, fills NaNs depending on `fill` and return the fixed `to_df`.
+    :param from_df: the df to bring the date column from
+    :param to_df: the df to be changed
+    :param from_col: name of the column that contains date values in `from_df`
+    :param to_col: name of the column that contains date values in `to_df`
+    :return: fixed `to_df`
+    """
+    date_col = from_df[from_col]
+    to_df[to_col] = date_col
+    if fill is not None:
+        to_df.fillna(method=fill)
+    return to_df
 
 
+
+def fix_dates_csv(from_csv: str, to_csv: str, from_col='datadate', to_col='datadate', fill='ffill'):
+    """
+    Reads date column from `from_csv` and apply to `to_csv`, fills NaNs depending on `fill` and save as `to_csv`
+    :param from_csv: the csv to bring the date column from
+    :param to_csv: the csv to be changed
+    :param from_col: name of the column that contains date values in `from_csv`
+    :param to_col: name of the column that contains date values in `to_csv`
+    :return: None
+    """
+    df1 = pd.read_csv(from_csv)
+    df2 = pd.read_csv(to_csv)
+    fix_dates_df(df1, df2, from_col, to_col)
+
+
+if __name__ == '__main__':

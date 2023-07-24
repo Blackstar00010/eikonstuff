@@ -68,6 +68,34 @@ def rate_of_change(dataframe: pd.DataFrame, minusone=True):
     return ret
 
 
+def ser_to_df(series: pd.Series, columns):
+    """
+    Stretches horizontally the column vector so that the resulting dataframe has all the columns of `dataframe` with
+    each row containing one value.
+    :param series: the pd.Series to expand
+    :param columns: list of names of the columns of the dataframe to be returned
+    :return: pd.DataFrame
+    """
+    ret = pd.DataFrame(series)
+    for acol in columns:
+        ret[acol] = series
+    ret = ret.drop(0, axis='columns')
+    return ret
+
+
+def ind_adj(dataframe: pd.DataFrame):
+    """
+    Calculate industry-adjusted values. Specifically, it subtracts from rows their average
+    :param dataframe: the dataframe to calculate industry-adjusted values
+    :return: pd.DataFrame
+    """
+    # not using mean as we might have 0's instead of NaN's
+    sum_row = dataframe.sum(axis=1)
+    count_row = dataframe.notna().sum(axis=1)
+    ind_avg = ser_to_df(sum_row / count_row, dataframe.columns)
+    return dataframe / ind_avg
+
+
 funda_dir = 'files/by_data/funda/'
 ref_dir = 'files/by_data/from_ref/'
 secd_dir = 'files/by_data/secd/'
@@ -233,17 +261,39 @@ rdbias = rate_of_change(xrd) - roe
 operprof = (revt - cogs - xsga - xint) / lag(ceq)
 ps = (ni > 0).astype(int) + (oancf > 0).astype(int) + (ni / at > lag(ni / at)).astype(int) + (oancf > ni).astype(
     int) + (dltt / at < lag(dltt / at)).astype(int) + (act / lct > lag(act / lct)).astype(int) + (
-                 (revt - cogs) / revt > (lag((revt - cogs) / revt)).astype(int)) + (revt / at > lag(revt / at)).astype(
+             (revt - cogs) / revt > (lag((revt - cogs) / revt)).astype(int)) + (revt / at > lag(revt / at)).astype(
     int) + (scstkc == 0).astype(int)
 
 # TODO: Lev and Nissim (2004) https://www.jstor.org/stable/4093085
+tr = 0
+tb = txt / tr / ib * (ib > 0) + 1 * (ib <= 0)
 
 roa = atlagat * ni
 cfroa = atlagat * (oancf + (oancf == 0) * (ib + dp))
 xrdint = atlagat * xrd
 capxint = atlagat * capx
 xadint = atlagat * xad
-print('ten done')
+
+chato = chato * (count >= 3) + 0 * (count < 3)
+grcapx = grcapx * (count >= 3) + 0 * (count < 3)
+
+chpmia = ind_adj(chpm)
+chatoia = ind_adj(chato)
+chempia = ind_adj(hire)
+bm_ia = ind_adj(bm)
+pchcapx_ia = ind_adj(pchcapx)
+tb = ind_adj(tb)
+cfp_ia = ind_adj(cfp)
+mve_ia = ind_adj(mve)
+herf = revt.div(revt.sum(axis=1).squeeze(), axis=0) * revt.div(revt.sum(axis=1).squeeze(), axis=0)
+
+# todo: Mohanram
+ms = (roa > ser_to_df(roa.median(axis=1), roa.columns)).astype(int) + \
+     (cfroa > ser_to_df(cfroa.median(axis=1), cfroa.columns)).astype(int) + \
+     (xrdint > ser_to_df(xrdint.median(axis=1), xrdint.columns)).astype(int) + \
+     (capxint > ser_to_df(capxint.median(axis=1), capxint.columns)).astype(int) + \
+     (xadint > ser_to_df(xadint.median(axis=1), xadint.columns)).astype(int) + \
+     (oancf > ni).astype(int)
 
 bm.to_csv('./files/by_data/seventyeight/bm.csv')
 ep.to_csv('./files/by_data/seventyeight/ep.csv')

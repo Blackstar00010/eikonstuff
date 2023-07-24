@@ -14,12 +14,62 @@ class Company:
         self.ric_code = comp_code
         self.price_data = pd.DataFrame()
 
-    def fetch_decade(self, dec, adj=False):
+    def fetch_price_decade(self, dec: int, adj=False):
         """
-        fetches price/volume data of a decade and returns as a dataframe.
+        fetches ohlccv data of a decade and returns as a dataframe.
         :param adj: adjusted price data if True, unadjusted price if False.
         :param dec: start year an integer. (e.g. 2020)
-        :return: dataframe of columns HIGH, LOW, CLOSE, OPEN, COUNT, VOLUME, SharesOutstanding.
+        :return: dataframe of index Date and columns HIGH, LOW, CLOSE, OPEN, COUNT, VOLUME.
+                 Also contains SHROUT and MVE columns if `adj` is False.
+        """
+        corax = 'adjusted' if adj else 'unadjusted'
+        try:
+            ohlccv = ek.get_timeseries(self.ric_code, start_date=str(dec) + "-01-01", end_date=str(dec + 9) + "-12-31",
+                                       corax=corax)
+            if adj and len(ohlccv) > 0:
+                shrout = ek.get_data(self.ric_code,
+                                     ['TR.SharesOutstanding', 'TR.SharesOutstanding.calcdate'],
+                                     {'SDate': ohlccv.index.min().strftime('%Y-%m-%d'),
+                                      'EDate': ohlccv.index.max().strftime('%Y-%m-%d')})
+            return ohlccv
+        except ek.EikonError as eke:
+            print('Error code: ', eke.code)
+            if eke.code in [401, 500]:
+                # 401: Eikon Proxy not running, 500: Backend error
+                sleep(1)
+                return self.fetch_price_decade(dec, adj=adj)
+            elif eke.code == 429:
+                raise RuntimeError('Code 429: reached API calls limit')
+            else:
+                print(f"{self.ric_code}: No data available for {dec}-{dec + 9}")
+            return pd.DataFrame()
+
+    def fetch_price(self, overwrite=False, delisted=2024, adj=False):
+        """
+        fetches ohlccv data and returns as a dataframe.
+        :param adj: adjusted price data if True, unadjusted price if False.
+        :param delisted: the year the firm got delisted
+        :param overwrite: overwrites price data dataframe if it is not empty
+        :return: dataframe of columns Date, HIGH, LOW, CLOSE, OPEN, COUNT, VOLUME. Also contains SHROUT and MVE columns
+                if `adj` is False
+        """
+
+        if overwrite or self.price_data.empty:
+            startyear = 1983
+            df = self.fetch_price_decade(startyear, adj=adj)
+            startyear += 10
+            while startyear < delisted:
+                new_df = self.fetch_price_decade(startyear, adj=adj)
+                df = pd.concat([df, new_df], axis=0)
+                startyear += 10
+            self.price_data = df
+        return self.price_data
+
+    def fetch_shrout_decade(self, dec: int):
+        """
+        fetches TR.SharesOustanding data of a decade and returns as a dataframe.
+        :param dec: start year as an integer. (e.g. 2020)
+        :return: dataframe of columns Date, HIGH, LOW, CLOSE, OPEN, COUNT, VOLUME, SharesOutstanding.
         """
         corax = 'adjusted' if adj else 'unadjusted'
         try:
@@ -30,7 +80,7 @@ class Company:
             if eke.code in [401, 500]:
                 # 401: Eikon Proxy not running, 500: Backend error
                 sleep(1)
-                return self.fetch_decade(dec, adj=adj)
+                return self.fetch_price_decade(dec, adj=adj)
             elif eke.code == 429:
                 raise RuntimeError('Code 429: reached API calls limit')
             else:
@@ -48,10 +98,10 @@ class Company:
 
         if overwrite or self.price_data.empty:
             startyear = 1983
-            df = self.fetch_decade(startyear, adj=adj)
+            df = self.fetch_price_decade(startyear, adj=adj)
             startyear += 10
             while startyear < delisted:
-                new_df = self.fetch_decade(startyear, adj=adj)
+                new_df = self.fetch_price_decade(startyear, adj=adj)
                 df = pd.concat([df, new_df], axis=0)
                 startyear += 10
             self.price_data = df
@@ -130,7 +180,7 @@ class Companies:
         fields = []
         [fields.append(ek.TR_Field(tr_item)) for tr_item in tr_and_date_list]
 
-        datedict = {"SDate": start, "EDate": end, 'Curn': 'GBP', 'Period': 'period'+'0', 'Frq': period}
+        datedict = {"SDate": start, "EDate": end, 'Curn': 'GBP', 'Period': 'period' + '0', 'Frq': period}
 
         df, err = ek.get_data(self.ric_codes, fields, parameters=datedict, field_name=True)
         self._raw_data_list.append(df)
