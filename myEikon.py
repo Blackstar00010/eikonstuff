@@ -14,6 +14,31 @@ class Company:
         self.ric_code = comp_code
         self.price_data = pd.DataFrame()
 
+    def fetch_shrout(self, start, end):
+        """
+        fetches shares oustanding data
+        :param start: the date from which data is fetched
+        :param end: the data until which data is fetched
+        :return: pd.DataFrame of columns 'SHROUT' and 'Date'
+        """
+        try:
+            shrout, err = ek.get_data(self.ric_code,
+                                      ['TR.SharesOutstanding', 'TR.SharesOutstanding.calcdate'],
+                                      {'SDate': start, 'EDate': end}, field_name=True)
+        except ek.EikonError as eke:
+            print('Error code: ', eke.code)
+            if eke.code in [401, 500]:
+                # 401: Eikon Proxy not running, 500: Backend error
+                sleep(1)
+                shrout = self.fetch_shrout(start=start, end=end)
+            elif eke.code == 429:
+                raise RuntimeError('Code 429: reached API calls limit')
+            else:
+                print(f"{self.ric_code}: No data available for {start} - {end}")
+                return pd.DataFrame()
+        shrout = shrout.rename(columns={'TR.SHARESOUTSTANDING': 'SHROUT', 'TR.SHARESOUTSTANDING.calcdate': 'Date'})
+        return shrout.drop('Instrument', axis=1)
+
     def fetch_price_decade(self, dec: int, adj=False):
         """
         fetches ohlccv data of a decade and returns as a dataframe.
@@ -26,11 +51,14 @@ class Company:
         try:
             ohlccv = ek.get_timeseries(self.ric_code, start_date=str(dec) + "-01-01", end_date=str(dec + 9) + "-12-31",
                                        corax=corax)
-            if adj and len(ohlccv) > 0:
-                shrout = ek.get_data(self.ric_code,
-                                     ['TR.SharesOutstanding', 'TR.SharesOutstanding.calcdate'],
-                                     {'SDate': ohlccv.index.min().strftime('%Y-%m-%d'),
-                                      'EDate': ohlccv.index.max().strftime('%Y-%m-%d')})
+            if (not adj) and (len(ohlccv) > 0):
+                shrout = self.fetch_shrout(start=ohlccv.index.min().strftime('%Y-%m-%d'),
+                                           end=ohlccv.index.max().strftime('%Y-%m-%d'))
+                shrout['Date'] = pd.to_datetime(shrout['Date'])
+                shrout = shrout.set_index('Date')
+                ohlccv = pd.concat([ohlccv, shrout], axis=1)
+                ohlccv = ohlccv.fillna('CLOSE', method='ffill')
+                ohlccv['MVE'] = ohlccv['CLOSE'] * ohlccv['SHROUT']
             return ohlccv
         except ek.EikonError as eke:
             print('Error code: ', eke.code)
@@ -50,50 +78,8 @@ class Company:
         :param adj: adjusted price data if True, unadjusted price if False.
         :param delisted: the year the firm got delisted
         :param overwrite: overwrites price data dataframe if it is not empty
-        :return: dataframe of columns Date, HIGH, LOW, CLOSE, OPEN, COUNT, VOLUME. Also contains SHROUT and MVE columns
-                if `adj` is False
-        """
-
-        if overwrite or self.price_data.empty:
-            startyear = 1983
-            df = self.fetch_price_decade(startyear, adj=adj)
-            startyear += 10
-            while startyear < delisted:
-                new_df = self.fetch_price_decade(startyear, adj=adj)
-                df = pd.concat([df, new_df], axis=0)
-                startyear += 10
-            self.price_data = df
-        return self.price_data
-
-    def fetch_shrout_decade(self, dec: int):
-        """
-        fetches TR.SharesOustanding data of a decade and returns as a dataframe.
-        :param dec: start year as an integer. (e.g. 2020)
-        :return: dataframe of columns Date, HIGH, LOW, CLOSE, OPEN, COUNT, VOLUME, SharesOutstanding.
-        """
-        corax = 'adjusted' if adj else 'unadjusted'
-        try:
-            return ek.get_timeseries(self.ric_code, start_date=str(dec) + "-01-01", end_date=str(dec + 9) + "-12-31",
-                                     corax=corax)
-        except ek.EikonError as eke:
-            print('Error code: ', eke.code)
-            if eke.code in [401, 500]:
-                # 401: Eikon Proxy not running, 500: Backend error
-                sleep(1)
-                return self.fetch_price_decade(dec, adj=adj)
-            elif eke.code == 429:
-                raise RuntimeError('Code 429: reached API calls limit')
-            else:
-                print(f"{self.ric_code}: No data available for {dec}-{dec + 9}")
-            return pd.DataFrame()
-
-    def fetch_price(self, overwrite=False, delisted=2024, adj=False):
-        """
-        fetches price/volume data and returns as a dataframe.
-        :param adj: adjusted price data if True, unadjusted price if False.
-        :param delisted: the year the firm got delisted
-        :param overwrite: overwrites price data dataframe if it is not empty
-        :return: dataframe of columns HIGH, LOW, CLOSE, OPEN, COUNT, VOLUME.
+        :return: dataframe of index Date and columns HIGH, LOW, CLOSE, OPEN, COUNT, VOLUME.
+                 Also contains SHROUT and MVE columns if `adj` is False.
         """
 
         if overwrite or self.price_data.empty:
