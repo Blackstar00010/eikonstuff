@@ -1,5 +1,4 @@
 import pandas as pd
-from time import sleep
 import eikon as ek
 
 apikey = "7fb0e788b2ff42c2823e80933fde4d28158c74f4"
@@ -49,7 +48,8 @@ class Company:
         """
         corax = 'adjusted' if adj else 'unadjusted'
         try:
-            ohlccv = ek.get_timeseries(self.ric_code, start_date=str(dec) + "-01-01", end_date=end_date, corax=corax)
+            ohlccv = ek.get_timeseries(self.ric_code, start_date=str(dec) + "-01-01", end_date=str(dec + 9) + '-12-31',
+                                       corax=corax)
             if (not adj) and (len(ohlccv) > 0):
                 shrout = self.fetch_shrout(start=ohlccv.index.min().strftime('%Y-%m-%d'),
                                            end=ohlccv.index.max().strftime('%Y-%m-%d'))
@@ -271,9 +271,10 @@ def datetime_to_str(col: pd.Series):
     :param col: the column vector to convert to str in the format YYYY-MM-DD
     :return: pd.Series of the converted vector
     """
-    if type(col[0]) == str:
-        return col
-    return col.dt.strftime('%Y-%m-%d')
+    col = pd.to_datetime(col).dt.strftime('%Y-%m-%d')
+    if type(col[0]) != str:
+        col = col.dt.strftime('%Y-%m-%d')
+    return col
 
 
 if __name__ == '__main__':

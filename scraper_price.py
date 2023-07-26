@@ -1,4 +1,4 @@
-import myEikon as dbb
+import myEikon as mek
 import pandas as pd
 import time
 import os
@@ -70,12 +70,8 @@ def fix_ohlccv(ohlccv_df: pd.DataFrame):
                 the_price = ohlc_df.at[i - 1, 'CLOSE']
             ohlc_df.loc[i] = the_price
             ohlc_df.at[i, 'Date'] = date
-    ohlc_df.loc[:, 'Date'] = pd.to_datetime(ohlc_df.loc[:, 'Date']).dt.strftime('%Y-%m-%d')
-    if type(ohlc_df.loc[0, 'Date']) != str:
-        ohlc_df['Date'] = ohlc_df['Date'].dt.strftime('%Y-%m-%d')
-    cv_df.loc[:, 'Date'] = pd.to_datetime(cv_df.loc[:, 'Date']).dt.strftime('%Y-%m-%d')
-    if type(cv_df.loc[0, 'Date']) != str:
-        cv_df['Date'] = cv_df['Date'].dt.strftime('%Y-%m-%d')
+    ohlc_df.loc[:, 'Date'] = mek.datetime_to_str(ohlc_df.loc[:, 'Date'])
+    cv_df.loc[:, 'Date'] = mek.datetime_to_str(cv_df.loc[:, 'Date'])
     # ohlccv_df_c = pd.concat([ohlccv_df, cv_df], axis=1)
     ohlccv_df = ohlc_df.merge(cv_df, on="Date", how="outer")
 
@@ -105,6 +101,7 @@ adj = True
 price_dir = 'files/price_stuff/adj_price_data/' if adj else 'files/price_stuff/price_data/'
 fixed_price_dir = 'files/price_stuff/adj_price_data_fixed/' if adj else 'files/price_stuff/price_data_fixed/'
 merge_dir = 'files/price_stuff/adj_price_data_merged/' if adj else 'files/price_stuff/price_data_merged/'
+adj_filename = 'adj_' if adj else ''
 
 if __name__ == '__main__':
     # b/c I have a Windows pc for fetching and a Mac for cleaning up
@@ -138,7 +135,7 @@ if __name__ == '__main__':
             delistedYY = int(delistedYY)
             is_listed = delistedYY == 0
             try:
-                comp = dbb.Company(ric)
+                comp = mek.Company(ric)
                 if is_listed:
                     price_data = comp.fetch_price(adj=adj)
                     time.sleep(1)
@@ -178,9 +175,6 @@ if __name__ == '__main__':
         keep_orig = False
         file_list = os.listdir('files/price_stuff/price_data/')
         rics = [file_name[:-4].replace('-', '.') for file_name in file_list]
-
-        shrout_done = pd.read_csv('files/comp_list/shrout_done.csv')['RIC']
-        rics = [ric for ric in rics if ric not in shrout_done]
         for ric in rics:
             original_df = pd.read_csv(f'files/price_stuff/price_data/{ric.replace(".", "-")}.csv')
 
@@ -209,13 +203,14 @@ if __name__ == '__main__':
             original_df = original_df.drop('SHROUT', axis=1) \
                 if (overwrite and 'SHROUT' in original_df.columns) else original_df
 
-            comp = dbb.Company(ric)
+            comp = mek.Company(ric)
             shrout_df = pd.DataFrame()
             syear = int(original_df['Date'].min()[:4])
             eyear = int(original_df['Date'].max()[:4])
             eyear = eyear if eyear > syear else eyear+1
             for yyyy in range(syear, eyear, 10):
-                shrout_df = pd.concat([shrout_df, comp.fetch_shrout(start=str(yyyy)+'-01-01', end=str(yyyy+9)+'-12-31')])
+                to_concat = comp.fetch_shrout(start=str(yyyy)+'-01-01', end=str(yyyy+9)+'-12-31')
+                shrout_df = pd.concat([shrout_df, to_concat])
 
             if shrout_df.isna().all().all():
                 original_df['SHROUT'] = float('NaN')
@@ -273,10 +268,10 @@ if __name__ == '__main__':
         popen = popen.sort_values('Date').set_index('Date')
         pclose = pclose.sort_values('Date').set_index('Date')
 
-        phigh.to_csv(merge_dir + 'high.csv', index=True)
-        plow.to_csv(merge_dir + 'low.csv', index=True)
-        popen.to_csv(merge_dir + 'open.csv', index=True)
-        pclose.to_csv(merge_dir + 'close.csv', index=True)
+        phigh.to_csv(merge_dir + adj_filename + 'high.csv', index=True)
+        plow.to_csv(merge_dir + adj_filename + 'low.csv', index=True)
+        popen.to_csv(merge_dir + adj_filename + 'open.csv', index=True)
+        pclose.to_csv(merge_dir + adj_filename + 'close.csv', index=True)
         print('Finished merging price data!')
 
     # fill in the blanks of the merged data with prev values and save at /price_data_merged/
@@ -294,16 +289,18 @@ if __name__ == '__main__':
                     if pd.isna(df.at[i, acol]):
                         df.at[i, acol] = prev_price
                     prev_price = df.at[i, acol]
+
+            df = df.reindex(sorted(df.columns), axis=1)
             df.to_csv(merge_dir + afile, index=False)
-            print(f'{afile} finished!')
+            print(f'{adj_filename}{afile} finished!')
 
     # convert fixed date vs comp matrix into date vs ohlc matrix and save as {ric1(ticker)}.csv at /price_data_fixed/
     convertQ = convertQ
     if convertQ:
-        df_c = pd.read_csv(merge_dir + 'close.csv')
-        df_h = pd.read_csv(merge_dir + 'high.csv')
-        df_l = pd.read_csv(merge_dir + 'low.csv')
-        df_o = pd.read_csv(merge_dir + 'open.csv')
+        df_c = pd.read_csv(merge_dir + adj_filename + 'close.csv')
+        df_h = pd.read_csv(merge_dir + adj_filename + 'high.csv')
+        df_l = pd.read_csv(merge_dir + adj_filename + 'low.csv')
+        df_o = pd.read_csv(merge_dir + adj_filename + 'open.csv')
         files = os.listdir(fixed_price_dir)
 
         print('Converting back...\n[', end="")
