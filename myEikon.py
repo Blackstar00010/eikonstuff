@@ -49,15 +49,16 @@ class Company:
         """
         corax = 'adjusted' if adj else 'unadjusted'
         try:
-            ohlccv = ek.get_timeseries(self.ric_code, start_date=str(dec) + "-01-01", end_date=str(dec + 9) + "-12-31",
-                                       corax=corax)
+            end_date = str(dec + 9) + '-12-31' if (dec+9 < 2023) else '2023-07-01'
+            ohlccv = ek.get_timeseries(self.ric_code, start_date=str(dec) + "-01-01", end_date=end_date, corax=corax)
             if (not adj) and (len(ohlccv) > 0):
                 shrout = self.fetch_shrout(start=ohlccv.index.min().strftime('%Y-%m-%d'),
                                            end=ohlccv.index.max().strftime('%Y-%m-%d'))
+                # shrout has 'Date' column but ohlccv has 'Date' index
                 shrout['Date'] = pd.to_datetime(shrout['Date'])
                 shrout = shrout.set_index('Date')
-                ohlccv = pd.concat([ohlccv, shrout], axis=1)
-                ohlccv = ohlccv.fillna('CLOSE', method='ffill')
+                ohlccv = pd.concat([ohlccv, shrout], axis=1).sort_index()
+                ohlccv['CLOSE'] = ohlccv['CLOSE'].fillna(method='ffill')
                 ohlccv['MVE'] = ohlccv['CLOSE'] * ohlccv['SHROUT']
             return ohlccv
         except ek.EikonError as eke:
@@ -146,11 +147,11 @@ class Companies:
         self.sedols = self.fetch_symb('SEDOL')
         return self.sedols
 
-    def fetch_data(self, tr_list: list, start='1983-01-01', end='2023-06-30', period='FY'):
+    def fetch_data(self, tr_list, start='1983-01-01', end='2023-06-30', period='FY'):
         """
         Fetches and returns data in pandas DataFrame without error.
         This DataFrame is stored in this instance, so to view previous fetches, use show_history() function.
-        :param tr_list: list of TR fields (e.g. ['TR.SharesOutstanding', 'TR.Revenue']
+        :param tr_list: list-like data of TR fields (e.g. ['TR.SharesOutstanding', 'TR.Revenue']
         :param start: the first date to fetch data, in the format 'YYYY-MM-DD' (e.g. '1983-01-01')
         :param end: the last date to fetch data, in the format 'YYYY-MM-DD' (e.g. '2020-12-31')
         :param period: period of which the data is fetched. 'FY' by default (e.g. 'FY', 'FS', 'FQ', 'daily')
@@ -160,6 +161,8 @@ class Companies:
             raise ValueError('start and end values should be given in the format of "YYYY-MM-DD". ')
         if period not in ['FY', 'FS', 'FQ', 'daily']:
             raise ValueError('period value should be given as either "FY", "FS", "FQ", or "daily". ')
+        if type(tr_list) != list:
+            tr_list = [item for item in tr_list]
 
         tr_and_date_list = tr_list + [item + '.CALCDATE' for item in tr_list]
         tr_and_date_list.sort()
@@ -261,6 +264,17 @@ class Companies:
         :return: None
         """
         self.set_history([], raw=raw)
+
+
+def datetime_to_str(col: pd.Series):
+    """
+    Converts datetime Series into str Series.
+    :param col: the column vector to convert to str in the format YYYY-MM-DD
+    :return: pd.Series of the converted vector
+    """
+    if type(col[0]) == str:
+        return col
+    return col.dt.strftime('%Y-%m-%d')
 
 
 if __name__ == '__main__':

@@ -1,9 +1,8 @@
 import myEikon as dbb
 import pandas as pd
-import numpy as np
-from eikon import eikonError
 import time
 import os
+import platform
 
 '''
 1. fetch ohlcv data from eikon and save as {ric1(ticker)}.csv at /price_data/
@@ -107,9 +106,15 @@ fixed_price_dir = 'files/price_stuff/adj_price_data_fixed/' if adj else 'files/p
 merge_dir = 'files/price_stuff/adj_price_data_merged/' if adj else 'files/price_stuff/price_data_merged/'
 
 if __name__ == '__main__':
-    # fetching data using eikon data api and save as {ric1(ticker)}.csv at /price_data/
-    fetchQ = True
+    # b/c I have a Windows pc for fetching and a Mac for cleaning up
+    fetchQ, shroutQ, fixQ, mergeQ, fillQ, convertQ = False, True, False, False, False, False
+    if platform.system() != 'Darwin':
+        fetchQ, shroutQ, fixQ, mergeQ, fillQ, convertQ = True, True, False, False, False, False
+
+    # fetching data using eikon data api and save as {ric1(ticker)}.csv in /price_data/
+    fetchQ = fetchQ
     if fetchQ:
+        # choosing which pickle file to fetch rics from
         use_available = True
         if use_available:
             comp_list_df = pd.read_pickle('files/comp_list/available.pickle')
@@ -165,8 +170,55 @@ if __name__ == '__main__':
             avail_df.to_csv('files/comp_list/available.csv', index=False)
             avail_df.to_pickle('files/comp_list/available.pickle')
 
+    shroutQ = shroutQ
+    if shroutQ:
+        overwrite = False
+        keep_both = False
+        keep_orig = False
+        file_list = os.listdir('files/price_stuff/price_data/')
+        rics = [file_name[:-4].replace('-', '.') for file_name in file_list]
+
+        shrout_done = pd.read_csv('files/comp_list/shrout_done.csv')['RIC']
+        rics = [ric for ric in rics if ric not in shrout_done]
+        for ric in rics:
+            original_df = pd.read_csv(f'files/price_stuff/price_data/{ric.replace(".", "-")}.csv')
+
+            # duplicate columns other than 'datadate' might exist so resolve this
+            if ('SHROUT' in original_df.columns) and (not overwrite) and (not keep_both) and (not keep_orig):
+                action = input(f'Which action would you like to perform? [overwrite/keep_both/keep_original]')
+                while action not in ['overwrite', 'keep_both', 'keep_original']:
+                    action = input(f'Which action would you like to perform? [overwrite/keep_both/keep_original]')
+
+                if action == 'overwrite':
+                    overwrite = True
+                elif action == 'keep_both':
+                    keep_both = True
+                else:
+                    keep_orig = True
+
+                remem = input('Remember your choice? [y/n]')
+                while remem not in ['y', 'n']:
+                    remem = input('Remember your choice? [y/n]')
+                if remem == 'n':
+                    overwrite, keep_both, keep_orig = False, False, False
+
+            if keep_orig and ('SHROUT' in original_df.columns):
+                continue  # no need to fetch new
+
+            original_df = original_df.drop('SHROUT', axis=1) \
+                if (overwrite and 'SHROUT' in original_df.columns) else original_df
+
+            comp = dbb.Company(ric)
+            shrout_df = pd.DataFrame()
+            for yyyy in range(1983, 2023):
+                shrout_df = pd.concat([shrout_df, comp.fetch_shrout(start=str(yyyy)+'-01-01', end=str(yyyy)+'-12-31')])
+
+            original_df = original_df.merge(shrout_df, on='Date', how='outer').sort_values(by='Date')
+            original_df.to_csv(f'files/price_stuff/price_data/{ric.replace(".", "-")}.csv', index=False)
+            print(f'{ric} shrout done!')
+
     # wisely fill NaNs and save at /price_data/
-    fixQ = False
+    fixQ = fixQ
     retryQ = False
     if fixQ:
         files = os.listdir(price_dir)
@@ -181,7 +233,7 @@ if __name__ == '__main__':
             print(f'{finished_count}/{len(files)} | {afile} done!')
 
     # merging data to make {one_of_ohlcv}.csv at /price_data_merged/
-    mergeQ = False
+    mergeQ = mergeQ
     if mergeQ:
         files = os.listdir(fixed_price_dir)
         df = pd.read_csv(fixed_price_dir + files[0])
@@ -218,7 +270,7 @@ if __name__ == '__main__':
         print('Finished merging price data!')
 
     # fill in the blanks of the merged data with prev values and save at /price_data_merged/
-    fillQ = False
+    fillQ = fillQ
     if fillQ:
         merged_files = os.listdir(merge_dir)
         print('Refilling empty price values...')
@@ -236,7 +288,7 @@ if __name__ == '__main__':
             print(f'{afile} finished!')
 
     # convert fixed date vs comp matrix into date vs ohlc matrix and save as {ric1(ticker)}.csv at /price_data_fixed/
-    convertQ = False
+    convertQ = convertQ
     if convertQ:
         df_c = pd.read_csv(merge_dir + 'close.csv')
         df_h = pd.read_csv(merge_dir + 'high.csv')
