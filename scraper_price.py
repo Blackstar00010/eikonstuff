@@ -74,7 +74,8 @@ def fix_ohlccv(ohlccv_df: pd.DataFrame):
     if type(ohlc_df.loc[0, 'Date']) != str:
         ohlc_df['Date'] = ohlc_df['Date'].dt.strftime('%Y-%m-%d')
     cv_df.loc[:, 'Date'] = pd.to_datetime(cv_df.loc[:, 'Date']).dt.strftime('%Y-%m-%d')
-    cv_df['Date'] = cv_df['Date'].dt.strftime('%Y-%m-%d')
+    if type(cv_df.loc[0, 'Date']) != str:
+        cv_df['Date'] = cv_df['Date'].dt.strftime('%Y-%m-%d')
     # ohlccv_df_c = pd.concat([ohlccv_df, cv_df], axis=1)
     ohlccv_df = ohlc_df.merge(cv_df, on="Date", how="outer")
 
@@ -107,7 +108,7 @@ merge_dir = 'files/price_stuff/adj_price_data_merged/' if adj else 'files/price_
 
 if __name__ == '__main__':
     # b/c I have a Windows pc for fetching and a Mac for cleaning up
-    fetchQ, shroutQ, fixQ, mergeQ, fillQ, convertQ = False, True, False, False, False, False
+    fetchQ, shroutQ, fixQ, mergeQ, fillQ, convertQ = False, False, True, True, True, True
     if platform.system() != 'Darwin':
         fetchQ, shroutQ, fixQ, mergeQ, fillQ, convertQ = False, True, False, False, False, False
 
@@ -252,7 +253,7 @@ if __name__ == '__main__':
         popen = df[['Date', 'OPEN']].rename(columns={'OPEN': firm_name})
         pclose = df[['Date', 'CLOSE']].rename(columns={'CLOSE': firm_name})
 
-        print('Merging price data...\n[', end="")
+        print('\nMerging price data...\n[', end="")
         for i, afile in enumerate(files[1:]):
             df = pd.read_csv(fixed_price_dir + afile)
             firm_name = afile.split('.')[0]
@@ -282,7 +283,7 @@ if __name__ == '__main__':
     fillQ = fillQ
     if fillQ:
         merged_files = os.listdir(merge_dir)
-        print('Refilling empty price values...')
+        print('\nRefilling empty price values...')
         for afile in merged_files:
             df = pd.read_csv(merge_dir + afile)
             first_i = df.apply(lambda col: col.first_valid_index())

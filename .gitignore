@@ -1,7 +1,9 @@
 .DS_Store
 
-# scraper_price.py -> fixQ & mergeQ = True
+# scraper_price.py -> adj = False, fixQ & mergeQ = True
 /files/price_stuff/price_data_merged/
+# scraper_price.py -> adj = True, fixQ & mergeQ = True
+/files/price_stuff/adj_price_data_merged/
 # wrds_prep.py -> organize_secd = True
 /files/by_data/secd/
 # scraper_fund.py -> organize_FY & ~_FS & ~_FQ = True
