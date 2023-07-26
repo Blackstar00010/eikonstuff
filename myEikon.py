@@ -3,7 +3,8 @@ import eikon as ek
 
 apikey = "7fb0e788b2ff42c2823e80933fde4d28158c74f4"
 ek.set_app_key(apikey)
-hehe = 'hehe'
+_server_err = [400, 401, 500, 2504]
+# 400: Backend error, 401: Eikon Proxy not running, 500: Backend error, 2504: Gateway Time-out
 
 
 class Company:
@@ -27,8 +28,7 @@ class Company:
                                       {'SDate': start, 'EDate': end}, field_name=True)
         except ek.EikonError as eke:
             print('Error code: ', eke.code)
-            if eke.code in [401, 500, 2504]:
-                # 401: Eikon Proxy not running, 500: Backend error, 2504: Gateway Time-out
+            if eke.code in _server_err:
                 # sleep(1)
                 shrout = self.fetch_shrout(start=start, end=end)
             elif eke.code == 429:
@@ -63,7 +63,7 @@ class Company:
             return ohlccv
         except ek.EikonError as eke:
             print('Error code: ', eke.code)
-            if eke.code in [401, 500, 2504]:
+            if eke.code in _server_err:
                 # 401: Eikon Proxy not running, 500: Backend error, 2504: Gateway Time-out
                 # sleep(1)
                 return self.fetch_price_decade(dec, adj=adj)
@@ -171,17 +171,28 @@ class Companies:
 
         datedict = {"SDate": start, "EDate": end, 'Curn': 'GBP', 'Period': 'period' + '0', 'Frq': period}
 
-        df, err = ek.get_data(self.ric_codes, fields, parameters=datedict, field_name=True)
-        self._raw_data_list.append(df)
-        for col in df.columns:
-            if col.count('.') < 2:  # if not calcdate
-                continue
-            df[col] = df[col].astype(str)
-            df.loc[:, col] = df.loc[:, col].str[:10]
-            df[col].replace("<NA>", float('NaN'), inplace=True)
-            df[col].replace("", float('NaN'), inplace=True)
-        self._data_list.append(df)
-        return df
+        try:
+            df, err = ek.get_data(self.ric_codes, fields, parameters=datedict, field_name=True)
+            self._raw_data_list.append(df)
+            for col in df.columns:
+                if col.count('.') < 2:  # if not calcdate
+                    continue
+                df[col] = df[col].astype(str)
+                df.loc[:, col] = df.loc[:, col].str[:10]
+                df[col].replace("<NA>", float('NaN'), inplace=True)
+                df[col].replace("", float('NaN'), inplace=True)
+            self._data_list.append(df)
+            return df
+        except ek.EikonError as eke:
+            print('Error code: ', eke.code)
+            if eke.code in _server_err:
+                # 401: Eikon Proxy not running, 500: Backend error, 2504: Gateway Time-out
+                # sleep(1)
+                return self.fetch_data(tr_list, start=start, end=end, period=period)
+            elif eke.code == 429:
+                raise RuntimeError('Code 429: reached API calls limit')
+            else:
+                raise RuntimeError('An error occurred; read the message above!')
 
     def fetch_price_data(self, start='2010-01-01', end='2023-06-30'):
         """
