@@ -145,14 +145,6 @@ if fetchQ:
             comp_df_new.loc[:, 'dr'] = comp_df_new.loc[:, 'drlt'] + comp_df_new.loc[:, 'drc']
             comp_df_new.loc[:, 'dc'] = comp_df_new.loc[:, 'dcvt']
 
-            # rename columns based on accounting period
-            if data_type == 'FQ':
-                comp_df_new = comp_df_new.rename(columns={col: col + 'q' for col in comp_df_new.columns
-                                                          if col not in ['datadate', 'Instrument']})
-            if data_type == 'FS':
-                comp_df_new = comp_df_new.rename(columns={col: col + 's' for col in comp_df_new.columns
-                                                          if col not in ['datadate', 'Instrument']})
-
             # final cleanup
             comp_df_new = comp_df_new.drop(['Instrument'], axis=1)
             comp_df_new = comp_df_new.replace(0, float('NaN'))  # fill empty columns
@@ -162,9 +154,21 @@ if fetchQ:
 
             # adding a column that counts the firm's age
             multiplier = 1
-            if
-            comp_df_new['count'] = (pd.to_datetime(comp_df_new['datadate']) - pd.to_datetime(
-                comp_df_new['datadate']).min()).dt.days // 365 + 1
+            if data_type == 'FQ':
+                multiplier = 4
+            elif data_type == 'FS':
+                multiplier = 2
+            comp_df_new['count'] = (multiplier * (pd.to_datetime(comp_df_new['datadate']
+                                                                 ) - pd.to_datetime(comp_df_new['datadate']).min()
+                                                  ).dt.days) // 365 + 1
+
+            # rename columns based on accounting period
+            if data_type == 'FQ':
+                comp_df_new = comp_df_new.rename(columns={col: col + 'q' for col in comp_df_new.columns
+                                                          if col != 'datadate'})
+            if data_type == 'FS':
+                comp_df_new = comp_df_new.rename(columns={col: col + 's' for col in comp_df_new.columns
+                                                          if col != 'datadate'})
 
             if len(comp_df_new) > 0:
                 comp_df_new.to_csv(f'./files/fund_data/{data_type}/{ric.replace(".", "-")}.csv', index=False)

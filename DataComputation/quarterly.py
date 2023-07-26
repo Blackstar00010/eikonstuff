@@ -2,7 +2,7 @@ import pandas as pd
 from useful_fn import lag, delta, rate_of_change, past_stddev, past_mean
 
 if __name__ == '__main__':
-    from_ref_dir = 'files/by_data/from_ref/'
+    from_ref_dir = '../files/by_data/from_ref/'
 
     if True:
         pstkrq = pd.read_csv(from_ref_dir + 'pstkrq.csv')
@@ -20,7 +20,7 @@ if __name__ == '__main__':
         lctq = pd.read_csv(from_ref_dir + 'lctq.csv')
         dlcq = pd.read_csv(from_ref_dir + 'dlcq.csv')
         ppentq = pd.read_csv(from_ref_dir + 'ppentq.csv')
-        ltq = pd.read_csv(from_ref_dir + 'ltq.csv')
+        countq = pd.read_csv(from_ref_dir + 'countq.csv')
 
     pstk = pstkrq.fillna(pstkq)
     scal = seqq.fillna(ceqq + pstk).fillna(atq - ltq)
@@ -51,3 +51,13 @@ if __name__ == '__main__':
     nincr += ibq_incr8 + ibq_incr8 * lag(ibq_incr, 9) + ibq_incr8 * lag(ibq_incr, 9) * lag(ibq_incr, 10) + \
              ibq_incr8 * lag(ibq_incr, 9) * lag(ibq_incr, 10) * lag(ibq_incr, 11) + \
              ibq_incr8 * lag(ibq_incr, 9) * lag(ibq_incr, 10) * lag(ibq_incr, 11) * lag(ibq_incr, 12)
+
+    roaq = roaq * (countq > 1)
+    roeq = roeq * (countq > 1)
+    chtx = chtx * (countq > 5)
+    che = che * (countq > 5)
+    cinvest = cinvest * (countq > 5)
+    stdacc = stdacc * (countq > 17)
+    stdcf = stdcf * (countq > 17)
+    sgrvol = sgrvol * (countq > 17)
+    roavol = roavol * (countq > 17)
