@@ -109,7 +109,7 @@ if __name__ == '__main__':
     # b/c I have a Windows pc for fetching and a Mac for cleaning up
     fetchQ, shroutQ, fixQ, mergeQ, fillQ, convertQ = False, True, False, False, False, False
     if platform.system() != 'Darwin':
-        fetchQ, shroutQ, fixQ, mergeQ, fillQ, convertQ = True, True, False, False, False, False
+        fetchQ, shroutQ, fixQ, mergeQ, fillQ, convertQ = False, True, False, False, False, False
 
     # fetching data using eikon data api and save as {ric1(ticker)}.csv in /price_data/
     fetchQ = fetchQ
@@ -185,9 +185,9 @@ if __name__ == '__main__':
 
             # duplicate columns other than 'datadate' might exist so resolve this
             if ('SHROUT' in original_df.columns) and (not overwrite) and (not keep_both) and (not keep_orig):
-                action = input(f'Which action would you like to perform? [overwrite/keep_both/keep_original]')
+                action = input(f'Which action would you like to perform? [overwrite/keep_both/keep_original] ')
                 while action not in ['overwrite', 'keep_both', 'keep_original']:
-                    action = input(f'Which action would you like to perform? [overwrite/keep_both/keep_original]')
+                    action = input(f'Which action would you like to perform? [overwrite/keep_both/keep_original] ')
 
                 if action == 'overwrite':
                     overwrite = True
@@ -196,9 +196,9 @@ if __name__ == '__main__':
                 else:
                     keep_orig = True
 
-                remem = input('Remember your choice? [y/n]')
+                remem = input('Remember your choice? [y/n] ')
                 while remem not in ['y', 'n']:
-                    remem = input('Remember your choice? [y/n]')
+                    remem = input('Remember your choice? [y/n] ')
                 if remem == 'n':
                     overwrite, keep_both, keep_orig = False, False, False
 
@@ -210,10 +210,19 @@ if __name__ == '__main__':
 
             comp = dbb.Company(ric)
             shrout_df = pd.DataFrame()
-            for yyyy in range(1983, 2023):
-                shrout_df = pd.concat([shrout_df, comp.fetch_shrout(start=str(yyyy)+'-01-01', end=str(yyyy)+'-12-31')])
+            syear = int(original_df['Date'].min()[:4])
+            eyear = int(original_df['Date'].max()[:4])
+            eyear = eyear if eyear > syear else eyear+1
+            for yyyy in range(syear, eyear, 10):
+                shrout_df = pd.concat([shrout_df, comp.fetch_shrout(start=str(yyyy)+'-01-01', end=str(yyyy+9)+'-12-31')])
 
+            if shrout_df.isna().all().all():
+                original_df['SHROUT'] = float('NaN')
+                original_df.to_csv(f'files/price_stuff/price_data/{ric.replace(".", "-")}.csv', index=False)
+                print(f'{ric} does not have shrout data!')
+                continue
             original_df = original_df.merge(shrout_df, on='Date', how='outer').sort_values(by='Date')
+            original_df = original_df.dropna(subset=['HIGH', 'LOW', 'CLOSE', 'OPEN', 'VOLUME'], how='all')
             original_df.to_csv(f'files/price_stuff/price_data/{ric.replace(".", "-")}.csv', index=False)
             print(f'{ric} shrout done!')
 

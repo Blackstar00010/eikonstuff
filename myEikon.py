@@ -14,11 +14,11 @@ class Company:
         self.ric_code = comp_code
         self.price_data = pd.DataFrame()
 
-    def fetch_shrout(self, start, end):
+    def fetch_shrout(self, start: str, end: str):
         """
         fetches shares oustanding data
-        :param start: the date from which data is fetched
-        :param end: the data until which data is fetched
+        :param start: the date from which data is fetched given in the format 'YYYY-MM-DD'
+        :param end: the data until which data is fetched given in the format 'YYYY-MM-DD'
         :return: pd.DataFrame of columns 'SHROUT' and 'Date'
         """
         try:
@@ -49,7 +49,6 @@ class Company:
         """
         corax = 'adjusted' if adj else 'unadjusted'
         try:
-            end_date = str(dec + 9) + '-12-31' if (dec+9 < 2023) else '2023-07-01'
             ohlccv = ek.get_timeseries(self.ric_code, start_date=str(dec) + "-01-01", end_date=end_date, corax=corax)
             if (not adj) and (len(ohlccv) > 0):
                 shrout = self.fetch_shrout(start=ohlccv.index.min().strftime('%Y-%m-%d'),

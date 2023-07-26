@@ -94,9 +94,9 @@ if fetchQ:
                 if (len(common_col) > 1) and (not overwrite) and (not keep_both) and (not keep_orig):
                     action = input(f'Following columns already exist:\n'
                                    f'{common_col.to_list()}\n'
-                                   f'Which action would you like to perform? [overwrite/keep_both/keep_original]')
+                                   f'Which action would you like to perform? [overwrite/keep_both/keep_original] ')
                     while action not in ['overwrite', 'keep_both', 'keep_original']:
-                        action = input(f'Which action would you like to perform? [overwrite/keep_both/keep_original]')
+                        action = input(f'Which action would you like to perform? [overwrite/keep_both/keep_original] ')
 
                     if action == 'overwrite':
                         overwrite = True
@@ -105,9 +105,9 @@ if fetchQ:
                     else:
                         keep_orig = True
 
-                    remem = input('Remember your choice? [y/n]')
+                    remem = input('Remember your choice? [y/n] ')
                     while remem not in ['y', 'n']:
-                        remem = input('Remember your choice? [y/n]')
+                        remem = input('Remember your choice? [y/n] ')
                     if remem == 'n':
                         overwrite, keep_both, keep_orig = False, False, False
 
