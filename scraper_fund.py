@@ -161,6 +161,8 @@ if fetchQ:
             comp_df_new = comp_df_new.dropna(how='all')
 
             # adding a column that counts the firm's age
+            multiplier = 1
+            if
             comp_df_new['count'] = (pd.to_datetime(comp_df_new['datadate']) - pd.to_datetime(
                 comp_df_new['datadate']).min()).dt.days // 365 + 1
 

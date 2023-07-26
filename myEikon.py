@@ -3,6 +3,7 @@ import eikon as ek
 
 apikey = "7fb0e788b2ff42c2823e80933fde4d28158c74f4"
 ek.set_app_key(apikey)
+hehe = 'hehe'
 
 
 class Company:

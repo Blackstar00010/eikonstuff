@@ -2,113 +2,26 @@ import os
 import pandas as pd
 from numpy import log
 import logging
+from useful_fn import lag, delta, rate_of_change, ind_adj
 
 date_col = pd.read_csv('../files/metadata/business_days.csv')[['YYYY-MM-DD', 'YYYYMMDD']]
 
-
-def date_column_finder(dataframe: pd.DataFrame):
-    """
-    Finds the name of the column that contains date values.
-    :param dataframe: the dataframe to find a date column from
-    :return: str name of the column's name
-    """
-    date_col_name = [i for i in ['datadate', 'date', 'Datadate', 'DataDate', 'Date'] if i in dataframe.columns]
-    if len(date_col_name) < 1:
-        date_col_name = dataframe.columns
-    if len(date_col_name) > 1:
-        goodenough = False
-        i = 0
-        while goodenough:
-            goodenoughQ = input(f'Do you want to use {date_col_name[i]} as the date column? [y/n]')
-            if goodenoughQ == 'y':
-                goodenough = True
-                date_col_name = date_col_name[i]
-    else:
-        date_col_name = date_col_name[0]
-    return date_col_name
-
-
-def lag(dataframe: pd.DataFrame, by=1):
-    """
-
-    :param dataframe:
-    :return: a dataframe of calculated delta with the original date column
-    """
-    ischanged = (dataframe == dataframe.shift(periods=1))
-    ret = dataframe.shift(periods=1) * ischanged
-    ret = ret.fillna(method='ffill')
-    if by > 1:
-        ret = lag(ret)
-    return ret
-
-
-def delta(dataframe: pd.DataFrame):
-    """
-    Calculate absolute changes from the last different values vertically.
-    :param dataframe: the dataframe to calculate delta. The column of dates must be the index column.
-    :return: a dataframe of calculated delta with the original date column
-    """
-    ret = dataframe - dataframe.shift(periods=1)
-    ret = ret.replace({0: float('NaN')})
-    ret = ret.fillna(method='ffill')
-    return ret
-
-
-def rate_of_change(dataframe: pd.DataFrame, minusone=True):
-    """
-    Calculate absolute changes from the last different values vertically. The value in the returned dataframe is 0.1 if
-    the input dataframe's value changed from 10 to 11.
-    :param dataframe: the dataframe to calculate delta. Must contain a column of dates.
-    :param minusone: For a value changing from 10 to 11, the returned value is 0.1 if minusone=True and 1.1 if minusone=False. True by default.
-    :return: a dataframe of calculated rate of change with the original date column
-    """
-    ret = delta(dataframe)
-    ret = ret / (dataframe - ret)
-    if not minusone:
-        ret += 1
-    return ret
-
-
-def ser_to_df(series: pd.Series, columns):
-    """
-    Stretches horizontally the column vector so that the resulting dataframe has all the columns of `dataframe` with
-    each row containing one value.
-    :param series: the pd.Series to expand
-    :param columns: list of names of the columns of the dataframe to be returned
-    :return: pd.DataFrame
-    """
-    ret = pd.DataFrame(series)
-    for acol in columns:
-        ret[acol] = series
-    ret = ret.drop(0, axis='columns')
-    return ret
-
-
-def ind_adj(dataframe: pd.DataFrame):
-    """
-    Calculate industry-adjusted values. Specifically, it subtracts from rows their average
-    :param dataframe: the dataframe to calculate industry-adjusted values
-    :return: pd.DataFrame
-    """
-    # not using mean as we might have 0's instead of NaN's
-    sum_row = dataframe.sum(axis=1)
-    count_row = dataframe.notna().sum(axis=1)
-    ind_avg = ser_to_df(sum_row / count_row, dataframe.columns)
-    return dataframe / ind_avg
-
-
-funda_dir = '../files/by_data/funda/'
+funda_dir = '../files/by_data/useless/funda/'
 ref_dir = '../files/by_data/from_ref/'
-secd_dir = '../files/by_data/secd/'
+secd_dir = '../files/by_data/useless/secd/'
 
-data_df = pd.DataFrame()
-for file_name in os.listdir(ref_dir):
-    to_concat = pd.read_csv(ref_dir + file_name)
-    to_concat['data_name'] = file_name[:-4]
-    data_df = pd.concat([data_df, to_concat], axis=0)
-data_df = data_df.set_index('datadate')
+is_first = pd.read_csv(ref_dir+'count.csv') == 1
+
 
 if __name__ == '__main__':
+    data_df = pd.DataFrame()
+    for file_name in os.listdir(ref_dir):
+        to_concat = pd.read_csv(ref_dir + file_name)
+        to_concat['data_name'] = file_name[:-4]
+        data_df = pd.concat([data_df, to_concat], axis=0)
+    data_df = data_df.set_index('datadate')
+
+
     if True:
         logging.warning('Running yearly.py will consume huge amount of memory!')
 
@@ -138,6 +51,7 @@ if __name__ == '__main__':
         ebitda = data_df[data_df['data_name'] == 'ebitda'].drop('data_name', axis=1)
         emp = data_df[data_df['data_name'] == 'emp'].drop('data_name', axis=1)
         fatl = data_df[data_df['data_name'] == 'fatl'].drop('data_name', axis=1)
+        fatb = data_df[data_df['data_name'] == 'fatb'].drop('data_name', axis=1)
         gdwlia = data_df[data_df['data_name'] == 'gdwlia'].drop('data_name', axis=1)
         ib = data_df[data_df['data_name'] == 'ib'].drop('data_name', axis=1)
         intan = data_df[data_df['data_name'] == 'intan'].drop('data_name', axis=1)
@@ -234,7 +148,7 @@ if __name__ == '__main__':
     woGW = (gdwlia != 0)
     tang = (che + rect * 0.715 + invt * 0.547 + ppent * 0.535) / at
     # if (2100<=sic<=2199) or (2080<=sic<=2085) or (naics in ('7132','71312','713210','71329','713290','72112','721120'))
-    #     then sin=1 else sin=0  # TODO
+    #     then sin=1 else sin=0  # TODO: (174)
     act = act.replace(0, float('NaN')).fillna(che + rect + invt)
     lct = lct.replace(0, float('NaN')).fillna(ap)
     currat = act / lct
@@ -247,7 +161,6 @@ if __name__ == '__main__':
     saleinv = revt / invt
     pchsaleinv = rate_of_change(revt / invt)
     cashdebt = 2 * (ib + dp) / (lt + lag(lt))
-    fatb = pd.DataFrame(0, columns=fatl.columns, index=fatl.index)  # TODO
     realestate = (fatb + fatl) / (ppegt.replace(0, float('NaN')).fillna(ppent))
     print('ten done')
     divi = ((dvt > 0) * ((lag(dvt) == 0) + lag(dvt).isna())) * 1  # starts paying dividends, legit isna
@@ -271,7 +184,7 @@ if __name__ == '__main__':
                  scstkc == 0) * 1
 
     # TODO: Lev and Nissim (2004) https://www.jstor.org/stable/4093085
-    tr = 0
+    tr = 0  # todo: (206)
     tb = txt / tr / ib * (ib > 0) + 1 * (ib <= 0)
 
     chato = chato * (count >= 3) + 0 * (count < 3)
@@ -292,9 +205,12 @@ if __name__ == '__main__':
     first_index = xsga.first_valid_index
     orgcap = (xsga / cpi / 0.25) * ((count == 1) + (xsga.index == xsga.first_valid_index()))
     for i in range(len(orgcap)):
-        # todo
+        # todo (385-)
         continue
     orgcap = atlagat * orgcap * (count > 1)
+
+    # todo: mve (516)
+    # todo: pps (518)
 
     bm.to_csv('./files/by_data/seventyeight/bm.csv')
     ep.to_csv('./files/by_data/seventyeight/ep.csv')

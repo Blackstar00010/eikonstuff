@@ -5,7 +5,7 @@
 # scraper_price.py -> adj = True, fixQ & mergeQ = True
 /files/price_stuff/adj_price_data_merged/
 # wrds_prep.py -> organize_secd = True
-/files/by_data/secd/
+/files/by_data/useless/secd/
 # scraper_fund.py -> organize_FY & ~_FS & ~_FQ = True
 /files/by_data/from_ref/
 

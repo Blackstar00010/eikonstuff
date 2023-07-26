@@ -219,6 +219,8 @@ if __name__ == '__main__':
                 continue
             original_df = original_df.merge(shrout_df, on='Date', how='outer').sort_values(by='Date')
             original_df = original_df.dropna(subset=['HIGH', 'LOW', 'CLOSE', 'OPEN', 'VOLUME'], how='all')
+            original_df['SHROUT'] = original_df['SHROUT'].fillna(method='ffill')
+
             original_df.to_csv(f'files/price_stuff/price_data/{ric.replace(".", "-")}.csv', index=False)
             print(f'{ric} shrout done!')
 
@@ -247,6 +249,7 @@ if __name__ == '__main__':
         plow = df[['Date', 'LOW']].rename(columns={'LOW': firm_name})
         popen = df[['Date', 'OPEN']].rename(columns={'OPEN': firm_name})
         pclose = df[['Date', 'CLOSE']].rename(columns={'CLOSE': firm_name})
+        shrout = df[['Date', 'SHROUT']].rename(columns={'SHROUT': firm_name})
 
         print('\nMerging price data...\n[', end="")
         for i, afile in enumerate(files[1:]):
@@ -256,6 +259,7 @@ if __name__ == '__main__':
             plow = plow.merge(df[['Date', 'LOW']], on="Date", how="outer").rename(columns={'LOW': firm_name})
             popen = popen.merge(df[['Date', 'OPEN']], on="Date", how="outer").rename(columns={'OPEN': firm_name})
             pclose = pclose.merge(df[['Date', 'CLOSE']], on="Date", how="outer").rename(columns={'CLOSE': firm_name})
+            shrout = shrout.merge(df[['Date', 'SHROUT']], on="Date", how="outer").rename(columns={'SHROUT': firm_name})
 
             if i % 5 == 3:
                 print('-', end="")
@@ -267,11 +271,13 @@ if __name__ == '__main__':
         plow = plow.sort_values('Date').set_index('Date')
         popen = popen.sort_values('Date').set_index('Date')
         pclose = pclose.sort_values('Date').set_index('Date')
+        shrout = shrout.sort_values('Date').set_index('Date')
 
         phigh.to_csv(merge_dir + adj_filename + 'high.csv', index=True)
         plow.to_csv(merge_dir + adj_filename + 'low.csv', index=True)
         popen.to_csv(merge_dir + adj_filename + 'open.csv', index=True)
         pclose.to_csv(merge_dir + adj_filename + 'close.csv', index=True)
+        shrout.to_csv(merge_dir + adj_filename + 'shrout.csv', index=True)
         print('Finished merging price data!')
 
     # fill in the blanks of the merged data with prev values and save at /price_data_merged/
