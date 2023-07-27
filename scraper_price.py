@@ -3,6 +3,7 @@ import pandas as pd
 import time
 import os
 import platform
+from useful_stuff import beep
 
 '''
 1. fetch ohlcv data from eikon and save as {ric1(ticker)}.csv at /price_data/
@@ -167,6 +168,7 @@ if __name__ == '__main__':
             avail_df = comp_list_df[comp_list_df['RIC'].isin(avail_list)]
             avail_df.to_csv('files/comp_list/available.csv', index=False)
             avail_df.to_pickle('files/comp_list/available.pickle')
+        beep()
 
     shroutQ = shroutQ
     if shroutQ:
@@ -198,6 +200,7 @@ if __name__ == '__main__':
                     overwrite, keep_both, keep_orig = False, False, False
 
             if keep_orig and ('SHROUT' in original_df.columns):
+                print(f'{ric} already done!')
                 continue  # no need to fetch new
 
             original_df = original_df.drop('SHROUT', axis=1) \
@@ -218,11 +221,13 @@ if __name__ == '__main__':
                 print(f'{ric} does not have shrout data!')
                 continue
             original_df = original_df.merge(shrout_df, on='Date', how='outer').sort_values(by='Date')
-            original_df = original_df.dropna(subset=['HIGH', 'LOW', 'CLOSE', 'OPEN', 'VOLUME'], how='all')
+            existing_col = [col for col in ['HIGH', 'LOW', 'CLOSE', 'OPEN', 'VOLUME'] if col in original_df.columns]
+            original_df = original_df.dropna(subset=existing_col, how='all')
             original_df['SHROUT'] = original_df['SHROUT'].fillna(method='ffill')
 
             original_df.to_csv(f'files/price_stuff/price_data/{ric.replace(".", "-")}.csv', index=False)
             print(f'{ric} shrout done!')
+        beep()
 
     # wisely fill NaNs and save at /price_data/
     fixQ = fixQ
@@ -238,6 +243,7 @@ if __name__ == '__main__':
                     continue
             finished_count += 1
             print(f'{finished_count}/{len(files)} | {afile} done!')
+        beep()
 
     # merging data to make {one_of_ohlcv}.csv at /price_data_merged/
     mergeQ = mergeQ
@@ -280,6 +286,8 @@ if __name__ == '__main__':
         shrout.to_csv(merge_dir + adj_filename + 'shrout.csv', index=True)
         print('Finished merging price data!')
 
+        beep()
+
     # fill in the blanks of the merged data with prev values and save at /price_data_merged/
     fillQ = fillQ
     if fillQ:
@@ -299,6 +307,8 @@ if __name__ == '__main__':
             df = df.reindex(sorted(df.columns), axis=1)
             df.to_csv(merge_dir + afile, index=False)
             print(f'{adj_filename}{afile} finished!')
+
+        beep()
 
     # convert fixed date vs comp matrix into date vs ohlc matrix and save as {ric1(ticker)}.csv at /price_data_fixed/
     convertQ = convertQ
@@ -328,3 +338,5 @@ if __name__ == '__main__':
             if i % 100 == 99:
                 print(f'] {i + 1}/{len(files)}\n[', end="")
         print(f'] {len(files)}/{len(files)}')
+
+        beep()

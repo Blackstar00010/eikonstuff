@@ -1,9 +1,10 @@
 import pandas as pd
 import eikon as ek
+from useful_stuff import beep
 
 apikey = "7fb0e788b2ff42c2823e80933fde4d28158c74f4"
 ek.set_app_key(apikey)
-_server_err = [400, 401, 500, 2504]
+_not_my_fault = [400, 401, 500, 2504]
 # 400: Backend error, 401: Eikon Proxy not running, 500: Backend error, 2504: Gateway Time-out
 
 
@@ -17,7 +18,7 @@ class Company:
 
     def fetch_shrout(self, start: str, end: str):
         """
-        fetches shares oustanding data
+        fetches shares outstanding data
         :param start: the date from which data is fetched given in the format 'YYYY-MM-DD'
         :param end: the data until which data is fetched given in the format 'YYYY-MM-DD'
         :return: pd.DataFrame of columns 'SHROUT' and 'Date'
@@ -26,18 +27,20 @@ class Company:
             shrout, err = ek.get_data(self.ric_code,
                                       ['TR.SharesOutstanding', 'TR.SharesOutstanding.calcdate'],
                                       {'SDate': start, 'EDate': end}, field_name=True)
+            shrout = shrout.drop('Instrument', axis=1)
         except ek.EikonError as eke:
             print('Error code: ', eke.code)
-            if eke.code in _server_err:
+            if eke.code in _not_my_fault:
                 # sleep(1)
                 shrout = self.fetch_shrout(start=start, end=end)
             elif eke.code == 429:
+                beep()
                 raise RuntimeError('Reached API calls limit')
             else:
                 print(f"{self.ric_code}: No data available for {start} - {end}")
                 return pd.DataFrame()
         shrout = shrout.rename(columns={'TR.SHARESOUTSTANDING': 'SHROUT', 'TR.SHARESOUTSTANDING.calcdate': 'Date'})
-        return shrout.drop('Instrument', axis=1)
+        return shrout
 
     def fetch_price_decade(self, dec: int, adj=False):
         """
@@ -63,11 +66,12 @@ class Company:
             return ohlccv
         except ek.EikonError as eke:
             print('Error code: ', eke.code)
-            if eke.code in _server_err:
+            if eke.code in _not_my_fault:
                 # 401: Eikon Proxy not running, 500: Backend error, 2504: Gateway Time-out
                 # sleep(1)
                 return self.fetch_price_decade(dec, adj=adj)
             elif eke.code == 429:
+                beep()
                 raise RuntimeError('Code 429: reached API calls limit')
             else:
                 print(f"{self.ric_code}: No data available for {dec}-{dec + 9}")
@@ -121,6 +125,9 @@ class Companies:
         except KeyError:
             result[symb_type] = ''
             symb = result[['RIC', symb_type]]
+        except ek.EikonError as eke:
+            print('Error code: ', eke.code)
+            symb = self.fetch_symb(symb_type=symb_type)
         return symb
 
     def fetch_isin(self):
@@ -185,11 +192,11 @@ class Companies:
             return df
         except ek.EikonError as eke:
             print('Error code: ', eke.code)
-            if eke.code in _server_err:
-                # 401: Eikon Proxy not running, 500: Backend error, 2504: Gateway Time-out
+            if eke.code in _not_my_fault:
                 # sleep(1)
                 return self.fetch_data(tr_list, start=start, end=end, period=period)
             elif eke.code == 429:
+                beep()
                 raise RuntimeError('Code 429: reached API calls limit')
             else:
                 raise RuntimeError('An error occurred; read the message above!')
@@ -290,7 +297,8 @@ def datetime_to_str(col: pd.Series):
 
 
 if __name__ == '__main__':
-    print('You are running myEikon.py')
-    test = ek.get_data(['AZN.L', 'HSBA.L'], ['TR.IssuerRating', 'TR.IssuerRating.calcdate'],
-                       {'SDate': '2020-01-01', 'EDate': '2023-06-30'}, field_name=True)
-    print(test)
+    ans = input('You are running myEikon.py. Do you wish to continue? [y/n]')
+    if ans == 'y':
+        test = ek.get_data(['AZN.L', 'HSBA.L'], ['TR.IssuerRating', 'TR.IssuerRating.calcdate'],
+                           {'SDate': '2020-01-01', 'EDate': '2023-06-30'}, field_name=True)
+        print(test)
