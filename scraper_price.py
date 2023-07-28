@@ -103,7 +103,11 @@ if __name__ == '__main__':
     # b/c I have a Windows pc for fetching and a Mac for cleaning up
     fetchQ, shroutQ, fixQ, mergeQ, moveQ, convertQ = False, False, False, False, True, False
     if platform.system() != 'Darwin':
+<<<<<<< Updated upstream
         fetchQ, shroutQ, fixQ, mergeQ, moveQ, convertQ = False, True, False, False, False, False
+=======
+        fetchQ, shroutQ, fixQ, mergeQ, fillQ, convertQ = True, False, False, False, False, False
+>>>>>>> Stashed changes
 
     # fetching data using eikon data api and save as {ric1(ticker)}.csv in /price_data/
     fetchQ = fetchQ
