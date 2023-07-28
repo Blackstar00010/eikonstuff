@@ -1,21 +1,21 @@
 import pandas as pd
-from useful_fn import series_to_df, lag
+from elementwise_calc import series_to_df, lag
 
 from_ref_dir = '../files/by_data/from_ref/'
 intermed_dir = '../files/by_data/intermed/'
 
-at = pd.read_csv(from_ref_dir+'at.csv')
-ni = pd.read_csv(from_ref_dir+'ni.csv')
-ib = pd.read_csv(from_ref_dir+'ib.csv')
-dp = pd.read_csv(from_ref_dir+'dp.csv')
-oancf = pd.read_csv(from_ref_dir+'oancf.csv')
-xrd = pd.read_csv(from_ref_dir+'xrd.csv')
-capx = pd.read_csv(from_ref_dir+'capx.csv')
-xad = pd.read_csv(from_ref_dir+'xad.csv')
-roavol = pd.read_csv(intermed_dir+'roavol.csv')
-sgrvol = pd.read_csv(intermed_dir+'sgrvol.csv')
+ni = pd.read_csv(from_ref_dir+'ni.csv').set_index('datadate')
+ib = pd.read_csv(from_ref_dir+'ib.csv').set_index('datadate')
+dp = pd.read_csv(from_ref_dir+'dp.csv').set_index('datadate')
+oancf = pd.read_csv(from_ref_dir+'oancf.csv').set_index('datadate')
+xrd = pd.read_csv(from_ref_dir+'xrd.csv').set_index('datadate')
+capx = pd.read_csv(from_ref_dir+'capx.csv').set_index('datadate')
+xad = pd.read_csv(from_ref_dir+'xad.csv').set_index('datadate')
 
-atlagat = 2 / (at + lag(at))
+roavol = pd.read_csv(intermed_dir+'roavol.csv').set_index('datadate')
+sgrvol = pd.read_csv(intermed_dir+'sgrvol.csv').set_index('datadate')
+atlagat = pd.read_csv(intermed_dir+'atlagat.csv').set_index('datadate')
+
 roa = atlagat * ni
 cfroa = atlagat * (oancf + (oancf == 0) * (ib + dp))
 xrdint = atlagat * xrd

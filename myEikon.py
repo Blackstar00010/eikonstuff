@@ -1,9 +1,16 @@
 import pandas as pd
 import eikon as ek
+import platform
 from useful_stuff import beep
 
-apikey = "7fb0e788b2ff42c2823e80933fde4d28158c74f4"
-ek.set_app_key(apikey)
+
+if platform.system() == 'Darwin':
+    print('Your Operating System is Darwin, so eikon Data API was not set.')
+
+else:
+    apikey = "7fb0e788b2ff42c2823e80933fde4d28158c74f4"
+    ek.set_app_key(apikey)
+
 _not_my_fault = [400, 401, 500, 2504]
 # 400: Backend error, 401: Eikon Proxy not running, 500: Backend error, 2504: Gateway Time-out
 
@@ -282,18 +289,6 @@ class Companies:
         :return: None
         """
         self.set_history([], raw=raw)
-
-
-def datetime_to_str(col: pd.Series):
-    """
-    Converts datetime Series into str Series.
-    :param col: the column vector to convert to str in the format YYYY-MM-DD
-    :return: pd.Series of the converted vector
-    """
-    col = pd.to_datetime(col).dt.strftime('%Y-%m-%d')
-    if type(col[0]) != str:
-        col = col.dt.strftime('%Y-%m-%d')
-    return col
 
 
 if __name__ == '__main__':

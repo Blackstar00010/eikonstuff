@@ -1,26 +1,26 @@
 import pandas as pd
-from useful_fn import lag, delta, rate_of_change, past_stddev, past_mean
+from elementwise_calc import lag, delta, rate_of_change, past_stddev, past_mean
 
 if __name__ == '__main__':
     from_ref_dir = '../files/by_data/from_ref/'
 
     if True:
-        pstkrq = pd.read_csv(from_ref_dir + 'pstkrq.csv')
-        pstkq = pd.read_csv(from_ref_dir + 'pstkq.csv')
-        seqq = pd.read_csv(from_ref_dir + 'seqq.csv')
-        ceqq = pd.read_csv(from_ref_dir + 'ceqq.csv')
-        atq = pd.read_csv(from_ref_dir + 'atq.csv')
-        ltq = pd.read_csv(from_ref_dir + 'ltq.csv')
-        txtq = pd.read_csv(from_ref_dir + 'txtq.csv')
-        ibq = pd.read_csv(from_ref_dir + 'ibq.csv')
-        revtq = pd.read_csv(from_ref_dir + 'revtq.csv')
-        mveq = pd.read_csv(from_ref_dir + 'mveq.csv')
-        actq = pd.read_csv(from_ref_dir + 'actq.csv')
-        cheq = pd.read_csv(from_ref_dir + 'cheq.csv')
-        lctq = pd.read_csv(from_ref_dir + 'lctq.csv')
-        dlcq = pd.read_csv(from_ref_dir + 'dlcq.csv')
-        ppentq = pd.read_csv(from_ref_dir + 'ppentq.csv')
-        countq = pd.read_csv(from_ref_dir + 'countq.csv')
+        pstkrq = pd.read_csv(from_ref_dir + 'pstkrq.csv').set_index('datadate')
+        pstkq = pd.read_csv(from_ref_dir + 'pstkq.csv').set_index('datadate')
+        seqq = pd.read_csv(from_ref_dir + 'seqq.csv').set_index('datadate')
+        ceqq = pd.read_csv(from_ref_dir + 'ceqq.csv').set_index('datadate')
+        atq = pd.read_csv(from_ref_dir + 'atq.csv').set_index('datadate')
+        ltq = pd.read_csv(from_ref_dir + 'ltq.csv').set_index('datadate')
+        txtq = pd.read_csv(from_ref_dir + 'txtq.csv').set_index('datadate')
+        ibq = pd.read_csv(from_ref_dir + 'ibq.csv').set_index('datadate')
+        revtq = pd.read_csv(from_ref_dir + 'revtq.csv').set_index('datadate')
+        actq = pd.read_csv(from_ref_dir + 'actq.csv').set_index('datadate')
+        cheq = pd.read_csv(from_ref_dir + 'cheq.csv').set_index('datadate')
+        lctq = pd.read_csv(from_ref_dir + 'lctq.csv').set_index('datadate')
+        dlcq = pd.read_csv(from_ref_dir + 'dlcq.csv').set_index('datadate')
+        ppentq = pd.read_csv(from_ref_dir + 'ppentq.csv').set_index('datadate')
+        countq = pd.read_csv(from_ref_dir + 'countq.csv').set_index('datadate')
+        mveq = pd.read_csv(from_ref_dir + 'mveq.csv').set_index('datadate')
 
     pstk = pstkrq.fillna(pstkq)
     scal = seqq.fillna(ceqq + pstk).fillna(atq - ltq)
