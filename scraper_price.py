@@ -101,13 +101,9 @@ adj_filename = 'adj_' if adj else ''
 
 if __name__ == '__main__':
     # b/c I have a Windows pc for fetching and a Mac for cleaning up
-    fetchQ, shroutQ, fixQ, mergeQ, moveQ, convertQ = False, False, False, False, True, False
+    fetchQ, shroutQ, fixQ, mergeQ, moveQ, convertQ = False, False, True, True, True, False
     if platform.system() != 'Darwin':
-<<<<<<< Updated upstream
-        fetchQ, shroutQ, fixQ, mergeQ, moveQ, convertQ = False, True, False, False, False, False
-=======
         fetchQ, shroutQ, fixQ, mergeQ, fillQ, convertQ = True, False, False, False, False, False
->>>>>>> Stashed changes
 
     # fetching data using eikon data api and save as {ric1(ticker)}.csv in /price_data/
     fetchQ = fetchQ
@@ -169,6 +165,7 @@ if __name__ == '__main__':
             avail_df.to_pickle('files/comp_list/available.pickle')
         useful_stuff.beep()
 
+    # appending shrout data to .csv files in /price_data/
     shroutQ = shroutQ
     if shroutQ:
         overwrite = False
@@ -228,7 +225,7 @@ if __name__ == '__main__':
             print(f'{ric} shrout done!')
         useful_stuff.beep()
 
-    # wisely fill NaNs and save at /price_data/
+    # wisely fill NaNs and save at /price_data_fixed/
     fixQ = fixQ
     retryQ = True
     if fixQ:
