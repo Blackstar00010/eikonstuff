@@ -1,8 +1,4 @@
-import myEikon as mek
 import pandas as pd
-import time
-import os
-import platform
 import useful_stuff
 
 '''
@@ -30,10 +26,11 @@ def fix_ohlccv(ohlccv_df: pd.DataFrame) -> pd.DataFrame:
     if 'Date' not in ohlccv_df.columns:
         ohlccv_df = ohlccv_df.reset_index(drop=False).rename(columns={'index': 'Date'})
 
-    ohlccv_df['CLOSE'] = ohlccv_df['CLOSE'].fillna(method='ffill')
+    ohlccv_df = ohlccv_df.dropna(subset='Date')
+    ohlccv_df[['SHROUT', 'CLOSE']] = ohlccv_df[['SHROUT', 'CLOSE']].fillna(method='ffill')
 
     ohlc_df = ohlccv_df[['Date', 'HIGH', 'LOW', 'CLOSE', 'OPEN']]
-    # shrout_df = ohlccv_df[['Date', 'SHROUT']]
+    shrout_df = ohlccv_df[['Date', 'SHROUT']]
     cv_df = ohlccv_df[['Date', 'COUNT', 'VOLUME']].fillna(0)
 
     nan_counter = ohlc_df.isna().sum(axis=1)
@@ -54,21 +51,25 @@ def fix_ohlccv(ohlccv_df: pd.DataFrame) -> pd.DataFrame:
 
         # two data are missing -> high=max, low=min, close/open=some good no.
         elif count == 2:
-            num1, num2 = ohlc_df.loc[i].dropna().tolist()[1:]
-            ohlc_df.at[i, 'HIGH'] = max(num1, num2)
-            ohlc_df.at[i, 'LOW'] = min(num1, num2)
-            ohlc_df.at[i, 'CLOSE'] = num1
-            ohlc_df.at[i, 'OPEN'] = num2
+            num1, num2 = ohlc_df.loc[i, :].dropna().tolist()[1:]
+            ohlc_df.loc[i, ['HIGH', 'LOW', 'CLOSE', 'OPEN']] = [max(num1, num2), min(num1, num2), num1, num2]
 
-        # only one is not a nan. No all-four-missing rows b/c 'CLOSE' was ffill-ed
-        else:
-            date, the_only_value = ohlc_df.iloc[i].dropna().tolist()
-            ohlc_df.loc[i] = the_only_value
+        # only one is not a nan
+        elif count == 3:
+            date, the_only_value = ohlc_df.loc[i, :].dropna().tolist()
+            ohlc_df.loc[i, ['HIGH', 'LOW', 'CLOSE', 'OPEN']] = the_only_value
             ohlc_df.at[i, 'Date'] = date
+
+        else:  # all four missing
+            if i > 0:
+                ohlc_df.loc[i, ['HIGH', 'LOW', 'CLOSE', 'OPEN']] = ohlc_df.loc[i - 1, 'CLOSE']
 
     ohlc_df.loc[:, 'Date'] = useful_stuff.datetime_to_str(ohlc_df.loc[:, 'Date'])
     cv_df.loc[:, 'Date'] = useful_stuff.datetime_to_str(cv_df.loc[:, 'Date'])
+    shrout_df.loc[:, 'Date'] = useful_stuff.datetime_to_str(shrout_df.loc[:, 'Date'])
+
     ohlccv_df = ohlc_df.merge(cv_df, on="Date", how="outer")
+    ohlccv_df = ohlccv_df.merge(shrout_df, on="Date", how="outer")
 
     for i in range(1, len(ohlccv_df)):
         if ohlccv_df.at[i, 'VOLUME'] == 0 and ohlccv_df.at[i, 'CLOSE'] != ohlccv_df.at[i, 'OPEN']:
@@ -78,18 +79,27 @@ def fix_ohlccv(ohlccv_df: pd.DataFrame) -> pd.DataFrame:
     return ohlccv_df
 
 
-def fix_ohlccv_file(input_file, output_file) -> pd.DataFrame:
+def fix_ohlccv_file(input_file: str, output_file: str, retryQ=True) -> pd.DataFrame:
     """
     Fix ohlccv dataframe of the ``input_file`` and export as ``output_file``
     :param input_file: name of the file to fix. should end with .csv
     :param output_file: name of the fixed file. should end with .csv
+    :param retryQ: fix again even if the fixed file exists in the target directory
     :return: None if the file is empty. Else, return the fixed dataframe as pandas.DataFrame
     """
-    ohlccv_df = pd.read_csv(input_file)
-    ohlccv_df = fix_ohlccv(ohlccv_df)
-    if ohlccv_df is not None:
-        ohlccv_df.to_csv(output_file, index=False)
-    return ohlccv_df
+    # input_dir = '/'.join(input_file.split('/')[:-1])
+    output_dir = '/'.join(output_file.split('/')[:-1])
+    filename = input_file.split('/')[-1]
+
+    finished_count = 0
+    if retryQ or filename not in useful_stuff.listdir(output_dir):
+        ohlccv_df = pd.read_csv(input_file)
+        ohlccv_df = fix_ohlccv(ohlccv_df)
+        if ohlccv_df is not None:
+            ohlccv_df.to_csv(output_file, index=False)
+            finished_count += 1
+            print(f'{filename} done!')
+        return ohlccv_df
 
 
 adj = True
@@ -100,6 +110,12 @@ secd_ref_dir = 'files/by_data/secd_ref/'
 adj_filename = 'adj_' if adj else ''
 
 if __name__ == '__main__':
+    import time
+    import os
+    import platform
+    import myEikon as mek
+    import multiprocessing as mp
+
     # b/c I have a Windows pc for fetching and a Mac for cleaning up
     fetchQ, shroutQ, fixQ, mergeQ, moveQ, convertQ = False, False, True, True, True, False
     if platform.system() != 'Darwin':
@@ -229,19 +245,23 @@ if __name__ == '__main__':
     fixQ = fixQ
     retryQ = True
     if fixQ:
+        print('Applying the same column/date format...', time.strftime('%H:%m'))
         # same column same date
-        useful_stuff.give_same_format(price_dir)
+        # useful_stuff.give_same_format(price_dir)
+        print('Finished applying the same formats')
 
         files = useful_stuff.listdir(price_dir)
-        finished_ones = useful_stuff.listdir(fixed_price_dir)
-        finished_count = 0
-        for afile in files:
-            if retryQ or afile not in finished_ones:
-                cont_if_none = fix_ohlccv_file(price_dir + afile, fixed_price_dir + afile)
-                if cont_if_none is None:
-                    continue
-            finished_count += 1
-            print(f'{finished_count}/{len(files)} | {afile} done!')
+        nthread = mp.cpu_count()
+        print('Filling ohlccv file...', time.strftime('%H:%m'))
+        for i in range(8000, len(files), nthread):
+            files_splitted = files[i:i+nthread]
+            procs = []
+            for afile in files_splitted:
+                proc = mp.Process(target=fix_ohlccv_file, args=(price_dir + afile, fixed_price_dir + afile, retryQ,))
+                procs.append(proc)
+                proc.start()
+            for proc in procs:
+                proc.join()
         useful_stuff.beep()
 
     # merging data to make {one_of_ohlcvs}.csv at /price_data_merged/
@@ -272,7 +292,8 @@ if __name__ == '__main__':
                 phigh = phigh.merge(df[['Date', 'HIGH']], on="Date", how="outer").rename(columns={'HIGH': firm_name})
                 plow = plow.merge(df[['Date', 'LOW']], on="Date", how="outer").rename(columns={'LOW': firm_name})
                 popen = popen.merge(df[['Date', 'OPEN']], on="Date", how="outer").rename(columns={'OPEN': firm_name})
-                pclose = pclose.merge(df[['Date', 'CLOSE']], on="Date", how="outer").rename(columns={'CLOSE': firm_name})
+                pclose = pclose.merge(df[['Date', 'CLOSE']], on="Date", how="outer").rename(
+                    columns={'CLOSE': firm_name})
                 pvol = pvol.merge(df[['Date', 'VOLUME']], on="Date", how="outer").rename(columns={'VOLUME': firm_name})
                 if 'SHROUT' in df.columns:
                     shrout = shrout.merge(df[['Date', 'SHROUT']], on="Date", how="outer"
