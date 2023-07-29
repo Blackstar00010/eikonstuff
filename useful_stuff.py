@@ -1,6 +1,5 @@
 import platform
 import os
-import beepy
 import pandas as pd
 from typing import Literal
 
@@ -9,7 +8,12 @@ def beep() -> None:
     """
     Makes a beep sound
     """
-    beepy.beep()
+    if platform.system() == 'Darwin':
+        import beepy
+        beepy.beep()
+    else:
+        import winsound
+        winsound.Beep(1000, 500)
 
 
 def listdir(directory: str, file_type='csv') -> list:
@@ -154,5 +158,5 @@ def datetime_to_str(col: pd.Series) -> pd.Series:
 
 
 if __name__ == '__main__':
-    give_same_format('files/temp/')
+    # give_same_format('files/temp/')
     beep()

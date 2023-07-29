@@ -92,7 +92,7 @@ def fix_ohlccv_file(input_file, output_file) -> pd.DataFrame:
     return ohlccv_df
 
 
-adj = False
+adj = True
 price_dir = 'files/price_stuff/adj_price_data/' if adj else 'files/price_stuff/price_data/'
 fixed_price_dir = 'files/price_stuff/adj_price_data_fixed/' if adj else 'files/price_stuff/price_data_fixed/'
 merge_dir = 'files/price_stuff/adj_price_data_merged/' if adj else 'files/price_stuff/price_data_merged/'
@@ -103,7 +103,7 @@ if __name__ == '__main__':
     # b/c I have a Windows pc for fetching and a Mac for cleaning up
     fetchQ, shroutQ, fixQ, mergeQ, moveQ, convertQ = False, False, True, True, True, False
     if platform.system() != 'Darwin':
-        fetchQ, shroutQ, fixQ, mergeQ, fillQ, convertQ = True, False, False, False, False, False
+        fetchQ, shroutQ, fixQ, mergeQ, moveQ, convertQ = True, False, False, False, False, False
 
     # fetching data using eikon data api and save as {ric1(ticker)}.csv in /price_data/
     fetchQ = fetchQ
