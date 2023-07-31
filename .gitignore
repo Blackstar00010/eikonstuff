@@ -8,6 +8,8 @@
 /files/by_data/useless/secd/
 # scraper_fund.py -> organize_FY & ~_FS & ~_FQ = True
 /files/by_data/from_ref/
+# scraper_fund.py -> moveQ = True
+/files/by_data/secd_ref/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

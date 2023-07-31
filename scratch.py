@@ -5,6 +5,7 @@ import time
 import eikon as ek
 import os
 import numpy as np
+import useful_stuff
 
 """ Testing TR Fields
 print(ek.get_data("AZN.L", [{"TR.SharesOutstanding": {"SDate": "2010-01-01", "EDate": "2020-12-31", "Currency": "USD"}},
@@ -20,12 +21,10 @@ prices = ek.get_timeseries(["AZN.L", "AAPL.O"], start_date="2010-01-01", end_dat
 aznprice = prices["AZN.L"]
 print(aznprice)
 """
-
 '''
 asdf = pd.read_csv('https://www.jamesd002.com/file/close.csv')
 print(asdf)
 '''
-
 '''
 close_df = pd.read_csv('./files/price_stuff/price_data_merged/close.csv')
 close_df = close_df.set_index('Date')
@@ -38,7 +37,6 @@ shrout_df.to_csv('./files/by_data/shrout.csv')
 mve_df = shrout_df * close_df
 mve_df.to_csv('./files/by_data/mve.csv')
 '''
-
 ''' calculating business_days.csv
 close_df = pd.read_csv('files/by_data/secd/close.csv')[
     ['datadate', 'AZN.L']]  # AZN is just a placeholder to keep df not series
@@ -50,7 +48,6 @@ close_df['YYYY-MM-DD'] = close_df['YYYY'] + '-' + close_df['MM'] + '-' + close_d
 close_df = close_df.drop(['AZN.L', 'datadate'], axis=1)
 close_df.to_csv('files/metadata/business_days.csv', indices=False)
 # '''
-
 '''
 files = os.listdir('files/fund_data/FY/')
 for afile in files:
@@ -59,7 +56,6 @@ for afile in files:
     thedf.to_csv('files/fund_data/FY/'+afile, indices=False)
     print(f'{afile} done!')
 # '''
-
 ''' pickle test
 asdf = pd.read_csv('files/comp_list/comp_list.csv')
 asdf['RIC1(ticker)'] = asdf['RIC'].apply(lambda x: x.split('.L')[0])
@@ -73,7 +69,6 @@ asdf['CUSIP'] = asdf['CUSIP'].astype(str)
 asdf['SEDOL'] = asdf['SEDOL'].astype(str)
 asdf.to_pickle('files/comp_list/comp_list.pickle')
 # '''
-
 '''
 file_names = os.listdir('files/fund_data/FY/')
 for afile in file_names:
@@ -120,3 +115,10 @@ with open('files/comp_list/no_timestamp.txt', 'w') as f:
     for line in to_edit:
         f.write(f"{line}\n")
 # '''
+
+files = useful_stuff.listdir('files/price_stuff/adj_price_data/')
+for afile in files:
+    df = pd.read_csv('files/price_stuff/adj_price_data/' + afile)
+    df = df.dropna(subset=['HIGH', 'LOW', 'CLOSE', 'OPEN', 'COUNT', 'VOLUME'], how='all')
+    df.to_csv('files/price_stuff/adj_price_data/' + afile, index=False)
+    print(afile)

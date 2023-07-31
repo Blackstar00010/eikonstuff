@@ -23,7 +23,7 @@ class Company:
         self.ric_code = comp_code
         self.price_data = pd.DataFrame()
 
-    def fetch_shrout(self, start: str, end: str):
+    def fetch_shrout(self, start: str, end: str) -> pd.DataFrame:
         """
         fetches shares outstanding data
         :param start: the date from which data is fetched given in the format 'YYYY-MM-DD'
@@ -49,7 +49,7 @@ class Company:
         shrout = shrout.rename(columns={'TR.SHARESOUTSTANDING': 'SHROUT', 'TR.SHARESOUTSTANDING.calcdate': 'Date'})
         return shrout
 
-    def fetch_price_decade(self, dec: int, adj=False):
+    def fetch_price_decade(self, dec: int, adj=False) -> pd.DataFrame:
         """
         fetches ohlccv data of a decade and returns as a dataframe.
         :param adj: adjusted price data if True, unadjusted price if False.
@@ -84,7 +84,7 @@ class Company:
                 print(f"{self.ric_code}: No data available for {dec}-{dec + 9}")
             return pd.DataFrame()
 
-    def fetch_price(self, overwrite=False, delisted=2024, adj=False):
+    def fetch_price(self, overwrite=False, delisted=2024, adj=False) -> pd.DataFrame:
         """
         fetches ohlccv data and returns as a dataframe.
         :param adj: adjusted price data if True, unadjusted price if False.
@@ -118,7 +118,7 @@ class Companies:
         self._data_list = []
         self._raw_data_list = []
 
-    def fetch_symb(self, symb_type: str):
+    def fetch_symb(self, symb_type: str) -> pd.DataFrame:
         """
         Returns translation dataframe of ISIN/CUSIP/SEDOL.
         :param symb_type: 'ISIN', 'CUSIP' or 'SEDOL'
@@ -137,7 +137,7 @@ class Companies:
             symb = self.fetch_symb(symb_type=symb_type)
         return symb
 
-    def fetch_isin(self):
+    def fetch_isin(self) -> pd.DataFrame:
         """
         Returns translation dataframe of ISIN Codes. Recommend using `fetch_symb('ISIN')` instead.
         :return: pd.DataFrame of columns `RIC` and `ISIN`
@@ -145,7 +145,7 @@ class Companies:
         self.isins = self.fetch_symb('ISIN')
         return self.isins
 
-    def fetch_cusip(self):
+    def fetch_cusip(self) -> pd.DataFrame:
         """
         Returns translation dataframe of CUSIP Codes. Recommend using `fetch_symb('CUSIP')` instead.
         :return: pd.DataFrame of columns `RIC` and `CUSIP`
@@ -153,7 +153,7 @@ class Companies:
         self.cusips = self.fetch_symb('CUSIP')
         return self.cusips
 
-    def fetch_sedol(self):
+    def fetch_sedol(self) -> pd.DataFrame:
         """
         Returns translation dataframe of SEDOL Codes. Recommend using `fetch_symb('SEDOL')` instead.
         :return: pd.DataFrame of columns `RIC` and `SEDOL`
@@ -161,7 +161,7 @@ class Companies:
         self.sedols = self.fetch_symb('SEDOL')
         return self.sedols
 
-    def fetch_data(self, tr_list, start='1983-01-01', end='2023-06-30', period='FY'):
+    def fetch_data(self, tr_list, start='1983-01-01', end='2023-06-30', period='FY') -> pd.DataFrame:
         """
         Fetches and returns data in pandas DataFrame without error.
         This DataFrame is stored in this instance, so to view previous fetches, use show_history() function.
@@ -208,7 +208,7 @@ class Companies:
             else:
                 raise RuntimeError('An error occurred; read the message above!')
 
-    def fetch_price_data(self, start='2010-01-01', end='2023-06-30'):
+    def fetch_price_data(self, start='2010-01-01', end='2023-06-30') -> pd.DataFrame:
         """
         Fetches and returns ohlc+v data in pandas DataFrame without error.
         This DataFrame is stored in this instance, so to view previous fetches, use show_history() function.
@@ -239,7 +239,7 @@ class Companies:
         self._data_list.append(df)
         return df
 
-    def get_history(self, index=None, raw=False):
+    def get_history(self, index=None, raw=False) -> list:
         """
         Returns previous fetch(es) of data.
         :param index: The indices of history (e.g. -1 -> last fetch, 0 -> first fetch, [0, -1] -> first and last fetch, None -> all)
@@ -254,7 +254,7 @@ class Companies:
         elif type(index) is int:
             return [ret_list[index]]
 
-    def comp_specific_data(self, ric_code, raw=False):
+    def comp_specific_data(self, ric_code, raw=False) -> pd.DataFrame:
         """
         Returns a DataFrame whose Instrument column is ric_code from the last fetch
         :param ric_code: the code of the firm to get
@@ -266,7 +266,7 @@ class Companies:
         last_df = self.get_history(-1, raw=raw)[0]
         return last_df[last_df['Instrument'] == ric_code]
 
-    def set_history(self, dataframes, raw=False):
+    def set_history(self, dataframes, raw=False) -> None:
         """
         Sets the list of fetch history to the given dataframes.
         :param dataframes: the list to set history as.
@@ -282,7 +282,7 @@ class Companies:
         else:
             raise TypeError("The parameter given to set_history() should be a list or a pd.DataFrame.")
 
-    def clear_history(self, raw=False):
+    def clear_history(self, raw=False) -> None:
         """
         Clears all data history
         :param raw: True if you want to clear the history of raw data
@@ -294,6 +294,6 @@ class Companies:
 if __name__ == '__main__':
     ans = input('You are running myEikon.py. Do you wish to continue? [y/n]')
     if ans == 'y':
-        test = ek.get_data(['AZN.L', 'HSBA.L'], ['TR.IssuerRating', 'TR.IssuerRating.calcdate'],
-                           {'SDate': '2020-01-01', 'EDate': '2023-06-30'}, field_name=True)
-        print(test)
+        test = Companies(['AZN.L', 'HSBA.L'])
+        data = test.fetch_data(['TR.IssuerRating', 'TR.IssuerRating.calcdate'], start='2020-01-01', end='2023-06-30', )
+        print(data)

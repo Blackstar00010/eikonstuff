@@ -1,5 +1,6 @@
 import pandas as pd
 import useful_stuff
+import shutil
 
 '''
 1. fetch ohlcv data from eikon and save as {ric1(ticker)}.csv at /price_data/
@@ -16,7 +17,7 @@ def fix_ohlccv(ohlccv_df: pd.DataFrame) -> pd.DataFrame:
     """
     if len(ohlccv_df) < 1:
         print(f'!!!!!!!!!!!!!!!!{afile} is empty!!!!!!!!!!!!!!!!!')
-        return None
+        return pd.DataFrame()
     for data_type in ['HIGH', 'LOW', 'OPEN']:
         if data_type not in ohlccv_df.columns:
             ohlccv_df[data_type] = ohlccv_df['CLOSE']
@@ -27,10 +28,15 @@ def fix_ohlccv(ohlccv_df: pd.DataFrame) -> pd.DataFrame:
         ohlccv_df = ohlccv_df.reset_index(drop=False).rename(columns={'index': 'Date'})
 
     ohlccv_df = ohlccv_df.dropna(subset='Date')
-    ohlccv_df[['SHROUT', 'CLOSE']] = ohlccv_df[['SHROUT', 'CLOSE']].fillna(method='ffill')
+
+    compute_shrout = 'SHROUT' in ohlccv_df.columns
+    if compute_shrout:
+        ohlccv_df[['SHROUT', 'CLOSE']] = ohlccv_df[['SHROUT', 'CLOSE']].fillna(method='ffill')
+        shrout_df = ohlccv_df[['Date', 'SHROUT']]
+    else:
+        ohlccv_df['CLOSE'] = ohlccv_df['CLOSE'].fillna(method='ffill')
 
     ohlc_df = ohlccv_df[['Date', 'HIGH', 'LOW', 'CLOSE', 'OPEN']]
-    shrout_df = ohlccv_df[['Date', 'SHROUT']]
     cv_df = ohlccv_df[['Date', 'COUNT', 'VOLUME']].fillna(0)
 
     nan_counter = ohlc_df.isna().sum(axis=1)
@@ -66,10 +72,11 @@ def fix_ohlccv(ohlccv_df: pd.DataFrame) -> pd.DataFrame:
 
     ohlc_df.loc[:, 'Date'] = useful_stuff.datetime_to_str(ohlc_df.loc[:, 'Date'])
     cv_df.loc[:, 'Date'] = useful_stuff.datetime_to_str(cv_df.loc[:, 'Date'])
-    shrout_df.loc[:, 'Date'] = useful_stuff.datetime_to_str(shrout_df.loc[:, 'Date'])
-
     ohlccv_df = ohlc_df.merge(cv_df, on="Date", how="outer")
-    ohlccv_df = ohlccv_df.merge(shrout_df, on="Date", how="outer")
+
+    if compute_shrout:
+        shrout_df.loc[:, 'Date'] = useful_stuff.datetime_to_str(shrout_df.loc[:, 'Date'])
+        ohlccv_df = ohlccv_df.merge(shrout_df, on="Date", how="outer")
 
     for i in range(1, len(ohlccv_df)):
         if ohlccv_df.at[i, 'VOLUME'] == 0 and ohlccv_df.at[i, 'CLOSE'] != ohlccv_df.at[i, 'OPEN']:
@@ -117,7 +124,7 @@ if __name__ == '__main__':
     import multiprocessing as mp
 
     # b/c I have a Windows pc for fetching and a Mac for cleaning up
-    fetchQ, shroutQ, fixQ, mergeQ, moveQ, convertQ = False, False, True, True, True, False
+    fetchQ, shroutQ, fixQ, mergeQ, moveQ, convertQ = False, False, False, True, True, False
     if platform.system() != 'Darwin':
         fetchQ, shroutQ, fixQ, mergeQ, moveQ, convertQ = True, False, False, False, False, False
 
@@ -245,19 +252,22 @@ if __name__ == '__main__':
     fixQ = fixQ
     retryQ = True
     if fixQ:
-        print('Applying the same column/date format...', time.strftime('%H:%m'))
+        print('Applying the same column/date format...', time.strftime('%H:%M'))
         # same column same date
-        # useful_stuff.give_same_format(price_dir)
+        for afile in useful_stuff.listdir(price_dir):
+            shutil.copyfile(price_dir + afile, fixed_price_dir + afile)
+        useful_stuff.give_same_format(fixed_price_dir)
         print('Finished applying the same formats')
 
-        files = useful_stuff.listdir(price_dir)
+        files = useful_stuff.listdir(fixed_price_dir)
         nthread = mp.cpu_count()
-        print('Filling ohlccv file...', time.strftime('%H:%m'))
-        for i in range(8000, len(files), nthread):
+        print('Filling ohlccv file...', time.strftime('%H:%M'))
+        for i in range(0, len(files), nthread):
             files_splitted = files[i:i+nthread]
             procs = []
             for afile in files_splitted:
-                proc = mp.Process(target=fix_ohlccv_file, args=(price_dir + afile, fixed_price_dir + afile, retryQ,))
+                proc = mp.Process(target=fix_ohlccv_file,
+                                  args=(fixed_price_dir + afile, fixed_price_dir + afile, retryQ, ))
                 procs.append(proc)
                 proc.start()
             for proc in procs:
@@ -268,12 +278,13 @@ if __name__ == '__main__':
     mergeQ = mergeQ
     if mergeQ:
         all_files = useful_stuff.listdir(fixed_price_dir)
+
         # split b/c merging a column is >O(n^2) (I think)
         split_by = 1000
         for i in range(0, len(all_files), split_by):
             files = all_files[i: i + split_by]
             df = pd.read_csv(fixed_price_dir + files[0])
-            firm_name = files[0].split('.')[0]
+            firm_name = files[0].split('.')[0].replace('-', '.')
             phigh = df[['Date', 'HIGH']].rename(columns={'HIGH': firm_name})
             plow = df[['Date', 'LOW']].rename(columns={'LOW': firm_name})
             popen = df[['Date', 'OPEN']].rename(columns={'OPEN': firm_name})
@@ -288,7 +299,7 @@ if __name__ == '__main__':
             print('\nMerging price data...\n[', end="")
             for index, afile in enumerate(files[1:]):
                 df = pd.read_csv(fixed_price_dir + afile)
-                firm_name = afile.split('.')[0]
+                firm_name = afile.split('.')[0].replace('-', '.')
                 phigh = phigh.merge(df[['Date', 'HIGH']], on="Date", how="outer").rename(columns={'HIGH': firm_name})
                 plow = plow.merge(df[['Date', 'LOW']], on="Date", how="outer").rename(columns={'LOW': firm_name})
                 popen = popen.merge(df[['Date', 'OPEN']], on="Date", how="outer").rename(columns={'OPEN': firm_name})
@@ -326,7 +337,10 @@ if __name__ == '__main__':
 
             print(f'Finished merging {i // split_by + 1} batch(es) out of {len(all_files) // split_by + 1} batch(es)!')
 
-        for ptype in ['high', 'low', 'open', 'close', 'volume', 'shrout']:
+        ptype_list = ['high', 'low', 'open', 'close', 'volume'] if adj \
+            else ['high', 'low', 'open', 'close', 'volume', 'shrout']
+
+        for ptype in ptype_list:
             df = pd.read_csv(merge_dir + adj_filename + ptype + '0.csv')
             for i in range(split_by, len(all_files), split_by):
                 df = df.merge(pd.read_csv(merge_dir + adj_filename + ptype + str(i) + '.csv'), on='Date')
@@ -344,27 +358,31 @@ if __name__ == '__main__':
 
     # calculate mve based on close prices and move to /files/by_data/secd_ref
     moveQ = moveQ
-    if moveQ and adj:
-        # calculating mve
-        shrout_df = pd.read_csv(merge_dir + 'shrout.csv').set_index('Date')
-        close_df = pd.read_csv(merge_dir + 'close.csv').set_index('Date')
-        mve_df = shrout_df * close_df
-        mve_df.to_csv(merge_dir + 'mve.csv', index=True)
-        print('mve calculated!')
+    if moveQ:
+        cols = pd.read_csv('files/by_data/from_ref/act.csv').columns  # RICs of companies that has fundamental data
+        if adj:
+            # moving to /files/by_data/secd_ref/
+            close_adj_df = pd.read_csv(merge_dir + 'adj_close.csv').set_index('Date')
+            close_adj_df = close_adj_df.loc[:, close_adj_df.columns[close_adj_df.columns.isin(cols)]]
+            close_adj_df.to_csv(secd_ref_dir + 'close_adj.csv')
+        else:
+            shrout_df = pd.read_csv(merge_dir + 'shrout.csv').set_index('Date')
+            close_df = pd.read_csv(merge_dir + 'close.csv').set_index('Date')
+            volume_df = pd.read_csv(merge_dir + 'volume.csv').set_index('Date')
+            mve_df = shrout_df * close_df
+            gbpvol_df = volume_df * close_df
 
-        # moving to /files/by_data/secd_ref/
-        volume_df = pd.read_csv(merge_dir + 'volume.csv').set_index('Date')
-        cols = pd.read_csv('files/by_data/from_ref/aco.csv').columns
+            shrout_df = shrout_df.loc[:, shrout_df.columns[shrout_df.columns.isin(cols)]]
+            close_df = close_df.loc[:, close_df.columns[close_df.columns.isin(cols)]]
+            mve_df = mve_df.loc[:, mve_df.columns[mve_df.columns.isin(cols)]]
+            gbpvol_df = gbpvol_df.loc[:, gbpvol_df.columns[gbpvol_df.columns.isin(cols)]]
 
-        volume_df = volume_df.loc[:, volume_df.columns[volume_df.columns.isin(cols)]]
-        close_df = close_df.loc[:, close_df.columns[close_df.columns.isin(cols)]]
-        shrout_df = shrout_df.loc[:, shrout_df.columns[shrout_df.columns.isin(cols)]]
-        mve_df = shrout_df * close_df
-
-        volume_df.to_csv('files/by_data/secd_ref/volume.csv')
-        close_df.to_csv('files/by_data/secd_ref/close.csv')
-        shrout_df.to_csv('files/by_data/secd_ref/shrout.csv')
-        mve_df.to_csv('files/by_data/secd_ref/mve.csv')
+            close_df.to_csv(secd_ref_dir + 'close.csv')
+            shrout_df.to_csv(secd_ref_dir + 'shrout.csv')
+            mve_df.to_csv(secd_ref_dir + 'mve.csv')
+            mve_df.to_csv(merge_dir + 'mve.csv')
+            gbpvol_df.to_csv(secd_ref_dir + 'gbpvol.csv')
+            gbpvol_df.to_csv(merge_dir + 'gbpvol.csv')
 
         print('Moved necessary files to secd_ref!')
         useful_stuff.beep()

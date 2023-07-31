@@ -70,14 +70,14 @@ def outer_joined_axis(directory: str, file_type: Literal['csv', 'pickle'] = 'csv
             ret = pd.concat([ret, df[date_col_finder(df, afile)]])
         else:
             ret = pd.concat([ret, pd.Series(df.columns)])
+        ret = ret.dropna().drop_duplicates()
     ret = pd.Series(ret)
-    ret = ret.dropna().drop_duplicates()
     ret = ret.sort_values()
     return ret
 
 
 def give_same_axis(dir_or_dirs, file_type: Literal['csv', 'pickle'] = 'csv', minimum=pd.Series(),
-                   axis: Literal['row', 'column'] = 'row') -> pd.Series:
+                   axis: Literal['row', 'column'] = 'row', print_logs=True) -> pd.Series:
     """
     Outer-join all the dates or column titles of .csv files within the directory(ies) `dir_or_dirs`.
     :param dir_or_dirs: directory or list of directories to scan .csv files and apply the operation
@@ -85,8 +85,10 @@ def give_same_axis(dir_or_dirs, file_type: Literal['csv', 'pickle'] = 'csv', min
     :param minimum: minimum series of rows/columns each dataframe should have
     :param axis: the axis to be joined and returned.
         'row' for rows(generally dates) and 'column' for columns(generally companies)
+    :param print_logs: prints logs if True
     :return: Series of row/column names (the same as outer_joined_date function)
     """
+    # checkinf if dir_or_dirs is in a right format
     if type(dir_or_dirs) == list:
         if len(dir_or_dirs) < 1:
             raise IndexError('The length of dir_or_dirs should be at least 1')
@@ -105,6 +107,9 @@ def give_same_axis(dir_or_dirs, file_type: Literal['csv', 'pickle'] = 'csv', min
         raise TypeError('dir_or_dirs should be either list or str')
 
     axis_vector = pd.concat([minimum, outer_joined_axis(directory, file_type, axis)])
+    if print_logs:
+        print(f'\tFinished finding {axis} vector to apply!')
+
     files = listdir(directory, file_type=file_type)
     for afile in files:
         df = pd.read_csv(directory + afile) if file_type == 'csv' else pd.read_pickle(directory + afile)
@@ -115,11 +120,14 @@ def give_same_axis(dir_or_dirs, file_type: Literal['csv', 'pickle'] = 'csv', min
             lacking_index = axis_vector[~axis_vector.isin(df.index)]
             to_concat = pd.DataFrame(float('NaN'), columns=df.columns, index=lacking_index)
             df = pd.concat([df, to_concat], axis=0)
+            df = df.sort_index()
         else:
             lacking_index = axis_vector[~axis_vector.isin(df.columns)]
             to_concat = pd.DataFrame(float('NaN'), columns=lacking_index, index=df.index)
             df = pd.concat([df, to_concat], axis=1)
-        df = df.sort_index()
+
+        if print_logs:
+            print(f'\t{axis} - {afile} finished!')
 
         if file_type == 'csv':
             df = df.reset_index(drop=False).rename(columns={'index': date_col_name}) if axis == 'row' else df
@@ -131,17 +139,24 @@ def give_same_axis(dir_or_dirs, file_type: Literal['csv', 'pickle'] = 'csv', min
 
 
 def give_same_format(dir_or_dirs, file_type: Literal['csv', 'pickle'] = 'csv',
-                     minimum_index=pd.Series(), minimum_column=pd.Series()) -> pd.DataFrame:
+                     minimum_index=pd.Series(), minimum_column=pd.Series(), print_logs=True) -> pd.DataFrame:
     """
     Outer-join all the dates AND column names of .csv files within the directory(ies) `dir_or_dirs`.
     :param dir_or_dirs: directory or list of directories to scan .csv files and apply the operation
     :param file_type: extension of files to find (e.g. 'csv' or 'pickle')
     :param minimum_index: minimum series of dates each dataframe should have
     :param minimum_column: minimum series of column names each dataframe should have
+    :param print_logs: prints logs if True
     :return: empty dataframe of the final index and column names
     """
-    ind = give_same_axis(dir_or_dirs=dir_or_dirs, file_type=file_type, minimum=minimum_index, axis='row')
-    col = give_same_axis(dir_or_dirs=dir_or_dirs, file_type=file_type, minimum=minimum_column, axis='column')
+    ind = give_same_axis(dir_or_dirs=dir_or_dirs, file_type=file_type, minimum=minimum_index,
+                         axis='row', print_logs=print_logs)
+    if print_logs:
+        print('\tRows completed!')
+    col = give_same_axis(dir_or_dirs=dir_or_dirs, file_type=file_type, minimum=minimum_column,
+                         axis='column', print_logs=print_logs)
+    if print_logs:
+        print('\tColumns completed!')
     return pd.DataFrame(float('NaN'), columns=col, index=ind)
 
 
