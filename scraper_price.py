@@ -31,13 +31,13 @@ def fix_ohlccv(ohlccv_df: pd.DataFrame) -> pd.DataFrame:
 
     compute_shrout = 'SHROUT' in ohlccv_df.columns
     if compute_shrout:
-        ohlccv_df[['SHROUT', 'CLOSE']] = ohlccv_df[['SHROUT', 'CLOSE']].fillna(method='ffill')
+        ohlccv_df['SHROUT'] = ohlccv_df['SHROUT'].fillna(method='ffill')
         shrout_df = ohlccv_df[['Date', 'SHROUT']]
-    else:
-        ohlccv_df['CLOSE'] = ohlccv_df['CLOSE'].fillna(method='ffill')
 
     ohlc_df = ohlccv_df[['Date', 'HIGH', 'LOW', 'CLOSE', 'OPEN']]
     cv_df = ohlccv_df[['Date', 'COUNT', 'VOLUME']].fillna(0)
+
+    first_index, last_index = ohlc_df[['HIGH', 'LOW', 'OPEN', 'CLOSE']].dropna(how='all').index[[0, -1]]
 
     nan_counter = ohlc_df.isna().sum(axis=1)
     for i, count in enumerate(nan_counter):

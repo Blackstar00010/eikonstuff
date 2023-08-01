@@ -116,9 +116,12 @@ with open('files/comp_list/no_timestamp.txt', 'w') as f:
         f.write(f"{line}\n")
 # '''
 
-files = useful_stuff.listdir('files/price_stuff/adj_price_data/')
-for afile in files:
-    df = pd.read_csv('files/price_stuff/adj_price_data/' + afile)
-    df = df.dropna(subset=['HIGH', 'LOW', 'CLOSE', 'OPEN', 'COUNT', 'VOLUME'], how='all')
-    df.to_csv('files/price_stuff/adj_price_data/' + afile, index=False)
+import scraper_price
+the_dir = 'files/price_stuff/adj_price_data_fixed/'
+for afile in useful_stuff.listdir(the_dir):
+    df = pd.read_csv(the_dir + afile)
+    scraper_price.fix_ohlccv(df)
     print(afile)
+    print(df.first_valid_index, df.last_valid_index)
+    print(df)
+

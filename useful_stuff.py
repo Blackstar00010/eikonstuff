@@ -77,14 +77,16 @@ def outer_joined_axis(directory: str, file_type: Literal['csv', 'pickle'] = 'csv
 
 
 def give_same_axis(dir_or_dirs, file_type: Literal['csv', 'pickle'] = 'csv', minimum=pd.Series(),
-                   axis: Literal['row', 'column'] = 'row', print_logs=True) -> pd.Series:
+                   axis: Literal['row', 'column'] = 'row', strip: bool = False, print_logs=True) -> pd.Series:
     """
     Outer-join all the dates or column titles of .csv files within the directory(ies) `dir_or_dirs`.
     :param dir_or_dirs: directory or list of directories to scan .csv files and apply the operation
     :param file_type: extension of files to find (e.g. 'csv' or 'pickle')
     :param minimum: minimum series of rows/columns each dataframe should have
-    :param axis: the axis to be joined and returned.
+    :param axis: the axis to be joined and returned
         'row' for rows(generally dates) and 'column' for columns(generally companies)
+        Hence, 'row' means vertical join and 'column' means horizontal join
+    :param strip: strip first and last row/column if True.
     :param print_logs: prints logs if True
     :return: Series of row/column names (the same as outer_joined_date function)
     """
@@ -121,10 +123,14 @@ def give_same_axis(dir_or_dirs, file_type: Literal['csv', 'pickle'] = 'csv', min
             to_concat = pd.DataFrame(float('NaN'), columns=df.columns, index=lacking_index)
             df = pd.concat([df, to_concat], axis=0)
             df = df.sort_index()
+            if strip:
+                df = strip_df(df, df.columns.drop('Date'), axis='row')
         else:
             lacking_index = axis_vector[~axis_vector.isin(df.columns)]
             to_concat = pd.DataFrame(float('NaN'), columns=lacking_index, index=df.index)
             df = pd.concat([df, to_concat], axis=1)
+            if strip:
+                df = strip_df(df, df.index, axis='column')
 
         if print_logs:
             print(f'\t{axis} - {afile} finished!')
@@ -139,25 +145,51 @@ def give_same_axis(dir_or_dirs, file_type: Literal['csv', 'pickle'] = 'csv', min
 
 
 def give_same_format(dir_or_dirs, file_type: Literal['csv', 'pickle'] = 'csv',
-                     minimum_index=pd.Series(), minimum_column=pd.Series(), print_logs=True) -> pd.DataFrame:
+                     minimum_index=pd.Series(), minimum_column=pd.Series(),
+                     strip=True, print_logs=True) -> pd.DataFrame:
     """
     Outer-join all the dates AND column names of .csv files within the directory(ies) `dir_or_dirs`.
     :param dir_or_dirs: directory or list of directories to scan .csv files and apply the operation
     :param file_type: extension of files to find (e.g. 'csv' or 'pickle')
     :param minimum_index: minimum series of dates each dataframe should have
     :param minimum_column: minimum series of column names each dataframe should have
+    :param strip: strips first and last rows of NaNs if True
     :param print_logs: prints logs if True
     :return: empty dataframe of the final index and column names
     """
     ind = give_same_axis(dir_or_dirs=dir_or_dirs, file_type=file_type, minimum=minimum_index,
-                         axis='row', print_logs=print_logs)
+                         axis='row', print_logs=print_logs, strip=strip)
     if print_logs:
         print('\tRows completed!')
     col = give_same_axis(dir_or_dirs=dir_or_dirs, file_type=file_type, minimum=minimum_column,
-                         axis='column', print_logs=print_logs)
+                         axis='column', print_logs=print_logs, strip=strip)
     if print_logs:
         print('\tColumns completed!')
     return pd.DataFrame(float('NaN'), columns=col, index=ind)
+
+
+def strip_df(df: pd.DataFrame, subset: list, axis: Literal['row', 'column'] = 'row') -> pd.DataFrame:
+    """
+    Delete first nan rows/columns and last nan rows/columns. (how='all')
+    :param df: the dataframe to strip
+    :param subset: list of rows/columns to consider. automatically drops entities not existent in `df`'s columns/index
+    :param axis: unit of the chunk that is going to be removed (e.g. if 'row', first and last rows are deleted)
+    :return: stripped dataframe
+    """
+    subset = pd.Series(subset)
+    if axis == 'row':
+        subset = subset.isin(df.columns)
+        filtered_rows = df.index[~df.loc[:, subset].isna().all(axis=1)]
+        first_row, last_row = filtered_rows[[0, -1]]
+        filtered_rows = df.index[first_row: last_row]
+        filtered_cols = df.columns[:]
+    else:
+        subset = subset.isin(df.index)
+        filtered_rows = df.index[:]
+        filtered_cols = df.columns[~df.loc[subset, :].isna().all(axis=0)]
+        first_col, last_col = filtered_cols[[0, -1]]
+        filtered_cols = df.columns[first_col: last_col]
+    return df.loc[filtered_rows, filtered_cols]
 
 
 def datetime_to_str(col: pd.Series) -> pd.Series:
