@@ -183,7 +183,7 @@ class Companies:
         fields = []
         [fields.append(ek.TR_Field(tr_item)) for tr_item in tr_and_date_list]
 
-        datedict = {"SDate": start, "EDate": end, 'Curn': 'GBP', 'Period': 'period' + '0', 'Frq': period}
+        datedict = {"SDate": start, "EDate": end, 'Curn': 'GBP', 'Period': period + '0', 'Frq': period}
 
         try:
             df, err = ek.get_data(self.ric_codes, fields, parameters=datedict, field_name=True)

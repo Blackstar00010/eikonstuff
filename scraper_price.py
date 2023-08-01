@@ -109,7 +109,7 @@ def fix_ohlccv_file(input_file: str, output_file: str, retryQ=True) -> pd.DataFr
         return ohlccv_df
 
 
-adj = True
+adj = False
 price_dir = 'files/price_stuff/adj_price_data/' if adj else 'files/price_stuff/price_data/'
 fixed_price_dir = 'files/price_stuff/adj_price_data_fixed/' if adj else 'files/price_stuff/price_data_fixed/'
 merge_dir = 'files/price_stuff/adj_price_data_merged/' if adj else 'files/price_stuff/price_data_merged/'
@@ -132,7 +132,7 @@ if __name__ == '__main__':
     fetchQ = fetchQ
     if fetchQ:
         # choosing which pickle file to fetch rics from
-        use_available = True
+        use_available = False
         if use_available:
             comp_list_df = pd.read_pickle('files/comp_list/available.pickle')
             rics = comp_list_df['RIC']

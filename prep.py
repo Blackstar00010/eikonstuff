@@ -1,5 +1,5 @@
 import pandas as pd
-import math
+import os
 import myEikon as mek
 
 '''
@@ -23,11 +23,33 @@ screen = screen.drop("Identifier", axis=1)  # same as RIC
 screen = screen.drop('Price Close\n(2023-06-20, GBP)', axis=1)  # useless
 screen = screen.drop('Exchange Name', axis=1)  # always LONDON STOCK EXCHANGE
 
-g23_list = ['MGPM.L', 'FTSV.L', 'FULH.L', 'SURS.L', 'XPD.L', 'STAST.L']  # freshly deleted in July 2023
+g23_list = pd.read_excel('files/comp_list/delisted_G23.xlsx')['RIC']  # freshly deleted in July 2023
+g23_list = g23_list.apply(lambda x: x[:-4])
 g23_df = screen[screen['RIC'].isin(g23_list)][['Company Name', 'RIC']]
 screen = screen[~screen['RIC'].isin(g23_list)]
 screen.to_csv("./files/comp_list/screen_230706.csv", index=False)
 # columns: Company Name,ISIN,CUSIP (extended),SEDOL Code,RIC
+
+# renaming existing files containing the G23 companies
+dirs = ['files/fund_data/FQ/', 'files/fund_data/FS/', 'files/fund_data/FY/',
+        'files/price_stuff/adj_price_data/', 'files/price_stuff/adj_price_data_fixed/',
+        'files/price_stuff/price_data/', 'files/price_stuff/price_data_fixed/']
+for ric_wo_g23 in g23_list:
+    ric_wo_g23 = ric_wo_g23.replace('.', '-')
+    ric_w_g23 = ric_wo_g23 + '^G23'
+    for adir in dirs:
+        if os.path.exists(adir + ric_wo_g23 + '.csv'):
+            os.rename(adir + ric_wo_g23 + '.csv', adir + ric_w_g23 + '.csv')
+
+# updating available.csv & available.pickle
+g23_dict = {aric: aric+'^G23' for aric in g23_list}
+available = pd.read_pickle('files/comp_list/available.pickle')
+available['RIC'] = available['RIC'].replace(g23_dict)
+for i in available.index:
+    if available.loc[i, 'RIC'][-4:] == '^G23':
+        available.loc[i, ['delisted MM', 'delisted YY']] = [7, 2023]
+available.to_csv('files/comp_list/available.csv', index=False)
+available.to_pickle('files/comp_list/available.pickle')
 
 # prepare for merging listed and delisted
 listed = pd.read_csv('./files/comp_list/screen_230706.csv')[['Company Name', 'RIC']]
@@ -48,7 +70,9 @@ listed['delisted MM'] = 0  # not delisted
 listed['delisted YY'] = 0  # not delisted
 
 delisted = delisted.rename(
-    columns={'Name (or Code)': 'Company Name', 'delisted mm': 'delisted MM', 'delisted yy': 'delisted YY'})
+    columns={'Name (or Code)': 'Company Name',
+             'delisted mm': 'delisted MM',
+             'delisted yy': 'delisted YY'})
 
 # merging two dataframes
 all_firms = pd.concat([listed, delisted], axis=0)

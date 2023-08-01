@@ -11,7 +11,6 @@ from datetime import datetime
 2. Organise those data and move to /by_data/from_ref with each file of certain data containing date in rows companies in columns 
 '''
 
-# split into smaller list just in case it might give some blank rows
 fetchQ = True
 appendQ = True
 if appendQ:
@@ -22,14 +21,15 @@ if fetchQ:
     data_type = 'FQ'
     all_rics = pd.read_csv('files/metadata/ref-comp.csv')['ric'].to_list()
     # columns 'Green_name' and 'TR_name'
-    green_tr_df = pd.read_csv('files/metadata/trs_additional.csv') if appendQ else pd.read_csv('files/metadata/'
-                                                                                               'trs_to_fetch.csv')
+    green_tr_df = pd.read_csv('files/metadata/trs_additional.csv') if appendQ\
+        else pd.read_csv('files/metadata/trs_to_fetch.csv')
     tl_dict = dict()
     fields = green_tr_df['TR_name']
     for i in range(len(green_tr_df)):
         tl_dict[green_tr_df.loc[i, 'TR_name'].upper()] = green_tr_df.loc[i, 'Green_name']
 
-    slice_by = 25
+    # split into smaller list just in case it might give some blank rows
+    slice_by = 500
     start_firm = 0
     for i in range(start_firm, len(all_rics), slice_by):
         rics = all_rics[i:i + slice_by]
@@ -75,6 +75,9 @@ if fetchQ:
         for ric in rics:
             # columns: ['Instrument', 'TR.STH1', 'TR.STH1.DATE', 'TR.STH2', 'TR.STH2.DATE', ...]
             comp_df = comps.comp_specific_data(ric)
+            # all empty
+            if comp_df.set_index('Instrument').isna().all().all():
+                continue
 
             comp_df_new = comp_df.loc[:, comp_df.columns[0:3]]  # first data
             comp_df_new = comp_df_new.rename(columns={comp_df_new.columns[-1]: 'datadate'})
@@ -87,10 +90,13 @@ if fetchQ:
             comp_df_new = comp_df_new.rename(columns=tl_dict)
 
             if appendQ:
-                original_df = pd.read_csv(f'files/fund_data/{data_type}/{ric.replace(".", "-")}.csv')
+                try:
+                    original_df = pd.read_csv(f'files/fund_data/{data_type}/{ric.replace(".", "-")}.csv')
+                except FileNotFoundError:
+                    original_df = pd.DataFrame(float('NaN'), columns=['datadate'], index=[0])
 
-                # duplicate columns might exist so resolve this
-                common_col = comp_df_new.columns[comp_df_new.columns.isin(original_df.columns)][1:]  # except datadate
+                # duplicate columns might exist, so resolve this issue
+                common_col = comp_df_new.columns[comp_df_new.columns.isin(original_df.columns)][1:]  # except Instrument
                 if (len(common_col) > 1) and (not overwrite) and (not keep_both) and (not keep_orig):
                     action = input(f'Following columns already exist:\n'
                                    f'{common_col.to_list()}\n'
@@ -120,7 +126,18 @@ if fetchQ:
             comp_df_new = comp_df_new.groupby('datadate').sum().reset_index()
             comp_df_new = comp_df_new.sort_values(by=['datadate'])
 
-            # calculate new columns
+            # multiplier is for calculating the 'count' column, suffix for columnwise computation
+            if data_type == 'FY':
+                multiplier = 1
+                suffix = ''
+            elif data_type == 'FS':
+                multiplier = 2
+                suffix = 's'
+            else:  # FQ
+                multiplier = 4
+                suffix = 'q'
+
+            # calculate new columns  todo
             comp_df_new.loc[:, 'dcpstk'] = comp_df_new.loc[:, 'pstk'] + comp_df_new.loc[:, 'dcvt']
             comp_df_new.loc[:, 'txfo'] = comp_df_new.loc[:, 'txt'] - comp_df_new.loc[:, 'txfed']
             comp_df_new.loc[:, 'nopi'] = comp_df_new.loc[:, 'nopi'] + comp_df_new.loc[:, 'nopi1']
@@ -152,12 +169,6 @@ if fetchQ:
             comp_df_new = comp_df_new.fillna(method='ffill')  # fill empty columns
             comp_df_new = comp_df_new.dropna(how='all')
 
-            # adding a column that counts the firm's age
-            multiplier = 1
-            if data_type == 'FQ':
-                multiplier = 4
-            elif data_type == 'FS':
-                multiplier = 2
             comp_df_new['count'] = (multiplier * (pd.to_datetime(comp_df_new['datadate']
                                                                  ) - pd.to_datetime(comp_df_new['datadate']).min()
                                                   ).dt.days) // 365 + 1
