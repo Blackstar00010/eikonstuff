@@ -124,7 +124,7 @@ if __name__ == '__main__':
     import multiprocessing as mp
 
     # b/c I have a Windows pc for fetching and a Mac for cleaning up
-    fetchQ, shroutQ, fixQ, mergeQ, moveQ, convertQ = False, False, False, True, True, False
+    fetchQ, shroutQ, fixQ, mergeQ, moveQ, convertQ = False, False, False, False, True, False
     if platform.system() != 'Darwin':
         fetchQ, shroutQ, fixQ, mergeQ, moveQ, convertQ = True, False, False, False, False, False
 
@@ -132,7 +132,7 @@ if __name__ == '__main__':
     fetchQ = fetchQ
     if fetchQ:
         # choosing which pickle file to fetch rics from
-        use_available = False
+        use_available = True
         if use_available:
             comp_list_df = pd.read_pickle('files/comp_list/available.pickle')
             rics = comp_list_df['RIC']
@@ -364,6 +364,8 @@ if __name__ == '__main__':
             # moving to /files/by_data/secd_ref/
             close_adj_df = pd.read_csv(merge_dir + 'adj_close.csv').set_index('Date')
             close_adj_df = close_adj_df.loc[:, close_adj_df.columns[close_adj_df.columns.isin(cols)]]
+            # error in TLW.L -> todo: edit those files and remerge
+            close_adj_df = close_adj_df.replace(0, float('NaN')).fillna(method='ffill')
             close_adj_df.to_csv(secd_ref_dir + 'close_adj.csv')
         else:
             shrout_df = pd.read_csv(merge_dir + 'shrout.csv').set_index('Date')
@@ -376,6 +378,9 @@ if __name__ == '__main__':
             close_df = close_df.loc[:, close_df.columns[close_df.columns.isin(cols)]]
             mve_df = mve_df.loc[:, mve_df.columns[mve_df.columns.isin(cols)]]
             gbpvol_df = gbpvol_df.loc[:, gbpvol_df.columns[gbpvol_df.columns.isin(cols)]]
+
+            # error in TLW.L -> todo: edit those files and remerge
+            close_df = close_df.replace(0, float('NaN')).fillna(method='ffill')
 
             close_df.to_csv(secd_ref_dir + 'close.csv')
             shrout_df.to_csv(secd_ref_dir + 'shrout.csv')

@@ -6,9 +6,9 @@ from elementwise_calc import lag, delta, rate_of_change, ind_adj
 
 date_col = pd.read_csv('../files/metadata/business_days.csv')[['YYYY-MM-DD', 'YYYYMMDD']]
 
-funda_dir = '../files/by_data/useless/funda/'
+funda_dir = '../files/by_data/funda/'
 ref_dir = '../files/by_data/from_ref/'
-secd_dir = '../files/by_data/useless/secd/'
+secd_dir = '../files/by_data/secd_ref/'
 seventyeight_dir = './files/by_data/seventyeight/'
 
 is_first = pd.read_csv(ref_dir + 'count.csv') == 1
@@ -22,7 +22,10 @@ if __name__ == '__main__':
     data_df = data_df.set_index('datadate')
 
     if True:
-        logging.warning('Running annual.py will consume huge amount of memory!')
+        logging.warning('Running this file will consume huge amount of memory!')
+        if input('Do you wish to continue? [y/n] ') != 'y':
+            import sys
+            sys.exit()
 
         aco = data_df[data_df['data_name'] == 'aco'].drop('data_name', axis=1).fillna(0)
         act = data_df[data_df['data_name'] == 'act'].drop('data_name', axis=1).fillna(0)
@@ -34,7 +37,7 @@ if __name__ == '__main__':
         che = data_df[data_df['data_name'] == 'che'].drop('data_name', axis=1).fillna(0)
         cogs = data_df[data_df['data_name'] == 'cogs'].drop('data_name', axis=1).fillna(0)
         count = data_df[data_df['data_name'] == 'count'].drop('data_name', axis=1).fillna(0)
-        credrat = data_df[data_df['data_name'] == 'credrat'].drop('data_name', axis=1).fillna(0).fillna(0)
+        credrat = data_df[data_df['data_name'] == 'credrat'].drop('data_name', axis=1).fillna(0)
         dc = data_df[data_df['data_name'] == 'dc'].drop('data_name', axis=1).fillna(0)
         dcpstk = data_df[data_df['data_name'] == 'dcpstk'].drop('data_name', axis=1).fillna(0)
         dcvt = data_df[data_df['data_name'] == 'dcvt'].drop('data_name', axis=1).fillna(0)
@@ -88,46 +91,7 @@ if __name__ == '__main__':
 
         print('all data loaded.')
 
-    bm = ceq / mve
-    ep = ib / mve
-    cashpr = ((mve + dltt - at) / che)
-    dy = dvt / mve
-    lev = lt / mve
-    sp = revt / mve
-    roic = (ebit - nopi) / (ceq + lt - che)
-    rd_sale = xrd / revt
-    rd_mve = xrd / mve
-    agr = rate_of_change(at)
-    print('ten done')
-    gma = (revt - cogs) / lag(at)
-    chcsho = rate_of_change(csho)
-    lgr = rate_of_change(lt)
 
-    oancfisna = oancf.isna() + (oancf == 0)
-    oancfnotna = ~oancfisna
-    atlagat = 2 / (at + lag(at))
-
-    oancf_alt = delta(act) - delta(che) - delta(lct) + delta(dlc) + delta(txp) + dp
-    acc = atlagat * (
-            oancfnotna * (ib - oancf) +
-            oancfisna * oancf_alt)
-    pctacc = (oancfnotna * (ib - oancf) / (abs(ib) * (ib != 0) + 0.1 * (ib == 0)) +
-              oancfisna * oancf_alt / (abs(ib) * (ib != 0) + 0.1 * (ib == 0)))
-    cfp = oancfisna * (ib - oancf_alt) / mve + oancfnotna * oancf / mve
-    print('ten done')
-    absacc = abs(acc)
-    age = count
-    chinv = atlagat * delta(invt)
-    spii = (spi != 0)
-    spi = atlagat * spi
-    cf = atlagat * (
-            oancfnotna * oancf +
-            oancfisna * (ib - oancf_alt))
-    hire = rate_of_change(emp) * (emp != 0) * (lag(emp) != 0)
-    hire = hire.fillna(0)  # it is a valid flllna
-    sgr = rate_of_change(revt)  # sale == revt
-    chpm = (ib / revt) - (lag(ib) / lag(revt))
-    print('ten done')
     chato = 2 * (revt / (at + lag(at))) - (lag(revt) / (lag(at) + lag(at, by=2)))
     pchsale_pchinvt = rate_of_change(revt) - rate_of_change(invt)
     pchsale_pchrect = rate_of_change(revt) - rate_of_change(rect)
@@ -189,15 +153,9 @@ if __name__ == '__main__':
     chato = chato * (count >= 3) + 0 * (count < 3)
     grcapx = grcapx * (count >= 3) + 0 * (count < 3)
 
-    chpmia = ind_adj(chpm)
     chatoia = ind_adj(chato)
-    chempia = ind_adj(hire)
-    bm_ia = ind_adj(bm)
     pchcapx_ia = ind_adj(pchcapx)
     tb = ind_adj(tb)
-    cfp_ia = ind_adj(cfp)
-    mve_ia = ind_adj(mve)
-    herf = revt.div(revt.sum(axis=1).squeeze(), axis=0) * revt.div(revt.sum(axis=1).squeeze(), axis=0)
 
     credrat_dwn = (credrat < lag(credrat)) * 1 * (count > 1)
 
@@ -211,25 +169,6 @@ if __name__ == '__main__':
     # todo: mve (516)
     # todo: pps (518)
 
-    bm.to_csv(seventyeight_dir + 'bm.csv')
-    ep.to_csv(seventyeight_dir + 'ep.csv')
-    cashpr.to_csv(seventyeight_dir + 'cashpr.csv')
-    dy.to_csv(seventyeight_dir + 'dy.csv')
-    lev.to_csv(seventyeight_dir + 'lev.csv')
-    sp.to_csv(seventyeight_dir + 'sp.csv')
-    roic.to_csv(seventyeight_dir + 'roic.csv')
-    agr.to_csv(seventyeight_dir + 'agr.csv')
-    gma.to_csv(seventyeight_dir + 'gma.csv')
-    chcsho.to_csv(seventyeight_dir + 'chcsho.csv')
-    lgr.to_csv(seventyeight_dir + 'lgr.csv')
-    acc.to_csv(seventyeight_dir + 'acc.csv')
-    pctacc.to_csv(seventyeight_dir + 'pctacc.csv')
-    cfp.to_csv(seventyeight_dir + 'cfp.csv')
-    absacc.to_csv(seventyeight_dir + 'absacc.csv')
-    age.to_csv(seventyeight_dir + 'age.csv')
-    chinv.to_csv(seventyeight_dir + 'chinv.csv')
-    hire.to_csv(seventyeight_dir + 'hire.csv')
-    sgr.to_csv(seventyeight_dir + 'sgr.csv')
     pchsale_pchrect.to_csv(seventyeight_dir + 'pchsale_pchrect.csv')
     pchgm_pchsale.to_csv(seventyeight_dir + 'pchgm_pchsale.csv')
     depr.to_csv(seventyeight_dir + 'depr.csv')

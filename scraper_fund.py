@@ -21,12 +21,19 @@ if fetchQ:
     data_type = 'FQ'
     all_rics = pd.read_csv('files/metadata/ref-comp.csv')['ric'].to_list()
     # columns 'Green_name' and 'TR_name'
-    green_tr_df = pd.read_csv('files/metadata/trs_additional.csv') if appendQ\
+    green_tr_df = pd.read_csv('files/metadata/trs_additional.csv') if appendQ \
         else pd.read_csv('files/metadata/trs_to_fetch.csv')
-    tl_dict = dict()
     fields = green_tr_df['TR_name']
+
+    if data_type == 'FY':
+        suffix = ''
+    elif data_type == 'FS':
+        suffix = 's'
+    else:  # FQ
+        suffix = 'q'
+    tl_dict = dict()
     for i in range(len(green_tr_df)):
-        tl_dict[green_tr_df.loc[i, 'TR_name'].upper()] = green_tr_df.loc[i, 'Green_name']
+        tl_dict[green_tr_df.loc[i, 'TR_name'].upper()] = green_tr_df.loc[i, 'Green_name'] + suffix
 
     # split into smaller list just in case it might give some blank rows
     slice_by = 500
@@ -129,38 +136,45 @@ if fetchQ:
             # multiplier is for calculating the 'count' column, suffix for columnwise computation
             if data_type == 'FY':
                 multiplier = 1
-                suffix = ''
             elif data_type == 'FS':
                 multiplier = 2
-                suffix = 's'
             else:  # FQ
                 multiplier = 4
-                suffix = 'q'
 
-            # calculate new columns  todo
-            comp_df_new.loc[:, 'dcpstk'] = comp_df_new.loc[:, 'pstk'] + comp_df_new.loc[:, 'dcvt']
-            comp_df_new.loc[:, 'txfo'] = comp_df_new.loc[:, 'txt'] - comp_df_new.loc[:, 'txfed']
-            comp_df_new.loc[:, 'nopi'] = comp_df_new.loc[:, 'nopi'] + comp_df_new.loc[:, 'nopi1']
-            comp_df_new = comp_df_new.drop('nopi1', axis=1)
-            comp_df_new.loc[:, 'xint'] = - comp_df_new.loc[:, 'xint']
-            comp_df_new.loc[:, 'capx'] = - comp_df_new.loc[:, 'capx']
-            comp_df_new.loc[:, 'rect'] = comp_df_new.loc[:, 'rect'] + comp_df_new.loc[:, 'rect1']
-            comp_df_new = comp_df_new.drop('rect1', axis=1)
-            comp_df_new.loc[:, 'invt'] = comp_df_new.loc[:, 'invt'].fillna(comp_df_new.loc[:, 'invt2'])
-            comp_df_new = comp_df_new.drop('invt2', axis=1)
-            comp_df_new.loc[:, 'intan'] = comp_df_new.loc[:, 'intan'] + comp_df_new.loc[:, 'gdwlia']
-            comp_df_new.loc[:, 'ao'] = comp_df_new.loc[:, 'ao'] + comp_df_new.loc[:, 'aco']
-            comp_df_new.loc[:, 'fatl'] = comp_df_new.loc[:, 'fatl'] + comp_df_new.loc[:, 'fatl1']
-            comp_df_new = comp_df_new.drop('fatl1', axis=1)
-            comp_df_new.loc[:, 'dltt'] = comp_df_new.loc[:, 'dlc1'] + comp_df_new.loc[:, 'dlc11']
-            comp_df_new.loc[:, 'dlc'] = comp_df_new.loc[:, 'dlc'] + comp_df_new.loc[:, 'dltt']
-            comp_df_new = comp_df_new.drop(['dlc1', 'dlc11'], axis=1)
-            comp_df_new.loc[:, 'lt'] = comp_df_new.loc[:, 'lt'] - comp_df_new.loc[:, 'lt1']
-            comp_df_new = comp_df_new.drop('lt1', axis=1)
+            # calculate some new columns
+            comp_df_new.loc[:, 'dcpstk' + suffix] = comp_df_new.loc[:, 'pstk' + suffix] + \
+                                                    comp_df_new.loc[:, 'dcvt' + suffix]
+            comp_df_new.loc[:, 'txfo' + suffix] = comp_df_new.loc[:, 'txt' + suffix] - \
+                                                  comp_df_new.loc[:, 'txfed' + suffix]
+            comp_df_new.loc[:, 'nopi' + suffix] = comp_df_new.loc[:, 'nopi' + suffix] + \
+                                                  comp_df_new.loc[:, 'nopi1' + suffix]
+            comp_df_new = comp_df_new.drop('nopi1' + suffix, axis=1)
+            comp_df_new.loc[:, 'xint' + suffix] = - comp_df_new.loc[:, 'xint' + suffix]
+            comp_df_new.loc[:, 'capx' + suffix] = - comp_df_new.loc[:, 'capx' + suffix]
+            comp_df_new.loc[:, 'rect' + suffix] = comp_df_new.loc[:, 'rect' + suffix] + \
+                                                  comp_df_new.loc[:, 'rect1' + suffix]
+            comp_df_new = comp_df_new.drop('rect1' + suffix, axis=1)
+            comp_df_new.loc[:, 'invt' + suffix] = comp_df_new.loc[:, 'invt' + suffix].fillna(
+                comp_df_new.loc[:, 'invt2' + suffix])
+            comp_df_new = comp_df_new.drop('invt2' + suffix, axis=1)
+            comp_df_new.loc[:, 'intan' + suffix] = comp_df_new.loc[:, 'intan' + suffix] + \
+                                                   comp_df_new.loc[:, 'gdwlia' + suffix]
+            comp_df_new.loc[:, 'ao' + suffix] = comp_df_new.loc[:, 'ao' + suffix] + comp_df_new.loc[:, 'aco']
+            comp_df_new.loc[:, 'fatl' + suffix] = comp_df_new.loc[:, 'fatl' + suffix] + \
+                                                  comp_df_new.loc[:, 'fatl1' + suffix]
+            comp_df_new = comp_df_new.drop('fatl1' + suffix, axis=1)
+            comp_df_new.loc[:, 'dltt' + suffix] = comp_df_new.loc[:, 'dlc1' + suffix] + \
+                                                  comp_df_new.loc[:, 'dlc11' + suffix]
+            comp_df_new.loc[:, 'dlc' + suffix] = comp_df_new.loc[:, 'dlc' + suffix] + \
+                                                 comp_df_new.loc[:, 'dltt' + suffix]
+            comp_df_new = comp_df_new.drop(['dlc1' + suffix, 'dlc11' + suffix], axis=1)
+            comp_df_new.loc[:, 'lt' + suffix] = comp_df_new.loc[:, 'lt' + suffix] - \
+                                                comp_df_new.loc[:, 'lt1' + suffix]
+            comp_df_new = comp_df_new.drop('lt1' + suffix, axis=1)
 
             # lines 86-92
-            comp_df_new.loc[:, 'dr'] = comp_df_new.loc[:, 'drlt'] + comp_df_new.loc[:, 'drc']
-            comp_df_new.loc[:, 'dc'] = comp_df_new.loc[:, 'dcvt']
+            comp_df_new.loc[:, 'dr' + suffix] = comp_df_new.loc[:, 'drlt' + suffix] + comp_df_new.loc[:, 'drc' + suffix]
+            comp_df_new.loc[:, 'dc' + suffix] = comp_df_new.loc[:, 'dcvt' + suffix]
 
             # final cleanup
             comp_df_new = comp_df_new.drop(['Instrument'], axis=1)
@@ -172,14 +186,6 @@ if fetchQ:
             comp_df_new['count'] = (multiplier * (pd.to_datetime(comp_df_new['datadate']
                                                                  ) - pd.to_datetime(comp_df_new['datadate']).min()
                                                   ).dt.days) // 365 + 1
-
-            # rename columns based on accounting period
-            if data_type == 'FQ':
-                comp_df_new = comp_df_new.rename(columns={col: col + 'q' for col in comp_df_new.columns
-                                                          if col != 'datadate'})
-            if data_type == 'FS':
-                comp_df_new = comp_df_new.rename(columns={col: col + 's' for col in comp_df_new.columns
-                                                          if col != 'datadate'})
 
             if len(comp_df_new) > 0:
                 comp_df_new.to_csv(f'./files/fund_data/{data_type}/{ric.replace(".", "-")}.csv', index=False)
