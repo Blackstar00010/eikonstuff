@@ -13,6 +13,8 @@
 /data/processed/output_by_var_dd/
 /data/processed/output_by_var_mm/
 
+/deprecated/data/processed/secd/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
