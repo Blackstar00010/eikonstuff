@@ -1,13 +1,13 @@
 import pandas as pd
 
 '''
-files/comp_list/comp_list.csv (from Refinitiv) + ~/comp_names_all.csv (from Compustat) -> files/metadata/ref-comp.csv
+data/comp_list/comp_list.csv (from Refinitiv) + ~/comp_names_all.csv (from Compustat) -> data/metadata/ref-comp.csv
 '''
 
 dt_wrds_dir = '/Users/jamesd/Desktop/data/all/'
 
 # TODO: After fetching all prices, we should check if two companies with different RIC but same RIC(ticker) exists
-refi_df = pd.read_csv('files/comp_list/comp_list.csv')[['Company Name', 'RIC', 'RIC1(ticker)', 'ISIN', 'CUSIP']]
+refi_df = pd.read_csv('../data/metadata/comp_list/comp_list.csv')[['Company Name', 'RIC', 'RIC1(ticker)', 'ISIN', 'CUSIP']]
 refi_df = refi_df[refi_df['ISIN'].notna()]
 refi_df = refi_df.rename(columns=str.lower)
 comp_df = pd.read_csv(dt_wrds_dir+'comp_names_all.csv')[['gvkey', 'isin']]
@@ -33,5 +33,5 @@ for isin in dup_isins:
 merged_df = merged_df[~merged_df['isin'].duplicated()]
 
 # columns: ['company name', 'ric', 'ric1(ticker)', 'isin', 'cusip', 'gvkey']
-merged_df.to_csv('files/metadata/ref-comp.csv', index=False)
+merged_df.to_csv('data/metadata/ref-comp.csv', index=False)
 print('# of unique translatable companies:', len(merged_df))

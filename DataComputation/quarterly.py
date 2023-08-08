@@ -1,8 +1,8 @@
 import pandas as pd
-from elementwise_calc import lag, delta, rate_of_change, past_stddev, past_mean
+from Misc.elementwise_calc import lag, delta, past_stddev, past_mean
 
 if __name__ == '__main__':
-    from_ref_dir = '../files/by_data/from_ref/'
+    from_ref_dir = '../data/processed/input_funda/'
 
     if True:
         pstkrq = pd.read_csv(from_ref_dir + 'pstkrq.csv').set_index('datadate')

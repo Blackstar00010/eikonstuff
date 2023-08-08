@@ -4,8 +4,8 @@ import pandas as pd
 
 all_dir = '/Users/jamesd/Desktop/data/all/'
 useful_dir = '/Users/jamesd/Desktop/data/useful/'
-raw_output_dir = 'files/wrds/'
-by_data_dir = 'files/by_data/'
+raw_output_dir = 'wrds/'
+by_data_dir = '../data/processed/'
 
 """
 0_comp_ref_tl_table.csv
@@ -24,24 +24,24 @@ df1 = pd.read_csv(dt_wrds_dir+'comp_names1_all.csv')
 df2 = pd.read_csv(dt_wrds_dir+'comp_names2_all.csv')
 df = pd.concat([df1, df2], ignore_index=True)
 df = df.sort_values('gvkey').reset_index()
-df = df.drop('indices', axis=1)
+df = df.drop('index_data', axis=1)
 dup = df[['gvkey', 'isin']].duplicated()
 df = df[~dup]
-df.to_csv(dt_wrds_dir+'comp_names_all.csv', indices=False)
+df.to_csv(dt_wrds_dir+'comp_names_all.csv', index_data=False)
 
 if input("DID YOU RUN tl_table_generator.py?[y/n]") != 'y':
     import sys
     sys.exit()
 
-files = os.listdir('files/wrds/')
-files.pop(files.indices('0_comp_ref_tl_table.csv'))
-for file in files:
-    metadata = pd.read_csv('files/wrds/0_comp_ref_tl_table.csv')[['gvkey', 'ric', 'isin']]
-    funda = pd.read_csv('files/wrds/'+file)
+data = os.listdir('data/wrds/')
+data.pop(data.index_data('0_comp_ref_tl_table.csv'))
+for file in data:
+    metadata = pd.read_csv('data/wrds/0_comp_ref_tl_table.csv')[['gvkey', 'ric', 'isin']]
+    funda = pd.read_csv('data/wrds/'+file)
     funda = pd.merge(funda, metadata, on='gvkey', how='inner')
     funda = funda[funda['isin'].notna()]
     funda = funda[funda.columns.to_list()[-2:] + funda.columns.to_list()[:-2]]
-    funda.to_csv('files/by_data/from_comp/'+file)
+    funda.to_csv('data/processed/from_comp/'+file)
     print(file+' finished!')
 """
 
@@ -77,11 +77,11 @@ def pivot(some_df: pd.DataFrame):
 
 if __name__ == "__main__":
     # gvkeys -> RIC dictionary
-    ref_comp_table = pd.read_csv('files/metadata/ref-comp.csv')[['ric', 'gvkey']]
+    ref_comp_table = pd.read_csv('../data/metadata/ref-comp.csv')[['ric', 'gvkey']]
     gvkey_ric_dict = {}
     for i in range(len(ref_comp_table)):
         gvkey_ric_dict[ref_comp_table.loc[i, 'gvkey']] = ref_comp_table.loc[i, 'ric']  # TODO: check if it is int->str
-    date_col = pd.read_csv('files/metadata/business_days.csv'
+    date_col = pd.read_csv('../data/metadata/business_days.csv'
                            ).rename(columns={'YYYY-MM-DD': 'datadate'}).loc[:, 'datadate']
 
     # GBPXXX

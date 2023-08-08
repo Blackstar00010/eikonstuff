@@ -1,8 +1,8 @@
 import pandas as pd
-from elementwise_calc import series_to_df, lag
+from Misc.elementwise_calc import series_to_df
 
-from_ref_dir = '../files/by_data/from_ref/'
-intermed_dir = '../files/by_data/intermed/'
+from_ref_dir = '../data/processed/input_funda/'
+intermed_dir = '../data/processed/intermed/'
 
 ni = pd.read_csv(from_ref_dir+'ni.csv').set_index('datadate')
 ib = pd.read_csv(from_ref_dir+'ib.csv').set_index('datadate')

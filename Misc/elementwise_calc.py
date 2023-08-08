@@ -51,10 +51,7 @@ def series_to_df(series: pd.Series, columns) -> pd.DataFrame:
     :param columns: list of names of the columns of the dataframe to be returned
     :return: pd.DataFrame
     """
-    ret = pd.DataFrame(series)
-    for acol in columns:
-        ret[acol] = series
-    ret = ret.drop(0, axis='columns')
+    ret = pd.concat((pd.Series(series, name=acol) for acol in columns), axis=1)
     return ret
 
 
@@ -66,8 +63,8 @@ def ind_adj(dataframe: pd.DataFrame) -> pd.DataFrame:
     """
     # not using mean as we might have 0's instead of NaN's
     sum_row = dataframe.sum(axis=1)
-    count_row = dataframe.notna().sum(axis=1)
-    ind_avg = series_to_df(sum_row / count_row, dataframe.columns)
+    count_row = dataframe.notna().sum(axis=1).replace(0, float('NaN'))
+    ind_avg = series_to_df(sum_row / count_row, dataframe.columns).replace(float('NaN'), 0)
     return dataframe / ind_avg
 
 
