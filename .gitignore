@@ -1,15 +1,15 @@
 .DS_Store
 
 # scraper_price.py -> adj = False, fixQ & mergeQ = True
-/files/price_stuff/price_data_merged/
+/data/price_stuff/price_data_merged/
 # scraper_price.py -> adj = True, fixQ & mergeQ = True
-/files/price_stuff/adj_price_data_merged/
+/data/price_stuff/adj_price_data_merged/
 # wrds_prep.py -> organize_secd = True
-/files/by_data/useless/secd/
+/deprecated/data/processed/secd/
 # scraper_fund.py -> organize_FY & ~_FS & ~_FQ = True
-/files/by_data/from_ref/
+/data/processed/input_funda/
 # scraper_fund.py -> moveQ = True
-/files/by_data/secd_ref/
+/data/processed/input_secd/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
