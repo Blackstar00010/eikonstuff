@@ -1,28 +1,36 @@
 import os
+import platform
 import pandas as pd
 import eikon as ek
 import myEikon as mek
-from wrds_prep import pivot
+from deprecated.wrds_prep import pivot
 from time import sleep
 from datetime import datetime
 
 '''
-1. Fetch FY/FS/FQ data using eikon
-2. Organise those data and move to /by_data/from_ref with each file of certain data containing date in rows companies in columns 
+1. Fetch fundamental data of periods FY/FS/FQ using eikon
+2. Organise those data and move to ../data/processed/input_funda with each file containing date in rows,
+                                                                                          companies in columns 
 '''
+
+metadata_dir = '../data/metadata/'
+fund_data_dir = '../data/preprocessed/'
+final_output_dir = '../data/processed//input_funda/'
 
 fetchQ = True
 appendQ = True
+if platform.system() == 'Darwin':
+    fetchQ = False
 if appendQ:
     overwrite = False
     keep_both = False
     keep_orig = False
 if fetchQ:
     data_type = 'FQ'
-    all_rics = pd.read_csv('files/metadata/ref-comp.csv')['ric'].to_list()
+    all_rics = pd.read_csv(metadata_dir + 'ref-comp.csv')['ric'].to_list()
     # columns 'Green_name' and 'TR_name'
-    green_tr_df = pd.read_csv('files/metadata/trs_additional.csv') if appendQ \
-        else pd.read_csv('files/metadata/trs_to_fetch.csv')
+    green_tr_df = pd.read_csv(metadata_dir + 'trs_additional.csv') if appendQ \
+        else pd.read_csv(metadata_dir + 'trs_to_fetch.csv')
     fields = green_tr_df['TR_name']
 
     if data_type == 'FY':
@@ -76,7 +84,7 @@ if fetchQ:
         # saving raw fetches just in case
         now = datetime.now().strftime("%y%m%d_%H%M%S")
         comps.set_history(pd.concat([df_21c, df_20c], axis=0))  # join vertically
-        pd.concat([df_20c_raw, df_21c_raw], axis=0).to_csv(f'files/fund_data/_raw/{data_type}/raw_data_{i}_{now}.csv',
+        pd.concat([df_20c_raw, df_21c_raw], axis=0).to_csv(f'{fund_data_dir}_raw/{data_type}/raw_data_{i}_{now}.csv',
                                                            index=False)
         # divide, organize, and save
         for ric in rics:
@@ -98,7 +106,7 @@ if fetchQ:
 
             if appendQ:
                 try:
-                    original_df = pd.read_csv(f'files/fund_data/{data_type}/{ric.replace(".", "-")}.csv')
+                    original_df = pd.read_csv(f'{fund_data_dir}/{data_type}/{ric.replace(".", "-")}.csv')
                 except FileNotFoundError:
                     original_df = pd.DataFrame(float('NaN'), columns=['datadate'], index=[0])
 
@@ -188,18 +196,18 @@ if fetchQ:
                                                   ).dt.days) // 365 + 1
 
             if len(comp_df_new) > 0:
-                comp_df_new.to_csv(f'./files/fund_data/{data_type}/{ric.replace(".", "-")}.csv', index=False)
+                comp_df_new.to_csv(f'{fund_data_dir}/{data_type}/{ric.replace(".", "-")}.csv', index=False)
 
             print(ric, 'done!')
         print(f'{i} / {len(rics)} done!')
 
-# organise & move to /by_data/from_ref
-to_organize = []
-# to_organize = ['FY']
+# organise & move to /processed/input_funda
+# to_organize = []
+to_organize = ['FY']
 for Fsth in to_organize:
-    date_col = pd.read_csv('files/metadata/business_days.csv').rename(columns={'YYYY-MM-DD': 'datadate'}
-                                                                      ).loc[:, 'datadate']
-    fsth_dir = f'files/fund_data/{Fsth}/'
+    date_col = pd.read_csv(metadata_dir + 'business_days.csv').rename(columns={'YYYY-MM-DD': 'datadate'}
+                                                                         ).loc[:, 'datadate']
+    fsth_dir = f'{fund_data_dir}/{Fsth}/'
     files = os.listdir(fsth_dir)
     firms = [file_name[:-4].replace('-', '.') for file_name in files]
 
@@ -216,6 +224,7 @@ for Fsth in to_organize:
         field_df = pivot(field_df)
 
         field_df = field_df.merge(date_col, on='datadate', how='outer').sort_values('datadate')
-        field_df = field_df.fillna(method='ffill')
-        field_df.to_csv(f'files/by_data/from_ref/{field_name}.csv', index=False)
+        last_nans = field_df.fillna(method='bfill').notna()  # false if last NaNs; todo: apply only for delisted
+        field_df = field_df.fillna(method='ffill') * last_nans
+        field_df.to_csv(f'{final_output_dir}/{field_name}.csv', index=False)
         print(f'{field_name} done!')

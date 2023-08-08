@@ -1,7 +1,7 @@
 import pandas as pd
 import eikon as ek
 import platform
-from useful_stuff import beep
+from Misc.useful_stuff import beep
 
 
 if platform.system() == 'Darwin':
@@ -242,7 +242,7 @@ class Companies:
     def get_history(self, index=None, raw=False) -> list:
         """
         Returns previous fetch(es) of data.
-        :param index: The indices of history (e.g. -1 -> last fetch, 0 -> first fetch, [0, -1] -> first and last fetch, None -> all)
+        :param index: The index_data of history (e.g. -1 -> last fetch, 0 -> first fetch, [0, -1] -> first and last fetch, None -> all)
         :param raw: True if you want to fetch the history of raw data
         :return: list of dataframe(s)
         """

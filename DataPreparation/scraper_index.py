@@ -1,13 +1,12 @@
-import os
-import eikon as ek
 import myEikon as mek
 from scraper_price import fix_ohlccv
 import pandas as pd
+from Misc import useful_stuff as us
 
 # FTSE100, FTSE250, FTSE350, FTSE All-Share, SP500, NDX, EuroStoxx50, ES All
 indices = ['FTSE', 'FTMC', 'FTLC', 'FTAS', 'SP500', 'NDX', 'STOXX50E', 'STOXXE']
-output_dir = 'files/price_stuff/indices/'
-merge_dir = 'files/price_stuff/indices_merged/'
+output_dir = '../data/price_stuff/index_data/'
+merge_dir = '../data/price_stuff/index_data_merged/'
 
 fetchQ = True
 if fetchQ:
@@ -20,7 +19,7 @@ if fetchQ:
 
 mergeQ = True
 if mergeQ:
-    files = os.listdir(output_dir)
+    files = us.listdir(output_dir)
     df = pd.read_csv(output_dir + files[0])
     firm_name = files[0].split('.')[0]
     phigh = df[['Date', 'HIGH']].rename(columns={'HIGH': firm_name})
