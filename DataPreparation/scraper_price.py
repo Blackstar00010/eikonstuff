@@ -128,7 +128,7 @@ if __name__ == '__main__':
     import multiprocessing as mp
 
     # b/c I have a Windows pc for fetching and a Mac for cleaning up
-    fetchQ, shroutQ, fixQ, mergeQ, moveQ, convertQ = False, False, False, False, True, False
+    fetchQ, shroutQ, fixQ, mergeQ, moveQ, convertQ = False, False, False, True, False, False
     if platform.system() != 'Darwin':
         fetchQ, shroutQ, fixQ, mergeQ, moveQ, convertQ = True, False, False, False, False, False
 
@@ -256,10 +256,10 @@ if __name__ == '__main__':
     if fixQ:
         pre_fix = False  # mp screws up some of the rows
         if pre_fix:
-            print('Finding zeros...')
             for afile in useful_stuff.listdir(price_dir):
                 shutil.copyfile(price_dir + afile, fixed_price_dir + afile)
 
+            print('Finding zeros...')
             files = useful_stuff.listdir(fixed_price_dir)
             for afile in files:
                 df = pd.read_csv(fixed_price_dir + afile)
