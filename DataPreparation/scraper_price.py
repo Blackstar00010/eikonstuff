@@ -128,7 +128,7 @@ if __name__ == '__main__':
     import multiprocessing as mp
 
     # b/c I have a Windows pc for fetching and a Mac for cleaning up
-    fetchQ, shroutQ, fixQ, mergeQ, moveQ, convertQ = False, False, False, True, False, False
+    fetchQ, shroutQ, fixQ, mergeQ, moveQ, convertQ = False, False, False, True, True, False
     if platform.system() != 'Darwin':
         fetchQ, shroutQ, fixQ, mergeQ, moveQ, convertQ = True, False, False, False, False, False
 

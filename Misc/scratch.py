@@ -1,5 +1,5 @@
 import pandas as pd
-
+import Misc.useful_stuff as us
 # import myEikon as dbb
 
 """ Testing TR Fields
@@ -111,14 +111,9 @@ with open('data/comp_list/no_timestamp.txt', 'w') as f:
         f.write(f"{line}\n")
 # '''
 
-from Misc import elementwise_calc
+price_date_col = pd.read_csv('../data/price_stuff/adj_price_data_merged/adj_close.csv')
+price_date_col = price_date_col[us.date_col_finder(price_date_col, '')]
+og_price_col = pd.read_csv('../data/metadata/business_days.csv')
+og_price_col = og_price_col['YYYY-MM-DD']
+print(price_date_col[~price_date_col.isin(og_price_col)])
 
-ref_dir = '../data/processed/input_funda/'
-act = pd.read_csv(ref_dir + 'act.csv').set_index('datadate').fillna(0)
-print('act imported!')
-at = pd.read_csv(ref_dir + 'at.csv').set_index('datadate').fillna(0)
-print('at imported!')
-shit = act / at
-shitia = elementwise_calc.ind_adj(shit)
-print(shit)
-print(shitia)
