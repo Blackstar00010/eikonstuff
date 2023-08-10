@@ -197,7 +197,7 @@ if __name__ == '__main__':
     chempia = ind_adj(hire)  # pt1
     bm_ia = ind_adj(bm)  # pt1
     pchcapx_ia = ind_adj(pchcapx)  # pt2
-    tb = ind_adj(tb)  # pt3 todo: not tb_ia?
+    tb = ind_adj(tb)  # pt3 (don't know why not tb_ia)
     cfp_ia = ind_adj(cfp)  # pt1
     mve_ia = ind_adj(mve)  # pt1
     herf = revt.div(revt.sum(axis=1).squeeze(), axis=0) * revt.div(revt.sum(axis=1).squeeze(), axis=0)  # pt1
@@ -210,9 +210,6 @@ if __name__ == '__main__':
         # todo (385-) | pt0
         continue
     orgcap = atlagat * orgcap * (count > 1)  # pt0
-
-    # todo: mve (516) | pt0
-    # todo: pps (518) | pt0
 
     bm.to_csv(seventyeight_dir + 'bm.csv')
     ep.to_csv(seventyeight_dir + 'ep.csv')

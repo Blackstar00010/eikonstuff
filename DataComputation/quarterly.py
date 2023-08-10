@@ -22,6 +22,7 @@ if __name__ == '__main__':
         countq = pd.read_csv(from_ref_dir + 'countq.csv').set_index('datadate')
         mveq = pd.read_csv(from_ref_dir + 'mveq.csv').set_index('datadate')
 
+    # lines 559-
     pstk = pstkrq.fillna(pstkq)
     scal = seqq.fillna(ceqq + pstk).fillna(atq - ltq)
     chtx = delta(txtq, by=4) / lag(atq, by=4)
@@ -54,10 +55,10 @@ if __name__ == '__main__':
 
     roaq = roaq * (countq > 1)
     roeq = roeq * (countq > 1)
-    chtx = chtx * (countq > 5)
-    che = che * (countq > 5)
-    cinvest = cinvest * (countq > 5)
-    stdacc = stdacc * (countq > 17)
-    stdcf = stdcf * (countq > 17)
-    sgrvol = sgrvol * (countq > 17)
-    roavol = roavol * (countq > 17)
+    chtx = chtx * (countq > 4)
+    che = che * (countq > 4)
+    cinvest = cinvest * (countq > 4)
+    stdacc = stdacc * (countq > 16)
+    stdcf = stdcf * (countq > 16)
+    sgrvol = sgrvol * (countq > 16)
+    roavol = roavol * (countq > 16)

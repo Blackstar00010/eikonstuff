@@ -2,6 +2,7 @@ import platform
 import os
 import pandas as pd
 from typing import Literal
+import multiprocessing as mp
 
 
 def beep() -> None:
@@ -16,15 +17,41 @@ def beep() -> None:
         winsound.Beep(1000, 500)
 
 
-def listdir(directory: str, file_type='csv') -> list:
+def listdir(directory: str, file_type='csv', files_to_exclude=None) -> list:
     """
     Alternative for os.listdir.
     :param directory: the directory to find certain type of file.
-    :param file_type: extension of data to find (e.g. 'csv' or 'pickle')
+    :param file_type: extension of data to find (e.g. 'csv', 'pickle', or 'dir').
+        Can use None to make it behave the same as os.listdir without files starting with '.' or '_'
+    :param files_to_exclude: list of files to exclude.
     :return: list of file names
     """
+    if files_to_exclude is None:
+        files_to_exclude = []
     ret = os.listdir(directory)
-    ret = [item for item in ret if item.split('.')[-1] == file_type]
+    to_drop = []
+    if file_type is None:
+        for afile in ret:
+            if afile[0] in ['.', '_']:
+                to_drop.append(afile)
+            elif afile in files_to_exclude:
+                to_drop.append(afile)
+
+    elif file_type != 'dir':
+        ret = [item for item in ret if item.split('.')[-1] == file_type]
+        for afile in ret:
+            if afile in files_to_exclude:
+                to_drop.append(afile)
+            if afile+file_type in files_to_exclude:
+                to_drop.append(afile + file_type)
+    else:
+        ret = [item for item in ret if os.path.isdir(directory + item)]
+        for afile in ret:
+            if afile in files_to_exclude:
+                to_drop.append(afile)
+
+    for afile in to_drop:
+        ret.remove(afile)
     return sorted(ret)
 
 
@@ -53,15 +80,60 @@ def date_col_finder(dataframe, df_name) -> str:
     return date_col
 
 
-def outer_joined_axis(directory: str, file_type: Literal['csv', 'pickle'] = 'csv',
-                      axis: Literal['row', 'daterow', 'column'] = 'daterow') -> pd.Series:
+def apply_axis_2df(df: pd.DataFrame, vector, dfname, axis: Literal['row', 'daterow', 'column', 'col'] = 'daterow',
+                   how: Literal['outer', 'inner'] = 'outer',
+                   strip: bool = True, strip_subset: list = None) -> pd.DataFrame:
     """
-    Returns outer-joined date of all the .csv data within the directory `dir`.
-    :param directory: the directory to scan .csv data and apply the operation
-    :param file_type: extension of data to find (e.g. 'csv' or 'pickle')
+    Applies the vector to the dataframe `df`. if `axis` is 'row', the vector is applied to the index of `df`.
+    :param df: the dataframe to apply the vector to
+    :param vector: the vector to apply to the dataframe. list or pd.Series
+    :param dfname: the name of the dataframe
+    :param axis: the direction along which the vector will be applied.
+        If 'row' or 'daterow', the file may be extended vertically,
+        and if 'column' or 'col', the file may be extended horizontally
+    :param how: 'outer' or 'inner'. If 'outer', the file will be extended to include the vector.
+    :param strip: if True, the first and last NaNs will be stripped from the dataframe.
+    : param strip_subset: if not None, the df will be stripped according to the columns of the df.
+    :return: the dataframe with the vector applied
+    """
+    if type(vector) not in [list, pd.Series]:
+        raise TypeError('vector must be a list or pd.Series')
+    elif type(vector) == list:
+        vector = pd.Series(vector)
+
+    date_col_name = date_col_finder(df, dfname)
+    df[date_col_name] = datetime_to_str(df[date_col_name])
+    df = df.set_index(date_col_name)
+    if how == 'inner':
+        df = df.drop(index=df.index[~df.index.isin(vector)])
+    if 'row' in axis:
+        to_concat = pd.DataFrame(
+            float('NaN'), columns=df.columns, index=vector[~vector.isin(df.index)])
+        concat_axis = 0
+    else:
+        to_concat = pd.DataFrame(
+            float('NaN'), columns=vector[~vector.isin(df.columns)], index=df.index)
+        concat_axis = 1
+    df = pd.concat([df, to_concat], axis=concat_axis)
+    if strip:
+        if strip_subset is None:
+            df = strip_df(df, axis=axis, subset=None)
+        else:
+            df = strip_df(df, subset=strip_subset, axis=axis)
+    df = df.sort_index()
+    return df
+
+
+def outer_joined_axis(directory: str, file_type: Literal['csv', 'pickle'] = 'csv',
+                      axis: Literal['row', 'daterow', 'column', 'col'] = 'daterow') -> pd.Series:
+    """
+    Returns outer-joined axis of all the files within the directory.
+    :param directory: the directory to scan files and apply the operation
+    :param file_type: the type of file to scan. 'csv' or 'pickle'
     :param axis: the axis to be joined and returned.
-        'row' for rows except dates, 'daterow' for rows containing dates, and 'column' for columns(generally companies)
-    :return: Series of row names
+        'row' for rows except dates, 'daterow' for rows containing dates,
+        and 'column'/'col' for columns(generally companies)
+    :return: the outer-joined axis in pd.Series
     """
     files = listdir(directory, file_type=file_type)
     ret = pd.Series()
@@ -84,18 +156,18 @@ def give_same_axis(dir_or_dirs, file_type: Literal['csv', 'pickle'] = 'csv', min
                    print_logs=True) -> pd.Series:
     """
     Outer-join all the dates or column titles of .csv data within the directory(ies) `dir_or_dirs`.
-    :param dir_or_dirs: directory or list of directories to scan .csv data and apply the operation
-    :param file_type: extension of data to find (e.g. 'csv' or 'pickle')
+    :param dir_or_dirs: the directory or list of directories to scan files and apply the operation
+    :param file_type: the type of file to scan. 'csv' or 'pickle'
     :param minimum: minimum series of rows/columns each dataframe should have
     :param axis: the axis to be joined and returned
         'row' for any rows(indexes), 'daterow' for rows that contain dates,
          and 'column' for columns(generally companies).
         Hence, 'row'/'daterow' means vertical join and 'column' means horizontal join
-    :param strip: strip first and last rows/columns if True
-    :param strip_subset: the subset of index/columns to use when stripping
-        each df's date/column-wo-date by default
-    :param print_logs: prints logs if True
-    :return: Series of row/column names (the same as outer_joined_date function)
+    :param strip: if True, strip first and last rows/columns
+    :param strip_subset: the subset of index/columns to use when stripping.
+        Each df's date/column-wo-date by default
+    :param print_logs: if True, print logs
+    :return: the outer-joined axis in pd.Series (same as the return of outer_joined_axis)
     """
     # check if dir_or_dirs is in a right format
     if strip_subset is None:
@@ -115,7 +187,7 @@ def give_same_axis(dir_or_dirs, file_type: Literal['csv', 'pickle'] = 'csv', min
     elif type(dir_or_dirs) == str:
         directory = dir_or_dirs  # for comprehensiveness of the code below
     else:
-        raise TypeError('dir_or_dirs should be either list or str')
+        raise TypeError('dir_or_dirs must be a list or str')
 
     axis_vector = pd.concat([minimum, outer_joined_axis(directory, file_type, axis)])
     if print_logs:
@@ -124,13 +196,15 @@ def give_same_axis(dir_or_dirs, file_type: Literal['csv', 'pickle'] = 'csv', min
     files = listdir(directory, file_type=file_type)
     for afile in files:
         # todo: use multiprocessing
-        df = pd.read_csv(directory + afile) if file_type == 'csv' else pd.read_pickle(directory + afile)
+        df = pd.read_csv(
+            directory + afile) if file_type == 'csv' else pd.read_pickle(directory + afile)
         date_col_name = date_col_finder(df, df_name=afile)
 
         if 'row' in axis:
             df = df.set_index(date_col_name)
             lacking_index = axis_vector[~axis_vector.isin(df.index)]
-            to_concat = pd.DataFrame(float('NaN'), columns=df.columns, index=lacking_index)
+            to_concat = pd.DataFrame(
+                float('NaN'), columns=df.columns, index=lacking_index)
             df = pd.concat([df, to_concat], axis=0)
             df = df.sort_index()
             if strip:
@@ -140,7 +214,8 @@ def give_same_axis(dir_or_dirs, file_type: Literal['csv', 'pickle'] = 'csv', min
                     df = strip_df(df, strip_subset, axis='row')
         else:
             lacking_index = axis_vector[~axis_vector.isin(df.columns)]
-            to_concat = pd.DataFrame(float('NaN'), columns=lacking_index, index=df.index)
+            to_concat = pd.DataFrame(
+                float('NaN'), columns=lacking_index, index=df.index)
             df = pd.concat([df, to_concat], axis=1)
             if strip:
                 if strip_subset is None:
@@ -152,7 +227,8 @@ def give_same_axis(dir_or_dirs, file_type: Literal['csv', 'pickle'] = 'csv', min
             print(f'\t{axis} - {afile} finished!')
 
         if file_type == 'csv':
-            df = df.reset_index(drop=False).rename(columns={'index': date_col_name}) if 'row' in axis else df
+            df = df.reset_index(drop=False).rename(
+                columns={'index': date_col_name}) if 'row' in axis else df
             df.to_csv(directory + afile, index=False)
         else:
             df.to_pickle(directory + afile)
@@ -191,21 +267,25 @@ def give_same_format(dir_or_dirs, file_type: Literal['csv', 'pickle'] = 'csv', i
     return pd.DataFrame(float('NaN'), columns=col, index=ind)
 
 
-def strip_df(df: pd.DataFrame, subset: list, axis: Literal['row', 'column'] = 'row',
+def strip_df(df: pd.DataFrame, subset: list = None, axis: Literal['row', 'column', 'col'] = 'row',
              method: Literal['both', 'first', 'last'] = 'both') -> pd.DataFrame:
     """
     Delete first nan rows/columns and last nan rows/columns. (how='all')
     :param df: the dataframe to strip
-    :param subset: list of rows/columns to consider. automatically drops entities not existent in `df`'s columns/index
+    :param subset: list of rows/columns to consider. automatically drops entities not existent in `df`'s columns/index.
+        if None, all rows/columns are considered.
     :param axis: unit of the chunk that is going to be removed (e.g. if 'row', first and last rows are deleted)
     :param method: which part to strip.
         only the NaNs prior to the first valid data if 'first', only the NaNs after the last valid data if 'last',
         both for 'both'
     :return: stripped dataframe
     """
-    subset = pd.Series(subset)
     if axis == 'row':
-        subset = subset[subset.isin(df.columns)]
+        if subset is None:
+            subset = df.columns
+        else:
+            subset = pd.Series(subset)
+            subset = subset[subset.isin(df.columns)]
         mask = ~df.loc[:, subset].isna().all(axis=1)
         ff = mask.replace(False, True)
         bf = ff
@@ -218,7 +298,11 @@ def strip_df(df: pd.DataFrame, subset: list, axis: Literal['row', 'column'] = 'r
         filtered_rows = df.index[ff * bf]
         filtered_cols = df.columns[:]
     else:
-        subset = subset.isin(df.index)
+        if subset is None:
+            subset = df.index
+        else:
+            subset = pd.Series(subset)
+            subset = subset.isin(df.index)
         filtered_rows = df.index[:]
         mask = ~df.loc[subset, :].isna().all(axis=0)
         ff = mask.replace(False, True)
@@ -278,7 +362,8 @@ def pivot(some_df: pd.DataFrame, df_name, col_col, row_col=None):
         row_col = date_col_finder(some_df, df_name)
     value = some_df.columns.drop([row_col, col_col])
     ret = some_df.pivot_table(index=row_col, columns=col_col, values=value)
-    ret.columns = ret.columns.droplevel(level=0)  # b/c of two-level column names
+    ret.columns = ret.columns.droplevel(
+        level=0)  # b/c of two-level column names
     return ret
 
 
