@@ -4,14 +4,14 @@
 Create signals (RPS) that are aligned in calendar month from firm characteristics pulled from Compustat, CRSP, and I/B/E/S
 used to predict monthly cross-sections of stock returns
 
-Creating this data includes every RPS in the paper plus a few more that we didn't use, mainly because there were a lot of missing observations for those RPS
+Creating this data includes every RPS in the paper plus a few more that we didnt use, mainly because there were a lot of missing observations for those RPS
 	the ones not in the paper are from the RPS in the earlier paper Green, Hand, and Zhang (2013)
 
 
 Some sort of liability disclaimer here...
 If you use the program, make sure you understand it,
 If you spot some errors, let is know,
-and if you use it, please cite us :)
+and if you use it, please cite us :
 
 This is the data creation program for Green, Hand, and Zhang (2016)
 
