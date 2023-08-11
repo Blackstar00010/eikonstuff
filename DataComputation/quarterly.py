@@ -79,7 +79,7 @@ if __name__ == '__main__':
     roaq.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'roaq.csv')
     roeq.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'roeq.csv')
     chtx.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'chtx.csv')
-    # che.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'che.csv')
+    che.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(intermed_dir + 'che.csv')
     cinvest.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'cinvest.csv')
     stdacc.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'stdacc.csv')
     stdcf.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'stdcf.csv')

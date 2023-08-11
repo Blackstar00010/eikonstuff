@@ -649,25 +649,25 @@ proc sql;
 					and not missing(medest) and not missing(fpedats)
 					and (fpedats-statpers)>=0;
 					quit; 		
-						*forecasts closest prior to fiscal period end date;
+						-- *forecasts closest prior to fiscal period end date;
 					proc sort data=ibessum;
 					 by cusip  fpedats descending statpers;
 					run;	
 					proc sort data=ibessum nodupkey;
 					by cusip fpedats;
 					run; 
-					** Prepare Compustat-IBES translation file;
+					-- ** Prepare Compustat-IBES translation file;
 					proc sort data=crsp.msenames(where=(ncusip ne '')) out=names nodupkey;
 					by permno ncusip;
 					run;
-					* Add current cusip to IBES (IBES cusip is historical);
+					-- * Add current cusip to IBES (IBES cusip is historical);
 					proc sql;
 						create table ibessum2 as select
 						a.*, substr(compress(b.cusip),1,6) as cusip6
 						from ibessum a left join names b on
 						(a.cusip = b.ncusip);
 						quit; 		   
-					* Merge IBES, CRSP/Compustat;
+					-- * Merge IBES, CRSP/Compustat;
 					proc sql;
 					create table data4 as select a.*,b.medest,b.actual 
 					from data3 a left join ibessum2 b on
@@ -678,11 +678,11 @@ proc sql;
 					run;
 					data data4;
 						set data4;
-						* finish SUE variable;
+						-- * finish SUE variable;
 						if missing(medest) or missing(actual) then sue=che/mveq;
 						if not missing(medest) and not missing(actual) then sue=(actual-medest)/abs(prccq);
 						run;
-  					*get permno for CRSP data;
+  					-- *get permno for CRSP data;
 					proc sql; create table data5 as select a.lpermno as permno,b.*
 						from lnk a,data4 b where a.gvkey=b.gvkey 
 						and (LINKDT <= b.datadate or LINKDT = .B) and (b.datadate <= LINKENDDT or LINKENDDT = .E) and lpermno ne . and not missing(b.gvkey);
@@ -696,13 +696,13 @@ data data5;
 	where not missing(rdq);  *seems like a reasonable screen at this point to make sure have at least some of this information;
 	run;
 
-*=============================================
+/*=============================================
 
 		Some of the RPS require daily CRSP data in conjunction with Compustat quarterly,
 		so add daily CRSP info to create these RPS
 
-==============================================;
-*this is for abnormal trading volume and returns around earings announcements;
+==============================================*/
+-- *this is for abnormal trading volume and returns around earings announcements;
 proc sql;
 	create table data5 
 	as select a.*,b.vol

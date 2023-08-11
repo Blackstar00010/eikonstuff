@@ -3,7 +3,7 @@ import logging
 from Misc.elementwise_calc import lag, delta, rate_of_change, ind_adj
 from os.path import join as pathjoin
 
-date_col = pd.read_csv('../data/metadata/business_days.csv')[['YYYY-MM-DD', 'YYYYMMDD']]
+# date_col = pd.read_csv('../data/metadata/business_days.csv')[['YYYY-MM-DD', 'YYYYMMDD']]
 
 funda_dir = '../data/processed/input_funda/'
 secd_dir = '../data/processed/input_secd/'
