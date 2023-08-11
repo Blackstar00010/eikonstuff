@@ -12,12 +12,12 @@ from datetime import datetime
 '''
 1. Fetch fundamental data of periods FY/FS/FQ using eikon
 2. Organise those data and move to ../data/processed/input_funda with each file containing date in rows,
-                                                                                          companies in columns 
+                                                                                            companies in columns 
 '''
 
 metadata_dir = '../data/metadata/'
 fund_data_dir = '../data/preprocessed/'
-final_output_dir = '../data/processed//input_funda/'
+final_output_dir = '../data/processed/input_funda/'
 data_type = 'FQ'
 if data_type == 'FY':
     suffix = ''
@@ -36,11 +36,10 @@ if appendQ:
     keep_orig = False
 if fetchQ:
     data_type = 'FQ'
-    all_rics = pd.read_csv(metadata_dir + 'ref-comp.csv')['ric'].to_list()
-    all_rics = pd.read_pickle('files/comp_list/available.pickle')['RIC'].to_list()
+    # all_rics = pd.read_csv(metadata_dir + 'ref-comp.csv')['ric'].to_list()
+    all_rics = pd.read_pickle(f'{metadata_dir}comp_list/available.pickle')['RIC'].to_list()
     # columns 'Green_name' and 'TR_name'
-    green_tr_df = pd.read_csv(metadata_dir + 'trs_additional.csv') if appendQ \
-        else pd.read_csv(metadata_dir + 'trs_to_fetch.csv')
+    green_tr_df = pd.read_csv(f'{metadata_dir}{"trs_additional" if appendQ else "trs_to_fetch"}.csv')
     fields = green_tr_df['TR_name']
 
     tl_dict = dict()
@@ -154,7 +153,7 @@ if fetchQ:
             comp_df_new = comp_df_new.dropna(how='all')
 
             if len(comp_df_new) > 0:
-                comp_df_new.to_csv(f'{fund_data_dir}/{data_type}/{ric.replace(".", "-")}.csv', index=False)
+                comp_df_new.to_csv(f'{fund_data_dir}{data_type}/{ric.replace(".", "-")}.csv', index=False)
                 comp_df_new = comp_df_new.set_index('datadate')
                 comp_df_new = comp_df_new.reindex(sorted(comp_df_new.columns), axis=1)
                 comp_df_new.to_csv(f'./files/fund_data/{data_type}/{ric.replace(".", "-")}.csv', index=True)
@@ -162,12 +161,9 @@ if fetchQ:
             print(ric, 'done!')
         print(f'{i} / {len(rics)} done!')
 
-# organise & move to /processed/input_funda
-# to_organize = []
-to_organize = ['FY']
 computeQ = False
 if computeQ:
-    fund_data_dir = f'files/fund_data/{data_type}'
+    fund_data_dir = f'files/fund_data/{data_type}/'
     files = useful_stuff.listdir(fund_data_dir)
     for afile in files:
         df = pd.read_csv(fund_data_dir + afile).fillna(0)
