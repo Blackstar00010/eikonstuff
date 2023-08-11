@@ -3,6 +3,8 @@ from Misc.elementwise_calc import lag, delta, past_stddev, past_mean
 
 if __name__ == '__main__':
     from_ref_dir = '../data/processed/input_funda/'
+    seventyeight_dir = '../data/processed/output_by_var_dd/'
+    intermed_dir = '../data/processed/intermed/'
 
     if True:
         pstkrq = pd.read_csv(from_ref_dir + 'pstkrq.csv').set_index('datadate')
@@ -62,3 +64,24 @@ if __name__ == '__main__':
     stdcf = stdcf * (countq > 16)
     sgrvol = sgrvol * (countq > 16)
     roavol = roavol * (countq > 16)
+
+    # pstk.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'pstk.csv')
+    # scal.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'scal.csv')
+    rsup.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'rsup.csv')
+    # abs_revtq.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'abs_revtq.csv')
+    # sacc.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'sacc.csv')
+    # scf.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'scf.csv')
+    cash.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'cash.csv')
+    # ibq_incr.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'ibq_incr.csv')
+    # ibq_incr4.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'ibq_incr4.csv')
+    # ibq_incr8.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'ibq_incr8.csv')
+    nincr.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'nincr.csv')
+    roaq.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'roaq.csv')
+    roeq.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'roeq.csv')
+    chtx.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'chtx.csv')
+    # che.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'che.csv')
+    cinvest.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'cinvest.csv')
+    stdacc.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'stdacc.csv')
+    stdcf.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'stdcf.csv')
+    sgrvol.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(intermed_dir + 'sgrvol.csv')
+    roavol.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'roavol.csv')

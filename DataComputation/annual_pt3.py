@@ -77,7 +77,7 @@ if __name__ == '__main__':
     # TODO: Lev and Nissim (2004) https://www.jstor.org/stable/4093085
     tr = 1  # todo: (206)
     tb = txt / tr / ib * (ib > 0) + 1 * (ib <= 0)
-    tb = ind_adj(tb)  # todo: not tb_ia?
+    tb = ind_adj(tb)
 
     securedind.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(seventyeight_dir, 'securedind.csv'))
     secured.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(seventyeight_dir, 'secured.csv'))
