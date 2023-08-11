@@ -4,6 +4,8 @@ import pandas as pd
 import eikon as ek
 import myEikon as mek
 from deprecated.wrds_prep import pivot
+import useful_stuff
+from wrds_prep import pivot
 from time import sleep
 from datetime import datetime
 
@@ -16,6 +18,13 @@ from datetime import datetime
 metadata_dir = '../data/metadata/'
 fund_data_dir = '../data/preprocessed/'
 final_output_dir = '../data/processed//input_funda/'
+data_type = 'FQ'
+if data_type == 'FY':
+    suffix = ''
+elif data_type == 'FS':
+    suffix = 's'
+else:  # FQ
+    suffix = 'q'
 
 fetchQ = True
 appendQ = True
@@ -28,17 +37,12 @@ if appendQ:
 if fetchQ:
     data_type = 'FQ'
     all_rics = pd.read_csv(metadata_dir + 'ref-comp.csv')['ric'].to_list()
+    all_rics = pd.read_pickle('files/comp_list/available.pickle')['RIC'].to_list()
     # columns 'Green_name' and 'TR_name'
     green_tr_df = pd.read_csv(metadata_dir + 'trs_additional.csv') if appendQ \
         else pd.read_csv(metadata_dir + 'trs_to_fetch.csv')
     fields = green_tr_df['TR_name']
 
-    if data_type == 'FY':
-        suffix = ''
-    elif data_type == 'FS':
-        suffix = 's'
-    else:  # FQ
-        suffix = 'q'
     tl_dict = dict()
     for i in range(len(green_tr_df)):
         tl_dict[green_tr_df.loc[i, 'TR_name'].upper()] = green_tr_df.loc[i, 'Green_name'] + suffix
@@ -90,13 +94,14 @@ if fetchQ:
         for ric in rics:
             # columns: ['Instrument', 'TR.STH1', 'TR.STH1.DATE', 'TR.STH2', 'TR.STH2.DATE', ...]
             comp_df = comps.comp_specific_data(ric)
-            # all empty
-            if comp_df.set_index('Instrument').isna().all().all():
-                continue
+            comp_df = comp_df.drop('Instrument', axis=1)
 
-            comp_df_new = comp_df.loc[:, comp_df.columns[0:3]]  # first data
+            if not comp_df.isna().all().all():
+                comp_df = comp_df  # debug point
+
+            comp_df_new = comp_df.loc[:, comp_df.columns[0:2]]  # first data
             comp_df_new = comp_df_new.rename(columns={comp_df_new.columns[-1]: 'datadate'})
-            for acol in comp_df.columns[3:]:
+            for acol in comp_df.columns[2:]:
                 if acol.count('.') == 1:
                     to_concat = comp_df.loc[:, [acol + ".CALCDATE", acol]]
                     to_concat = to_concat.rename(columns={acol + ".CALCDATE": 'datadate'})
@@ -111,8 +116,10 @@ if fetchQ:
                     original_df = pd.DataFrame(float('NaN'), columns=['datadate'], index=[0])
 
                 # duplicate columns might exist, so resolve this issue
-                common_col = comp_df_new.columns[comp_df_new.columns.isin(original_df.columns)][1:]  # except Instrument
-                if (len(common_col) > 1) and (not overwrite) and (not keep_both) and (not keep_orig):
+                common_col = comp_df_new.columns[comp_df_new.columns.isin(original_df.columns)]
+                if 'datadate' in common_col:
+                    common_col = common_col.drop('datadate')
+                if (len(common_col) > 0) and (not overwrite) and (not keep_both) and (not keep_orig):
                     action = input(f'Following columns already exist:\n'
                                    f'{common_col.to_list()}\n'
                                    f'Which action would you like to perform? [overwrite/keep_both/keep_original] ')
@@ -137,66 +144,20 @@ if fetchQ:
                 comp_df_new = original_df.merge(comp_df_new, on='datadate', how='outer')
 
             # manage duplicate 'datadate' (b/c more than one data released on one day)
-            comp_df_new = comp_df_new.dropna(how='all')
             comp_df_new = comp_df_new.groupby('datadate').sum().reset_index()
             comp_df_new = comp_df_new.sort_values(by=['datadate'])
 
-            # multiplier is for calculating the 'count' column, suffix for columnwise computation
-            if data_type == 'FY':
-                multiplier = 1
-            elif data_type == 'FS':
-                multiplier = 2
-            else:  # FQ
-                multiplier = 4
-
-            # calculate some new columns
-            comp_df_new.loc[:, 'dcpstk' + suffix] = comp_df_new.loc[:, 'pstk' + suffix] + \
-                                                    comp_df_new.loc[:, 'dcvt' + suffix]
-            comp_df_new.loc[:, 'txfo' + suffix] = comp_df_new.loc[:, 'txt' + suffix] - \
-                                                  comp_df_new.loc[:, 'txfed' + suffix]
-            comp_df_new.loc[:, 'nopi' + suffix] = comp_df_new.loc[:, 'nopi' + suffix] + \
-                                                  comp_df_new.loc[:, 'nopi1' + suffix]
-            comp_df_new = comp_df_new.drop('nopi1' + suffix, axis=1)
-            comp_df_new.loc[:, 'xint' + suffix] = - comp_df_new.loc[:, 'xint' + suffix]
-            comp_df_new.loc[:, 'capx' + suffix] = - comp_df_new.loc[:, 'capx' + suffix]
-            comp_df_new.loc[:, 'rect' + suffix] = comp_df_new.loc[:, 'rect' + suffix] + \
-                                                  comp_df_new.loc[:, 'rect1' + suffix]
-            comp_df_new = comp_df_new.drop('rect1' + suffix, axis=1)
-            comp_df_new.loc[:, 'invt' + suffix] = comp_df_new.loc[:, 'invt' + suffix].fillna(
-                comp_df_new.loc[:, 'invt2' + suffix])
-            comp_df_new = comp_df_new.drop('invt2' + suffix, axis=1)
-            comp_df_new.loc[:, 'intan' + suffix] = comp_df_new.loc[:, 'intan' + suffix] + \
-                                                   comp_df_new.loc[:, 'gdwlia' + suffix]
-            comp_df_new.loc[:, 'ao' + suffix] = comp_df_new.loc[:, 'ao' + suffix] + comp_df_new.loc[:, 'aco']
-            comp_df_new.loc[:, 'fatl' + suffix] = comp_df_new.loc[:, 'fatl' + suffix] + \
-                                                  comp_df_new.loc[:, 'fatl1' + suffix]
-            comp_df_new = comp_df_new.drop('fatl1' + suffix, axis=1)
-            comp_df_new.loc[:, 'dltt' + suffix] = comp_df_new.loc[:, 'dlc1' + suffix] + \
-                                                  comp_df_new.loc[:, 'dlc11' + suffix]
-            comp_df_new.loc[:, 'dlc' + suffix] = comp_df_new.loc[:, 'dlc' + suffix] + \
-                                                 comp_df_new.loc[:, 'dltt' + suffix]
-            comp_df_new = comp_df_new.drop(['dlc1' + suffix, 'dlc11' + suffix], axis=1)
-            comp_df_new.loc[:, 'lt' + suffix] = comp_df_new.loc[:, 'lt' + suffix] - \
-                                                comp_df_new.loc[:, 'lt1' + suffix]
-            comp_df_new = comp_df_new.drop('lt1' + suffix, axis=1)
-
-            # lines 86-92
-            comp_df_new.loc[:, 'dr' + suffix] = comp_df_new.loc[:, 'drlt' + suffix] + comp_df_new.loc[:, 'drc' + suffix]
-            comp_df_new.loc[:, 'dc' + suffix] = comp_df_new.loc[:, 'dcvt' + suffix]
-
             # final cleanup
-            comp_df_new = comp_df_new.drop(['Instrument'], axis=1)
             comp_df_new = comp_df_new.replace(0, float('NaN'))  # fill empty columns
             comp_df_new = comp_df_new.replace('', float('NaN'))  # fill empty columns
             comp_df_new = comp_df_new.fillna(method='ffill')  # fill empty columns
             comp_df_new = comp_df_new.dropna(how='all')
 
-            comp_df_new['count'] = (multiplier * (pd.to_datetime(comp_df_new['datadate']
-                                                                 ) - pd.to_datetime(comp_df_new['datadate']).min()
-                                                  ).dt.days) // 365 + 1
-
             if len(comp_df_new) > 0:
                 comp_df_new.to_csv(f'{fund_data_dir}/{data_type}/{ric.replace(".", "-")}.csv', index=False)
+                comp_df_new = comp_df_new.set_index('datadate')
+                comp_df_new = comp_df_new.reindex(sorted(comp_df_new.columns), axis=1)
+                comp_df_new.to_csv(f'./files/fund_data/{data_type}/{ric.replace(".", "-")}.csv', index=True)
 
             print(ric, 'done!')
         print(f'{i} / {len(rics)} done!')
@@ -204,6 +165,63 @@ if fetchQ:
 # organise & move to /processed/input_funda
 # to_organize = []
 to_organize = ['FY']
+computeQ = False
+if computeQ:
+    fund_data_dir = f'files/fund_data/{data_type}'
+    files = useful_stuff.listdir(fund_data_dir)
+    for afile in files:
+        df = pd.read_csv(fund_data_dir + afile).fillna(0)
+
+        # calculate some new columns
+        df.loc[:, 'dcpstk' + suffix] = df.loc[:, 'pstk' + suffix] + df.loc[:, 'dcvt' + suffix]
+        df.loc[:, 'txfo' + suffix] = df.loc[:, 'txt' + suffix] - df.loc[:, 'txfed' + suffix]
+        if 'nopi1' + suffix in df.columns:
+            df.loc[:, 'nopi' + suffix] = df.loc[:, 'nopi' + suffix] + df.loc[:, 'nopi1' + suffix]
+            df = df.drop('nopi1' + suffix, axis=1)
+        df.loc[:, 'xint' + suffix] = - df.loc[:, 'xint' + suffix]
+        df.loc[:, 'capx' + suffix] = - df.loc[:, 'capx' + suffix]
+        if 'rect1' + suffix in df.columns:
+            df.loc[:, 'rect' + suffix] = df.loc[:, 'rect' + suffix] + df.loc[:, 'rect1' + suffix]
+            df = df.drop('rect1' + suffix, axis=1)
+        if 'invt2' + suffix in df.columns:
+            df.loc[:, 'invt' + suffix] = df.loc[:, 'invt' + suffix].fillna(
+                df.loc[:, 'invt2' + suffix])
+            df = df.drop('invt2' + suffix, axis=1)
+        df.loc[:, 'intan' + suffix] = df.loc[:, 'intan' + suffix] + df.loc[:, 'gdwlia' + suffix]
+        df.loc[:, 'ao' + suffix] = df.loc[:, 'ao' + suffix] + df.loc[:, 'aco' + suffix]
+        if 'fatl1' + suffix in df.columns:
+            df.loc[:, 'fatl' + suffix] = df.loc[:, 'fatl' + suffix] + df.loc[:, 'fatl1' + suffix]
+            df = df.drop('fatl1' + suffix, axis=1)
+        if ('dlc1' + suffix in df.columns) and ('dlc11' + suffix in df.columns):
+            df.loc[:, 'dltt' + suffix] = df.loc[:, 'dlc1' + suffix] + df.loc[:, 'dlc11' + suffix]
+            df.loc[:, 'dlc' + suffix] = df.loc[:, 'dlc' + suffix] + df.loc[:, 'dltt' + suffix]
+            df = df.drop(['dlc1' + suffix, 'dlc11' + suffix], axis=1)
+        if 'lt1' + suffix in df.columns:
+            df.loc[:, 'lt' + suffix] = df.loc[:, 'lt' + suffix] - df.loc[:, 'lt1' + suffix]
+            df = df.drop('lt1' + suffix, axis=1)
+
+        # lines 86-92
+        df.loc[:, 'dr' + suffix] = df.loc[:, 'drlt' + suffix] + df.loc[:, 'drc' + suffix]
+        df.loc[:, 'dc' + suffix] = df.loc[:, 'dcvt' + suffix]
+
+        # multiplier is for calculating the 'count' column
+        if data_type == 'FY':
+            multiplier = 1
+        elif data_type == 'FS':
+            multiplier = 2
+        else:  # FQ
+            multiplier = 4
+        df['count'] = (multiplier * (pd.to_datetime(df['datadate']) - pd.to_datetime(df['datadate']).min()
+                                     ).dt.days) // 365 + 1
+
+        df = df.replace(0, float('NaN'))
+        df = df.set_index('datadate')
+        df = df.reindex(sorted(df.columns), axis=1)
+        df.to_csv(fund_data_dir + afile, index=True)
+
+# organise & move to /by_data/from_ref
+to_organize = []
+# to_organize = ['FY']
 for Fsth in to_organize:
     date_col = pd.read_csv(metadata_dir + 'business_days.csv').rename(columns={'YYYY-MM-DD': 'datadate'}
                                                                          ).loc[:, 'datadate']

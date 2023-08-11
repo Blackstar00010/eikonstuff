@@ -116,4 +116,12 @@ price_date_col = price_date_col[us.date_col_finder(price_date_col, '')]
 og_price_col = pd.read_csv('../data/metadata/business_days.csv')
 og_price_col = og_price_col['YYYY-MM-DD']
 print(price_date_col[~price_date_col.isin(og_price_col)])
+the_dir = 'files/fund_data/FQ/'
+for afile in useful_stuff.listdir(the_dir):
+    df = pd.read_csv(the_dir + afile)
+    if 'fatbq' in df.columns:
+        df = df.loc[:, df.columns.drop(['fatbq'])]
+    if 'fatbq_x' in df.columns:
+        df = df.loc[:, df.columns.drop(['fatbq_x', 'fatbq_y'])]
+    df.to_csv(the_dir + afile, index=False)
 

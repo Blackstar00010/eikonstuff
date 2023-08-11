@@ -11,8 +11,9 @@ else:
     apikey = "7fb0e788b2ff42c2823e80933fde4d28158c74f4"
     ek.set_app_key(apikey)
 
-_not_my_fault = [400, 401, 500, 2504]
-# 400: Backend error, 401: Eikon Proxy not running, 500: Backend error, 2504: Gateway Time-out
+_not_my_fault = [400, 401, 408, 500, 2504]
+# 400: Backend error, 401: Eikon Proxy not running, 408: HTTP Timeout
+# 500: Backend error, 2504: Gateway Time-out
 
 
 class Company:
