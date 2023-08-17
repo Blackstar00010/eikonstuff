@@ -4,20 +4,18 @@ import pandas as pd
 import eikon as ek
 import myEikon as mek
 from deprecated.wrds_prep import pivot
-import useful_stuff
-from wrds_prep import pivot
+import Misc.useful_stuff as us
 from time import sleep
 from datetime import datetime
 
 '''
 1. Fetch fundamental data of periods FY/FS/FQ using eikon
 2. Organise those data and move to ../data/processed/input_funda with each file containing date in rows,
-                                                                                            companies in columns 
+                                                                                           companies in columns 
 '''
 
 metadata_dir = '../data/metadata/'
 fund_data_dir = '../data/preprocessed/'
-final_output_dir = '../data/processed/input_funda/'
 data_type = 'FQ'
 if data_type == 'FY':
     suffix = ''
@@ -100,11 +98,14 @@ if fetchQ:
 
             comp_df_new = comp_df.loc[:, comp_df.columns[0:2]]  # first data
             comp_df_new = comp_df_new.rename(columns={comp_df_new.columns[-1]: 'datadate'})
+
+            dfs = []
             for acol in comp_df.columns[2:]:
                 if acol.count('.') == 1:
                     to_concat = comp_df.loc[:, [acol + ".CALCDATE", acol]]
                     to_concat = to_concat.rename(columns={acol + ".CALCDATE": 'datadate'})
-                    comp_df_new = pd.concat([comp_df_new, to_concat])
+                    dfs.append(to_concat)
+            comp_df_new = pd.concat(dfs)
 
             comp_df_new = comp_df_new.rename(columns=tl_dict)
 
@@ -164,7 +165,7 @@ if fetchQ:
 computeQ = False
 if computeQ:
     fund_data_dir = f'files/fund_data/{data_type}/'
-    files = useful_stuff.listdir(fund_data_dir)
+    files = us.listdir(fund_data_dir)
     for afile in files:
         df = pd.read_csv(fund_data_dir + afile).fillna(0)
 
@@ -216,21 +217,30 @@ if computeQ:
         df.to_csv(fund_data_dir + afile, index=True)
 
 # organise & move to /by_data/from_ref
-to_organize = []
-# to_organize = ['FY']
+# to_organize = []
+to_organize = ['FQ']
 for Fsth in to_organize:
+    if Fsth == 'FY':
+        suffix = ''
+    elif Fsth == 'FS':
+        suffix = 's'
+    else:  # FQ
+        suffix = 'q'
     date_col = pd.read_csv(metadata_dir + 'business_days.csv').rename(columns={'YYYY-MM-DD': 'datadate'}
                                                                          ).loc[:, 'datadate']
     fsth_dir = f'{fund_data_dir}/{Fsth}/'
     files = os.listdir(fsth_dir)
     firms = [file_name[:-4].replace('-', '.') for file_name in files]
 
-    total_df = pd.DataFrame()
+    dfs = []
     for i, file_name in enumerate(files):
         to_concat = pd.read_csv(fsth_dir + file_name)
         to_concat['ric'] = firms[i]
-        total_df = pd.concat([total_df, to_concat], axis=0)
+        dfs.append(to_concat)
+    total_df = pd.concat(dfs, axis=0)
     print('Finished loading data!')
+
+    final_output_dir = f'../data/processed/input_fund{suffix if suffix!="" else "a"}/'
 
     fields = total_df.columns.drop(['datadate', 'ric'])
     for field_name in fields:
@@ -238,7 +248,10 @@ for Fsth in to_organize:
         field_df = pivot(field_df)
 
         field_df = field_df.merge(date_col, on='datadate', how='outer').sort_values('datadate')
-        last_nans = field_df.fillna(method='bfill').notna()  # false if last NaNs; todo: apply only for delisted
-        field_df = field_df.fillna(method='ffill') * last_nans
+        last_nans = ~field_df.fillna(method='bfill').notna()  # True if last NaNs
+        is_del_series = field_df.columns.str.contains('^')  # True if delisted
+        last_nans = last_nans.apply(lambda x: x * is_del_series, axis=1)  # True if delisted last NaNs
+        field_df = field_df.fillna(method='ffill') * (~last_nans)
+
         field_df.to_csv(f'{final_output_dir}/{field_name}.csv', index=False)
         print(f'{field_name} done!')
