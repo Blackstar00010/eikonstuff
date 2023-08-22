@@ -8,7 +8,7 @@ proc_wrds_dir = '../data/processed_wrds/'
 proc_ref_dir = '../data/price_stuff/price_data_merged/'
 
 
-def import_price(file_name: str, hat_in_cols: bool) -> pd.DataFrame:
+def import_csv(file_name: str, hat_in_cols: bool) -> pd.DataFrame:
     """
     
     :param file_name: 
@@ -41,14 +41,14 @@ def notna_per_row(df: pd.DataFrame) -> pd.Series:
     return df.notna().sum(axis=1).replace(0, float('NaN')).fillna(method='ffill')
 
 
-price_yf = import_price(pres_dir + 'price_yf.csv', hat_in_cols=False)
-price_wrds = import_price(proc_wrds_dir + 'input_secd/close.csv', hat_in_cols=True)
-price_ref = import_price(proc_ref_dir + 'close.csv', hat_in_cols=True)
+price_yf = import_csv(pres_dir + 'price_yf.csv', hat_in_cols=False)
+price_wrds = import_csv(proc_wrds_dir + 'input_secd/close.csv', hat_in_cols=True)
+price_ref = import_csv(proc_ref_dir + 'close.csv', hat_in_cols=True)
 
-notna_counts_list = [notna_per_row(price_yf)[:-1], notna_per_row(price_wrds), notna_per_row(price_ref)]
+notna_counts_list = [notna_per_row(price_yf)[:-1], notna_per_row(price_ref), notna_per_row(price_wrds)]
 for i in range(len(notna_counts_list)):
     notna_counts_df = pd.concat(notna_counts_list[:(i + 1)], axis=1)
-    notna_counts_df.columns = ['Yahoo Finance', 'WRDS', 'Refinitiv'][:(i + 1)]
+    notna_counts_df.columns = ['Yahoo Finance', 'Refinitiv', 'WRDS'][:(i + 1)]
     notna_counts_df = notna_counts_df.sort_index()
     notna_counts_df = notna_counts_df.fillna(method='ffill')
 
@@ -71,5 +71,32 @@ for i in range(len(notna_counts_list)):
     plt.title('Normalised number of stocks with price data')
     plt.xticks(label_df['locs'], label_df['labels'].dt.strftime('%Y-%m'))
     plt.ylabel('%')
-    plt.savefig(pres_dir + f'price_data_count_norm_{i}.png', dpi=300)
+    plt.savefig(pres_dir + f'img_price/price_data_count_norm_{i}.png', dpi=300)
     # plt.show()
+
+target_dir = '../data/processed_wrds/output_by_var_dd/'
+vars = us.listdir(target_dir)
+overall_nonzero = 0
+overall_cells = 0
+for avar in vars:
+    df = import_csv(target_dir + avar, hat_in_cols=True)
+    avar = avar.replace('.csv', '')
+
+    total_cells = df.shape[0] * df.shape[1]
+    total_nonzero = ((df != 0) * (df.notna())).sum().sum()
+    print(f'\tNon-zero cells of {avar} : '
+          f'{total_nonzero} / {total_cells} = {round(total_nonzero / (total_cells + 1) * 100, 2)}%')
+    overall_nonzero += total_nonzero
+    overall_cells += total_cells
+
+    price_ref_temp = price_ref.loc[
+        price_ref.index[price_ref.index.isin(df.index)], price_ref.columns[price_ref.columns.isin(df.columns)]]
+    df = df.loc[df.index[df.index.isin(price_ref_temp.index)], df.columns[df.columns.isin(price_ref_temp.columns)]]
+    pd.DataFrame([price_ref_temp.notna().sum(axis=1), df.notna().sum(axis=1)]).T.plot()
+    plt.title(f'Number of non-empty cells of {avar}')
+    plt.legend(['price', avar])
+    plt.savefig(pres_dir + f'img_fund/nonempty_{avar}.png', dpi=300)
+    plt.show()
+
+print(
+    f'Overall non-empty cells: {overall_nonzero} / {overall_cells} = {round(overall_nonzero / overall_cells * 100, 2)}%')
