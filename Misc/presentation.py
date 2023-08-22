@@ -5,7 +5,7 @@ import datetime
 
 pres_dir = '../data/_presentation/'
 proc_wrds_dir = '../data/processed_wrds/'
-proc_ref_dir = '../data/processed/'
+proc_ref_dir = '../data/price_stuff/price_data_merged/'
 
 
 def import_price(file_name: str, hat_in_cols: bool) -> pd.DataFrame:
@@ -20,9 +20,11 @@ def import_price(file_name: str, hat_in_cols: bool) -> pd.DataFrame:
     df = df.sort_values(by=date_col_name)
     if df[date_col_name].duplicated().any():
         df = df.set_index(date_col_name)
+        df = df.replace([0, float('inf'), -float('inf')], float('NaN'))
         df = df[~df.index.duplicated(keep='first')].fillna(df[~df.index.duplicated(keep='last')])
         df = us.fillna(df, hat_in_cols=hat_in_cols)
     else:
+        df = df.replace([0, float('inf'), -float('inf')], float('NaN'))
         df = us.fillna(df, hat_in_cols=hat_in_cols)
         df = df.set_index(date_col_name)
     df = df.sort_index()
@@ -41,7 +43,7 @@ def notna_per_row(df: pd.DataFrame) -> pd.Series:
 
 price_yf = import_price(pres_dir + 'price_yf.csv', hat_in_cols=False)
 price_wrds = import_price(proc_wrds_dir + 'input_secd/close.csv', hat_in_cols=True)
-price_ref = import_price(proc_ref_dir + 'input_secd/close.csv', hat_in_cols=True)
+price_ref = import_price(proc_ref_dir + 'close.csv', hat_in_cols=True)
 
 notna_counts_list = [notna_per_row(price_yf)[:-1], notna_per_row(price_wrds), notna_per_row(price_ref)]
 for i in range(len(notna_counts_list)):

@@ -1,5 +1,6 @@
 import pandas as pd
 from numpy import sqrt
+from typing import Literal
 
 
 def lag(dataframe: pd.DataFrame, by=1) -> pd.DataFrame:
@@ -44,15 +45,19 @@ def rate_of_change(dataframe: pd.DataFrame, by=1, minusone=True) -> pd.DataFrame
     return ret
 
 
-def series_to_df(series: pd.Series, columns) -> pd.DataFrame:
+def series_to_df(series: pd.Series, vec, direction: Literal['horizontal', 'vertical']) -> pd.DataFrame:
     """
-    Stretches horizontally the column vector so that the resulting dataframe has all the columns of `dataframe` with
-    each row containing one value.
+    Stretches the given vector so that the resulting dataframe has all the columns/rows of `dataframe` with
+    each row/column containing one value.
     :param series: the pd.Series to expand
-    :param columns: list of names of the columns of the dataframe to be returned
+    :param vec: list of names of the columns of the dataframe to be returned
+    :param direction: 'horizontal' or 'vertical'
+        if 'horizontal', the returned dataframe will be the horizontally-stretched version of the column vector `vec`.
+        if 'vertical', the returned dataframe will be the vertically-stretched version of the row vector `vec`.
     :return: pd.DataFrame
     """
-    ret = pd.concat((pd.Series(series, name=acol) for acol in columns), axis=1)
+    axis = 1 if direction == 'horizontal' else 0
+    ret = pd.concat((pd.Series(series, name=val) for val in vec), axis=axis)
     return ret
 
 

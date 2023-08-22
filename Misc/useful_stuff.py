@@ -4,6 +4,7 @@ import pandas as pd
 from typing import Literal
 import multiprocessing as mp
 import numpy as np
+import datetime
 
 
 def beep() -> None:
@@ -377,6 +378,53 @@ def pivot(some_df: pd.DataFrame, df_name, col_col, row_col=None):
     return ret
 
 
+def drop_invalid_data(some_df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Replace non-NaN cells of delisted companies' delisted date with NaN
+    :param some_df: the dataframe to replace values in
+    :return: the dataframe with some more NaNs
+    """
+    ret = some_df
+    try:
+        date_col_name = date_col_finder(some_df, 'some_df')
+        ret = ret.set_index(date_col_name)
+        should_reset_index = True
+    except IndexError:
+        should_reset_index = False
+    ret = ret.sort_index()
+
+    delisted_date = pd.DataFrame(ret.columns, columns=['RIC'])
+    delisted_date['ric2'] = delisted_date['RIC'].str.split('^').str[-1] * (delisted_date['RIC'].str.find('^') > 0)
+    delisted_date = delisted_date.replace('', float('NaN')).dropna(subset=['ric2'])
+    delisted_date['delisted_YYYY'] = delisted_date['ric2'].str[1:]
+    delisted_date['delisted_YYYY'] = delisted_date['delisted_YYYY'].astype(int).apply(
+        lambda x: 1900 + x if x > 23 else 2000 + x)
+    delisted_date['delisted_MM'] = delisted_date['ric2'].str[0]
+    delisted_date['delisted_MM'] = delisted_date['delisted_MM'].apply(lambda x: ord(x) - 64)
+    delisted_date['delisted_MM'] = delisted_date['delisted_MM'].apply(lambda x: str(x).rjust(2, '0'))
+    delisted_date['delisted_DD'] = '28'
+    delisted_date['delisted_date'] = pd.to_datetime(delisted_date.apply(
+        lambda x: str(x['delisted_YYYY']) + '-' + str(x['delisted_MM']) + '-' + str(x['delisted_DD']),
+        axis=1)) + datetime.timedelta(days=4)
+    delisted_date['delisted_date'] = delisted_date['delisted_date'].dt.strftime('%Y-%m-%d')
+    delisted_date = delisted_date[['RIC', 'delisted_date']]
+
+    truth_df = pd.DataFrame(True, index=ret.index, columns=ret.columns)
+    for ind in delisted_date.index:
+        date_of_delisting = delisted_date.loc[ind, 'delisted_date']
+        if '^G23' in delisted_date.loc[ind, 'RIC']:
+            continue
+        while date_of_delisting not in truth_df.index:
+            # print(delisted_date.loc[ind, 'RIC'], date_of_delisting)  # for debugging
+            date_of_delisting = (pd.to_datetime(date_of_delisting) + datetime.timedelta(days=1)).strftime('%Y-%m-%d')
+
+        truth_df.loc[delisted_date.loc[ind, 'delisted_date']:, delisted_date.loc[ind, 'RIC']] = False
+    ret = ret * truth_df
+    if should_reset_index:
+        ret = ret.reset_index()
+    return ret
+
+
 def fillna(some_df: pd.DataFrame, hat_in_cols=False) -> pd.DataFrame:
     """
     df.fillna() with ffill and bfill
@@ -385,11 +433,11 @@ def fillna(some_df: pd.DataFrame, hat_in_cols=False) -> pd.DataFrame:
     :return:
     """
     ret = some_df.fillna(method='ffill')
-    last_nans = some_df.fillna(method='bfill').isna()
     if hat_in_cols:
-        listed = some_df.columns[~(some_df.columns.str.find('^') > 0)]
-        last_nans.loc[:, listed] = False
-    ret = ret * (~last_nans)
+        ret = drop_invalid_data(ret)
+    else:
+        last_nans = some_df.fillna(method='bfill').isna()
+        ret = ret * (~last_nans)
     return ret
 
 
