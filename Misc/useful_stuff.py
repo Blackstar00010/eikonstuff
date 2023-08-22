@@ -3,6 +3,7 @@ import os
 import pandas as pd
 from typing import Literal
 import multiprocessing as mp
+import numpy as np
 
 
 def beep() -> None:
@@ -42,7 +43,7 @@ def listdir(directory: str, file_type='csv', files_to_exclude=None) -> list:
         for afile in ret:
             if afile in files_to_exclude:
                 to_drop.append(afile)
-            if afile+file_type in files_to_exclude:
+            if afile + file_type in files_to_exclude:
                 to_drop.append(afile + file_type)
     else:
         ret = [item for item in ret if os.path.isdir(directory + item)]
@@ -93,7 +94,7 @@ def apply_axis_2df(df: pd.DataFrame, vector, dfname, axis: Literal['row', 'dater
         and if 'column' or 'col', the file may be extended horizontally
     :param how: 'outer' or 'inner'. If 'outer', the file will be extended to include the vector.
     :param strip: if True, the first and last NaNs will be stripped from the dataframe.
-    : param strip_subset: if not None, the df will be stripped according to the columns of the df.
+    :param strip_subset: if not None, the df will be stripped according to the columns of the df.
     :return: the dataframe with the vector applied
     """
     if type(vector) not in [list, pd.Series]:
@@ -138,7 +139,7 @@ def outer_joined_axis(directory: str, file_type: Literal['csv', 'pickle'] = 'csv
     files = listdir(directory, file_type=file_type)
     ret = pd.Series()
     for afile in files:
-        df = pd.read_csv(directory + afile)
+        df = pd.read_csv(directory + afile, low_memory=False)
         if 'row' in axis:
             ret = pd.Series(pd.concat([ret, df[date_col_finder(df, afile)]]))
         else:
@@ -323,8 +324,18 @@ def datetime_to_str(col: pd.Series) -> pd.Series:
     :param col: the column vector to convert to str in the format YYYY-MM-DD
     :return: pd.Series of the converted vector
     """
-    col = pd.to_datetime(col, format='mixed').dt.strftime('%Y-%m-%d')
-    if type(col[0]) != str:
+    if type(col.iloc[0]) in [int, np.int64]:
+        col = col.astype(str)
+
+    if type(col.iloc[0]) == str:
+        if col.iloc[0].count(' ') > 0:
+            col = col.str.split(' ').str[0]
+        if col.iloc[0].count('/') > 0:
+            col = col.str.replace('/', '-')
+        if col.iloc[0].count('-') == 0:
+            col = col.apply(lambda x: x[:4] + '-' + x[4:6] + '-' + x[6:])
+        col = pd.to_datetime(col, format='mixed').dt.strftime('%Y-%m-%d')
+    else:
         col = col.dt.strftime('%Y-%m-%d')
     return col
 
@@ -362,9 +373,42 @@ def pivot(some_df: pd.DataFrame, df_name, col_col, row_col=None):
         row_col = date_col_finder(some_df, df_name)
     value = some_df.columns.drop([row_col, col_col])
     ret = some_df.pivot_table(index=row_col, columns=col_col, values=value)
-    ret.columns = ret.columns.droplevel(
-        level=0)  # b/c of two-level column names
+    ret.columns = ret.columns.droplevel(level=0)  # b/c of two-level column names
     return ret
+
+
+def fillna(some_df: pd.DataFrame, hat_in_cols=False) -> pd.DataFrame:
+    """
+    df.fillna() with ffill and bfill
+    :param some_df:
+    :param hat_in_cols:
+    :return:
+    """
+    ret = some_df.fillna(method='ffill')
+    last_nans = some_df.fillna(method='bfill').isna()
+    if hat_in_cols:
+        listed = some_df.columns[~(some_df.columns.str.find('^') > 0)]
+        last_nans.loc[:, listed] = False
+    ret = ret * (~last_nans)
+    return ret
+
+
+def fix_save_df(some_df: pd.DataFrame, directory: str, filename: str, index_label=None) -> None:
+    """
+    Replace 0, inf, and -inf with NaN and save the dataframe as csv.
+    :param some_df: the dataframe to save
+    :param directory: the directory to save the dataframe
+    :param filename: the name of the file to save
+    :param index_label: the name of the index column
+    :return: None
+    """
+    if filename[-4:] == '.csv':
+        filename = filename[:-4]
+    if index_label is None:
+        some_df.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(directory + filename + '.csv')
+    else:
+        some_df.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(
+            directory + filename + '.csv', index_label=index_label)
 
 
 if __name__ == '__main__':

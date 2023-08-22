@@ -1,22 +1,26 @@
 import pandas as pd
-import numpy as np
 from Misc.elementwise_calc import series_to_df
 
-from_ref_dir = '../data/processed/input_funda/'
-intermed_dir = '../data/processed/intermed/'
+wrds = False
 
-ni = pd.read_csv(from_ref_dir+'ni.csv').set_index('datadate')
-ib = pd.read_csv(from_ref_dir+'ib.csv').set_index('datadate')
-dp = pd.read_csv(from_ref_dir+'dp.csv').set_index('datadate')
-oancf = pd.read_csv(from_ref_dir+'oancf.csv').set_index('datadate')
-xrd = pd.read_csv(from_ref_dir+'xrd.csv').set_index('datadate')
-capx = pd.read_csv(from_ref_dir+'capx.csv').set_index('datadate')
-xad = pd.read_csv(from_ref_dir+'xad.csv').set_index('datadate')
+funda_dir = '../data/processed_wrds/input_funda/' if wrds else '../data/processed/input_funda/'
+intermed_dir = '../data/processed_wrds/intermed/' if wrds else '../data/processed/intermed/'
+by_var_dir = '../data/processed_wrds/output_by_var_dd/' if wrds else '../data/processed/output_by_var_dd/'
+
+ni = pd.read_csv(funda_dir + 'ni.csv').set_index('datadate').replace(float('NaN'), 0)
+ib = pd.read_csv(funda_dir + 'ib.csv').set_index('datadate').replace(float('NaN'), 0)
+dp = pd.read_csv(funda_dir + 'dp.csv').set_index('datadate').replace(float('NaN'), 0)
+xrd = pd.read_csv(funda_dir + 'xrd.csv').set_index('datadate').replace(float('NaN'), 0)
+capx = pd.read_csv(funda_dir + 'capx.csv').set_index('datadate').replace(float('NaN'), 0)
+xad = pd.read_csv(funda_dir + 'xad.csv').set_index('datadate').replace(float('NaN'), 0)
 sic2 = pd.DataFrame()  # todo
 
-roavol = pd.read_csv(intermed_dir+'roavol.csv').set_index('datadate')
-sgrvol = pd.read_csv(intermed_dir+'sgrvol.csv').set_index('datadate')
-atlagat = pd.read_csv(intermed_dir+'atlagat.csv').set_index('datadate')
+oancf = pd.read_csv(intermed_dir + 'oancf_alt.csv').set_index('datadate').replace(float('NaN'), 0)
+roavol = pd.read_csv(by_var_dir+'roavol.csv').set_index('datadate').replace(float('NaN'), 0)
+sgrvol = pd.read_csv(intermed_dir+'sgrvol.csv').set_index('datadate').replace(float('NaN'), 0)
+atlagat = pd.read_csv(intermed_dir+'atlagat.csv').set_index('datadate').replace(float('NaN'), 0)
+
+print('all data loaded.')
 
 roa = atlagat * ni
 cfroa = atlagat * (oancf + (oancf == 0) * (ib + dp))
@@ -38,6 +42,17 @@ xadint = atlagat * xad
 #     roavol_med = series_to_df(roavol_med, roavol_group.columns)
 #     roavol_score = roavol_score.append((roavol_group > roavol_med) * 1)
 
+ni_filler = pd.DataFrame(0,
+                         columns=oancf.columns[~oancf.columns.isin(ni.columns)],
+                         index=oancf.index[~oancf.index.isin(ni.index)])
+oancf_filler = pd.DataFrame(0,
+                            columns=ni.columns[~ni.columns.isin(oancf.columns)],
+                            index=ni.index[~ni.index.isin(oancf.index)])
+ni = pd.concat([ni, ni_filler])
+ni = ni.sort_index(axis=1).sort_index(axis=0)
+oancf = pd.concat([oancf, oancf_filler])
+oancf = oancf.sort_index(axis=1).sort_index(axis=0)
+
 ms = (roa > series_to_df(roa.median(axis=1), roa.columns)) * 1 + \
      (cfroa > series_to_df(cfroa.median(axis=1), cfroa.columns)) * 1 + \
      (xrdint > series_to_df(xrdint.median(axis=1), xrdint.columns)) * 1 + \
@@ -46,3 +61,5 @@ ms = (roa > series_to_df(roa.median(axis=1), roa.columns)) * 1 + \
      (oancf > ni) * 1 + \
      (roavol < series_to_df(roavol.median(axis=1), roavol.columns)) * 1 + \
      (sgrvol < series_to_df(sgrvol.median(axis=1), sgrvol.columns)) * 1
+
+ms.to_csv(by_var_dir + 'ms.csv', index=True)

@@ -110,18 +110,20 @@ with open('data/comp_list/no_timestamp.txt', 'w') as f:
     for line in to_edit:
         f.write(f"{line}\n")
 # '''
-
+'''
 price_date_col = pd.read_csv('../data/price_stuff/adj_price_data_merged/adj_close.csv')
 price_date_col = price_date_col[us.date_col_finder(price_date_col, '')]
 og_price_col = pd.read_csv('../data/metadata/business_days.csv')
 og_price_col = og_price_col['YYYY-MM-DD']
 print(price_date_col[~price_date_col.isin(og_price_col)])
 the_dir = 'files/fund_data/FQ/'
-for afile in useful_stuff.listdir(the_dir):
+for afile in us.listdir(the_dir):
     df = pd.read_csv(the_dir + afile)
     if 'fatbq' in df.columns:
         df = df.loc[:, df.columns.drop(['fatbq'])]
     if 'fatbq_x' in df.columns:
         df = df.loc[:, df.columns.drop(['fatbq_x', 'fatbq_y'])]
     df.to_csv(the_dir + afile, index=False)
+'''
 
+close_df = pd.read_csv('data//price_data_merged/close.csv')

@@ -2,21 +2,23 @@ from numpy import log
 import pandas as pd
 from os.path import join as pathjoin
 import logging
+import time
 from Misc.elementwise_calc import lag, delta, rate_of_change, ind_adj
+import Misc.useful_stuff as us
 
-# date_col = pd.read_csv('../data/metadata/business_days.csv')[['YYYY-MM-DD', 'YYYYMMDD']]
+wrds = True
 
-funda_dir = '../data/processed/input_funda/'
-secd_dir = '../data/processed/input_secd/'
+funda_dir = '../data/processed_wrds/input_funda/' if wrds else '../data/processed/input_funda/'
+secd_dir = '../data/processed_wrds/input_secd/' if wrds else '../data/processed/input_secd/'
 
-by_var_dir = '../data/processed/output_by_var_dd/'
-intermed_dir = '../data/processed/intermed/'
+by_var_dir = '../data/processed_wrds/output_by_var_dd/' if wrds else '../data/processed/output_by_var_dd/'
+intermed_dir = '../data/processed_wrds/intermed/' if wrds else '../data/processed/intermed/'
 
-# is_first = pd.read_csv(ref_dir + 'count.csv') == 1
 
 if __name__ == '__main__':
     if True:
         logging.warning('Running annual_pt2.py will consume a huge amount of memory!')
+        time.sleep(0.1)
         if input('Do you wish to continue? [y/n] ') != 'y':
             import sys
             sys.exit()
@@ -35,11 +37,17 @@ if __name__ == '__main__':
         xsga = pd.read_csv(pathjoin(funda_dir, 'xsga.csv')).set_index('datadate').fillna(0)
         dp = pd.read_csv(pathjoin(funda_dir, 'dp.csv')).set_index('datadate').fillna(0)
         ppent = pd.read_csv(pathjoin(funda_dir, 'ppent.csv')).set_index('datadate').fillna(0)
-        xad = pd.read_csv(pathjoin(funda_dir, 'xad.csv')).set_index('datadate').fillna(0)
+        try:
+            xad = pd.read_csv(pathjoin(funda_dir, 'xad.csv')).set_index('datadate').fillna(0)
+        except FileNotFoundError:
+            xad = ppent.notna() * 0
         ppegt = pd.read_csv(pathjoin(funda_dir, 'ppegt.csv')).set_index('datadate').fillna(0)
         ceq = pd.read_csv(pathjoin(funda_dir, 'ceq.csv')).set_index('datadate').fillna(0)
         capx = pd.read_csv(pathjoin(funda_dir, 'capx.csv')).set_index('datadate').fillna(0)
-        gdwlia = pd.read_csv(pathjoin(funda_dir, 'gdwlia.csv')).set_index('datadate').fillna(0)
+        try:
+            gdwlia = pd.read_csv(pathjoin(funda_dir, 'gdwlia.csv')).set_index('datadate').fillna(0)
+        except FileNotFoundError:
+            gdwlia = pd.read_csv(pathjoin(funda_dir, 'gdwl.csv')).set_index('datadate').fillna(0)
         che = pd.read_csv(pathjoin(funda_dir, 'che.csv')).set_index('datadate').fillna(0)
         act = pd.read_csv(pathjoin(funda_dir, 'act.csv')).set_index('datadate').fillna(0)
         lct = pd.read_csv(pathjoin(funda_dir, 'lct.csv')).set_index('datadate').fillna(0)
@@ -120,3 +128,5 @@ if __name__ == '__main__':
     saleinv.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(by_var_dir, 'saleinv.csv'))
     pchsaleinv.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(by_var_dir, 'pchsaleinv.csv'))
     cashdebt.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(by_var_dir, 'cashdebt.csv'))
+
+    us.beep()

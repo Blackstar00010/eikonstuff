@@ -1,31 +1,42 @@
 import pandas as pd
+import Misc.useful_stuff as us
 from Misc.elementwise_calc import lag, delta, past_stddev, past_mean
 
 if __name__ == '__main__':
-    from_ref_dir = '../data/processed/input_funda/'
-    seventyeight_dir = '../data/processed/output_by_var_dd/'
+    fundq_dir = '../data/processed/input_fundq/'
+    secd_dir = '../data/processed/input_secd/'
+    by_var_dir = '../data/processed/output_by_var_dd/'
     intermed_dir = '../data/processed/intermed/'
 
     if True:
-        pstkrq = pd.read_csv(from_ref_dir + 'pstkrq.csv').set_index('datadate')
-        pstkq = pd.read_csv(from_ref_dir + 'pstkq.csv').set_index('datadate')
-        seqq = pd.read_csv(from_ref_dir + 'seqq.csv').set_index('datadate')
-        ceqq = pd.read_csv(from_ref_dir + 'ceqq.csv').set_index('datadate')
-        atq = pd.read_csv(from_ref_dir + 'atq.csv').set_index('datadate')
-        ltq = pd.read_csv(from_ref_dir + 'ltq.csv').set_index('datadate')
-        txtq = pd.read_csv(from_ref_dir + 'txtq.csv').set_index('datadate')
-        ibq = pd.read_csv(from_ref_dir + 'ibq.csv').set_index('datadate')
-        revtq = pd.read_csv(from_ref_dir + 'revtq.csv').set_index('datadate')
-        actq = pd.read_csv(from_ref_dir + 'actq.csv').set_index('datadate')
-        cheq = pd.read_csv(from_ref_dir + 'cheq.csv').set_index('datadate')
-        lctq = pd.read_csv(from_ref_dir + 'lctq.csv').set_index('datadate')
-        dlcq = pd.read_csv(from_ref_dir + 'dlcq.csv').set_index('datadate')
-        ppentq = pd.read_csv(from_ref_dir + 'ppentq.csv').set_index('datadate')
-        countq = pd.read_csv(from_ref_dir + 'countq.csv').set_index('datadate')
-        mveq = pd.read_csv(from_ref_dir + 'mveq.csv').set_index('datadate')
+        pstkq = pd.read_csv(fundq_dir + 'pstkq.csv').set_index('datadate').fillna(0)
+        try:
+            pstkrq = pd.read_csv(fundq_dir + 'pstkrq.csv').set_index('datadate').fillna(0)
+        except FileNotFoundError:
+            pstkrq = pd.DataFrame(0, columns=pstkq.columns, index=pstkq.index)
+        ceqq = pd.read_csv(fundq_dir + 'ceqq.csv').set_index('datadate').fillna(0)
+        try:
+            seqq = pd.read_csv(fundq_dir + 'seqq.csv').set_index('datadate').fillna(0)
+        except FileNotFoundError:
+            seqq = pd.DataFrame(float('NaN'), columns=ceqq.columns, index=ceqq.index)
+        atq = pd.read_csv(fundq_dir + 'atq.csv').set_index('datadate').fillna(0)
+        ltq = pd.read_csv(fundq_dir + 'ltq.csv').set_index('datadate').fillna(0)
+        txtq = pd.read_csv(fundq_dir + 'txtq.csv').set_index('datadate').fillna(0)
+        ibq = pd.read_csv(fundq_dir + 'ibq.csv').set_index('datadate').fillna(0)
+        revtq = pd.read_csv(fundq_dir + 'revtq.csv').set_index('datadate').fillna(0)
+        actq = pd.read_csv(fundq_dir + 'actq.csv').set_index('datadate').fillna(0)
+        cheq = pd.read_csv(fundq_dir + 'cheq.csv').set_index('datadate').fillna(0)
+        lctq = pd.read_csv(fundq_dir + 'lctq.csv').set_index('datadate').fillna(0)
+        dlcq = pd.read_csv(fundq_dir + 'dlcq.csv').set_index('datadate').fillna(0)
+        ppentq = pd.read_csv(fundq_dir + 'ppentq.csv').set_index('datadate').fillna(0)
+        countq = pd.read_csv(fundq_dir + 'countq.csv').set_index('datadate').fillna(0)
+
+        mveq = pd.read_csv(secd_dir + 'mve.csv')
+        mveq = mveq.set_index(us.date_col_finder(mveq, 'mveq')).fillna(0)
+        print('all data loaded.')
 
     # lines 559-
-    pstk = pstkrq.fillna(pstkq)
+    pstk = pstkq.fillna(pstkrq)
     scal = seqq.fillna(ceqq + pstk).fillna(atq - ltq)
     chtx = delta(txtq, by=4) / lag(atq, by=4)
     roaq = ibq / lag(atq)
@@ -65,23 +76,17 @@ if __name__ == '__main__':
     sgrvol = sgrvol * (countq > 16)
     roavol = roavol * (countq > 16)
 
-    # pstk.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'pstk.csv')
-    # scal.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'scal.csv')
-    rsup.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'rsup.csv')
-    # abs_revtq.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'abs_revtq.csv')
-    # sacc.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'sacc.csv')
-    # scf.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'scf.csv')
-    cash.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'cash.csv')
-    # ibq_incr.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'ibq_incr.csv')
-    # ibq_incr4.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'ibq_incr4.csv')
-    # ibq_incr8.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'ibq_incr8.csv')
-    nincr.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'nincr.csv')
-    roaq.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'roaq.csv')
-    roeq.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'roeq.csv')
-    chtx.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'chtx.csv')
-    che.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(intermed_dir + 'che.csv')
-    cinvest.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'cinvest.csv')
-    stdacc.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'stdacc.csv')
-    stdcf.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'stdcf.csv')
-    sgrvol.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(intermed_dir + 'sgrvol.csv')
-    roavol.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(seventyeight_dir + 'roavol.csv')
+    us.fix_save_df(chtx, by_var_dir, 'chtx.csv', index_label='datadate')
+    us.fix_save_df(cash, by_var_dir, 'cash.csv', index_label='datadate')
+    us.fix_save_df(nincr, by_var_dir, 'nincr.csv', index_label='datadate')
+    us.fix_save_df(roaq, by_var_dir, 'roaq.csv', index_label='datadate')
+    us.fix_save_df(roeq, by_var_dir, 'roeq.csv', index_label='datadate')
+    us.fix_save_df(chtx, by_var_dir, 'chtx.csv', index_label='datadate')
+    us.fix_save_df(che, by_var_dir, 'che.csv', index_label='datadate')
+    us.fix_save_df(cinvest, by_var_dir, 'cinvest.csv', index_label='datadate')
+    us.fix_save_df(stdacc, by_var_dir, 'stdacc.csv', index_label='datadate')
+    us.fix_save_df(stdcf, by_var_dir, 'stdcf.csv', index_label='datadate')
+    us.fix_save_df(sgrvol, by_var_dir, 'sgrvol.csv', index_label='datadate')
+    us.fix_save_df(roavol, by_var_dir, 'roavol.csv', index_label='datadate')
+
+    us.beep()

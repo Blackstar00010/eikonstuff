@@ -2,21 +2,22 @@ from os.path import join as pathjoin
 import shutil
 import pandas as pd
 import logging
+import time
 from Misc.elementwise_calc import lag, delta, rate_of_change, ind_adj
+import Misc.useful_stuff as us
 
-# date_col = pd.read_csv('../data/metadata/business_days.csv')[['YYYY-MM-DD', 'YYYYMMDD']]
+wrds = True
 
-funda_dir = '../data/processed/input_funda/'
-secd_dir = '../data/processed/input_secd/'
+funda_dir = '../data/processed_wrds/input_funda/' if wrds else '../data/processed/input_funda/'
+secd_dir = '../data/processed_wrds/input_secd/' if wrds else '../data/processed/input_secd/'
 
-by_var_dir = '../data/processed/output_by_var_dd/'
-intermed_dir = '../data/processed/intermed/'
-
-# is_first = pd.read_csv(ref_dir + 'count.csv') == 1
+by_var_dir = '../data/processed_wrds/output_by_var_dd/' if wrds else '../data/processed/output_by_var_dd/'
+intermed_dir = '../data/processed_wrds/intermed/' if wrds else '../data/processed/intermed/'
 
 if __name__ == '__main__':
     if True:
         logging.warning('Running annual_pt1.py will consume a huge amount of memory!')
+        time.sleep(0.1)
         if input('Do you wish to continue? [y/n] ') != 'y':
             import sys
             sys.exit()
@@ -82,7 +83,7 @@ if __name__ == '__main__':
     print('ten done')
     agr = rate_of_change(at)
     gma = (revt - cogs) / lag(at)
-    chcsho = rate_of_change(csho)
+    chcsho = rate_of_change(csho).replace(-1.0, float('NaN'))
     lgr = rate_of_change(lt)
 
     oancfisna = oancf.isna() + (oancf == 0)
@@ -101,7 +102,7 @@ if __name__ == '__main__':
     cfp = (oancfisna * (ib - oancf_alt) + oancfnotna * oancf) / mve.replace(0, float('NaN'))
     cfp = cfp.replace(float('NaN'), 0)
     cfp_ia = ind_adj(cfp)  # line 244
-    shutil.copyfile('../data/processed/input_funda/count.csv', '../data/processed/output_by_var_dd/age.csv')
+    shutil.copyfile(funda_dir + 'count.csv', by_var_dir + 'age.csv')
     chinv = atlagat * delta(invt)
     # spii = (spi != 0)
     # spi = atlagat * spi
@@ -121,6 +122,7 @@ if __name__ == '__main__':
     divi = ((dvt > 0) * ((lag(dvt) == 0) + lag(dvt).isna())) * 1  # starts paying dividends, legit isna
     divo = (((dvt == 0) + dvt.isna()) * (lag(dvt) > 0)) * 1  # stops paying dividends, legit isna
 
+    print('Saving...')
     bm.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(by_var_dir, 'bm.csv'))
     bm_ia.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(by_var_dir, 'bm_ia.csv'))
     ep.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(by_var_dir, 'ep.csv'))
@@ -131,6 +133,7 @@ if __name__ == '__main__':
     roic.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(by_var_dir, 'roic.csv'))
     rd_sale.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(by_var_dir, 'rd_sale.csv'))
     rd_mve.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(by_var_dir, 'rd_mve.csv'))
+    print('ten done')
     agr.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(by_var_dir, 'agr.csv'))
     gma.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(by_var_dir, 'gma.csv'))
     chcsho.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(by_var_dir, 'chcsho.csv'))
@@ -142,6 +145,7 @@ if __name__ == '__main__':
     absacc.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(by_var_dir, 'absacc.csv'))
     # age.replace(0, float('NaN').replace()float('inf'), float('NaN'.to_csv(pathjoin(seventyeight_dir, 'age.csv'))
     chinv.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(by_var_dir, 'chinv.csv'))
+    print('ten done')
     hire.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(by_var_dir, 'hire.csv'))
     chempia.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(by_var_dir, 'chempia.csv'))
     sgr.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(by_var_dir, 'sgr.csv'))
@@ -153,3 +157,5 @@ if __name__ == '__main__':
 
     atlagat.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(intermed_dir, 'atlagat.csv'))
     oancf_alt.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(intermed_dir, 'oancf_alt.csv'))
+    print('ten done')
+    us.beep()

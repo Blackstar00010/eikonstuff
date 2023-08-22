@@ -3,7 +3,7 @@ import platform
 import pandas as pd
 import eikon as ek
 import myEikon as mek
-from deprecated.wrds_prep import pivot
+from prep_wrds import pivot
 import Misc.useful_stuff as us
 from time import sleep
 from datetime import datetime
@@ -156,18 +156,20 @@ if fetchQ:
             if len(comp_df_new) > 0:
                 comp_df_new.to_csv(f'{fund_data_dir}{data_type}/{ric.replace(".", "-")}.csv', index=False)
                 comp_df_new = comp_df_new.set_index('datadate')
-                comp_df_new = comp_df_new.reindex(sorted(comp_df_new.columns), axis=1)
+                comp_df_new = comp_df_new.sort_index(axis=1)
                 comp_df_new.to_csv(f'./files/fund_data/{data_type}/{ric.replace(".", "-")}.csv', index=True)
 
             print(ric, 'done!')
         print(f'{i} / {len(rics)} done!')
 
-computeQ = False
+computeQ = True
 if computeQ:
-    fund_data_dir = f'files/fund_data/{data_type}/'
-    files = us.listdir(fund_data_dir)
-    for afile in files:
-        df = pd.read_csv(fund_data_dir + afile).fillna(0)
+    fth_dir = f'../data/preprocessed/{data_type}/'
+    files = us.listdir(fth_dir)
+
+    print('Computing necessary columns...\n[', end='')
+    for i, afile in enumerate(files):
+        df = pd.read_csv(fth_dir + afile).fillna(0)
 
         # calculate some new columns
         df.loc[:, 'dcpstk' + suffix] = df.loc[:, 'pstk' + suffix] + df.loc[:, 'dcvt' + suffix]
@@ -208,28 +210,33 @@ if computeQ:
             multiplier = 2
         else:  # FQ
             multiplier = 4
-        df['count'] = (multiplier * (pd.to_datetime(df['datadate']) - pd.to_datetime(df['datadate']).min()
-                                     ).dt.days) // 365 + 1
+        df['count' + suffix] = (multiplier * (pd.to_datetime(df['datadate']) - pd.to_datetime(df['datadate']).min()
+                                              ).dt.days) // 365 + 1
 
         df = df.replace(0, float('NaN'))
         df = df.set_index('datadate')
-        df = df.reindex(sorted(df.columns), axis=1)
-        df.to_csv(fund_data_dir + afile, index=True)
+        df = df.sort_index(axis=1)
+        df.to_csv(fth_dir + afile, index=True)
+
+        if i % 20 == 19:
+            print('-', end='')
+        if i % 500 == 499:
+            print(f'] {i + 1} / {len(files)}\n[', end='')
+    print(f'] {len(files)} / {len(files)}\n')
 
 # organise & move to /by_data/from_ref
-# to_organize = []
 to_organize = ['FQ']
 for Fsth in to_organize:
     if Fsth == 'FY':
-        suffix = ''
+        suffix = 'a'
     elif Fsth == 'FS':
         suffix = 's'
     else:  # FQ
         suffix = 'q'
     date_col = pd.read_csv(metadata_dir + 'business_days.csv').rename(columns={'YYYY-MM-DD': 'datadate'}
-                                                                         ).loc[:, 'datadate']
-    fsth_dir = f'{fund_data_dir}/{Fsth}/'
-    files = os.listdir(fsth_dir)
+                                                                      ).loc[:, 'datadate']
+    fsth_dir = fund_data_dir + Fsth + '/'
+    files = us.listdir(fsth_dir)
     firms = [file_name[:-4].replace('-', '.') for file_name in files]
 
     dfs = []
@@ -240,18 +247,20 @@ for Fsth in to_organize:
     total_df = pd.concat(dfs, axis=0)
     print('Finished loading data!')
 
-    final_output_dir = f'../data/processed/input_fund{suffix if suffix!="" else "a"}/'
+    final_output_dir = f'../data/processed/input_fund{suffix}/'
 
-    fields = total_df.columns.drop(['datadate', 'ric'])
+    date_col_name = us.date_col_finder(total_df, 'total_df')
+
+    fields = total_df.columns.drop([date_col_name, 'ric'])
     for field_name in fields:
-        field_df = total_df.loc[:, ['datadate', 'ric', field_name]]
+        field_df = total_df.loc[:, [date_col_name, 'ric', field_name]]
         field_df = pivot(field_df)
 
-        field_df = field_df.merge(date_col, on='datadate', how='outer').sort_values('datadate')
+        field_df = field_df.merge(date_col, on=date_col_name, how='outer').sort_values(date_col_name)
         last_nans = ~field_df.fillna(method='bfill').notna()  # True if last NaNs
         is_del_series = field_df.columns.str.contains('^')  # True if delisted
         last_nans = last_nans.apply(lambda x: x * is_del_series, axis=1)  # True if delisted last NaNs
         field_df = field_df.fillna(method='ffill') * (~last_nans)
 
-        field_df.to_csv(f'{final_output_dir}/{field_name}.csv', index=False)
+        field_df.to_csv(final_output_dir + f'{field_name}.csv', index=False)
         print(f'{field_name} done!')

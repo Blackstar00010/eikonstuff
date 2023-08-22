@@ -1,5 +1,5 @@
-datadate,apq,rectq,xadq,obq,capxq,dmq,cheq,oancfq,cogsq,drcq,drltq,dpq,ebitq,ebitdaq,empq,gdwliaq,dvtq,txpq,xintq,intanq,nopiq,scstkcq,niq,ibq,piq,acoq,lcoq,aoq,loq,ppegtq,ppentq,pstkqq,xrdq,revtq,fatlq,xsgaq,spiq,txfedq,txdiq,txtq,atq,lctq,actq,dlcq,ceqq,invtq,ltq,pstkq,dcvtq,dcpstkq,txfoq,dlttq,drq,dcq,count
-2012-05-31,,,,,,,,,,,,,8409000.0,12269000.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1
-2012-11-30,,,,,,,,,,,,,8409000.0,12269000.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1
-2020-05-31,,,,,,,,,,,,,27391000.0,38656000.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,9
-2021-08-31,,,,,,,,,,,,,33783000.0,61759000.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,10
+datadate,acoq,actq,aoq,apq,atq,capxq,ceqq,cheq,cogsq,count,countq,dcpstkq,dcq,dcvtq,dlcq,dlttq,dmq,dpq,drcq,drltq,drq,dvtq,ebitdaq,ebitq,empq,fatlq,gdwliaq,ibq,intanq,invtq,lcoq,lctq,loq,ltq,niq,nopiq,oancfq,obq,piq,ppegtq,ppentq,pstkq,pstkqq,rectq,revtq,scstkcq,spiq,txdiq,txfedq,txfoq,txpq,txtq,xadq,xintq,xrdq,xsgaq
+2012-05-31,,,,,,,,,,1,1,,,,,,,,,,,,12269000.0,8409000.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+2012-11-30,,,,,,,,,,1,3,,,,,,,,,,,,12269000.0,8409000.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+2020-05-31,,,,,,,,,,9,33,,,,,,,,,,,,38656000.0,27391000.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+2021-08-31,,,,,,,,,,10,38,,,,,,,,,,,,61759000.0,33783000.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

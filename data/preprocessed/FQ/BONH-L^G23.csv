@@ -1,4 +1,4 @@
-datadate,apq,rectq,xadq,obq,capxq,dmq,cheq,oancfq,cogsq,drcq,drltq,dpq,ebitq,ebitdaq,empq,gdwliaq,dvtq,txpq,xintq,intanq,nopiq,scstkcq,niq,ibq,piq,acoq,lcoq,aoq,loq,ppegtq,ppentq,pstkqq,xrdq,revtq,fatlq,xsgaq,spiq,txfedq,txdiq,txtq,atq,lctq,actq,dlcq,ceqq,invtq,ltq,pstkq,dcvtq,dcpstkq,txfoq,dlttq,drq,dcq,count
-2018-12-31,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1
-2020-03-31,,,,,,,,,,,,,1387000.0,2312000.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,2
-2022-06-30,,,,,,,,,,,,,1387000.0,23000.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,4
+datadate,acoq,actq,aoq,apq,atq,capxq,ceqq,cheq,cogsq,count,countq,dcpstkq,dcq,dcvtq,dlcq,dlttq,dmq,dpq,drcq,drltq,drq,dvtq,ebitdaq,ebitq,empq,fatlq,gdwliaq,ibq,intanq,invtq,lcoq,lctq,loq,ltq,niq,nopiq,oancfq,obq,piq,ppegtq,ppentq,pstkq,pstkqq,rectq,revtq,scstkcq,spiq,txdiq,txfedq,txfoq,txpq,txtq,xadq,xintq,xrdq,xsgaq
+2018-12-31,,,,,,,,,,1,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+2020-03-31,,,,,,,,,,2,5,,,,,,,,,,,,2312000.0,1387000.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+2022-06-30,,,,,,,,,,4,14,,,,,,,,,,,,23000.0,1387000.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

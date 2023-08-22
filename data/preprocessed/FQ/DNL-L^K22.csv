@@ -1,6 +1,6 @@
-datadate,apq,rectq,xadq,obq,fatbq,capxq,dmq,cheq,oancfq,cogsq,drcq,drltq,dpq,ebitq,ebitdaq,empq,gdwliaq,dvtq,txpq,xintq,intanq,nopiq,scstkcq,niq,ibq,piq,acoq,lcoq,aoq,loq,ppegtq,ppentq,pstkqq,xrdq,revtq,fatlq,xsgaq,spiq,txfedq,txdiq,txtq,atq,lctq,actq,dlcq,ceqq,invtq,ltq,pstkq,dcvtq,dcpstkq,txfoq,dlttq,drq,dcq,count
-2015-06-30,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1
-2015-09-30,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1
-2019-06-30,,,,,,,,,,,,,,-16779000.0,-16765000.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,5
-2020-06-30,,,,,,,,,,,,,,-14526000.0,-14504000.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,6
-2021-06-30,,,,,,,,,,,,,,-5392000.0,-5367000.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,7
+datadate,acoq,actq,aoq,apq,atq,capxq,ceqq,cheq,cogsq,count,countq,dcpstkq,dcq,dcvtq,dlcq,dlttq,dmq,dpq,drcq,drltq,drq,dvtq,ebitdaq,ebitq,empq,fatbq,fatlq,gdwliaq,ibq,intanq,invtq,lcoq,lctq,loq,ltq,niq,nopiq,oancfq,obq,piq,ppegtq,ppentq,pstkq,pstkqq,rectq,revtq,scstkcq,spiq,txdiq,txfedq,txfoq,txpq,txtq,xadq,xintq,xrdq,xsgaq
+2015-06-30,,,,,,,,,,1,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+2015-09-30,,,,,,,,,,1,2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+2019-06-30,,,,,,,,,,5,17,,,,,,,,,,,,-16765000.0,-16779000.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+2020-06-30,,,,,,,,,,6,21,,,,,,,,,,,,-14504000.0,-14526000.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+2021-06-30,,,,,,,,,,7,25,,,,,,,,,,,,-5367000.0,-5392000.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

@@ -9,9 +9,9 @@ def lag(dataframe: pd.DataFrame, by=1) -> pd.DataFrame:
     :param by: the amount of unit period to lag. (e.g. by=1 for 1 year if the data is FY0 type)
     :return: pd.DataFrame of calculated delta with the original date column
     """
-    ischanged = (dataframe == dataframe.shift(periods=1))
+    ischanged = (dataframe != dataframe.shift(periods=1))
     ret = dataframe.shift(periods=1) * ischanged
-    ret = ret.fillna(method='ffill')
+    ret = ret.replace(0, float('NaN')).fillna(method='ffill').replace(float('NaN'), 0)
     if by > 1:
         ret = lag(ret, by=by-1)
     return ret
@@ -40,6 +40,7 @@ def rate_of_change(dataframe: pd.DataFrame, by=1, minusone=True) -> pd.DataFrame
     ret = ret / (dataframe - ret)
     if not minusone:
         ret += 1
+    ret = ret.replace(float('NaN'), 0)
     return ret
 
 
@@ -62,9 +63,8 @@ def ind_adj(dataframe: pd.DataFrame) -> pd.DataFrame:
     :return: pd.DataFrame
     """
     # not using mean as we might have 0's instead of NaN's
-    sum_row = dataframe.sum(axis=1)
-    count_row = dataframe.notna().sum(axis=1).replace(0, float('NaN'))
-    ind_avg = series_to_df(sum_row / count_row, dataframe.columns).replace(float('NaN'), 0)
+    dataframe = dataframe.replace(0, float('NaN'))
+    ind_avg = series_to_df(dataframe.mean(axis=1), dataframe.columns).replace(float('NaN'), 0)
     return dataframe / ind_avg
 
 
