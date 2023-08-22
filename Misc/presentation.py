@@ -47,8 +47,8 @@ price_ref = import_price(proc_ref_dir + 'close.csv', hat_in_cols=True)
 
 notna_counts_list = [notna_per_row(price_yf)[:-1], notna_per_row(price_wrds), notna_per_row(price_ref)]
 for i in range(len(notna_counts_list)):
-    notna_counts_df = pd.concat(notna_counts_list[:(i+1)], axis=1)
-    notna_counts_df.columns = ['Yahoo Finance', 'WRDS', 'Refinitiv'][:(i+1)]
+    notna_counts_df = pd.concat(notna_counts_list[:(i + 1)], axis=1)
+    notna_counts_df.columns = ['Yahoo Finance', 'WRDS', 'Refinitiv'][:(i + 1)]
     notna_counts_df = notna_counts_df.sort_index()
     notna_counts_df = notna_counts_df.fillna(method='ffill')
 
@@ -59,9 +59,9 @@ for i in range(len(notna_counts_list)):
     label_df = pd.DataFrame({'locs': locs[1:-1], 'labels': pd.to_datetime(labels[1:-1])})
     for ind in label_df.index:
         if pd.isna(label_df.loc[ind, 'labels']):
-            label_df.loc[ind, 'labels'] = (label_df.loc[ind-1, 'labels'] +
-                                           datetime.timedelta(days=(label_df.loc[ind, 'locs'] -
-                                                                    label_df.loc[ind-1, 'locs'])))
+            label_df.loc[ind, 'labels'] = (label_df.loc[ind - 1, 'labels'] +
+                                           datetime.timedelta(days=int(7 / 5 * (label_df.loc[ind, 'locs'] -
+                                                                                label_df.loc[ind - 1, 'locs']))))
     plt.xticks(label_df['locs'], label_df['labels'].dt.strftime('%Y-%m'))
     plt.ylabel('Count')
     plt.savefig(pres_dir + f'price_data_count_{i}.png', dpi=300)
