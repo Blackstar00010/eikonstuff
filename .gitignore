@@ -1,21 +1,6 @@
 .DS_Store
 
-# scraper_price.py -> adj = False, fixQ & mergeQ = True
-/data/price_stuff/price_data_merged/
-# scraper_price.py -> adj = True, fixQ & mergeQ = True
-/data/price_stuff/adj_price_data_merged/
-# scraper_fund.py -> organize_FY & ~_FS & ~_FQ = True
-/data/processed/input_funda/
-/data/processed/input_fundq/
-# scraper_fund.py -> moveQ = True
-/data/processed/input_secd/
-# running appropriate files inside /DataComputation/
-/data/processed/intermed/
-/data/processed/output_by_var_dd/
-/data/processed/output_by_var_mm/
-
-/data/processed_wrds/
-/deprecated/data/processed/secd/
+/data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
