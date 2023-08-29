@@ -72,12 +72,12 @@ def fix_ohlccv(ohlccv_df: pd.DataFrame) -> pd.DataFrame:
                 if pd.isna(prev_close):
                     cv_df.loc[i, :] = prev_close
 
-    ohlc_df.loc[:, 'Date'] = us.datetime_to_str(ohlc_df.loc[:, 'Date'])
-    cv_df.loc[:, 'Date'] = us.datetime_to_str(cv_df.loc[:, 'Date'])
+    ohlc_df.loc[:, 'Date'] = us.dt_to_str(ohlc_df.loc[:, 'Date'])
+    cv_df.loc[:, 'Date'] = us.dt_to_str(cv_df.loc[:, 'Date'])
     ohlccv_df = ohlc_df.merge(cv_df, on="Date", how="outer")
 
     if compute_shrout:
-        shrout_df.loc[:, 'Date'] = us.datetime_to_str(shrout_df.loc[:, 'Date'])
+        shrout_df.loc[:, 'Date'] = us.dt_to_str(shrout_df.loc[:, 'Date'])
         ohlccv_df = ohlccv_df.merge(shrout_df, on="Date", how="outer")
 
     for i in range(1, len(ohlccv_df)):

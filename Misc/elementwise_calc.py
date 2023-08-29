@@ -45,7 +45,7 @@ def rate_of_change(dataframe: pd.DataFrame, by=1, minusone=True) -> pd.DataFrame
     return ret
 
 
-def series_to_df(series: pd.Series, vec, direction: Literal['horizontal', 'vertical']) -> pd.DataFrame:
+def series_to_df(series: pd.Series, vec, direction: Literal['horizontal', 'vertical']='horizontal') -> pd.DataFrame:
     """
     Stretches the given vector so that the resulting dataframe has all the columns/rows of `dataframe` with
     each row/column containing one value.
@@ -68,7 +68,7 @@ def ind_adj(dataframe: pd.DataFrame) -> pd.DataFrame:
     :return: pd.DataFrame
     """
     # not using mean as we might have 0's instead of NaN's
-    dataframe = dataframe.replace(0, float('NaN'))
+    dataframe = dataframe.replace([0, float('inf'), -float('inf')], float('NaN'))
     ind_avg = series_to_df(dataframe.mean(axis=1), dataframe.columns).replace(float('NaN'), 0)
     return dataframe / ind_avg
 

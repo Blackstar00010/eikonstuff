@@ -57,6 +57,20 @@ def listdir(directory: str, file_type='csv', files_to_exclude=None) -> list:
     return sorted(ret)
 
 
+def num2ric(num: int) -> str:
+    """
+    Converts a number to ric-styled str.
+    :param num: the number to convert
+    :return: the converted string
+    """
+    digits = []
+    while num > 0:
+        digits.append(num % 26)
+        num = num // 26
+    ret = ''.join([chr(ord('A') + item) for item in digits[::-1]])
+    return ret+'-L'
+
+
 def date_col_finder(dataframe, df_name) -> str:
     """
     Finds the name of the column that contains date values.
@@ -104,7 +118,7 @@ def apply_axis_2df(df: pd.DataFrame, vector, dfname, axis: Literal['row', 'dater
         vector = pd.Series(vector)
 
     date_col_name = date_col_finder(df, dfname)
-    df[date_col_name] = datetime_to_str(df[date_col_name])
+    df[date_col_name] = dt_to_str(df[date_col_name])
     df = df.set_index(date_col_name)
     if how == 'inner':
         df = df.drop(index=df.index[~df.index.isin(vector)])
@@ -146,7 +160,7 @@ def outer_joined_axis(directory: str, file_type: Literal['csv', 'pickle'] = 'csv
         else:
             ret = pd.concat([ret, pd.Series(df.columns)])
         ret = ret.dropna().drop_duplicates().reset_index(drop=True)
-        ret = datetime_to_str(ret) if axis == 'daterow' else ret
+        ret = dt_to_str(ret) if axis == 'daterow' else ret
     ret = pd.Series(ret)
     ret = ret.sort_values()
     return ret
@@ -319,7 +333,7 @@ def strip_df(df: pd.DataFrame, subset: list = None, axis: Literal['row', 'column
     return df.loc[filtered_rows, filtered_cols]
 
 
-def datetime_to_str(col: pd.Series) -> pd.Series:
+def dt_to_str(col: pd.Series) -> pd.Series:
     """
     Converts datetime Series into str Series.
     :param col: the column vector to convert to str in the format YYYY-MM-DD
@@ -393,7 +407,7 @@ def drop_invalid_data(some_df: pd.DataFrame) -> pd.DataFrame:
         should_reset_index = False
     ret = ret.sort_index()
 
-    delisted_date = pd.DataFrame(ret.columns, columns=['RIC'])
+    delisted_date = pd.DataFrame(ret.columns.rename('RIC'))
     delisted_date['ric2'] = delisted_date['RIC'].str.split('^').str[-1] * (delisted_date['RIC'].str.find('^') > 0)
     delisted_date = delisted_date.replace('', float('NaN')).dropna(subset=['ric2'])
     delisted_date['delisted_YYYY'] = delisted_date['ric2'].str[1:]
@@ -414,12 +428,12 @@ def drop_invalid_data(some_df: pd.DataFrame) -> pd.DataFrame:
         date_of_delisting = delisted_date.loc[ind, 'delisted_date']
         if '^G23' in delisted_date.loc[ind, 'RIC']:
             continue
-        while date_of_delisting not in truth_df.index:
+        while (date_of_delisting not in truth_df.index) and (date_of_delisting < truth_df.index[-1]):
             # print(delisted_date.loc[ind, 'RIC'], date_of_delisting)  # for debugging
             date_of_delisting = (pd.to_datetime(date_of_delisting) + datetime.timedelta(days=1)).strftime('%Y-%m-%d')
 
         truth_df.loc[delisted_date.loc[ind, 'delisted_date']:, delisted_date.loc[ind, 'RIC']] = False
-    ret = ret * truth_df
+    ret = ret * truth_df.replace(False, float('NaN'))
     if should_reset_index:
         ret = ret.reset_index()
     return ret
@@ -437,7 +451,7 @@ def fillna(some_df: pd.DataFrame, hat_in_cols=False) -> pd.DataFrame:
         ret = drop_invalid_data(ret)
     else:
         last_nans = some_df.fillna(method='bfill').isna()
-        ret = ret * (~last_nans)
+        ret = ret * (last_nans.replace(False, float('NaN')))
     return ret
 
 
