@@ -3,7 +3,7 @@ import pandas as pd
 from Misc import useful_stuff as us
 from os.path import join as pathjoin
 
-wrds = False
+wrds = True
 secd_dir = '../data/processed_wrds/input_secd/' if wrds else '../data/processed/input_secd/'
 by_var_dd_dir = '../data/processed_wrds/output_by_var_dd/' if wrds else '../data/processed/output_by_var_dd/'
 by_var_mm_dir = '../data/processed_wrds/output_by_var_mm/' if wrds else '../data/processed/output_by_var_mm/'
@@ -17,16 +17,14 @@ if close_to_momentum:
         close_df = pd.read_csv(pathjoin(secd_dir, 'close_adj.csv'))
     except FileNotFoundError:
         close_df = pd.read_csv(pathjoin(secd_dir, 'close.csv'))
+
+    # make sure the date column is monthly (you should have done in ../DataPreparation/prep_wrds.py)
     date_col_name = us.date_col_finder(close_df, 'close')
-    close_df.loc[:, date_col_name] = us.dt_to_str(close_df.loc[:, date_col_name])
-    close_df = close_df.sort_values(by=date_col_name)
-
-    months = close_df[date_col_name].apply(lambda x: x[5:7])
-    close_df = close_df.loc[close_df.index[months != months.shift(1)], :]
-
+    close_df[date_col_name] = us.dt_to_str(close_df[date_col_name])
+    date_vec = close_df[date_col_name].drop_duplicates().sort_values()
+    date_vec = (date_vec[date_vec.str[5:7] != date_vec.str[5:7].shift(1)])
     close_df = close_df.set_index(date_col_name)
-    close_df = close_df.replace(0, float('NaN'))
-    close_df = us.fillna(close_df, hat_in_cols=True).replace(float('NaN'), 0)
+    close_df = close_df.loc[date_vec, :]
 
     print('[', end='')
     for current_date in close_df.index[50:]:
@@ -52,11 +50,10 @@ if close_to_momentum:
     if int(current_date[5:7]) != 12:
         print(f'] {current_date[:7]} done!\n')
 
+for afile in us.listdir(by_var_dd_dir):
+    shutil.copyfile(by_var_dd_dir + afile, by_var_mm_dir + afile)
 if dd_to_mm:
-    for afile in us.listdir(by_var_dd_dir):
-        shutil.copyfile(by_var_dd_dir + afile, by_var_mm_dir + afile)
-
-    print('Finding outer-joined date indexes...')
+    # print('Finding outer-joined date indexes...')
     # da_row = us.outer_joined_axis(by_var_mm_dir, file_type='csv', axis='daterow')
     # updating business_days.csv
     # bday_df = pd.read_csv('../data/metadata/business_days.csv').set_index('YYYY-MM-DD')
@@ -123,6 +120,7 @@ if mm_to_month:
     first_days = df[date_col_name].unique()
     first_days = sorted(first_days)
     for afirst_day in first_days:
+        # importing momentum data
         yyyy_mm = afirst_day[:7]
         if (yyyy_mm + '.csv') not in us.listdir(by_month_dir):
             print(f'{yyyy_mm} skipped!')
@@ -131,12 +129,16 @@ if mm_to_month:
         moms_df = moms_df.set_index('firms')
         moms_df = moms_df.dropna(how='any', axis=0)
 
+        # importing characteristics data
         chars_df = df.loc[df[date_col_name] == afirst_day, :]
         chars_df = chars_df.drop(date_col_name, axis=1).rename(columns={'var': 'firms'}).set_index('firms')
         chars_df = chars_df.transpose()
+        # drop columns(characterstics) that are already in moms_df
         for acol in chars_df:
             if acol in moms_df:
                 chars_df = chars_df.drop(acol, axis=1)
+        # drop rows(firms) that are not in moms_df
+        chars_df = chars_df.loc[chars_df.index[chars_df.index.isin(moms_df)], :]
 
         best_case_finder = []
         chars_df_og = chars_df
@@ -144,9 +146,7 @@ if mm_to_month:
             chars_df = chars_df_og
             # drop columns with too many NaNs
             for acol in chars_df.columns:
-                if acol in moms_df:
-                    continue
-                # shitty column
+                # shitty column based on thresh_col
                 if chars_df[acol].notna().sum() < (len(chars_df) * thresh_col/10):
                     chars_df = chars_df.drop(acol, axis=1)
 

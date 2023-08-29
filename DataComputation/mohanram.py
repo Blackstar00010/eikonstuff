@@ -1,24 +1,30 @@
 import pandas as pd
 from Misc.elementwise_calc import series_to_df
 
-wrds = False
+wrds = True
 
 funda_dir = '../data/processed_wrds/input_funda/' if wrds else '../data/processed/input_funda/'
 intermed_dir = '../data/processed_wrds/intermed/' if wrds else '../data/processed/intermed/'
 by_var_dir = '../data/processed_wrds/output_by_var_dd/' if wrds else '../data/processed/output_by_var_dd/'
 
-ni = pd.read_csv(funda_dir + 'ni.csv').set_index('datadate').replace(float('NaN'), 0)
 ib = pd.read_csv(funda_dir + 'ib.csv').set_index('datadate').replace(float('NaN'), 0)
+try:
+    ni = pd.read_csv(funda_dir + 'ni.csv').set_index('datadate').replace(float('NaN'), 0)
+except FileNotFoundError:
+    ni = ib - pd.read_csv(funda_dir + 'txt.csv').set_index('datadate').replace(float('NaN'), 0)
 dp = pd.read_csv(funda_dir + 'dp.csv').set_index('datadate').replace(float('NaN'), 0)
 xrd = pd.read_csv(funda_dir + 'xrd.csv').set_index('datadate').replace(float('NaN'), 0)
 capx = pd.read_csv(funda_dir + 'capx.csv').set_index('datadate').replace(float('NaN'), 0)
-xad = pd.read_csv(funda_dir + 'xad.csv').set_index('datadate').replace(float('NaN'), 0)
+try:
+    xad = pd.read_csv(funda_dir + 'xad.csv').set_index('datadate').replace(float('NaN'), 0)
+except:
+    xad = pd.DataFrame(0, columns=capx.columns, index=capx.index)
 sic2 = pd.DataFrame()  # todo
 
 oancf = pd.read_csv(intermed_dir + 'oancf_alt.csv').set_index('datadate').replace(float('NaN'), 0)
-roavol = pd.read_csv(by_var_dir+'roavol.csv').set_index('datadate').replace(float('NaN'), 0)
-sgrvol = pd.read_csv(intermed_dir+'sgrvol.csv').set_index('datadate').replace(float('NaN'), 0)
 atlagat = pd.read_csv(intermed_dir+'atlagat.csv').set_index('datadate').replace(float('NaN'), 0)
+roavol = pd.read_csv(by_var_dir+'roavol.csv').set_index('datadate').replace(float('NaN'), 0)
+sgrvol = pd.read_csv(by_var_dir+'sgrvol.csv').set_index('datadate').replace(float('NaN'), 0)
 
 print('all data loaded.')
 

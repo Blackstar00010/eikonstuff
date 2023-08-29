@@ -277,7 +277,9 @@ if __name__ == "__main__":
     if make_monthly:
         # producing first days of months
         close_df = pd.read_csv(preprocessed_dir + 'price/close.csv')
-        date_vec = close_df[us.date_col_finder(close_df, 'close')].drop_duplicates().sort_values()
+        date_col_name = us.date_col_finder(close_df, 'close.csv')
+        close_df[date_col_name] = us.dt_to_str(close_df[date_col_name])
+        date_vec = close_df[date_col_name].drop_duplicates().sort_values()
         date_vec = (date_vec[date_vec.str[5:7] != date_vec.str[5:7].shift(1)])
 
         from_dirs = [preprocessed_dir + subdir for subdir in ['FQ/', 'FY/', 'price/']]

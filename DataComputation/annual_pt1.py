@@ -6,7 +6,7 @@ import time
 from Misc.elementwise_calc import lag, delta, rate_of_change, ind_adj
 import Misc.useful_stuff as us
 
-wrds = False
+wrds = True
 
 funda_dir = '../data/processed_wrds/input_funda/' if wrds else '../data/processed/input_funda/'
 secd_dir = '../data/processed_wrds/input_secd/' if wrds else '../data/processed/input_secd/'
@@ -23,49 +23,29 @@ if __name__ == '__main__':
             sys.exit()
 
         act = pd.read_csv(funda_dir + 'act.csv').set_index('datadate').fillna(0)
-        print('act imported!')
         at = pd.read_csv(funda_dir + 'at.csv').set_index('datadate').fillna(0)
-        print('at imported!')
         ceq = pd.read_csv(funda_dir + 'ceq.csv').set_index('datadate').fillna(0)
-        print('ceq imported!')
         che = pd.read_csv(funda_dir + 'che.csv').set_index('datadate').fillna(0)
-        print('che imported!')
         cogs = pd.read_csv(funda_dir + 'cogs.csv').set_index('datadate').fillna(0)
-        print('cogs imported!')
         dlc = pd.read_csv(funda_dir + 'dlc.csv').set_index('datadate').fillna(0)
-        print('dlc imported!')
         dltt = pd.read_csv(funda_dir + 'dltt.csv').set_index('datadate').fillna(0)
-        print('dltt imported!')
         dp = pd.read_csv(funda_dir + 'dp.csv').set_index('datadate').fillna(0)
-        print('dp imported!')
         dvt = pd.read_csv(funda_dir + 'dvt.csv').set_index('datadate').fillna(0)
-        print('dvt imported!')
         ebit = pd.read_csv(funda_dir + 'ebit.csv').set_index('datadate').fillna(0)
-        print('ebit imported!')
+        print('ten imported!')
         emp = pd.read_csv(funda_dir + 'emp.csv').set_index('datadate').fillna(0)
-        print('emp imported!')
         ib = pd.read_csv(funda_dir + 'ib.csv').set_index('datadate').fillna(0)
-        print('ib imported!')
         invt = pd.read_csv(funda_dir + 'invt.csv').set_index('datadate').fillna(0)
-        print('invt imported!')
         lct = pd.read_csv(funda_dir + 'lct.csv').set_index('datadate').fillna(0)
-        print('lct imported!')
         lt = pd.read_csv(funda_dir + 'lt.csv').set_index('datadate').fillna(0)
-        print('lt imported!')
         nopi = pd.read_csv(funda_dir + 'nopi.csv').set_index('datadate').fillna(0)
-        print('nopi imported!')
         oancf = pd.read_csv(funda_dir + 'oancf.csv').set_index('datadate').fillna(0)
-        print('oancf imported!')
         revt = pd.read_csv(funda_dir + 'revt.csv').set_index('datadate').fillna(0)
-        print('revt imported!')
         txp = pd.read_csv(funda_dir + 'txp.csv').set_index('datadate').fillna(0)
-        print('txp imported!')
         xrd = pd.read_csv(funda_dir + 'xrd.csv').set_index('datadate').fillna(0)
-        print('xrd imported!')
+        print('ten imported!')
         mve = pd.read_csv(secd_dir + 'mve.csv').rename(columns={'Date': 'datadate'}).set_index('datadate').fillna(0)
-        print('mve imported!')
         csho = pd.read_csv(secd_dir + 'shrout.csv').rename(columns={'Date': 'datadate'}).set_index('datadate').fillna(0)
-        print('csho imported!')
 
         print('all data loaded.')
 

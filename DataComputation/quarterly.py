@@ -2,16 +2,20 @@ import pandas as pd
 import Misc.useful_stuff as us
 from Misc.elementwise_calc import lag, delta, past_stddev, past_mean
 
-wrds = False
+wrds = True
 
 if __name__ == '__main__':
     fundq_dir = '../data/processed_wrds/input_fundq/' if wrds else '../data/processed/input_fundq/'
+    funda_dir = '../data/processed_wrds/input_funda/' if wrds else '../data/processed/input_funda/'
     secd_dir = '../data/processed_wrds/input_secd/' if wrds else '../data/processed/input_secd/'
     by_var_dir = '../data/processed_wrds/output_by_var_dd/' if wrds else '../data/processed/output_by_var_dd/'
     intermed_dir = '../data/processed_wrds/intermed/' if wrds else '../data/processed/intermed/'
 
     if True:
-        pstkq = pd.read_csv(fundq_dir + 'pstkq.csv').set_index('datadate').fillna(0)
+        try:
+            pstkq = pd.read_csv(fundq_dir + 'pstkq.csv').set_index('datadate').fillna(0)
+        except FileNotFoundError:
+            pstkq = pd.read_csv(funda_dir + 'pstk.csv').set_index('datadate').fillna(0) / 4
         try:
             pstkrq = pd.read_csv(fundq_dir + 'pstkrq.csv').set_index('datadate').fillna(0)
         except FileNotFoundError:
@@ -57,16 +61,9 @@ if __name__ == '__main__':
     che = delta(ibq, 4)
 
     ibq_incr = (ibq > lag(ibq)) * 1
-    nincr = ibq_incr + ibq_incr * lag(ibq_incr) + ibq_incr * lag(ibq_incr) * lag(ibq_incr, 2) + \
-            ibq_incr * lag(ibq_incr) * lag(ibq_incr, 2) * lag(ibq_incr, 2) + \
-            ibq_incr * lag(ibq_incr) * lag(ibq_incr, 2) * lag(ibq_incr, 3)
-    ibq_incr4 = ibq_incr * lag(ibq_incr) * lag(ibq_incr, 2) * lag(ibq_incr, 3) * lag(ibq_incr, 4)
-    nincr += ibq_incr4 + ibq_incr4 * lag(ibq_incr, 5) + ibq_incr4 * lag(ibq_incr, 5) * lag(ibq_incr, 6) + \
-             ibq_incr4 * lag(ibq_incr, 5) * lag(ibq_incr, 6) * lag(ibq_incr, 7)
-    ibq_incr8 = ibq_incr4 * lag(ibq_incr, 5) * lag(ibq_incr, 6) * lag(ibq_incr, 7) * lag(ibq_incr, 8)
-    nincr += ibq_incr8 + ibq_incr8 * lag(ibq_incr, 9) + ibq_incr8 * lag(ibq_incr, 9) * lag(ibq_incr, 10) + \
-             ibq_incr8 * lag(ibq_incr, 9) * lag(ibq_incr, 10) * lag(ibq_incr, 11) + \
-             ibq_incr8 * lag(ibq_incr, 9) * lag(ibq_incr, 10) * lag(ibq_incr, 11) * lag(ibq_incr, 12)
+    nincr = ibq_incr
+    for i in range(1, 4 * 4):  # b/c we are using 48 months
+        nincr += ibq_incr * lag(ibq_incr, i)
 
     roaq = roaq * (countq > 1)
     roeq = roeq * (countq > 1)

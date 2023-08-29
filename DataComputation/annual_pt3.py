@@ -5,7 +5,7 @@ import Misc.useful_stuff as us
 from os.path import join as pathjoin
 import time
 
-wrds = False
+wrds = True
 
 funda_dir = '../data/processed_wrds/input_funda/' if wrds else '../data/processed/input_funda/'
 secd_dir = '../data/processed_wrds/input_secd/' if wrds else '../data/processed/input_secd/'
@@ -16,7 +16,7 @@ is_first = pd.read_csv(funda_dir + 'count.csv') == 1
 
 if __name__ == '__main__':
     if True:
-        logging.warning('Running this file will consume huge amount of memory!')
+        logging.warning('Running annual_pt3.py will consume huge amount of memory!')
         time.sleep(0.1)
         if input('Do you wish to continue? [y/n] ') != 'y':
             import sys
