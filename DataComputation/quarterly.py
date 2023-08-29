@@ -2,11 +2,13 @@ import pandas as pd
 import Misc.useful_stuff as us
 from Misc.elementwise_calc import lag, delta, past_stddev, past_mean
 
+wrds = False
+
 if __name__ == '__main__':
-    fundq_dir = '../data/processed/input_fundq/'
-    secd_dir = '../data/processed/input_secd/'
-    by_var_dir = '../data/processed/output_by_var_dd/'
-    intermed_dir = '../data/processed/intermed/'
+    fundq_dir = '../data/processed_wrds/input_fundq/' if wrds else '../data/processed/input_fundq/'
+    secd_dir = '../data/processed_wrds/input_secd/' if wrds else '../data/processed/input_secd/'
+    by_var_dir = '../data/processed_wrds/output_by_var_dd/' if wrds else '../data/processed/output_by_var_dd/'
+    intermed_dir = '../data/processed_wrds/intermed/' if wrds else '../data/processed/intermed/'
 
     if True:
         pstkq = pd.read_csv(fundq_dir + 'pstkq.csv').set_index('datadate').fillna(0)

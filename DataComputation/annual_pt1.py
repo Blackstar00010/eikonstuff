@@ -6,7 +6,7 @@ import time
 from Misc.elementwise_calc import lag, delta, rate_of_change, ind_adj
 import Misc.useful_stuff as us
 
-wrds = True
+wrds = False
 
 funda_dir = '../data/processed_wrds/input_funda/' if wrds else '../data/processed/input_funda/'
 secd_dir = '../data/processed_wrds/input_secd/' if wrds else '../data/processed/input_secd/'

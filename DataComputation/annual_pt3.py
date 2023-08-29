@@ -5,7 +5,7 @@ import Misc.useful_stuff as us
 from os.path import join as pathjoin
 import time
 
-wrds = True
+wrds = False
 
 funda_dir = '../data/processed_wrds/input_funda/' if wrds else '../data/processed/input_funda/'
 secd_dir = '../data/processed_wrds/input_secd/' if wrds else '../data/processed/input_secd/'

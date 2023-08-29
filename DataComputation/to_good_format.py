@@ -3,14 +3,14 @@ import pandas as pd
 from Misc import useful_stuff as us
 from os.path import join as pathjoin
 
-wrds = True
+wrds = False
 secd_dir = '../data/processed_wrds/input_secd/' if wrds else '../data/processed/input_secd/'
 by_var_dd_dir = '../data/processed_wrds/output_by_var_dd/' if wrds else '../data/processed/output_by_var_dd/'
 by_var_mm_dir = '../data/processed_wrds/output_by_var_mm/' if wrds else '../data/processed/output_by_var_mm/'
 by_month_dir = '../data/processed_wrds/output_by_month/' if wrds else '../data/processed/output_by_month/'
 final_dir = '../data/processed_wrds/output/' if wrds else '../data/processed/output/'
 
-close_to_momentum, dd_to_mm, mm_to_month = True, False, True
+close_to_momentum, dd_to_mm, mm_to_month = False, False, True
 
 if close_to_momentum:
     try:
@@ -18,7 +18,7 @@ if close_to_momentum:
     except FileNotFoundError:
         close_df = pd.read_csv(pathjoin(secd_dir, 'close.csv'))
     date_col_name = us.date_col_finder(close_df, 'close')
-    close_df.loc[:, date_col_name] = us.datetime_to_str(close_df.loc[:, date_col_name])
+    close_df.loc[:, date_col_name] = us.dt_to_str(close_df.loc[:, date_col_name])
     close_df = close_df.sort_values(by=date_col_name)
 
     months = close_df[date_col_name].apply(lambda x: x[5:7])
@@ -90,11 +90,13 @@ if dd_to_mm:
     print('Calculating first days of months...')
     for afile in us.listdir(by_var_mm_dir):
         df = pd.read_csv(by_var_mm_dir + afile)
-        date_vec = df[us.date_col_finder(df, df_name=afile)]
-        date_vec = us.datetime_to_str(date_vec)
+        date_col_name = us.date_col_finder(df, df_name=afile)
+        date_vec = df[date_col_name]
+        date_vec = us.dt_to_str(date_vec)
         date_vec = date_vec.apply(lambda x: x[5:7])  # YYYY-MM-DD
         mask = date_vec == date_vec.shift(1)
         df = df.loc[df.index[~mask], :]
+        df[date_col_name] = df[date_col_name].apply(lambda x: x[:7])
         if 'Unnamed: 0' in df.columns:
             df = df.drop('Unnamed: 0', axis=1)
         df.to_csv(pathjoin(by_var_mm_dir, afile), index=False)
@@ -109,6 +111,9 @@ if mm_to_month:
         if (valid_count / (to_concat.shape[0] * to_concat.shape[1])) < 0.8:
             continue
         to_concat['var'] = avar[:-4]
+        to_concat[us.date_col_finder(to_concat, avar)] = us.dt_to_str(to_concat[us.date_col_finder(to_concat, avar)])
+        if avar == 'ms.csv':
+            avar = avar  # debug point
         df.append(to_concat)
         print(f'{avar} imported!')
     df = pd.concat(df, axis=0)
@@ -118,7 +123,7 @@ if mm_to_month:
     first_days = df[date_col_name].unique()
     first_days = sorted(first_days)
     for afirst_day in first_days:
-        yyyy_mm = afirst_day[:-3]
+        yyyy_mm = afirst_day[:7]
         if (yyyy_mm + '.csv') not in us.listdir(by_month_dir):
             print(f'{yyyy_mm} skipped!')
             continue
@@ -139,6 +144,8 @@ if mm_to_month:
             chars_df = chars_df_og
             # drop columns with too many NaNs
             for acol in chars_df.columns:
+                if acol in moms_df:
+                    continue
                 # shitty column
                 if chars_df[acol].notna().sum() < (len(chars_df) * thresh_col/10):
                     chars_df = chars_df.drop(acol, axis=1)
