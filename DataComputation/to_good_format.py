@@ -102,10 +102,13 @@ if dd_to_mm:
 if mm_to_month:
     var_list = us.listdir(by_var_mm_dir)
     df = []
+    close_df = pd.read_csv(pathjoin(secd_dir, 'close.csv'))
+    criterion = (close_df.notna() * (close_df!=0)).sum().sum() / (close_df.shape[0] * close_df.shape[1]) * 0.8
     for avar in var_list:
         to_concat = pd.read_csv(pathjoin(by_var_mm_dir, avar))
-        valid_count = (to_concat.notna() * to_concat!=0).sum().sum()
-        if (valid_count / (to_concat.shape[0] * to_concat.shape[1])) < 0.8:
+        valid_count = (to_concat.notna() * (to_concat!=0)).sum().sum()
+        if (valid_count / (to_concat.shape[0] * to_concat.shape[1])) < criterion:
+            print(f'{avar} skipped!')
             continue
         to_concat['var'] = avar[:-4]
         to_concat[us.date_col_finder(to_concat, avar)] = us.dt_to_str(to_concat[us.date_col_finder(to_concat, avar)])
@@ -117,15 +120,15 @@ if mm_to_month:
     # df's columns: [datadate, *.L, *.L^***, var]
 
     date_col_name = us.date_col_finder(df, 'df')
+    df[date_col_name] = df[date_col_name].apply(lambda x: x[:7])
     first_days = df[date_col_name].unique()
     first_days = sorted(first_days)
     for afirst_day in first_days:
         # importing momentum data
-        yyyy_mm = afirst_day[:7]
-        if (yyyy_mm + '.csv') not in us.listdir(by_month_dir):
-            print(f'{yyyy_mm} skipped!')
+        if (afirst_day + '.csv') not in us.listdir(by_month_dir):
+            print(f'{afirst_day} skipped!')
             continue
-        moms_df = pd.read_csv(pathjoin(by_month_dir, yyyy_mm + '.csv'))
+        moms_df = pd.read_csv(pathjoin(by_month_dir, afirst_day + '.csv'))
         moms_df = moms_df.set_index('firms')
         moms_df = moms_df.dropna(how='any', axis=0)
 
@@ -137,20 +140,20 @@ if mm_to_month:
         for acol in chars_df:
             if acol in moms_df:
                 chars_df = chars_df.drop(acol, axis=1)
-        # drop rows(firms) that are not in moms_df
-        chars_df = chars_df.loc[chars_df.index[chars_df.index.isin(moms_df)], :]
+        # drop rows(firms) that are not in moms_df's rows
+        chars_df = chars_df.loc[chars_df.index[chars_df.index.isin(moms_df.index)], :]
 
         best_case_finder = []
         chars_df_og = chars_df
         for thresh_col in range(10, 1, -1):
             chars_df = chars_df_og
-            # drop columns with too many NaNs
+            # drop columns(characteristics) with too many NaNs
             for acol in chars_df.columns:
                 # shitty column based on thresh_col
                 if chars_df[acol].notna().sum() < (len(chars_df) * thresh_col/10):
                     chars_df = chars_df.drop(acol, axis=1)
 
-            # drop rows with too many NaNs
+            # drop rows(firms) with too many NaNs
             thresh_row = 1.0
             temp_df = chars_df.dropna(thresh=int(chars_df.shape[1] * thresh_row), axis=0)
             while len(temp_df) < (len(chars_df)/2):
@@ -171,5 +174,5 @@ if mm_to_month:
 
         joined_df = pd.concat([chars_df, moms_df], axis=1)
         joined_df = joined_df.dropna(how='all', axis=1).dropna(how='any', axis=0)
-        joined_df.to_csv(pathjoin(by_month_dir, yyyy_mm + '.csv'), index=True, index_label='firms')
-        print(f'{yyyy_mm} exported!')
+        joined_df.to_csv(pathjoin(by_month_dir, afirst_day + '.csv'), index=True, index_label='firms')
+        print(f'{afirst_day} exported!')

@@ -18,7 +18,7 @@ if __name__ == '__main__':
     if True:
         logging.warning('Running annual_pt3.py will consume huge amount of memory!')
         time.sleep(0.1)
-        if input('Do you wish to continue? [y/n] ') != 'y':
+        if input('Do you wish to continue? [y/n] ') not in ['y', 'ㅛ', 'Y']:
             import sys
             sys.exit()
 
@@ -76,7 +76,7 @@ if __name__ == '__main__':
     # conv = dc / dltt
     grltnoa = (delta(+ppent + intan + ao - lo) - dp) * atlagat
     # chdrc = delta(dr) * atlagat
-    print('ten done')
+    print('ten calculated!')
     rd = (rate_of_change(xrd / at) > .05) * 1
     # roe = ib / lag(ceq)
     # rdbias = rate_of_change(xrd) - roe

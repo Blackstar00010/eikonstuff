@@ -19,7 +19,7 @@ if __name__ == '__main__':
     if True:
         logging.warning('Running annual_pt2.py will consume a huge amount of memory!')
         time.sleep(0.1)
-        if input('Do you wish to continue? [y/n] ') != 'y':
+        if input('Do you wish to continue? [y/n] ') not in ['y', 'ㅛ', 'Y']:
             import sys
             sys.exit()
 
@@ -73,7 +73,7 @@ if __name__ == '__main__':
     # chadv = log(1 + xad) - log(1 + lag(xad))
     invest = (delta(ppegt.replace(0, float('NaN')).fillna(ppent)) + delta(invt)) / lag(at)
     egr = rate_of_change(ceq)
-    print('ten done')
+    print('ten calculated!')
     capx = capx.replace(0, float('NaN')).fillna(delta(ppent))
     pchcapx = rate_of_change(capx)
     pchcapx_ia = ind_adj(pchcapx)
@@ -88,7 +88,7 @@ if __name__ == '__main__':
     act = act.replace(0, float('NaN')).fillna(che + rect + invt)
     lct = lct.replace(0, float('NaN')).fillna(ap)
     currat = act / lct
-    print('ten done')
+    print('ten calculated!')
     pchcurrat = rate_of_change(act / lct)
     quick = (act - invt) / lct
     pchquick = rate_of_change((act - invt) / lct)
@@ -98,7 +98,7 @@ if __name__ == '__main__':
     pchsaleinv = rate_of_change(revt / invt)
     cashdebt = 2 * (ib + dp) / (lt + lag(lt))
     # realestate = (fatb + fatl) / (ppegt.replace(0, float('NaN')).fillna(ppent))
-    print('ten done')
+    print('ten calculated!')
 
     chatoia.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(by_var_dir, 'chatoia.csv'))
     pchsale_pchinvt.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(by_var_dir, 'pchsale_pchinvt.csv'))

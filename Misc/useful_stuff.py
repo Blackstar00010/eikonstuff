@@ -71,6 +71,19 @@ def num2ric(num: int) -> str:
     return ret+'-L'
 
 
+def ric2num(ric: str) -> int:
+    """
+
+    :param ric:
+    :return:
+    """
+    ric = ric.split('-')[0]
+    ret = 0
+    for i, char in enumerate(ric):
+        ret += (ord(char) - 64-1) * (26 ** (len(ric) - i - 1))
+    return ret
+
+
 def date_col_finder(dataframe, df_name) -> str:
     """
     Finds the name of the column that contains date values.

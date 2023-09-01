@@ -50,9 +50,10 @@ if __name__ == '__main__':
     rsup = delta(revtq, by=4) / mveq
 
     abs_revtq = (revtq * (revtq > 0) + 0.01 * (revtq <= 0))
-    sacc = (delta(actq) - delta(cheq) - delta(lctq) + delta(dlcq)) / abs_revtq
+    sacc = delta(actq-cheq-lctq+dlcq) / abs_revtq
     stdacc = past_stddev(sacc, 16)
     sgrvol = past_stddev(rsup, 16)
+    print('ten computed!')
     roavol = past_stddev(roaq, 16)
     scf = (ibq / abs_revtq) - sacc
     stdcf = past_stddev(scf, 16)
@@ -63,10 +64,11 @@ if __name__ == '__main__':
     ibq_incr = (ibq > lag(ibq)) * 1
     nincr = ibq_incr
     for i in range(1, 4 * 4):  # b/c we are using 48 months
-        nincr += ibq_incr * lag(ibq_incr, i)
+        nincr += ibq_incr * lag(ibq_incr, i) * 1
 
     roaq = roaq * (countq > 1)
     roeq = roeq * (countq > 1)
+    print('ten computed!')
     chtx = chtx * (countq > 4)
     che = che * (countq > 4)
     cinvest = cinvest * (countq > 4)

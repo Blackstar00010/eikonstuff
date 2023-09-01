@@ -1,6 +1,7 @@
 import pandas as pd
 from numpy import sqrt
 from typing import Literal
+import Misc.useful_stuff as us
 
 
 def lag(dataframe: pd.DataFrame, by=1) -> pd.DataFrame:
@@ -12,7 +13,7 @@ def lag(dataframe: pd.DataFrame, by=1) -> pd.DataFrame:
     """
     ischanged = (dataframe != dataframe.shift(periods=1))
     ret = dataframe.shift(periods=1) * ischanged
-    ret = ret.replace(0, float('NaN')).fillna(method='ffill').replace(float('NaN'), 0)
+    ret = us.fillna(ret.replace(0, float('NaN')), hat_in_cols=True).replace(float('NaN'), 0)
     if by > 1:
         ret = lag(ret, by=by-1)
     return ret
@@ -73,44 +74,18 @@ def ind_adj(dataframe: pd.DataFrame) -> pd.DataFrame:
     return dataframe / ind_avg
 
 
-def mean(list_of_df: list) -> pd.DataFrame:
-    """
-    Calculates mean of each element, excluding NaNs.
-    :param list_of_df: list of dataframes. They all must have the same columns and rows.
-    :return: pd.DataFrame containing mean values of each element
-    """
-    total = pd.DataFrame()
-    count = pd.DataFrame()
-    for df in list_of_df:
-        total += df.fillna(0)
-        count += df.notna() * 1
-    return total / count
-
-
-def stddev(list_of_df: list) -> pd.DataFrame:
-    """
-    Calculates standard deviation of each element, excluding NaNs.
-    :param list_of_df: list of dataframes. They all must have the same columns and rows.
-    :return: pd.DataFrame containing standard deviation values of each element
-    """
-    avg = mean(list_of_df)
-    variance = 0
-    for df in list_of_df:
-        variance += (df - avg) ** 2
-    return sqrt(variance)
-
-
 def past_mean(df: pd.DataFrame, period=4) -> pd.DataFrame:
     """
     Calculates past `period` period mean of `df`.
     :param df: the dataframe to calculate past mean of
-    :param period: the number of period to calculate past stddev. N if you want to calculate (N-1)th to current period's value.
+    :param period: the number of period to calculate past mean.
+        N if you want to calculate (N-1)th to current period's value.
     :return: pd.DataFrame of mean of each cell
     """
-    the_list = [df]
-    for i in range(1, period):
-        the_list.append(lag(df, by=i))
-    return mean(the_list)
+    ret = pd.DataFrame(0, columns=df.columns, index=df.index)
+    for i in range(period, len(df)):
+        ret.iloc[i, :] = df.iloc[i - period:i, :].apply(lambda x: x.mean())
+    return ret
 
 
 def past_stddev(df: pd.DataFrame, period=4) -> pd.DataFrame:
@@ -120,8 +95,7 @@ def past_stddev(df: pd.DataFrame, period=4) -> pd.DataFrame:
     :param period: the number of period to calculate past stddev. N if you want to calculate (N-1)th to current period's value.
     :return: pd.DataFrame of standard deviation of
     """
-    the_list = [df]
-    for i in range(1, period):
-        the_list.append(lag(df, by=i))
-    return stddev(the_list)
-
+    ret = pd.DataFrame(0, columns=df.columns, index=df.index)
+    for i in range(period, len(df)):
+        ret.iloc[i, :] = df.iloc[i-period:i, :].apply(lambda x: x.std())
+    return ret
