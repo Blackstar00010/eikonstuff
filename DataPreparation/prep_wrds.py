@@ -273,7 +273,25 @@ if __name__ == "__main__":
         comp_fund.to_csv(raw_output_dir + f'comp_fund{"a" if fsth == "" else fsth}.csv', index=False)
         print(f'comp_fund{"a" if fsth == "" else fsth} saved!')
 
-    make_monthly = True
+    organise_ibes = False
+    if organise_ibes:
+        for period in ['ann', 'qtr']:
+            ibes_df = pd.read_csv(all_dir + f'ibes_{period}_est_all.csv', low_memory=False)
+            # todo: manage cusip
+
+    organise_cred = True
+    if organise_cred:
+        cred_df = pd.read_csv(useful_dir + 'comp_adsprate.csv', low_memory=False)
+        date_col_name = us.date_col_finder(cred_df, 'comp_adsprate')
+        cred_df = gvkey2ric(cred_df)
+
+        test_dir = '../data/processed_wrds/output_by_month/'
+        for afile in us.listdir(test_dir):
+            test_df = pd.read_csv(test_dir + afile)
+            ric1s = test_df.iloc[:, 0].str.split('^').apply(lambda x: x[0])
+            print(afile, cred_df.loc[cred_df.index[cred_df['ric'].isin(ric1s)], 'ric'].nunique(), '/', len(ric1s))
+
+    make_monthly = False
     if make_monthly:
         # producing first days of months
         close_df = pd.read_csv(preprocessed_dir + 'price/close.csv')
