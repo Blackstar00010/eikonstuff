@@ -2,15 +2,20 @@ import pandas as pd
 import logging
 from Misc.elementwise_calc import lag, delta, rate_of_change, ind_adj
 from os.path import join as pathjoin
+import _options as opt
 
 '''
 Lines 642 - 700
 '''
 
-funda_dir = '../data/processed/input_funda/'
-secd_dir = '../data/processed/input_secd/'
-seventyeight_dir = '../data/processed/output_by_var_dd/'
-intermed_dir = '../data/processed/intermed/'
+
+wrds = opt.wrds
+
+funda_dir = opt.funda_dir
+fundq_dir = opt.fundq_dir
+secd_dir = opt.secd_dir
+intermed_dir = opt.intermed_dir
+by_var_dir = opt.by_var_dd_dir
 
 if __name__ == '__main__':
     print('ibes.py is being run directly')

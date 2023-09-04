@@ -2,13 +2,14 @@ import pandas as pd
 import Misc.useful_stuff as us
 import Misc.elementwise_calc as ec
 import matplotlib.pyplot as plt
+import _options as opt
 
-wrds = True
+wrds = opt.wrds
 
-funda_dir = '../data/processed_wrds/input_funda/' if wrds else '../data/processed/input_funda/'
-fundq_dir = '../data/processed_wrds/input_fundq/' if wrds else '../data/processed/input_fundq/'
-secd_dir = '../data/processed_wrds/input_secd/' if wrds else '../data/processed/input_secd/'
-intermed_dir = '../data/processed_wrds/intermed/' if wrds else '../data/processed/intermed/'
+funda_dir = opt.funda_dir
+fundq_dir = opt.fundq_dir
+secd_dir = opt.secd_dir
+intermed_dir = opt.intermed_dir
 
 if __name__ == '__main__':
     close_ref = pd.read_csv('../data/processed/input_secd/close_adj.csv')

@@ -5,14 +5,15 @@ import logging
 import time
 from Misc.elementwise_calc import lag, delta, rate_of_change, ind_adj
 import Misc.useful_stuff as us
+import _options as opt
 
-wrds = True
+wrds = opt.wrds
 
-funda_dir = '../data/processed_wrds/input_funda/' if wrds else '../data/processed/input_funda/'
-secd_dir = '../data/processed_wrds/input_secd/' if wrds else '../data/processed/input_secd/'
-
-by_var_dir = '../data/processed_wrds/output_by_var_dd/' if wrds else '../data/processed/output_by_var_dd/'
-intermed_dir = '../data/processed_wrds/intermed/' if wrds else '../data/processed/intermed/'
+funda_dir = opt.funda_dir
+fundq_dir = opt.fundq_dir
+secd_dir = opt.secd_dir
+intermed_dir = opt.intermed_dir
+by_var_dir = opt.by_var_dd_dir
 
 if __name__ == '__main__':
     if True:

@@ -1,11 +1,12 @@
 import pandas as pd
 from Misc.elementwise_calc import series_to_df
+import _options as opt
+wrds = opt.wrds
 
-wrds = True
-
-funda_dir = '../data/processed_wrds/input_funda/' if wrds else '../data/processed/input_funda/'
-intermed_dir = '../data/processed_wrds/intermed/' if wrds else '../data/processed/intermed/'
-by_var_dir = '../data/processed_wrds/output_by_var_dd/' if wrds else '../data/processed/output_by_var_dd/'
+funda_dir = opt.funda_dir
+fundq_dir = opt.fundq_dir
+secd_dir = opt.secd_dir
+intermed_dir = opt.intermed_dir
 
 ib = pd.read_csv(funda_dir + 'ib.csv').set_index('datadate').replace(float('NaN'), 0)
 try:

@@ -2,13 +2,17 @@ import shutil
 import pandas as pd
 from Misc import useful_stuff as us
 from os.path import join as pathjoin
+import _options as opt
 
-wrds = True
-secd_dir = '../data/processed_wrds/input_secd/' if wrds else '../data/processed/input_secd/'
-by_var_dd_dir = '../data/processed_wrds/output_by_var_dd/' if wrds else '../data/processed/output_by_var_dd/'
-by_var_mm_dir = '../data/processed_wrds/output_by_var_mm/' if wrds else '../data/processed/output_by_var_mm/'
-by_month_dir = '../data/processed_wrds/output_by_month/' if wrds else '../data/processed/output_by_month/'
-final_dir = '../data/processed_wrds/output/' if wrds else '../data/processed/output/'
+wrds = opt.wrds
+
+funda_dir = opt.funda_dir
+fundq_dir = opt.fundq_dir
+secd_dir = opt.secd_dir
+intermed_dir = opt.intermed_dir
+by_var_dd_dir = opt.by_var_dd_dir
+by_var_mm_dir = opt.by_var_mm_dir
+by_month_dir = opt.by_month_dir
 
 close_to_momentum, dd_to_mm, mm_to_month = False, False, True
 
