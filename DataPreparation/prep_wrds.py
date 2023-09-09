@@ -2,6 +2,8 @@ import os
 import Misc.useful_stuff as us
 import pandas as pd
 import multiprocessing as mp
+from spec_cases import handle_secd
+
 # from joblib import Parallel, delayed
 
 all_dir = '/Users/jamesd/Desktop/wrds_data/all/'
@@ -9,23 +11,6 @@ useful_dir = '/Users/jamesd/Desktop/wrds_data/useful/'
 raw_output_dir = '../data/preprocessed_wrds/_raw/'
 preprocessed_dir = '../data/preprocessed_wrds/'
 processed_dir = '../data/processed_wrds/'
-
-
-def shitty_pivot(some_df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Deprecated. Use pivot() method.
-    :param some_df: dataframe to pivot
-    :return: pivoted dataframe
-    """
-    gvkeys = some_df['gvkey'].drop_duplicates(keep='first')
-    dataname = some_df.columns[-1]
-    ret = some_df[some_df['gvkey'] == gvkeys[0]].drop_duplicates(subset='datadate', keep='last')
-    ret = ret.rename(columns={dataname: gvkeys[0]}).drop('gvkey', axis=1)
-    for gvkey in gvkeys[1:]:
-        new_df = some_df[some_df['gvkey'] == gvkey].drop_duplicates(subset='datadate', keep='last')
-        new_df = new_df.rename(columns={dataname: gvkey}).drop('gvkey', axis=1)
-        ret = pd.merge(ret, new_df, on='datadate', how='outer')
-    return ret
 
 
 def pivot(some_df: pd.DataFrame) -> pd.DataFrame:
@@ -81,15 +66,32 @@ def collapse_dup(some_df: pd.DataFrame, subset: list = None, df_name: str = None
     :return: dataframe with duplicates collapsed
     """
     if subset is None:
-        subset = some_df.columns
-    ret = some_df.sort_values(by=subset).reset_index(drop=True)
-    dirty_index = ret.index[ret.duplicated(subset, keep=False)]
-    dirty_part = ret.loc[dirty_index, :]
-    ret = ret.drop(dirty_index, axis=0)
-    dirty_part = dirty_part.groupby(subset).apply(
+        subset = some_df.columns.tolist()
+    dirty_index = some_df.index[some_df.duplicated(subset, keep=False)]
+    dirty_part = some_df.loc[dirty_index, :]
+    ret = some_df.drop(dirty_index, axis=0)
+
+    try:
+        sort_by = subset.copy()
+        sort_by.append('cshtrd')
+        drop_by = sort_by.copy()
+        drop_by.append('prccd')
+        dirty_part = dirty_part.dropna(subset=drop_by, how='any')
+        dirty_part = dirty_part.sort_values(by=sort_by).reset_index(drop=True)
+    except KeyError:
+        dirty_part = dirty_part.sort_values(by=subset).reset_index(drop=True)
+
+    dirty_part['group_no'] = dirty_part.groupby(subset).ngroup()
+    cleaner_dirty_part = dirty_part.drop_duplicates(subset=subset, keep='last')
+    cleaner_dirty_part = cleaner_dirty_part.dropna(subset='prccd')
+    dirtier_dirty_part = dirty_part[~dirty_part['group_no'].isin(cleaner_dirty_part['group_no'])]
+    cleaner_dirty_part = cleaner_dirty_part.drop('group_no', axis=1)
+
+    dirtier_dirty_part = dirtier_dirty_part.groupby(subset).apply(
         lambda group: group.fillna(method='ffill')).reset_index(drop=True)
-    dirty_part = dirty_part.drop_duplicates(subset=subset, keep='last')
-    ret = pd.concat([ret, dirty_part], axis=0).sort_values(by=subset).reset_index(drop=True)
+    dirtier_dirty_part = dirtier_dirty_part.drop_duplicates(subset=subset, keep='last').drop('group_no', axis=1)
+    dirtier_dirty_part['prccd'] = float('NaN')
+    ret = pd.concat([ret, cleaner_dirty_part, dirtier_dirty_part], axis=0).sort_values(by=subset).reset_index(drop=True)
     if df_name is not None:
         print(f'Finished managing duplicates of {df_name} data!')
     return ret
@@ -121,16 +123,25 @@ if __name__ == "__main__":
     ).reset_index(level=0)
     exch_rates = exch_rates.dropna(subset=['curr', 'GBPXXX'], how='any')
 
-    organize_secd = False
+    organize_secd = True
     if organize_secd:
-        # gvkey,datadate,conm,isin,exchg,monthend,curcdd,ajexdi,cshoc,cshtrd,
+        # gvkey,datadate,isin,exchg,monthend,curcdd,ajexdi,cshoc,cshtrd,qunit,
         # prccd,prchd,prcld,prcod,curcddv,divd,paydate,split
         comp_secd = pd.read_csv(useful_dir + 'comp_secd.csv', low_memory=False)
-        comp_secd = comp_secd.drop(['conm', 'isin', 'exchg'], axis=1)
-        comp_secd[['prccd', 'prchd', 'prcld', 'prcod'
-                   ]] = comp_secd[['prccd', 'prchd', 'prcld', 'prcod']].replace(0, float('NaN'))
+        comp_secd = comp_secd.drop(['isin', 'exchg'], axis=1)
+        ohlc_list = ['prccd', 'prchd', 'prcld', 'prcod']
 
-        # changing date format
+        comp_secd[ohlc_list] = comp_secd[ohlc_list].replace(0, float('NaN'))
+        comp_secd[ohlc_list] = comp_secd[ohlc_list].multiply(1 / comp_secd['qunit'].replace(float('NaN'), 1),
+                                                             axis=0)
+        comp_secd[ohlc_list] = comp_secd[ohlc_list].multiply(1 / comp_secd['ajexdi'].replace(float('NaN'), 1),
+                                                             axis=0)
+
+        comp_secd.loc[:, ['cshoc', 'prccd']] = ((comp_secd.loc[:, ['cshoc', 'prccd']].fillna(method='ffill') ==
+                                                 comp_secd.loc[:, ['cshoc', 'prccd']].fillna(method='bfill')) *
+                                                comp_secd.loc[:, ['cshoc', 'prccd']].fillna(method='ffill'))
+
+        # change date format
         date_col_name = us.date_col_finder(comp_secd, 'comp_secd')
         comp_secd.loc[:, date_col_name] = us.dt_to_str(comp_secd.loc[:, date_col_name])
         comp_secd = comp_secd.loc[comp_secd[date_col_name] >= problematic_before, :].reset_index(drop=True)
@@ -142,6 +153,8 @@ if __name__ == "__main__":
             lambda group: group[['curcdd', 'prccd']].fillna(method='ffill')
         ).reset_index(level=0)
         comp_secd = comp_secd.dropna(subset=['curcdd', 'prccd'], how='any')
+
+        # comp_secd = handle_secd(comp_secd)
 
         # gvkey -> ric, reformatting
         comp_secd = gvkey2ric(comp_secd, gvkey_ric_dict) if mix_ref else gvkey2ric(comp_secd, add_hat=True)
@@ -157,7 +170,13 @@ if __name__ == "__main__":
         comp_secd.to_csv(raw_output_dir + 'comp_secd.csv', index=False)
         print('comp_secd saved and loaded!')
 
-        for p_type in ['open', 'high', 'low', 'close']:
+        # for aric in comp_secd['ric'].unique():
+        #     df = comp_secd[comp_secd['ric'] == aric]
+        #     df = df.sort_values(by=[date_col_name])
+        #     df.to_csv(preprocessed_dir + f'price/by_ric/{aric}.csv', index=False)
+        # us.beep()
+
+        for p_type in ['close', 'high', 'low', 'open']:
             comp_secd.loc[:, f'{p_type}(GBP)'] = comp_secd.loc[:, p_type] / comp_secd.loc[:, 'GBPXXX']
             comp_secd.loc[:, f'{p_type}(GBP)'] = comp_secd.loc[:, f'{p_type}(GBP)'].round(2)
             comp_secd = comp_secd.drop(p_type, axis=1)
@@ -168,13 +187,13 @@ if __name__ == "__main__":
             p_df = p_df.replace(0, float('NaN'))
             if p_type == 'close':
                 p_df = us.fillna(p_df, hat_in_cols=True)
+                p_type = 'close_OG'
             p_df.to_csv(preprocessed_dir + f'price/{p_type}.csv')
             print(f'{p_type} saved!')
 
         # shrout
         shrout_df = comp_secd.loc[:, ['ric', date_col_name, 'shrout']]
         shrout_df = pivot(shrout_df)
-        shrout_df = us.fillna(shrout_df, hat_in_cols=True)
         shrout_df = shrout_df.replace(0, float('NaN'))
         shrout_df = us.fillna(shrout_df, hat_in_cols=True)
         shrout_df.to_csv(preprocessed_dir + 'price/shrout.csv')
@@ -212,20 +231,20 @@ if __name__ == "__main__":
     else:
         funds = []
     for fsth in funds:
-        comp_fund = pd.read_csv(useful_dir + f'comp_fund{"a" if fsth=="" else fsth}.csv', low_memory=False)
+        comp_fund = pd.read_csv(useful_dir + f'comp_fund{"a" if fsth == "" else fsth}.csv', low_memory=False)
         for cols in ['conm', 'fyear', 'fyearq', 'fqtr']:
             try:
                 comp_fund = comp_fund.drop(cols, axis=1)
             except KeyError:
                 pass
-        date_col_name = us.date_col_finder(comp_fund, f'comp_fund{"a" if fsth=="" else fsth}')
+        date_col_name = us.date_col_finder(comp_fund, f'comp_fund{"a" if fsth == "" else fsth}')
         comp_fund[date_col_name] = us.dt_to_str(comp_fund[date_col_name])
         exch_rates = exch_rates.loc[exch_rates[date_col_name] >= problematic_before, :].reset_index(drop=True)
 
         # gvkey -> ric
         comp_fund = comp_fund.sort_values(by=['gvkey', date_col_name])
         comp_fund = collapse_dup(comp_fund, subset=['gvkey', date_col_name],
-                                 df_name=f'comp_fund{"a" if fsth=="" else fsth}')
+                                 df_name=f'comp_fund{"a" if fsth == "" else fsth}')
         comp_fund[['gvkey', 'curcd' + fsth]] = comp_fund[['gvkey', 'curcd' + fsth]].groupby('gvkey').apply(
             lambda group: group['curcd' + fsth].replace(0, float('NaN')).fillna(method='ffill')).reset_index(level=0)
         comp_fund = comp_fund.dropna(subset='curcd' + fsth)
@@ -258,7 +277,7 @@ if __name__ == "__main__":
         to_export = to_export.sort_values()
         for acol in to_export:
             new_acol = acol
-            if acol != 'count'+fsth:
+            if acol != 'count' + fsth:
                 new_acol = new_acol + '(GBP)'
                 comp_fund.loc[:, new_acol] = comp_fund.loc[:, acol] / comp_fund.loc[:, 'GBPXXX']
                 comp_fund = comp_fund.drop(acol, axis=1)
@@ -279,7 +298,7 @@ if __name__ == "__main__":
             ibes_df = pd.read_csv(all_dir + f'ibes_{period}_est_all.csv', low_memory=False)
             # todo: manage cusip
 
-    organise_cred = True
+    organise_cred = False
     if organise_cred:
         cred_df = pd.read_csv(useful_dir + 'comp_adsprate.csv', low_memory=False)
         date_col_name = us.date_col_finder(cred_df, 'comp_adsprate')
@@ -318,4 +337,3 @@ if __name__ == "__main__":
                 df = df.loc[date_vec, :]
                 df.to_csv(to_dir + filename, index=True)
                 print(filename + ' saved!')
-
