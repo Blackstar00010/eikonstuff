@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 secd_dir = opt.secd_dir
+all_dir = opt.all_dir
+
 price_data_dir = '../data/price_stuff/adj_price_data_fixed/'
 files = us.listdir(price_data_dir)
 
@@ -46,6 +48,14 @@ if mom_anomaly_check:
     ret_df.loc[:, top_shits[:10]].plot()
     plt.title('Return')
     plt.show()
+
+    export_shits = True
+    if export_shits:
+        secd_all_df = pd.read_csv(all_dir + 'comp_secd_all.csv', low_memory=False)
+        for shitty_ric in top_shits[:10]:
+            shitty_gvkey = us.ric2num(shitty_ric)
+            shitty_df = secd_all_df[secd_all_df['gvkey'] == shitty_gvkey]
+            shitty_df.to_csv(f'../data/validity_check/{shitty_ric}.csv', index=False)
 
 mom_dist_plot = False
 if mom_dist_plot:
