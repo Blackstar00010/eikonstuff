@@ -79,6 +79,7 @@ if __name__ == '__main__':
     sgrvol = sgrvol * (countq > 16)
     roavol = roavol * (countq > 16)
 
+    print('Saving...')
     us.fix_save_df(chtx, by_var_dir, 'chtx.csv', index_label='datadate')
     us.fix_save_df(cash, by_var_dir, 'cash.csv', index_label='datadate')
     us.fix_save_df(nincr, by_var_dir, 'nincr.csv', index_label='datadate')

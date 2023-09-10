@@ -12,9 +12,9 @@ secd_dir = opt.secd_dir
 intermed_dir = opt.intermed_dir
 by_var_dd_dir = opt.by_var_dd_dir
 by_var_mm_dir = opt.by_var_mm_dir
-by_month_dir = opt.by_month_dir
+by_month_dir = opt.output_dir
 
-close_to_momentum, dd_to_mm, mm_to_month = False, False, True
+close_to_momentum, dd_to_mm, mm_to_month = True, True, True
 
 if close_to_momentum:
     try:
@@ -50,7 +50,7 @@ if close_to_momentum:
 
         print('-', end='')
         if int(current_date[5:7]) == 12:
-            print(f'] {current_date[:7]} done!\n[', end='')
+            print(f'] {current_date[:5]} done!\n[', end='')
     if int(current_date[5:7]) != 12:
         print(f'] {current_date[:7]} done!\n')
 

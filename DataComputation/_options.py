@@ -1,4 +1,9 @@
+import os
+
 wrds = True
+
+all_dir = '/'.join(os.getcwd().split('/')[:3]) + '/Desktop/wrds_data/all/'
+useful_dir = '/'.join(os.getcwd().split('/')[:3]) + '/Desktop/wrds_data/useful/'
 
 funda_dir = '../data/processed_wrds/input_funda/' if wrds else '../data/processed/input_funda/'
 fundq_dir = '../data/processed_wrds/input_fundq/' if wrds else '../data/processed/input_fundq/'
@@ -7,4 +12,4 @@ intermed_dir = '../data/processed_wrds/intermed/' if wrds else '../data/processe
 
 by_var_dd_dir = '../data/processed_wrds/output_by_var_dd/' if wrds else '../data/processed/output_by_var_dd/'
 by_var_mm_dir = '../data/processed_wrds/output_by_var_mm/' if wrds else '../data/processed/output_by_var_mm/'
-by_month_dir = '../data/processed_wrds/output_by_month/' if wrds else '../data/processed/output_by_month/'
+output_dir = '../data/processed_wrds/output/' if wrds else '../data/processed/output/'

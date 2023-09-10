@@ -7,6 +7,7 @@ funda_dir = opt.funda_dir
 fundq_dir = opt.fundq_dir
 secd_dir = opt.secd_dir
 intermed_dir = opt.intermed_dir
+by_var_dir = opt.by_var_dd_dir
 
 ib = pd.read_csv(funda_dir + 'ib.csv').set_index('datadate').replace(float('NaN'), 0)
 try:
