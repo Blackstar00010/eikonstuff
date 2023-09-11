@@ -17,17 +17,18 @@ comp_df = comp_df[comp_df['isin'].notna()]
 merged_df = pd.merge(refi_df, comp_df, on='isin', how='inner')
 
 # resolving duplicated rows problem
+# to do are thing I should have done, but before solving those issues, I abandoned refinitiv
 dup_isins = merged_df[merged_df['isin'].duplicated()]['isin']
-print('# of duplicate rows:', len(dup_isins))  # TODO: debug here
+print('# of duplicate rows:', len(dup_isins))  # TO DO: debug here
 for isin in dup_isins:
     shits = merged_df[merged_df['isin'].isin(dup_isins)].sort_values('isin')['ric'].tolist()
     shits_df = pd.DataFrame()
     for ric in shits:
         ric = ric.replace('.', '-')
-        # shit_df = pd.read_csv('')  # TODO: where I store the price data
+        # shit_df = pd.read_csv('')  # TO DO: where I store the price data
         # shits_df = pd.concat([shits_df, shit_df], axis=0)
-        # shit_df.to_csv('')  # TODO: The same directory, but something like "JPM-L-dup.csv"
-    # TODO: Somehow remove duplicate dates' prices
+        # shit_df.to_csv('')  # TO DO: The same directory, but something like "JPM-L-dup.csv"
+    # TO DO: Somehow remove duplicate dates' prices
 
 merged_df = merged_df[~merged_df['isin'].duplicated()]
 
