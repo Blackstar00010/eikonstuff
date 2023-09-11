@@ -6,6 +6,7 @@ import time
 from Misc.elementwise_calc import lag, delta, rate_of_change, ind_adj
 import Misc.useful_stuff as us
 import _options as opt
+import sys
 
 wrds = opt.wrds
 
@@ -15,14 +16,11 @@ secd_dir = opt.secd_dir
 intermed_dir = opt.intermed_dir
 by_var_dir = opt.by_var_dd_dir
 
-if __name__ == '__main__':
-    if True:
-        logging.warning('Running annual_pt1.py will consume a huge amount of memory!')
-        time.sleep(0.1)
-        if input('Do you wish to continue? [y/n] ') not in ['y', 'ㅛ', 'Y']:
-            import sys
-            sys.exit()
 
+def run_annual1(beep_on_finish=True):
+    if __name__ != '__main__':
+        print('Computing the first batch of annually updated firm characteristics...')
+    if True:
         act = pd.read_csv(funda_dir + 'act.csv').set_index('datadate').fillna(0)
         at = pd.read_csv(funda_dir + 'at.csv').set_index('datadate').fillna(0)
         ceq = pd.read_csv(funda_dir + 'ceq.csv').set_index('datadate').fillna(0)
@@ -139,4 +137,15 @@ if __name__ == '__main__':
     atlagat.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(intermed_dir, 'atlagat.csv'))
     oancf_alt.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(intermed_dir, 'oancf_alt.csv'))
     print('ten calculated!')
-    us.beep()
+
+    if beep_on_finish:
+        us.beep()
+
+
+if __name__ == '__main__':
+    logging.warning('Running annual_pt1.py will consume a huge amount of memory!')
+    time.sleep(0.1)
+    if input('Do you wish to continue? [y/n] ') not in ['y', 'ㅛ', 'Y']:
+        sys.exit()
+
+    run_annual1()

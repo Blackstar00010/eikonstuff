@@ -5,6 +5,7 @@ import Misc.useful_stuff as us
 from os.path import join as pathjoin
 import time
 import _options as opt
+import sys
 
 wrds = opt.wrds
 
@@ -14,14 +15,11 @@ secd_dir = opt.secd_dir
 intermed_dir = opt.intermed_dir
 by_var_dir = opt.by_var_dd_dir
 
-if __name__ == '__main__':
-    if True:
-        logging.warning('Running annual_pt3.py will consume huge amount of memory!')
-        time.sleep(0.1)
-        if input('Do you wish to continue? [y/n] ') not in ['y', 'ㅛ', 'Y']:
-            import sys
-            sys.exit()
 
+def run_annual3(beep_on_finish=True):
+    if __name__ != '__main__':
+        print('Computing the third batch of annually updated firm characteristics...')
+    if True:
         atlagat = pd.read_csv(pathjoin(intermed_dir, 'atlagat.csv')).set_index('datadate').fillna(0)
         csho = pd.read_csv(pathjoin(secd_dir, 'shrout.csv'))
         csho = csho.set_index(us.date_col_finder(csho, 'csho')).fillna(0)
@@ -60,7 +58,7 @@ if __name__ == '__main__':
             ni = ib - txt
         try:
             scstkc = pd.read_csv(pathjoin(funda_dir, 'scstkc.csv')).set_index('datadate').fillna(0)
-        except:
+        except FileNotFoundError:
             prccd = pd.read_csv(pathjoin(secd_dir, 'close.csv'))
             prccd = prccd.set_index(us.date_col_finder(prccd, 'prccd'))
             scstkc = prccd * delta(csho)
@@ -106,4 +104,13 @@ if __name__ == '__main__':
     ps.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(by_var_dir, 'ps.csv'))
     tb.replace([0, float('inf'), -float('inf')], float('NaN')).to_csv(pathjoin(by_var_dir, 'tb.csv'))
 
-    us.beep()
+    if beep_on_finish:
+        us.beep()
+
+
+if __name__ == '__main__':
+    logging.warning('Running annual_pt3.py will consume huge amount of memory!')
+    time.sleep(0.1)
+    if input('Do you wish to continue? [y/n] ') not in ['y', 'ㅛ', 'Y']:
+        sys.exit()
+    run_annual3()
