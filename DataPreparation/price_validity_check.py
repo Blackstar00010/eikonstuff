@@ -28,34 +28,45 @@ if discontinuityQ:
 
 mom_anomaly_check = True
 if mom_anomaly_check:
-    close_df = pd.read_csv('../data/preprocessed_wrds/price/close.csv')
+    close_df = pd.read_csv('../data/preprocessed_wrds/price/mve.csv')
     close_df = close_df.set_index(us.date_col_finder(close_df, 'close'))
     # close_df = us.fillna(close_df, 'ffill')
     ret_df = close_df / close_df.shift(1) - 1
-    shits = np.log(ret_df).replace([float('inf'), -float('inf'), 0], float('NaN')).dropna().abs().max().sort_values(
-        ascending=False)
-    top_shits = ret_df.max().sort_values(ascending=False).index[:1000]
-    print(shits)
+    # shits = np.log(ret_df).abs().replace([float('inf'), 0], float('NaN')).max().dropna().sort_values(ascending=False)
+    # shits = shits[shits > 0.7]
+    # top_shits = shits.index[:1000]
+    # print(shits)
     # for i, shit in enumerate(top_shits):
     #     print(i, shit)
 
-    close_df.loc[:, top_shits[:10]].plot()
+    top_shits = ret_df.max().sort_values(ascending=False)
+    top_shits = top_shits[top_shits > 10]
+    top_shits = top_shits.index
+
+    to_check = 1000
+    print(top_shits[min(to_check-1, len(top_shits)-1)])
+
+    close_df.loc[:, top_shits[:to_check]].plot()
     plt.title('Close')
     plt.show()
-    (close_df.loc[:, top_shits[:10]] / close_df.loc[:, top_shits[:10]].max()).plot()
+    (close_df.loc[:, top_shits[:to_check]] / close_df.loc[:, top_shits[:to_check]].max()).plot()
     plt.title('Normalised Close')
     plt.show()
-    ret_df.loc[:, top_shits[:10]].plot()
+    ret_df.loc[:, top_shits[:to_check]].plot()
     plt.title('Return')
+    # plt.legend([])
     plt.show()
 
     export_shits = True
     if export_shits:
         secd_all_df = pd.read_csv(all_dir + 'comp_secd_all.csv', low_memory=False)
-        for shitty_ric in top_shits[:10]:
+        for shitty_ric in top_shits[:to_check]:
             shitty_gvkey = us.ric2num(shitty_ric)
             shitty_df = secd_all_df[secd_all_df['gvkey'] == shitty_gvkey]
-            shitty_df.to_csv(f'../data/validity_check/{shitty_ric}.csv', index=False)
+            shitty_df = shitty_df.set_index(us.date_col_finder(shitty_df, shitty_ric))
+            shitty_df = shitty_df.sort_index()
+            shitty_df.to_csv(f'../data/validity_check/{shitty_ric}.csv')
+        us.beep()
 
 mom_dist_plot = False
 if mom_dist_plot:

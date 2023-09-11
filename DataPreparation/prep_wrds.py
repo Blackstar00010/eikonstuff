@@ -1,6 +1,7 @@
 import Misc.useful_stuff as us
 import pandas as pd
 import multiprocessing as mp
+from spec_cases import fix_secd
 
 # from joblib import Parallel, delayed
 
@@ -25,20 +26,24 @@ def pivot(some_df: pd.DataFrame) -> pd.DataFrame:
     return ret
 
 
-def gvkey2ric(some_df: pd.DataFrame, gvkey_ric_dict: dict = None, add_hat: bool = False) -> pd.DataFrame:
+def gvkey2ric(some_df: pd.DataFrame, gvkey_ric_dict: dict = None, add_hat: bool = False,
+              drop: bool = False) -> pd.DataFrame:
     """
     :param some_df: dataframe with gvkey column
     :param gvkey_ric_dict: dictionary of {gvkey1: ric1, ...}
     :param add_hat: whether to add hat and last valid data's date to ric
+    :param drop: whether to drop gvkey column
     :return: dataframe with gvkey column replaced by ric column
     """
     if gvkey_ric_dict is not None:
         some_df = some_df[some_df['gvkey'].isin(list(gvkey_ric_dict.keys()))]
         some_df.loc[:, 'ric'] = some_df.loc[:, 'gvkey'].map(gvkey_ric_dict)
-        some_df = some_df.drop('gvkey', axis=1)
+        if drop:
+            some_df = some_df.drop('gvkey', axis=1)
     else:
         some_df.loc[:, 'ric'] = some_df.loc[:, 'gvkey'].apply(us.num2ric)
-        some_df = some_df.drop('gvkey', axis=1)
+        if drop:
+            some_df = some_df.drop('gvkey', axis=1)
         if add_hat:
             date_col_name = us.date_col_finder(some_df, 'df_in_gvkey2ric()')
             del_code = some_df[['ric', date_col_name]].drop_duplicates(subset='ric', keep='last')
@@ -69,11 +74,22 @@ def collapse_dup(some_df: pd.DataFrame, subset: list = None, df_name: str = None
     dirty_part = some_df.loc[dirty_index, :]
     ret = some_df.drop(dirty_index, axis=0)
 
+    close_col_name = ''
+    for candidates in ['prccd', 'close', 'Close']:
+        if candidates in some_df.columns.tolist():
+            close_col_name = candidates
+            break
+    vol_col_name = ''
+    for candidates in ['cshtrd', 'vol', 'Volume']:
+        if candidates in some_df.columns.tolist():
+            vol_col_name = candidates
+            break
+
     try:
         sort_by = subset.copy()
-        sort_by.append('cshtrd')
+        sort_by.append(vol_col_name)
         drop_by = sort_by.copy()
-        drop_by.append('prccd')
+        drop_by.append(close_col_name)
         dirty_part = dirty_part.dropna(subset=drop_by, how='any')
         dirty_part = dirty_part.sort_values(by=sort_by).reset_index(drop=True)
     except KeyError:
@@ -81,14 +97,14 @@ def collapse_dup(some_df: pd.DataFrame, subset: list = None, df_name: str = None
 
     dirty_part['group_no'] = dirty_part.groupby(subset).ngroup()
     cleaner_dirty_part = dirty_part.drop_duplicates(subset=subset, keep='last')
-    cleaner_dirty_part = cleaner_dirty_part.dropna(subset='prccd')
+    cleaner_dirty_part = cleaner_dirty_part.dropna(subset=close_col_name)
     dirtier_dirty_part = dirty_part[~dirty_part['group_no'].isin(cleaner_dirty_part['group_no'])]
     cleaner_dirty_part = cleaner_dirty_part.drop('group_no', axis=1)
 
     dirtier_dirty_part = dirtier_dirty_part.groupby(subset).apply(
         lambda group: group.fillna(method='ffill')).reset_index(drop=True)
     dirtier_dirty_part = dirtier_dirty_part.drop_duplicates(subset=subset, keep='last').drop('group_no', axis=1)
-    dirtier_dirty_part['prccd'] = float('NaN')
+    dirtier_dirty_part[close_col_name] = float('NaN')
     ret = pd.concat([ret, cleaner_dirty_part, dirtier_dirty_part], axis=0).sort_values(by=subset).reset_index(drop=True)
     if df_name is not None:
         print(f'Finished managing duplicates of {df_name} data!')
@@ -126,8 +142,15 @@ if __name__ == "__main__":
         # gvkey,datadate,isin,exchg,monthend,curcdd,ajexdi,cshoc,cshtrd,qunit,
         # prccd,prchd,prcld,prcod,curcddv,divd,paydate,split
         comp_secd = pd.read_csv(useful_dir + 'comp_secd.csv', low_memory=False)
-        comp_secd = comp_secd.drop(['isin', 'exchg'], axis=1)
+        comp_secd = comp_secd.drop(['exchg'], axis=1)
         ohlc_list = ['prccd', 'prchd', 'prcld', 'prcod']
+
+        # change date format
+        date_col_name = us.date_col_finder(comp_secd, 'comp_secd')
+        comp_secd.loc[:, date_col_name] = us.dt_to_str(comp_secd.loc[:, date_col_name])
+        comp_secd = comp_secd.loc[comp_secd[date_col_name] >= problematic_before, :].reset_index(drop=True)
+
+        comp_secd = fix_secd(comp_secd)
 
         comp_secd[ohlc_list] = comp_secd[ohlc_list].replace(0, float('NaN'))
         comp_secd[ohlc_list] = comp_secd[ohlc_list].multiply(1 / comp_secd['qunit'].replace(float('NaN'), 1),
@@ -139,42 +162,48 @@ if __name__ == "__main__":
                                                  comp_secd.loc[:, ['cshoc', 'prccd']].fillna(method='bfill')) *
                                                 comp_secd.loc[:, ['cshoc', 'prccd']].fillna(method='ffill'))
 
-        # change date format
-        date_col_name = us.date_col_finder(comp_secd, 'comp_secd')
-        comp_secd.loc[:, date_col_name] = us.dt_to_str(comp_secd.loc[:, date_col_name])
-        comp_secd = comp_secd.loc[comp_secd[date_col_name] >= problematic_before, :].reset_index(drop=True)
-
-        # remove duplicates
-        comp_secd = collapse_dup(comp_secd, subset=['gvkey', date_col_name], df_name='comp_secd')
-        # group ffill
-        comp_secd[['gvkey', 'curcdd', 'prccd']] = comp_secd[['gvkey', 'curcdd', 'prccd']].groupby('gvkey').apply(
-            lambda group: group[['curcdd', 'prccd']].fillna(method='ffill')
-        ).reset_index(level=0)
-        comp_secd = comp_secd.dropna(subset=['curcdd', 'prccd'], how='any')
-
-        # comp_secd = handle_secd(comp_secd)
+        # same gvkey different isin/sedol
+        comp_secd['ric_suffix'] = comp_secd['isin'].str[-2:]
+        try:  # todo: add sedol when selecting columns in sas studio
+            comp_secd['ric_suffix'] = comp_secd['ric_suffix'].fillna(comp_secd['sedol'].str[-2:])
+        except KeyError:
+            pass
+        comp_secd['ric_suffix'] = '_' + comp_secd['ric_suffix'].fillna('JD')
+        comp_secd['ric_suffix'] = comp_secd['ric_suffix'].replace('_JD', float('NaN'))
 
         # gvkey -> ric, reformatting
-        comp_secd = gvkey2ric(comp_secd, gvkey_ric_dict) if mix_ref else gvkey2ric(comp_secd, add_hat=True)
+        comp_secd = gvkey2ric(comp_secd, gvkey_ric_dict) if mix_ref else gvkey2ric(comp_secd, add_hat=True, drop=False)
+        comp_secd['ric'] = (comp_secd['ric'].str.split('-').str[0] +
+                            comp_secd['ric_suffix'] + '-' +
+                            comp_secd['ric'].str.split('-').str[-1])
         comp_secd = comp_secd.rename(columns={'curcdd': 'curr', 'curcddv': 'curr_div',
                                               'ajexdi': 'adj', 'cshoc': 'shrout', 'cshtrd': 'vol',
                                               'prccd': 'close', 'prchd': 'high', 'prcld': 'low', 'prcod': 'open'})
         comp_secd[date_col_name] = us.dt_to_str(comp_secd[date_col_name])
 
+        # remove duplicates
+        comp_secd = collapse_dup(comp_secd, subset=['ric', date_col_name], df_name='comp_secd')
+
+        # group ffill & currency matching
+        comp_secd[['ric', 'curr', 'close']] = comp_secd[['ric', 'curr', 'close']].groupby('ric').apply(
+            lambda group: group[['curr', 'close']].fillna(method='ffill')
+        ).reset_index(level=0)
+        comp_secd = comp_secd.dropna(subset=['curr', 'close'], how='any')
         comp_secd = comp_secd.merge(exch_rates,
                                     left_on=[date_col_name, 'curr'],
                                     right_on=[date_col_name, 'curr']).drop('curr', axis=1)
-        comp_secd = comp_secd.dropna(subset=['ric', 'close'])
+
         comp_secd.to_csv(raw_output_dir + 'comp_secd.csv', index=False)
         print('comp_secd saved and loaded!')
 
+        # save by ric
         # for aric in comp_secd['ric'].unique():
         #     df = comp_secd[comp_secd['ric'] == aric]
         #     df = df.sort_values(by=[date_col_name])
         #     df.to_csv(preprocessed_dir + f'price/by_ric/{aric}.csv', index=False)
         # us.beep()
 
-        for p_type in ['close', 'high', 'low', 'open']:
+        for p_type in ['high', 'low', 'open', 'close']:
             comp_secd.loc[:, f'{p_type}(GBP)'] = comp_secd.loc[:, p_type] / comp_secd.loc[:, 'GBPXXX']
             comp_secd.loc[:, f'{p_type}(GBP)'] = comp_secd.loc[:, f'{p_type}(GBP)'].round(2)
             comp_secd = comp_secd.drop(p_type, axis=1)
@@ -183,9 +212,6 @@ if __name__ == "__main__":
             p_df = pivot(p_df)
             p_df = us.fillna(p_df, hat_in_cols=True)
             p_df = p_df.replace(0, float('NaN'))
-            if p_type == 'close':
-                p_df = us.fillna(p_df, hat_in_cols=True)
-                p_type = 'close_OG'
             p_df.to_csv(preprocessed_dir + f'price/{p_type}.csv')
             print(f'{p_type} saved!')
 
@@ -198,7 +224,9 @@ if __name__ == "__main__":
         print('shrout saved!')
 
         # market value = market cap
-        mve_df = p_df * shrout_df
+        mve_df = pd.read_csv(preprocessed_dir + 'price/close.csv')
+        mve_df = mve_df.set_index(us.date_col_finder(mve_df, 'close')) * shrout_df
+        mve_df = mve_df * pivot(comp_secd.loc[:, ['ric', date_col_name, 'adj']])
         mve_df = us.fillna(mve_df, hat_in_cols=True)
         mve_df = mve_df.replace(0, float('NaN'))
         mve_df.to_csv(preprocessed_dir + 'price/mve.csv')

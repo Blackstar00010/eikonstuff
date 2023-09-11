@@ -78,6 +78,7 @@ def ric2num(ric: str) -> int:
     :return:
     """
     ric = ric.split('-')[0]
+    ric = ric.split('_')[0]
     ret = 0
     for i, char in enumerate(ric):
         ret += (ord(char) - 64-1) * (26 ** (len(ric) - i - 1))
