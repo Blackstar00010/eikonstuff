@@ -1,5 +1,5 @@
 import numpy as np
-
+import DataComputation._options as opt
 import Misc.useful_stuff as us
 import pandas as pd
 import multiprocessing as mp
@@ -9,9 +9,9 @@ from spec_cases import fix_secd
 
 all_dir = '/Users/jamesd/Desktop/wrds_data/all/'
 useful_dir = '/Users/jamesd/Desktop/wrds_data/useful/'
-raw_output_dir = '../data/preprocessed_wrds/_raw/'
-preprocessed_dir = '../data/preprocessed_wrds/'
-processed_dir = '../data/processed_wrds/'
+raw_output_dir = opt.raw_dir
+preprocessed_dir = opt.preprocessed_dir
+processed_dir = opt.processed_dir
 
 
 def pivot(some_df: pd.DataFrame) -> pd.DataFrame:
@@ -141,11 +141,12 @@ if __name__ == "__main__":
     mix_ref = False
     problematic_before = '1985-01-01'  # only data from this date
 
-    # gvkeys -> RIC dictionary
-    ref_comp_table = pd.read_csv('../data/metadata/ref-comp.csv')[['ric', 'gvkey']]
-    gvkey_ric_dict = {}
-    for i in range(len(ref_comp_table)):
-        gvkey_ric_dict[ref_comp_table.loc[i, 'gvkey']] = ref_comp_table.loc[i, 'ric']
+    if mix_ref:
+        # gvkeys -> RIC dictionary
+        ref_comp_table = pd.read_csv('../data/metadata/ref-comp.csv')[['ric', 'gvkey']]
+        gvkey_ric_dict = {}
+        for i in range(len(ref_comp_table)):
+            gvkey_ric_dict[ref_comp_table.loc[i, 'gvkey']] = ref_comp_table.loc[i, 'ric']
 
     # GBPXXX
     exch_rates = pd.read_csv(all_dir + 'comp_exrt_all.csv', low_memory=False)
@@ -168,43 +169,39 @@ if __name__ == "__main__":
         # prccd,prchd,prcld,prcod,curcddv,divd,paydate,split
         comp_secd = pd.read_csv(useful_dir + 'comp_secd.csv', low_memory=False)
         comp_secd = comp_secd.drop(['exchg'], axis=1)
+        comp_secd = comp_secd.rename(columns={'curcdd': 'curr', 'curcddv': 'curr_div',
+                                              'ajexdi': 'adj', 'cshoc': 'shrout', 'cshtrd': 'vol',
+                                              'prccd': 'close', 'prchd': 'high', 'prcld': 'low', 'prcod': 'open'})
 
-        # order: dateformat -> fix_secd -> ohlc -> gvkey2ric -> rename -> collapse_dup -> groupffill -> currency
+        # order: dateformat -> gvkey2ric -> collapse_dup -> groupffill -> currency
 
         # change date format
         date_col_name = us.date_col_finder(comp_secd, 'comp_secd')
         comp_secd.loc[:, date_col_name] = us.dt_to_str(comp_secd.loc[:, date_col_name])
         comp_secd = comp_secd.loc[comp_secd[date_col_name] >= problematic_before, :].reset_index(drop=True)
 
+        # manage special cases (should be done before gvkey2ric)
         comp_secd = fix_secd(comp_secd)
-
-        ohlc_list = ['prccd', 'prchd', 'prcld', 'prcod']
-        comp_secd[ohlc_list] = comp_secd[ohlc_list].replace(0, float('NaN'))
-        comp_secd[ohlc_list] = comp_secd[ohlc_list].multiply(1 / comp_secd['qunit'].replace(float('NaN'), 1),
-                                                             axis=0)
-        comp_secd[ohlc_list] = comp_secd[ohlc_list].multiply(1 / comp_secd['ajexdi'].replace(float('NaN'), 1),
-                                                             axis=0)
-
-        comp_secd.loc[:, ['cshoc', 'prccd']] = ((comp_secd.loc[:, ['cshoc', 'prccd']].fillna(method='ffill') ==
-                                                 comp_secd.loc[:, ['cshoc', 'prccd']].fillna(method='bfill')) *
-                                                comp_secd.loc[:, ['cshoc', 'prccd']].fillna(method='ffill'))
 
         # gvkey -> ric, reformatting
         if mix_ref:
             comp_secd = gvkey2ric(comp_secd, gvkey_ric_dict)
         else:
             comp_secd = gvkey2ric(comp_secd, add_hat=True, drop=True, isin_col='isin', sedol_col='sedol')
-        comp_secd = comp_secd.rename(columns={'curcdd': 'curr', 'curcddv': 'curr_div',
-                                              'ajexdi': 'adj', 'cshoc': 'shrout', 'cshtrd': 'vol',
-                                              'prccd': 'close', 'prchd': 'high', 'prcld': 'low', 'prcod': 'open'})
 
         # remove duplicates
         comp_secd = collapse_dup(comp_secd, subset=['ric', date_col_name], df_name='comp_secd')
 
-        # group ffill & currency matching
-        comp_secd[['ric', 'curr', 'close']] = comp_secd[['ric', 'curr', 'close']].groupby('ric').apply(
-            lambda group: group[['curr', 'close']].fillna(method='ffill')
+        # group ffill & price adjustment
+        ohlc_list = ['open', 'high', 'low', 'close']
+        to_ffill = us.flatten([ohlc_list, 'vol', 'shrout', 'adj'])
+        comp_secd[us.flatten(['ric', to_ffill])] = comp_secd[us.flatten(['ric', to_ffill])].groupby('ric').apply(
+            lambda group: group[to_ffill].fillna(method='ffill')
         ).reset_index(level=0)
+        comp_secd[ohlc_list] = comp_secd[ohlc_list].multiply(1 / comp_secd['qunit'].replace(float('NaN'), 1),
+                                                             axis=0)
+        comp_secd[ohlc_list] = comp_secd[ohlc_list].multiply(1 / comp_secd['adj'].replace(float('NaN'), 1),
+                                                             axis=0)
         comp_secd = comp_secd.dropna(subset=['curr', 'close'], how='any')
         comp_secd = comp_secd.merge(exch_rates,
                                     left_on=[date_col_name, 'curr'],
@@ -268,7 +265,7 @@ if __name__ == "__main__":
     ric1s = [ric.split('^')[0] for ric in rics]
     ric_dict = dict(zip(ric1s, rics))
 
-    organise_fund = True
+    organise_fund = False
     if organise_fund:
         funds = ['', 'q']
     else:
@@ -360,7 +357,7 @@ if __name__ == "__main__":
             ric1s = test_df.iloc[:, 0].str.split('^').apply(lambda x: x[0])
             print(afile, cred_df.loc[cred_df.index[cred_df['ric'].isin(ric1s)], 'ric'].nunique(), '/', len(ric1s))
 
-    make_monthly = False
+    make_monthly = True
     if make_monthly:
         # producing first days of months
         close_df = pd.read_csv(preprocessed_dir + 'price/close.csv')
@@ -372,10 +369,12 @@ if __name__ == "__main__":
         from_dirs = [preprocessed_dir + subdir for subdir in ['FQ/', 'FY/', 'price/']]
         to_dirs = [processed_dir + 'input_' + subdir for subdir in ['fundq/', 'funda/', 'secd/']]
 
-        for i in range(3):
+        for i in range(len(from_dirs)-3):
             from_dir = from_dirs[i]
             to_dir = to_dirs[i]
             for filename in us.listdir(from_dir):
+                if filename == '':
+                    continue
                 df = pd.read_csv(from_dir + filename)
                 df = df.set_index(us.date_col_finder(df, from_dir + filename))
                 df = pd.concat([df, pd.DataFrame(float('NaN'),
@@ -387,3 +386,7 @@ if __name__ == "__main__":
                 df = df.loc[date_vec, :]
                 df.to_csv(to_dir + filename, index=True)
                 print(filename + ' saved!')
+
+        monthly_return_df = close_df.set_index(date_col_name)
+        monthly_return_df = monthly_return_df.pct_change()
+        monthly_return_df.to_csv(opt.output_dir + 'monthly_return.csv', index=True)
