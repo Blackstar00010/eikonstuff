@@ -1,3 +1,5 @@
+import numpy as np
+
 import Misc.useful_stuff as us
 import pandas as pd
 import multiprocessing as mp
@@ -27,15 +29,17 @@ def pivot(some_df: pd.DataFrame) -> pd.DataFrame:
 
 
 def gvkey2ric(some_df: pd.DataFrame, gvkey_ric_dict: dict = None, add_hat: bool = False,
-              drop: bool = False) -> pd.DataFrame:
+              drop: bool = False, isin_col=None, sedol_col=None) -> pd.DataFrame:
     """
+    Add ric column named 'ric' to dataframe based on gvkey column. If ``gvkey_ric_dict`` is None, use us.num2ric function
     :param some_df: dataframe with gvkey column
     :param gvkey_ric_dict: dictionary of {gvkey1: ric1, ...}
     :param add_hat: whether to add hat and last valid data's date to ric
-    :param drop: whether to drop gvkey column
+    :param drop: whether to drop gvkey, isin, sedol column
     :return: dataframe with gvkey column replaced by ric column
     """
     if gvkey_ric_dict is not None:
+        # i.e., joining with refinitiv data or some other prep work is done
         some_df = some_df[some_df['gvkey'].isin(list(gvkey_ric_dict.keys()))]
         some_df.loc[:, 'ric'] = some_df.loc[:, 'gvkey'].map(gvkey_ric_dict)
         if drop:
@@ -57,6 +61,22 @@ def gvkey2ric(some_df: pd.DataFrame, gvkey_ric_dict: dict = None, add_hat: bool 
             del_code = del_code.drop([date_col_name, 'suffix_YYYY', 'suffix_MM', 'suffix'], axis=1)
             some_df = some_df.merge(del_code, on='ric', how='left')
             some_df = some_df.drop('ric', axis=1).rename(columns={'ric_new': 'ric'})
+
+    # adding suffix to manage single-ric-multiple-isin problem
+    some_df['ric_suffix'] = float('NaN')
+    if isin_col is not None:
+        some_df['ric_suffix'] = some_df['ric_suffix'].fillna(some_df[isin_col].str[-3:-1])
+        some_df = some_df.drop(isin_col, axis=1) if drop else some_df
+    if sedol_col is not None:
+        some_df['ric_suffix'] = some_df['ric_suffix'].fillna(some_df[sedol_col].str[-2:])
+        some_df = some_df.drop(sedol_col, axis=1) if drop else some_df
+    some_df['ric_suffix'] = '_' + some_df['ric_suffix']
+    some_df['ric_suffix'] = some_df['ric_suffix'].replace('_', float('NaN'))
+    some_df['ric'] = (some_df['ric'].str.split('-').str[0] +
+                      some_df['ric_suffix'] + '-' +
+                      some_df['ric'].str.split('-').str[-1])
+    some_df = some_df.drop('ric_suffix', axis=1)
+
     return some_df
 
 
@@ -70,6 +90,7 @@ def collapse_dup(some_df: pd.DataFrame, subset: list = None, df_name: str = None
     """
     if subset is None:
         subset = some_df.columns.tolist()
+    some_df = some_df.sort_values(by=subset).reset_index(drop=True)
     dirty_index = some_df.index[some_df.duplicated(subset, keep=False)]
     dirty_part = some_df.loc[dirty_index, :]
     ret = some_df.drop(dirty_index, axis=0)
@@ -97,11 +118,15 @@ def collapse_dup(some_df: pd.DataFrame, subset: list = None, df_name: str = None
 
     dirty_part['group_no'] = dirty_part.groupby(subset).ngroup()
     cleaner_dirty_part = dirty_part.drop_duplicates(subset=subset, keep='last')
-    cleaner_dirty_part = cleaner_dirty_part.dropna(subset=close_col_name)
-    dirtier_dirty_part = dirty_part[~dirty_part['group_no'].isin(cleaner_dirty_part['group_no'])]
-    cleaner_dirty_part = cleaner_dirty_part.drop('group_no', axis=1)
+    try:
+        cleaner_dirty_part = cleaner_dirty_part.dropna(subset=close_col_name)
+        dirtier_dirty_part = dirty_part[~dirty_part['group_no'].isin(cleaner_dirty_part['group_no'])]
+        cleaner_dirty_part = cleaner_dirty_part.drop('group_no', axis=1)
+    except KeyError:  # because close_col_name is ''
+        cleaner_dirty_part = pd.DataFrame([])
+        dirtier_dirty_part = dirty_part
 
-    dirtier_dirty_part = dirtier_dirty_part.groupby(subset).apply(
+    dirtier_dirty_part = dirtier_dirty_part.groupby('group_no').apply(
         lambda group: group.fillna(method='ffill')).reset_index(drop=True)
     dirtier_dirty_part = dirtier_dirty_part.drop_duplicates(subset=subset, keep='last').drop('group_no', axis=1)
     dirtier_dirty_part[close_col_name] = float('NaN')
@@ -137,13 +162,14 @@ if __name__ == "__main__":
     ).reset_index(level=0)
     exch_rates = exch_rates.dropna(subset=['curr', 'GBPXXX'], how='any')
 
-    organize_secd = True
+    organize_secd = False
     if organize_secd:
-        # gvkey,datadate,isin,exchg,monthend,curcdd,ajexdi,cshoc,cshtrd,qunit,
+        # gvkey,datadate,isin,sedol,exchg,monthend,curcdd,ajexdi,cshoc,cshtrd,qunit,
         # prccd,prchd,prcld,prcod,curcddv,divd,paydate,split
         comp_secd = pd.read_csv(useful_dir + 'comp_secd.csv', low_memory=False)
         comp_secd = comp_secd.drop(['exchg'], axis=1)
-        ohlc_list = ['prccd', 'prchd', 'prcld', 'prcod']
+
+        # order: dateformat -> fix_secd -> ohlc -> gvkey2ric -> rename -> collapse_dup -> groupffill -> currency
 
         # change date format
         date_col_name = us.date_col_finder(comp_secd, 'comp_secd')
@@ -152,6 +178,7 @@ if __name__ == "__main__":
 
         comp_secd = fix_secd(comp_secd)
 
+        ohlc_list = ['prccd', 'prchd', 'prcld', 'prcod']
         comp_secd[ohlc_list] = comp_secd[ohlc_list].replace(0, float('NaN'))
         comp_secd[ohlc_list] = comp_secd[ohlc_list].multiply(1 / comp_secd['qunit'].replace(float('NaN'), 1),
                                                              axis=0)
@@ -162,24 +189,14 @@ if __name__ == "__main__":
                                                  comp_secd.loc[:, ['cshoc', 'prccd']].fillna(method='bfill')) *
                                                 comp_secd.loc[:, ['cshoc', 'prccd']].fillna(method='ffill'))
 
-        # same gvkey different isin/sedol
-        comp_secd['ric_suffix'] = comp_secd['isin'].str[-2:]
-        try:  # todo: add sedol when selecting columns in sas studio
-            comp_secd['ric_suffix'] = comp_secd['ric_suffix'].fillna(comp_secd['sedol'].str[-2:])
-        except KeyError:
-            pass
-        comp_secd['ric_suffix'] = '_' + comp_secd['ric_suffix'].fillna('JD')
-        comp_secd['ric_suffix'] = comp_secd['ric_suffix'].replace('_JD', float('NaN'))
-
         # gvkey -> ric, reformatting
-        comp_secd = gvkey2ric(comp_secd, gvkey_ric_dict) if mix_ref else gvkey2ric(comp_secd, add_hat=True, drop=False)
-        comp_secd['ric'] = (comp_secd['ric'].str.split('-').str[0] +
-                            comp_secd['ric_suffix'] + '-' +
-                            comp_secd['ric'].str.split('-').str[-1])
+        if mix_ref:
+            comp_secd = gvkey2ric(comp_secd, gvkey_ric_dict)
+        else:
+            comp_secd = gvkey2ric(comp_secd, add_hat=True, drop=True, isin_col='isin', sedol_col='sedol')
         comp_secd = comp_secd.rename(columns={'curcdd': 'curr', 'curcddv': 'curr_div',
                                               'ajexdi': 'adj', 'cshoc': 'shrout', 'cshtrd': 'vol',
                                               'prccd': 'close', 'prchd': 'high', 'prcld': 'low', 'prcod': 'open'})
-        comp_secd[date_col_name] = us.dt_to_str(comp_secd[date_col_name])
 
         # remove duplicates
         comp_secd = collapse_dup(comp_secd, subset=['ric', date_col_name], df_name='comp_secd')
@@ -251,9 +268,9 @@ if __name__ == "__main__":
     ric1s = [ric.split('^')[0] for ric in rics]
     ric_dict = dict(zip(ric1s, rics))
 
-    organise_fund = False
+    organise_fund = True
     if organise_fund:
-        funds = ['q', '']
+        funds = ['', 'q']
     else:
         funds = []
     for fsth in funds:
@@ -263,39 +280,46 @@ if __name__ == "__main__":
                 comp_fund = comp_fund.drop(cols, axis=1)
             except KeyError:
                 pass
-        date_col_name = us.date_col_finder(comp_fund, f'comp_fund{"a" if fsth == "" else fsth}')
-        comp_fund[date_col_name] = us.dt_to_str(comp_fund[date_col_name])
+
+        # order: dateformat -> gvkey2ric -> rename -> collapse_dup -> groupffill -> currency
+
+        # change date format
+        comp_fund = us.change_date_format(comp_fund, 'comp_fund' + f'{"a" if fsth == "" else fsth}')
         exch_rates = exch_rates.loc[exch_rates[date_col_name] >= problematic_before, :].reset_index(drop=True)
 
-        # gvkey -> ric
-        comp_fund = comp_fund.sort_values(by=['gvkey', date_col_name])
-        comp_fund = collapse_dup(comp_fund, subset=['gvkey', date_col_name],
-                                 df_name=f'comp_fund{"a" if fsth == "" else fsth}')
-        comp_fund[['gvkey', 'curcd' + fsth]] = comp_fund[['gvkey', 'curcd' + fsth]].groupby('gvkey').apply(
-            lambda group: group['curcd' + fsth].replace(0, float('NaN')).fillna(method='ffill')).reset_index(level=0)
-        comp_fund = comp_fund.dropna(subset='curcd' + fsth)
-
-        comp_fund = gvkey2ric(comp_fund, gvkey_ric_dict) if mix_ref else gvkey2ric(comp_fund)
-
+        # gvkey -> ric, reformatting
+        if mix_ref:
+            comp_fund = gvkey2ric(comp_fund, gvkey_ric_dict)
+        else:
+            comp_fund = gvkey2ric(comp_fund, add_hat=False, drop=True, isin_col='isin', sedol_col='sedol')
         comp_fund = comp_fund[comp_fund['ric'].isin(ric1s)]
         comp_fund = comp_fund.rename(columns={'curcd' + fsth: 'curr'})
-        comp_fund['ric'] = comp_fund['ric'].map(dict(zip(ric1s, rics)))
-        comp_fund[date_col_name] = us.dt_to_str(comp_fund[date_col_name])
+        comp_fund['ric'] = comp_fund['ric'].map(ric_dict)
+        comp_fund = comp_fund.rename(columns={'curcd' + fsth: 'curr'})
+
+        # remove duplicates
+        comp_fund = collapse_dup(comp_fund, subset=['ric', date_col_name],
+                                 df_name=f'comp_fund{"a" if fsth == "" else fsth}')
+
+        # group ffill & currency matching
+        comp_fund[['ric', 'curr']] = comp_fund[['ric', 'curr']].groupby('ric').apply(
+            lambda group: group['curr'].replace(0, float('NaN')).fillna(method='ffill')).reset_index(level=0)
+        comp_fund = comp_fund.dropna(subset='curr')
         comp_fund = comp_fund.merge(exch_rates,
                                     left_on=[date_col_name, 'curr'],
                                     right_on=[date_col_name, 'curr']).drop('curr', axis=1)
+
         comp_fund['count' + fsth] = comp_fund.groupby('ric').cumcount() + 1  # line 76
 
+        # other variables
         # comp_fund['dr'+fsth] = np.NAN  # TODO: line 86-92
         if 'xint' + fsth in comp_fund.columns:
             comp_fund.loc[:, 'xint' + fsth] = comp_fund.loc[:, 'xint' + fsth].fillna(0)  # line 94
         if 'xsga' + fsth in comp_fund.columns:
             comp_fund.loc[:, 'xsga' + fsth] = comp_fund.loc[:, 'xsga' + fsth].fillna(0)  # line 96
 
-        comp_fund[date_col_name] = us.dt_to_str(comp_fund[date_col_name])
-
         to_export = comp_fund.columns
-        for acol in ['ric', date_col_name, 'GBPXXX']:
+        for acol in ['ric', date_col_name, 'GBPXXX', '', 'curr']:
             try:
                 to_export = to_export.drop(acol)
             except KeyError:
@@ -313,7 +337,7 @@ if __name__ == "__main__":
             new_df = pivot(new_df)
             new_df = us.fillna(new_df, hat_in_cols=True)
             new_df.to_csv(preprocessed_dir + f'F{"Y" if fsth == "" else "Q"}/' + acol + '.csv')
-            print(acol + f'{"a" if fsth == "" else fsth} saved!')
+            print(acol + ' saved!')
 
         comp_fund.to_csv(raw_output_dir + f'comp_fund{"a" if fsth == "" else fsth}.csv', index=False)
         print(f'comp_fund{"a" if fsth == "" else fsth} saved!')
