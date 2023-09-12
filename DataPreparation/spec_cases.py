@@ -4,15 +4,9 @@ import Misc.useful_stuff as us
 
 def fix_secd(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Fix the following:
-    1. QHFN: -2010-05-09, 2018-11-20-
-    2. NOAD: 2002-12-18
-    3. OFUO: 2017-12-28
-    4. SLKI: 2017-01-05
-    5. NIGY: 2017-01-05
-    6. PQRC: 2012-01-26
-    :param df:
-    :return:
+    Fix the following: QHFN, NOAD, OFUO, SLKI, NIGY, PQRC, TUCE, TRLK, SNBN, PRKD, TNRS, PRJJ, PRJS, MOLR, PLWM, NJJO
+    :param df: secd df
+    :return: fixed secd df
     """
     close_col = 'close' if 'close' in df.columns else 'prccd'
     price_cols = ['open', 'high', 'low', 'close'] if close_col == 'close' else ['prcod', 'prchd', 'prcld', 'prccd']
@@ -147,9 +141,17 @@ def fix_secd(df: pd.DataFrame) -> pd.DataFrame:
     plwm_df0.loc[:, shrout_col] = plwm_df0[shrout_col] / plwm_df0[shrout_col].iloc[-1] * plwm_df1[shrout_col].iloc[0]
     plwm_df = pd.concat([plwm_df0, plwm_df1], axis=0)
 
+    njjo_df = df[df['gvkey'] == us.ric2num('NJJO')]
+    df = df[df['gvkey'] != us.ric2num('NJJO')]
+    njjr_df0 = njjo_df[njjo_df[date_col] <= '2020-05-01']
+    njjr_df1 = njjo_df[~njjo_df.index.isin(njjr_df0.index)]
+    njjr_df0.loc[:, price_cols] = njjr_df0[price_cols] * njjr_df0[adj_col].iloc[-1] / njjr_df1[adj_col].iloc[0]
+    njjo_df = pd.concat([njjr_df0, njjr_df1], axis=0)
+
     df = pd.concat([df,
                     qhfn_df, noad_df, ofuo_df, slki_df, nigy_df,
                     pqrc_df, tuce_df, trlk_df, snbn_df, prkd_df,
-                    tnrs_df, prjj_df, prjs_df, molr_df, plwm_df], axis=0)
+                    tnrs_df, prjj_df, prjs_df, molr_df, plwm_df,
+                    njjo_df], axis=0)
     df = df.sort_index()
     return df

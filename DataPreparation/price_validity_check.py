@@ -3,6 +3,7 @@ import Misc.useful_stuff as us
 import DataComputation._options as opt
 import matplotlib.pyplot as plt
 import numpy as np
+import Misc.plots as plots
 
 secd_dir = opt.secd_dir
 all_dir = opt.all_dir
@@ -27,46 +28,45 @@ if discontinuityQ:
             count += 1
 
 mom_anomaly_check = True
+export_shits = True
 if mom_anomaly_check:
-    close_df = pd.read_csv('../data/preprocessed_wrds/price/mve.csv')
-    close_df = close_df.set_index(us.date_col_finder(close_df, 'close'))
-    # close_df = us.fillna(close_df, 'ffill')
-    ret_df = close_df / close_df.shift(1) - 1
-    # shits = np.log(ret_df).abs().replace([float('inf'), 0], float('NaN')).max().dropna().sort_values(ascending=False)
-    # shits = shits[shits > 0.7]
-    # top_shits = shits.index[:1000]
-    # print(shits)
-    # for i, shit in enumerate(top_shits):
-    #     print(i, shit)
+    for var_to_check in ['mve', 'close']:
+        close_df = pd.read_csv(f'../data/preprocessed_wrds/price/{var_to_check}.csv')
+        close_df = close_df.set_index(us.date_col_finder(close_df, var_to_check))
+        # close_df = us.fillna(close_df, 'ffill')
+        ret_df = close_df / close_df.shift(1)
+        ret_df = ret_df.astype(float).apply(np.log).abs().replace(float('inf'), float('NaN'))
 
-    top_shits = ret_df.max().sort_values(ascending=False)
-    top_shits = top_shits[top_shits > 10]
-    top_shits = top_shits.index
+        top_shits = ret_df.max().sort_values(ascending=False)
+        top_shits = top_shits[top_shits > np.log(10)]
+        top_shits = top_shits.index
 
-    to_check = 1000
-    print(top_shits[min(to_check-1, len(top_shits)-1)])
+        to_check = 1000
+        try:
+            print(top_shits[min(to_check-1, len(top_shits)-1)])
+        except IndexError:
+            print('No more to check!')
 
-    close_df.loc[:, top_shits[:to_check]].plot()
-    plt.title('Close')
-    plt.show()
-    (close_df.loc[:, top_shits[:to_check]] / close_df.loc[:, top_shits[:to_check]].max()).plot()
-    plt.title('Normalised Close')
-    plt.show()
-    ret_df.loc[:, top_shits[:to_check]].plot()
-    plt.title('Return')
-    # plt.legend([])
-    plt.show()
+        close_df.loc[:, top_shits[:to_check]].plot()
+        plt.title(var_to_check)
+        plt.show()
+        (close_df.loc[:, top_shits[:to_check]] / close_df.loc[:, top_shits[:to_check]].max()).plot()
+        plt.title(f'normalised {var_to_check}')
+        plt.show()
+        ret_df.loc[:, top_shits[:to_check]].plot()
+        plt.title(f'daily log return of {var_to_check}')
+        # plt.legend([])
+        plt.show()
 
-    export_shits = True
-    if export_shits:
-        secd_all_df = pd.read_csv(all_dir + 'comp_secd_all.csv', low_memory=False)
-        for shitty_ric in top_shits[:to_check]:
-            shitty_gvkey = us.ric2num(shitty_ric)
-            shitty_df = secd_all_df[secd_all_df['gvkey'] == shitty_gvkey]
-            shitty_df = shitty_df.set_index(us.date_col_finder(shitty_df, shitty_ric))
-            shitty_df = shitty_df.sort_index()
-            shitty_df.to_csv(f'../data/validity_check/{shitty_ric}.csv')
-        us.beep()
+        if export_shits:
+            secd_all_df = pd.read_csv(all_dir + 'comp_secd_all.csv', low_memory=False)
+            for shitty_ric in top_shits[:to_check]:
+                shitty_gvkey = us.ric2num(shitty_ric)
+                shitty_df = secd_all_df[secd_all_df['gvkey'] == shitty_gvkey]
+                shitty_df = shitty_df.set_index(us.date_col_finder(shitty_df, shitty_ric))
+                shitty_df = shitty_df.sort_index()
+                shitty_df.to_csv(f'../data/validity_check/{shitty_ric}.csv')
+    us.beep()
 
 mom_dist_plot = False
 if mom_dist_plot:
@@ -77,39 +77,7 @@ if mom_dist_plot:
     return_df = return_df.astype(float).apply(np.log)
     return_df = return_df.replace([float('inf'), float('-inf'), 0], float('NaN'))
 
-    melted_df = pd.melt(return_df.reset_index(), id_vars=['datadate'], var_name='firms', value_name='returns')
-    melted_df = melted_df.dropna(subset=['returns'])
-
-    return_bins = np.linspace(melted_df['returns'].min(), melted_df['returns'].max(), 100)
-    time_bins = melted_df['datadate'].unique()
-
-    melted_df['range'] = pd.cut(melted_df['returns'], bins=return_bins, labels=return_bins[:-1])
-    distribution_df = melted_df.groupby(['datadate', 'range']).size().unstack(fill_value=0)
-    distribution_df = distribution_df / distribution_df.sum(axis=1).values.reshape(-1, 1)
-
-    X, Y = np.meshgrid(np.arange(distribution_df.shape[1]), np.arange(distribution_df.shape[0]))
-    Z = distribution_df.values
-
-    # Create a figure and a 3D subplot
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
-    ax.plot_surface(X, Y, Z, cmap='viridis')
-    ax.set_title('Distribution of log return over time')
-
-    # X ticks: Limited to 5 ticks
-    num_x_ticks = 5
-    x_tick_positions = np.linspace(0, distribution_df.shape[1] - 1, num_x_ticks, dtype=int)
-    x_tick_labels = return_bins[x_tick_positions].round(2)
-    ax.set_xticks(x_tick_positions)
-    ax.set_xticklabels(x_tick_labels)
-
-    # Y ticks: Limited to 5 ticks
-    num_y_ticks = 5
-    y_tick_positions = np.linspace(0, distribution_df.shape[0] - 1, num_y_ticks, dtype=int)
-    y_tick_labels = [x[:7] for x in time_bins[y_tick_positions]]
-    ax.set_yticks(y_tick_positions)
-    ax.set_yticklabels(y_tick_labels)
-
-    plt.savefig('../data/_presentation/return_dist.png', dpi=300)
-
-    plt.show()
+    plots.distribution_plot3d(return_df, 'datadate', 'firms', 'returns',
+                              x_axis='log return', y_axis='', z_axis='portion of firms',
+                              title='Distribution of log return over time',
+                              filename='../data/_presentation/return_dist.png')

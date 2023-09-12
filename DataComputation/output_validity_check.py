@@ -1,10 +1,13 @@
+import numpy as np
 import pandas as pd
 import Misc.useful_stuff as us
 from os.path import join as pathjoin
+import _options as opt
+import matplotlib.pyplot as plt
 
-check_by_var = True
+check_by_var = False
 if check_by_var:
-    target_dir = '../data/processed_wrds/output_by_var_mm/'
+    target_dir = opt.by_var_mm_dir
     vars = us.listdir(target_dir)
     overall_realno = 0
     overall_nonzero = 0
@@ -25,10 +28,12 @@ if check_by_var:
 
 check_by_month = False
 if check_by_month:
-    target_dir = '../data/processed/output_by_month/'
+    target_dir = opt.output_dir
     months = us.listdir(target_dir)
     for amonth in months:
-        df = pd.read_csv(pathjoin(target_dir, amonth)).set_index('Unnamed: 0')
+        if amonth[0] not in ['1', '2']:
+            continue
+        df = pd.read_csv(pathjoin(target_dir, amonth))
         if 'age' in df.columns:
             df = df.drop('age', axis=1)
         print(f'For {amonth}...')
@@ -38,3 +43,15 @@ if check_by_month:
         print(f'Avg no. of entities each company has: {df.notna().sum(axis=1).replace(0, float("NaN")).dropna().mean()}')
         print(f'Med no. of entities each company has: {df.notna().sum(axis=1).replace(0, float("NaN")).dropna().median()}')
         print(f'')
+
+check_momentum = True
+if check_momentum:
+    momentum_df = pd.read_csv(pathjoin(opt.output_dir, 'monthly_return.csv'))
+    momentum_df = momentum_df.set_index(us.date_col_finder(momentum_df, 'monthly_return')) + 1
+    momentum_df = momentum_df.apply(np.log).abs()
+    momentum_df = momentum_df.replace(float('inf'), float('NaN'))
+    max_mom_ser = momentum_df.max(axis=1)
+    max_mom_ser.plot()
+    plt.legend()
+    plt.title('max(abs(log(return))) for each month')
+    plt.show()

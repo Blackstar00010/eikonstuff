@@ -5,8 +5,6 @@ import pandas as pd
 import multiprocessing as mp
 from spec_cases import fix_secd
 
-# from joblib import Parallel, delayed
-
 all_dir = '/Users/jamesd/Desktop/wrds_data/all/'
 useful_dir = '/Users/jamesd/Desktop/wrds_data/useful/'
 raw_output_dir = opt.raw_dir
@@ -163,7 +161,7 @@ if __name__ == "__main__":
     ).reset_index(level=0)
     exch_rates = exch_rates.dropna(subset=['curr', 'GBPXXX'], how='any')
 
-    organize_secd = False
+    organize_secd = True
     if organize_secd:
         # gvkey,datadate,isin,sedol,exchg,monthend,curcdd,ajexdi,cshoc,cshtrd,qunit,
         # prccd,prchd,prcld,prcod,curcddv,divd,paydate,split
