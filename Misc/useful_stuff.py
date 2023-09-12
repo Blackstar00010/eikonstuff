@@ -57,6 +57,24 @@ def listdir(directory: str, file_type='csv', files_to_exclude=None) -> list:
     return sorted(ret)
 
 
+def flatten(alist):
+    list_type = type(alist)
+    if list_type not in [list, np.ndarray, pd.Series]:
+        raise TypeError('alist must be a list, np.ndarray, or pd.Series')
+    ret = []
+    for item in alist:
+        if type(item) in [list, np.ndarray, pd.Series]:
+            ret += flatten(item)
+        else:
+            ret.append(item)
+
+    if list_type == pd.Series:
+        ret = pd.Series(ret)
+    elif list_type == np.ndarray:
+        ret = np.array(ret)
+    return ret
+
+
 def num2ric(num: int) -> str:
     """
     Converts a number to ric-styled str.
@@ -369,6 +387,20 @@ def dt_to_str(col: pd.Series) -> pd.Series:
     return col
 
 
+def change_date_format(some_df: pd.DataFrame, df_name='some_df', date_col_name: str = None, ) -> pd.DataFrame:
+    """
+    Change the column that contains date values to YYYY-MM-DD format.
+    :param some_df: the dataframe to change the date format
+    :param date_col_name: the name of the column that contains date values.
+    :param df_name: the name of the dataframe
+    :return: the dataframe with the date format changed
+    """
+    if date_col_name is None:
+        date_col_name = date_col_finder(some_df, df_name)
+    some_df[date_col_name] = dt_to_str(some_df[date_col_name])
+    return some_df
+
+
 def zero_finder(df: pd.DataFrame, df_name: str, raise_error=False) -> pd.DataFrame:
     """
     Finds if 0 exists in the dataframe and prints where it is.
@@ -460,6 +492,8 @@ def fillna(some_df: pd.DataFrame, hat_in_cols=False) -> pd.DataFrame:
     :param hat_in_cols:
     :return:
     """
+    if len(some_df) < 1:
+        raise IndexError('some_df is empty')
     ret = some_df.fillna(method='ffill')
     if hat_in_cols:
         ret = drop_invalid_data(ret)
