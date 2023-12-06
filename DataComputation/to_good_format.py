@@ -3,6 +3,7 @@ import pandas as pd
 from Misc import useful_stuff as us
 from os.path import join as pathjoin
 import _options as opt
+import os
 
 wrds = opt.wrds
 
@@ -13,8 +14,9 @@ intermed_dir = opt.intermed_dir
 by_var_dd_dir = opt.by_var_dd_dir
 by_var_mm_dir = opt.by_var_mm_dir
 by_month_dir = opt.output_dir
+percentile_output_dir = opt.percentile_output_dir
 
-close_to_momentum, dd_to_mm, mm_to_month = True, True, True
+close_to_momentum, dd_to_mm, mm_to_month, sort_by_mve = False, False, False, True
 
 if close_to_momentum:
     try:
@@ -50,13 +52,13 @@ if close_to_momentum:
 
         print('-', end='')
         if int(current_date[5:7]) == 12:
-            print(f'] {current_date[:5]} done!\n[', end='')
+            print(f'] {current_date[:4]} done!\n[', end='')
     if int(current_date[5:7]) != 12:
         print(f'] {current_date[:7]} done!\n')
 
-for afile in us.listdir(by_var_dd_dir):
-    shutil.copyfile(by_var_dd_dir + afile, by_var_mm_dir + afile)
 if dd_to_mm:
+    for afile in us.listdir(by_var_dd_dir):
+        shutil.copyfile(by_var_dd_dir + afile, by_var_mm_dir + afile)
     # print('Finding outer-joined date indexes...')
     # da_row = us.outer_joined_axis(by_var_mm_dir, file_type='csv', axis='daterow')
     # updating business_days.csv
@@ -180,3 +182,33 @@ if mm_to_month:
         joined_df = joined_df.dropna(how='all', axis=1).dropna(how='any', axis=0)
         joined_df.to_csv(pathjoin(by_month_dir, afirst_day + '.csv'), index=True, index_label='firms')
         print(f'{afirst_day} exported!')
+
+if sort_by_mve:
+    # columns of firm names, rows of dates
+    mve_df = pd.read_csv(pathjoin(secd_dir, 'mve.csv'))
+    mve_df[us.date_col_finder(mve_df, 'mve')] = mve_df[us.date_col_finder(mve_df, 'mve')].str[:7]
+    mve_df = mve_df.set_index(us.date_col_finder(mve_df, 'mve'))
+    mve_df = mve_df.transpose()
+
+    for afile in us.listdir(by_month_dir):
+        if '-' not in afile:
+            shutil.copyfile(by_month_dir + afile, percentile_output_dir + afile)
+            continue
+
+        # columns of firm characteristics, rows of dates
+        df = pd.read_csv(pathjoin(by_month_dir, afile))
+        if len(df) < 1:
+            os.remove(percentile_output_dir + afile)
+            continue
+
+        df = df.set_index('firms')
+
+        mve_col = mve_df[afile[:-4]].dropna()
+        # df = pd.concat([df, mve_col], axis=1).rename(columns={afile.replace('.csv', ''): 'mve'}).dropna(subset=df.columns, how='all')
+        df = pd.concat([df, mve_col], axis=1).rename(columns={afile.replace('.csv', ''): 'mve'})
+        df = df.dropna(subset=df.columns.drop('mve'), how='any')
+        df = df.sort_values('mve', ascending=False)
+        df = df.drop(columns='mve')
+
+        df.to_csv(pathjoin(percentile_output_dir, afile), index=True, index_label='firms')
+

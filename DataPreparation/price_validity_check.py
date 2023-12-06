@@ -27,34 +27,36 @@ if discontinuityQ:
             print(df.loc[problematic_dates, :])
             count += 1
 
-mom_anomaly_check = True
-export_shits = True
-if mom_anomaly_check:
+price_anomaly_check = False
+apply_log = False
+export_shits = False
+if price_anomaly_check:
     for var_to_check in ['mve', 'close']:
         close_df = pd.read_csv(f'../data/preprocessed_wrds/price/{var_to_check}.csv')
         close_df = close_df.set_index(us.date_col_finder(close_df, var_to_check))
         # close_df = us.fillna(close_df, 'ffill')
-        ret_df = close_df / close_df.shift(1)
-        ret_df = ret_df.astype(float).apply(np.log).abs().replace(float('inf'), float('NaN'))
+        ret_df = close_df / close_df.shift(-1)
+        if apply_log:
+            ret_df = ret_df.astype(float).apply(np.log).abs().replace(float('inf'), float('NaN'))
 
         top_shits = ret_df.max().sort_values(ascending=False)
-        top_shits = top_shits[top_shits > np.log(10)]
+        top_shits = top_shits[top_shits > np.log(10)] if apply_log else top_shits[top_shits > 10]
         top_shits = top_shits.index
 
-        to_check = 1000
+        to_check = 100
         try:
             print(top_shits[min(to_check-1, len(top_shits)-1)])
         except IndexError:
             print('No more to check!')
 
-        close_df.loc[:, top_shits[:to_check]].plot()
-        plt.title(var_to_check)
-        plt.show()
-        (close_df.loc[:, top_shits[:to_check]] / close_df.loc[:, top_shits[:to_check]].max()).plot()
-        plt.title(f'normalised {var_to_check}')
-        plt.show()
+        # close_df.loc[:, top_shits[:to_check]].plot()
+        # plt.title(var_to_check)
+        # plt.show()
+        # (close_df.loc[:, top_shits[:to_check]] / close_df.loc[:, top_shits[:to_check]].max()).plot()
+        # plt.title(f'normalised {var_to_check}')
+        # plt.show()
         ret_df.loc[:, top_shits[:to_check]].plot()
-        plt.title(f'daily log return of {var_to_check}')
+        plt.title(f'daily{" log" if apply_log else ""} return of {var_to_check}')
         # plt.legend([])
         plt.show()
 
@@ -68,16 +70,18 @@ if mom_anomaly_check:
                 shitty_df.to_csv(f'../data/validity_check/{shitty_ric}.csv')
     us.beep()
 
-mom_dist_plot = False
+mom_dist_plot = True
 if mom_dist_plot:
-    close_df = pd.read_csv(secd_dir + '/close.csv')
-    close_df = close_df.set_index(us.date_col_finder(close_df, 'close'))
-    close_df = us.fillna(close_df, hat_in_cols=True)
-    return_df = close_df / close_df.shift(1)
+    # close_df = pd.read_csv(secd_dir + '/close.csv')
+    # close_df = close_df.set_index(us.date_col_finder(close_df, 'close'))
+    # close_df = us.fillna(close_df, hat_in_cols=True)
+    # return_df = close_df / close_df.shift(-1)
+    return_df = pd.read_csv('../data/processed_wrds_us/_momentum.csv')
+    return_df = return_df.set_index(us.date_col_finder(return_df, '_momentum')).iloc[-12*40:] + 1
     return_df = return_df.astype(float).apply(np.log)
     return_df = return_df.replace([float('inf'), float('-inf'), 0], float('NaN'))
 
     plots.distribution_plot3d(return_df, 'datadate', 'firms', 'returns',
                               x_axis='log return', y_axis='', z_axis='portion of firms',
                               title='Distribution of log return over time',
-                              filename='../data/_presentation/return_dist.png')
+                              filename='../data/_presentation/return_dist_us.png', plot_range='full')

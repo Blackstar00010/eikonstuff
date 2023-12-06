@@ -181,6 +181,13 @@ if __name__ == "__main__":
         # manage special cases (should be done before gvkey2ric)
         comp_secd = fix_secd(comp_secd)
 
+        # only the most frequent isin for each gvkey
+        comp_secd['isin'] = comp_secd['isin'].fillna(comp_secd['sedol']).fillna('JD')
+        most_frequent_isin = comp_secd.groupby('gvkey')['isin'].agg(lambda x: x.value_counts().idxmax())
+        comp_secd = comp_secd.merge(most_frequent_isin.reset_index(), on='gvkey')
+        comp_secd = comp_secd[comp_secd['isin_x'] == comp_secd['isin_y']]
+        comp_secd = comp_secd.drop(['isin_y'], axis=1).rename(columns={'isin_x': 'isin'})
+
         # gvkey -> ric, reformatting
         if mix_ref:
             comp_secd = gvkey2ric(comp_secd, gvkey_ric_dict)
@@ -215,7 +222,8 @@ if __name__ == "__main__":
         #     df.to_csv(preprocessed_dir + f'price/by_ric/{aric}.csv', index=False)
         # us.beep()
 
-        for p_type in ['high', 'low', 'open', 'close']:
+        # for p_type in ['high', 'low', 'open', 'close']:
+        for p_type in ['close']:
             comp_secd.loc[:, f'{p_type}(GBP)'] = comp_secd.loc[:, p_type] / comp_secd.loc[:, 'GBPXXX']
             comp_secd.loc[:, f'{p_type}(GBP)'] = comp_secd.loc[:, f'{p_type}(GBP)'].round(2)
             comp_secd = comp_secd.drop(p_type, axis=1)

@@ -86,7 +86,7 @@ def num2ric(num: int) -> str:
         digits.append(num % 26)
         num = num // 26
     ret = ''.join([chr(ord('A') + item) for item in digits[::-1]])
-    return ret+'-L'
+    return ret + '-L'
 
 
 def ric2num(ric: str) -> int:
@@ -99,7 +99,7 @@ def ric2num(ric: str) -> int:
     ric = ric.split('_')[0]
     ret = 0
     for i, char in enumerate(ric):
-        ret += (ord(char) - 64-1) * (26 ** (len(ric) - i - 1))
+        ret += (ord(char) - 64 - 1) * (26 ** (len(ric) - i - 1))
     return ret
 
 
@@ -371,10 +371,12 @@ def dt_to_str(col: pd.Series) -> pd.Series:
     :param col: the column vector to convert to str in the format YYYY-MM-DD
     :return: pd.Series of the converted vector
     """
+    if type(col.iloc[0]) in [float, np.float64]:
+        col = col.astype(int)
     if type(col.iloc[0]) in [int, np.int64]:
         col = col.astype(str)
 
-    if type(col.iloc[0]) == str:
+    if type(col.iloc[0]) is str:
         if col.iloc[0].count(' ') > 0:
             col = col.str.split(' ').str[0]
         if col.iloc[0].count('/') > 0:

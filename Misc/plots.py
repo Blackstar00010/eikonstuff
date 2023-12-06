@@ -7,7 +7,7 @@ import Misc.useful_stuff as us
 def distribution_plot3d(some_df: pd.DataFrame,
                         id_name: str = None, var_name: str = None, value_name: str = None,
                         x_axis: str = None, y_axis: str = None, z_axis: str = None,
-                        filename: str = None, title: str = None,):
+                        filename: str = None, title: str = None, plot_range = None):
     """
     Plots the 3d distribution of a DataFrame.
     :param some_df: df that contains the data to plot.
@@ -57,6 +57,15 @@ def distribution_plot3d(some_df: pd.DataFrame,
     x_tick_labels = return_bins[x_tick_positions].round(2)
     ax.set_xticks(x_tick_positions)
     ax.set_xticklabels(x_tick_labels)
+
+    if plot_range in ['full', 'Full']:
+        ax.xlim = (distribution_df.columns.min(), distribution_df.columns.max())
+    elif plot_range is not None:
+        ax.xlim = plot_range
+    else:
+        mean = distribution_df.mean(axis=0)
+        std = distribution_df.std(axis=0)
+        ax.xlim = (mean - 3 * std, mean + 3 * std)
 
     # Y ticks: Limited to 5 ticks
     num_y_ticks = 5
