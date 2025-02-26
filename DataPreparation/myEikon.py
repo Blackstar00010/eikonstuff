@@ -8,7 +8,7 @@ if platform.system() == 'Darwin':
     print('Your Operating System is Darwin, so eikon Data API was not set.')
 
 else:
-    apikey = "7fb0e788b2ff42c2823e80933fde4d28158c74f4"
+    apikey = "123qweasd"
     ek.set_app_key(apikey)
 
 _not_my_fault = [400, 401, 408, 500, 2504]
